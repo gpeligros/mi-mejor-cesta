@@ -1,13 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply bg-background-light dark:bg-background-dark font-display;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Este bloque solo se activa al pulsar "Imprimir" o "Exportar PDF" */
+@media print {
+  /* 1. OCULTAR LO QUE NO SIRVE EN PAPEL */
+  .no-print, 
+  button, 
+  input, 
+  nav, 
+  footer, 
+  .aside,
+  header {
+    display: none !important;
+  }
+
+  /* 2. REESTRUCTURAR EL DISEÑO */
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hacemos que el contenedor principal ocupe todo el ancho */
+  .App, main, .container {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    display: block !important;
+  }
+
+  /* 3. MEJORAR LA LISTA DE PRODUCTOS */
+  .SuperCard {
+    page-break-inside: avoid; /* Evita que un supermercado se corte entre dos páginas */
+    border: 1px solid #eee !important;
+    margin-bottom: 20px !important;
+    box-shadow: none !important;
+  }
+
+  /* Forzar que los textos sean negros y legibles */
+  h1, h2, h3, span, p {
+    color: black !important;
+  }
+
+  /* Ajustar los logos para que no salgan gigantes o borrosos */
+  img {
+    max-height: 50px !important;
+    filter: grayscale(100%); /* Opcional: imprimir logos en B/N para ahorrar tinta */
+  }
+
+  /* 4. CREAR UNA LISTA TIPO CHECKLIST */
+  .lista-compra-item {
+    border-bottom: 1px dotted #ccc !important;
+    padding: 5px 0 !important;
+  }
 }

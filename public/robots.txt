@@ -1,3 +1,6 @@
-# https://www.robotstxt.org/robotstxt.html
+# Mi Mejor Cesta - Robots.txt
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap (cuando tengas dominio)
+# Sitemap: https://mimejorcesta.com/sitemap.xml

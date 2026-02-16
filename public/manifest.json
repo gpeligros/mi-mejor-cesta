@@ -1,25 +1,56 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Mi Cesta",
+  "name": "Mi Mejor Cesta - Comparador de Supermercados",
+  "description": "Ahorra en tu compra diaria comparando precios de Mercadona, Lidl y Carrefour",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/logo192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo192.png",
+      "src": "/logo512.png",
+      "sizes": "512x512",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#037623",
+  "background_color": "#f4f7f5",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["shopping", "lifestyle", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ver mi cesta",
+      "short_name": "Cesta",
+      "description": "Ver productos seleccionados",
+      "url": "/?action=view-cart",
+      "icons": [
+        {
+          "src": "/logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "lang": "es-ES",
+  "dir": "ltr"
 }

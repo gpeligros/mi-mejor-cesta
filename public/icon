@@ -1,0 +1,5 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" fill="#037623" rx="80"/>
+  <text x="256" y="340" font-size="220" text-anchor="middle" fill="white">🛒</text>
+  <text x="256" y="450" font-size="60" text-anchor="middle" fill="#13ec49" font-weight="900">Mi Mejor Cesta</text>
+</svg>
