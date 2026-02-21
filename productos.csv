@@ -1,4 +1,4 @@
-id_producto,nombre,formato,categoria,subcategoria
+﻿id_producto,nombre,formato,categoria,subcategoria
 BB-CO-001,Agua mineral bebé,1ud,Bebes,Comida infantil
 BB-CO-002,Cereales infantiles con miel,1ud,Bebes,Comida infantil
 BB-CO-003,Cereales infantiles sin gluten,1ud,Bebes,Comida infantil
@@ -19,14 +19,18 @@ BB-PA-004,Pañales talla 4,pack,Bebes,Pañales
 BB-PA-005,Pañales talla 5,pack,Bebes,Pañales
 BB-TO-001,Algodón hidrófilo bebé,pack,Bebes,Toallitas y algodón
 BB-TO-002,Toallitas húmedas bebé,pack,Bebes,Toallitas y algodón
-BE-AG-001,Agua mineral con gas,"1,5l",Bebidas,Agua
-BE-AG-002,Agua mineral natural,"1,5l",Bebidas,Agua
-BE-CE-001,"Cerveza 0,0","0,33l",Bebidas,Cerveza
+BE-AG-001,Agua mineral con gas,1,5l,Bebidas,Agua
+BE-AG-002,Agua mineral natural,1,5l,Bebidas,Agua
+BE-AG-003,Agua mineral Bezoya,1.5l,Bebidas,Agua
+BE-AG-004,Agua mineral Font Vella,1.5l,Bebidas,Agua
+BE-AG-005,Agua mineral Lanjaron,1.5l,Bebidas,Agua
+BE-CE-001,Cerveza 0,0,0,33l,Bebidas,Cerveza
 BE-CE-002,Cerveza rubia botella,1l,Bebidas,Cerveza
-BE-CE-003,Cerveza rubia lata,"0,33l",Bebidas,Cerveza
-BE-CE-004,Cerveza sin gluten,"0,33l",Bebidas,Cerveza
-BE-CE-005,Cerveza tostada,"0,33l",Bebidas,Cerveza
+BE-CE-004,Cerveza sin gluten,0,33l,Bebidas,Cerveza
+BE-CE-005,Cerveza tostada,0,33l,Bebidas,Cerveza
 BE-CE-006,Sidra natural,1l,Bebidas,Cerveza
+BE-CE-007,Cerveza Mahou 33cl pack 6,pack 6,Bebidas,Cerveza
+BE-CE-008,Cerveza Cruzcampo 33cl pack 6,pack 6,Bebidas,Cerveza
 BE-LI-001,Ginebra estándar,500ml,Bebidas,Licores y destilados
 BE-LI-002,Licor de café,500ml,Bebidas,Licores y destilados
 BE-LI-003,Licor de hierbas,500ml,Bebidas,Licores y destilados
@@ -34,13 +38,13 @@ BE-LI-004,Ron añejo,500ml,Bebidas,Licores y destilados
 BE-LI-005,Ron blanco,500ml,Bebidas,Licores y destilados
 BE-LI-006,Vodka,500ml,Bebidas,Licores y destilados
 BE-LI-007,Whisky blended,500ml,Bebidas,Licores y destilados
-BE-RE-001,Agua saborizada limón,"0,33l",Bebidas,Refrescos
-BE-RE-002,Bebida isotónica limón,"0,33l",Bebidas,Refrescos
-BE-RE-003,Refresco de cola,"0,33l",Bebidas,Refrescos
-BE-RE-004,Refresco de cola sin azúcar,"0,33l",Bebidas,Refrescos
-BE-RE-005,Refresco de lima-limón,"0,33l",Bebidas,Refrescos
-BE-RE-006,Refresco de limón,"0,33l",Bebidas,Refrescos
-BE-RE-007,Refresco de naranja,"0,33l",Bebidas,Refrescos
+BE-RE-001,Agua saborizada limón,0,33l,Bebidas,Refrescos
+BE-RE-002,Bebida isotónica limón,0,33l,Bebidas,Refrescos
+BE-RE-003,Refresco de cola,0,33l,Bebidas,Refrescos
+BE-RE-004,Refresco de cola sin azúcar,0,33l,Bebidas,Refrescos
+BE-RE-005,Refresco de lima-limón,0,33l,Bebidas,Refrescos
+BE-RE-006,Refresco de limón,0,33l,Bebidas,Refrescos
+BE-RE-007,Refresco de naranja,0,33l,Bebidas,Refrescos
 BE-RE-008,Agua saborizada limón,2l,Bebidas,Refrescos
 BE-RE-009,Bebida isotónica limón,2l,Bebidas,Refrescos
 BE-RE-010,Refresco de cola,2l,Bebidas,Refrescos
@@ -49,7 +53,11 @@ BE-RE-012,Refresco de lima-limón,2l,Bebidas,Refrescos
 BE-RE-013,Refresco de limón,2l,Bebidas,Refrescos
 BE-RE-014,Refresco de naranja,2l,Bebidas,Refrescos
 BE-RE-015,Refresco de naranja zero,2l,Bebidas,Refrescos
-BE-RE-016,Tónica,"0,33l",Bebidas,Refrescos
+BE-RE-016,Tónica,0,33l,Bebidas,Refrescos
+BE-RE-017,Coca Cola 2L,2l,Bebidas,Refrescos
+BE-RE-018,Fanta Naranja 2L,2l,Bebidas,Refrescos
+BE-RE-020,Fanta Limón 2L,2l,Bebidas,Refrescos
+BE-RE-019,Sprite 2L,2l,Bebidas,Refrescos
 BE-VI-001,Vermut blanco,750ml,Bebidas,Vino
 BE-VI-002,Vermut rojo,750ml,Bebidas,Vino
 BE-VI-003,Vino blanco afrutado,750ml,Bebidas,Vino
@@ -59,11 +67,15 @@ BE-VI-006,Vino espumoso cava,750ml,Bebidas,Vino
 BE-VI-007,Vino rosado,750ml,Bebidas,Vino
 BE-VI-008,Vino tinto crianza,750ml,Bebidas,Vino
 BE-VI-009,Vino tinto joven,750ml,Bebidas,Vino
-BE-ZU-001,Néctar de melocotón,"1,5l",Bebidas,Zumos
-BE-ZU-002,Zumo de naranja envasado,"1,5l",Bebidas,Zumos
-BE-ZU-003,Zumo de piña,"1,5l",Bebidas,Zumos
-BE-ZU-004,Zumo de tomate,"1,5l",Bebidas,Zumos
-BE-ZU-005,Zumo multifrutas,"1,5l",Bebidas,Zumos
+BE-VI-010,Vino tinto Don Simon 750ml,750ml,Bebidas,Vino
+BE-VI-011,Vino blanco Don Simon 750ml,750ml,Bebidas,Vino
+BE-ZU-001,Néctar de melocotón,1,5l,Bebidas,Zumos
+BE-ZU-002,Zumo de naranja envasado,1,5l,Bebidas,Zumos
+BE-ZU-003,Zumo de piña,1,5l,Bebidas,Zumos
+BE-ZU-004,Zumo de tomate,1,5l,Bebidas,Zumos
+BE-ZU-005,Zumo multifrutas,1,5l,Bebidas,Zumos
+BE-ZU-006,Zumo Don Simon Naranja 1L,1l,Bebidas,Zumos
+BE-ZU-007,Zumo Hacendado Naranja 1L,1l,Bebidas,Zumos
 BZ-BO-001,Bombillas halógenas,pack,Bazar y Varios,Bombillas y material electrico
 BZ-BO-002,Bombillas LED bajo consumo,pack,Bazar y Varios,Bombillas y material electrico
 BZ-BO-003,Regleta alargador,1ud,Bazar y Varios,Bombillas y material electrico
@@ -200,6 +212,8 @@ CO-CO-008,Mejillones en escabeche,1ud,Conservas y Enlatados,Conservas de pescado
 CO-CO-009,Pulpo en aceite,1ud,Conservas y Enlatados,Conservas de pescado y mariscos
 CO-CO-010,Sardinas en aceite de oliva,1ud,Conservas y Enlatados,Conservas de pescado y mariscos
 CO-CO-011,Sardinas en escabeche,1ud,Conservas y Enlatados,Conservas de pescado y mariscos
+CO-CO-012,Atun aceite Hacendado pack 3,pack 3,Conservas y Enlatados,Conservas de pescado
+CO-CO-013,Atun natural Hacendado pack 3,pack 3,Conservas y Enlatados,Conservas de pescado
 CO-FR-001,Cóctel de frutas en almíbar,1ud,Conservas y Enlatados,Frutas en almibar o en su jugo
 CO-FR-002,Frutas en almíbar (melocotón),1ud,Conservas y Enlatados,Frutas en almibar o en su jugo
 CO-FR-003,Peras en almíbar,1ud,Conservas y Enlatados,Frutas en almibar o en su jugo
@@ -230,20 +244,23 @@ CO-PL-016,Pizza congelada barbacoa,1kg,Congelados,Platos congelados preparados
 CO-PL-017,Pizza congelada cuatro quesos,1kg,Congelados,Platos congelados preparados
 CO-PL-018,Pizza congelada jamón y queso,1kg,Congelados,Platos congelados preparados
 CO-PL-019,Varitas de pescado congeladas,1kg,Congelados,Platos congelados preparados
-CO-SO-001,Crema de verduras en lata,1ud,Conservas y Enlatados,"Sopas, cremas y otros preparados"
-CO-SO-002,Puré de patata instantáneo en caja,1ud,Conservas y Enlatados,"Sopas, cremas y otros preparados"
-CO-SO-003,Sopa de cocido en lata,1ud,Conservas y Enlatados,"Sopas, cremas y otros preparados"
-CO-VE-001,Alcachofas en conserva,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-002,Alubias blancas cocidas,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-003,Alubias rojas cocidas,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-004,Garbanzos cocidos en tarro,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-005,Guisantes en conserva,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-006,Judías verdes en conserva,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-007,Lentejas cocidas en tarro,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-008,Maíz dulce en lata,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-009,Pimientos del piquillo en tarro,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-010,Tomate entero pelado en lata,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
-CO-VE-011,Tomate triturado en lata,1ud,Conservas y Enlatados,"Verduras, legumbres y hortalizas en conserva"
+CO-SO-001,Crema de verduras en lata,1ud,Conservas y Enlatados,Sopas, cremas y otros preparados
+CO-SO-002,Puré de patata instantáneo en caja,1ud,Conservas y Enlatados,Sopas, cremas y otros preparados
+CO-SO-003,Sopa de cocido en lata,1ud,Conservas y Enlatados,Sopas, cremas y otros preparados
+CO-VE-001,Alcachofas en conserva,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-002,Alubias blancas cocidas,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-003,Alubias rojas cocidas,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-004,Garbanzos cocidos en tarro,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-005,Guisantes en conserva,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-006,Judías verdes en conserva,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-007,Lentejas cocidas en tarro,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-008,Maíz dulce en lata,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-009,Pimientos del piquillo en tarro,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-010,Tomate entero pelado en lata,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-011,Tomate triturado en lata,1ud,Conservas y Enlatados,Verduras, legumbres y hortalizas en conserva
+CO-VE-012,Tomate triturado Hacendado 800g,800g,Conservas y Enlatados,Verduras legumbres hortalizas conserva
+CO-VE-013,Maiz dulce Hacendado 300g,300g,Conservas y Enlatados,Verduras legumbres hortalizas conserva
+CO-VE-014,Garbanzos cocidos Hacendado 400g,400g,Conservas y Enlatados,Verduras legumbres hortalizas conserva
 CO-VG-001,Espinacas congeladas en porciones,1kg,Congelados,Verduras congeladas
 CO-VG-002,Guisantes congelados,1kg,Congelados,Verduras congeladas
 CO-VG-003,Judías verdes congeladas,1kg,Congelados,Verduras congeladas
@@ -256,6 +273,7 @@ CP-CC-002,Champú anticaspa,1ud,Cuidado personal e Higiene,Cuidado del cabello
 CP-CC-003,Champú cabello graso,1ud,Cuidado personal e Higiene,Cuidado del cabello
 CP-CC-004,Champú cabello normal,1ud,Cuidado personal e Higiene,Cuidado del cabello
 CP-CC-005,Mascarilla para el pelo,1ud,Cuidado personal e Higiene,Cuidado del cabello
+CP-CC-006,Champu Pantene 360ml,360ml,Cuidado personal e Higiene,Cuidado del cabello
 CP-CR-001,Crema de manos,1ud,Cuidado personal e Higiene,Cremas y protectores
 CP-CR-002,Crema hidratante corporal,1ud,Cuidado personal e Higiene,Cremas y protectores
 CP-CR-003,Crema hidratante facial,1ud,Cuidado personal e Higiene,Cremas y protectores
@@ -264,17 +282,20 @@ CP-CR-005,Protector solar facial,1ud,Cuidado personal e Higiene,Cremas y protect
 CP-DE-001,Desodorante de pies,1ud,Cuidado personal e Higiene,Desodorantes
 CP-DE-002,Desodorante en roll-on,1ud,Cuidado personal e Higiene,Desodorantes
 CP-DE-003,Desodorante en spray,1ud,Cuidado personal e Higiene,Desodorantes
+CP-DE-004,Desodorante Nivea 50ml,50ml,Cuidado personal e Higiene,Desodorantes
 CP-HB-001,Cepillo de dientes eléctrico,1ud,Cuidado personal e Higiene,Higiene bucal
 CP-HB-002,Cepillo de dientes manual,1ud,Cuidado personal e Higiene,Higiene bucal
 CP-HB-003,Colutorio bucal,1ud,Cuidado personal e Higiene,Higiene bucal
 CP-HB-004,Hilo dental,1ud,Cuidado personal e Higiene,Higiene bucal
 CP-HB-005,Pasta de dientes blanqueadora,1ud,Cuidado personal e Higiene,Higiene bucal
 CP-HB-006,Pasta de dientes con flúor,1ud,Cuidado personal e Higiene,Higiene bucal
+CP-HB-007,Pasta dientes Colgate 75ml,75ml,Cuidado personal e Higiene,Higiene bucal
 CP-HC-001,Gel de baño,1ud,Cuidado personal e Higiene,Higiene corporal
 CP-HC-002,Gel íntimo,1ud,Cuidado personal e Higiene,Higiene corporal
 CP-HC-003,Jabón de manos en pastilla,1ud,Cuidado personal e Higiene,Higiene corporal
 CP-HC-004,Jabón de manos líquido,1ud,Cuidado personal e Higiene,Higiene corporal
 CP-HC-005,Jabón íntimo masculino,1ud,Cuidado personal e Higiene,Higiene corporal
+CP-HC-006,Gel bano Sanex 600ml,600ml,Cuidado personal e Higiene,Higiene corporal
 CP-HI-001,Bastoncillos de algodón,pack,Cuidado personal e Higiene,Higiene intima femenina y accesorios
 CP-HI-002,Compresas,pack,Cuidado personal e Higiene,Higiene intima femenina y accesorios
 CP-HI-003,Discos desmaquillantes,pack,Cuidado personal e Higiene,Higiene intima femenina y accesorios
@@ -292,6 +313,7 @@ DE-CA-004,Café molido natural,1ud,Desayuno y Snack,Café y cacaos
 DE-CA-005,Café soluble,1ud,Desayuno y Snack,Café y cacaos
 DE-CA-006,Cápsulas de café compatibles,pack,Desayuno y Snack,Café y cacaos
 DE-CA-007,Descafeinado soluble,1ud,Desayuno y Snack,Café y cacaos
+DE-CA-008,Cafe molido Marcilla 250g,250g,Desayuno y Snack,Cafe y cacaos
 DE-CE-001,Avena en copos,1ud,Desayuno y Snack,Cereales para desayuno
 DE-CE-002,Barritas de cereales,1ud,Desayuno y Snack,Cereales para desayuno
 DE-CE-003,Cereales de chocolate,1ud,Desayuno y Snack,Cereales para desayuno
@@ -334,20 +356,26 @@ DS-AC-007,Aceite de girasol,5l,Despensa,Aceites
 DS-AC-008,Aceite de oliva suave,5l,Despensa,Aceites
 DS-AC-009,Aceite de oliva virgen extra,5l,Despensa,Aceites
 DS-AC-010,Aceite de semillas,1l,Despensa,Aceites
-DS-AR-001,Arroz basmati,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-002,Arroz integral,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-003,Arroz largo,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-004,Arroz redondo,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-005,Couscous medio,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-006,Pasta espaguetis,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-007,Pasta macarrones,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-008,Pasta para sopa (fideos),1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-009,Pasta plumas integrales,1kg,Despensa,"Arroz, pasta y quinoa"
-DS-AR-010,Quinoa,1kg,Despensa,"Arroz, pasta y quinoa"
+DS-AC-011,Aceite oliva virgen extra Hacendado 1L,1l,Despensa,Aceites
+DS-AC-012,Aceite girasol Hacendado 1L,1l,Despensa,Aceites
+DS-AR-001,Arroz basmati,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-002,Arroz integral,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-003,Arroz largo,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-004,Arroz redondo,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-005,Couscous medio,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-006,Pasta espaguetis,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-007,Pasta macarrones,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-008,Pasta para sopa (fideos),1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-009,Pasta plumas integrales,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-010,Quinoa,1kg,Despensa,Arroz, pasta y quinoa
+DS-AR-011,Arroz largo Hacendado 1kg,1kg,Despensa,Arroz pasta quinoa
+DS-AR-012,Pasta espagueti Gallo 500g,500g,Despensa,Arroz pasta quinoa
+DS-AR-013,Pasta macarrones Gallo 500g,500g,Despensa,Arroz pasta quinoa
 DS-AZ-001,Azúcar blanco,1kg,Despensa,Azúcares y edulcorantes
 DS-AZ-002,Azúcar glas,1kg,Despensa,Azúcares y edulcorantes
 DS-AZ-003,Azúcar moreno,1kg,Despensa,Azúcares y edulcorantes
 DS-AZ-004,Edulcorante en sobres,pack,Despensa,Azúcares y edulcorantes
+DS-AZ-005,Azucar blanco Hacendado 1kg,1kg,Despensa,Azucares y edulcorantes
 DS-ES-001,Albahaca seca,1ud,Despensa,Especias e hierbas secas
 DS-ES-002,Canela en rama,1ud,Despensa,Especias e hierbas secas
 DS-ES-003,Canela molida,1ud,Despensa,Especias e hierbas secas
@@ -367,32 +395,38 @@ DS-HA-001,Harina de maíz,1kg,Despensa,Harinas
 DS-HA-002,Harina de repostería,1kg,Despensa,Harinas
 DS-HA-003,Harina de trigo,1kg,Despensa,Harinas
 DS-HA-004,Harina integral,1kg,Despensa,Harinas
+DS-HA-005,Harina trigo Hacendado 1kg,1kg,Despensa,Harinas
 DS-LE-001,Alubias blancas secas,1kg,Despensa,Legumbres secas
 DS-LE-002,Alubias pintas secas,1kg,Despensa,Legumbres secas
 DS-LE-003,Garbanzos secos,1kg,Despensa,Legumbres secas
 DS-LE-004,Lentejas pardinas secas,1kg,Despensa,Legumbres secas
 DS-LE-005,Lentejas rojas secas,1kg,Despensa,Legumbres secas
+DS-LE-006,Lentejas Hacendado 1kg,1kg,Despensa,Legumbres secas
+DS-LE-007,Garbanzos Hacendado 1kg,1kg,Despensa,Legumbres secas
 DS-SA-001,Sal fina,1kg,Despensa,Sales
 DS-SA-002,Sal gruesa,1kg,Despensa,Sales
 DS-SA-003,Sal marina,1kg,Despensa,Sales
-DS-SC-001,Alioli en tarro,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-002,Caldo de carne en brik,pack 12ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-003,Caldo de pollo en brik,pack 12ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-004,Caldo de verduras en brik,pack 12ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-005,Caldos concentrados en pastilla,pack 12ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-006,Mayonesa en tarro,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-007,Mostaza clásica,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-008,Mostaza de Dijon,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-009,Salsa barbacoa,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-010,Salsa boloñesa en bote,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-011,Salsa carbonara en bote,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-012,Salsa cesar,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-013,Salsa de soja,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-014,Salsa de tomate frito,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-015,Salsa ketchup,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-016,Salsa pesto verde,1ud,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-017,Tomate natural troceado,1kg,Despensa,"Salsas, caldos y condimentos preparados"
-DS-SC-018,Tomate triturado en brik,1kg,Despensa,"Salsas, caldos y condimentos preparados"
+DS-SC-001,Alioli en tarro,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-002,Caldo de carne en brik,pack 12ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-003,Caldo de pollo en brik,pack 12ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-004,Caldo de verduras en brik,pack 12ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-005,Caldos concentrados en pastilla,pack 12ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-006,Mayonesa en tarro,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-007,Mostaza clásica,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-008,Mostaza de Dijon,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-009,Salsa barbacoa,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-010,Salsa boloñesa en bote,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-011,Salsa carbonara en bote,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-012,Salsa cesar,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-013,Salsa de soja,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-014,Salsa de tomate frito,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-015,Salsa ketchup,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-016,Salsa pesto verde,1ud,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-017,Tomate natural troceado,1kg,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-018,Tomate triturado en brik,1kg,Despensa,Salsas, caldos y condimentos preparados
+DS-SC-019,Tomate frito Orlando 400g,400g,Despensa,Salsas caldos condimentos
+DS-SC-020,Mayonesa Hellmanns 400ml,400ml,Despensa,Salsas caldos condimentos
+DS-SC-021,Ketchup Heinz 400g,400g,Despensa,Salsas caldos condimentos
 DS-VI-001,Vinagre balsámico,1l,Despensa,Vinagres
 DS-VI-002,Vinagre de manzana,1l,Despensa,Vinagres
 DS-VI-003,Vinagre de vino blanco,1l,Despensa,Vinagres
@@ -511,10 +545,12 @@ HO-DE-002,Detergente en polvo,1ud,Hogar,Detergentes para ropa
 HO-DE-003,Detergente líquido para lavadora,1ud,Hogar,Detergentes para ropa
 HO-DE-004,Jabón para prendas delicadas,1ud,Hogar,Detergentes para ropa
 HO-DE-005,Quitamanchas en spray,1ud,Hogar,Detergentes para ropa
+HO-DE-006,Detergente liquido Ariel 30 dosis,30 dosis,Hogar,Detergentes para ropa
 HO-LA-001,Abrillantador lavavajillas,1ud,Hogar,Lavavajillas
 HO-LA-002,Lavavajillas manual limón,1ud,Hogar,Lavavajillas
 HO-LA-003,Lavavajillas máquina en pastillas,1ud,Hogar,Lavavajillas
 HO-LA-004,Sal para lavavajillas,1ud,Hogar,Lavavajillas
+HO-LA-005,Lavavajillas Fairy 500ml,500ml,Hogar,Lavavajillas
 HO-LE-001,Desinfectante multiusos,1ud,Hogar,Lejia y desinfectantes
 HO-LE-002,Lejía con detergente,1ud,Hogar,Lejia y desinfectantes
 HO-LE-003,Lejía concentrada,1ud,Hogar,Lejia y desinfectantes
@@ -526,6 +562,7 @@ HO-LI-005,Limpiador de suelos fregasuelos,1ud,Hogar,Limpiadores de superficie
 HO-LI-006,Limpiador multiusos,1ud,Hogar,Limpiadores de superficie
 HO-SU-001,Suavizante ropa floral,1ud,Hogar,Suavizantes
 HO-SU-002,Suavizante ropa hipoalergénico,1ud,Hogar,Suavizantes
+HO-SU-003,Suavizante Mimosin 58 dosis,58 dosis,Hogar,Suavizantes
 HO-UT-001,Bayetas multiusos,pack,Hogar,Utensilios y consumibles de limpieza
 HO-UT-002,Estropajos fuertes,pack,Hogar,Utensilios y consumibles de limpieza
 HO-UT-003,Estropajos suaves,pack,Hogar,Utensilios y consumibles de limpieza
@@ -534,12 +571,14 @@ HO-UT-005,Paños de microfibra,pack,Hogar,Utensilios y consumibles de limpieza
 HO-UT-006,Papel aluminio,1ud,Hogar,Utensilios y consumibles de limpieza
 HO-UT-007,Papel de cocina rollo,1ud,Hogar,Utensilios y consumibles de limpieza
 HO-UT-008,Papel film transparente,1ud,Hogar,Utensilios y consumibles de limpieza
+HO-UT-009,Papel cocina 3 rollos,pack 3,Hogar,Utensilios y consumibles de limpieza
 LA-GR-001,Margarina vegetal,250g,Lácteos y Huevos,Grasas vegetales
 LA-HU-001,Claras de huevo pasteurizadas,1l,Lácteos y Huevos,Huevos
 LA-HU-002,Huevos camperos,12ud,Lácteos y Huevos,Huevos
 LA-HU-003,Huevos talla XL docena,12ud,Lácteos y Huevos,Huevos
 LA-HU-004,Huevos talla L docena,12ud,Lácteos y Huevos,Huevos
 LA-HU-005,Huevos talla M docena,12ud,Lácteos y Huevos,Huevos
+LA-HU-006,Huevos frescos L 12ud,12ud,Lácteos y Huevos,Huevos
 LA-LE-001,Leche de almendras,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
 LA-LE-002,Leche de arroz,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
 LA-LE-003,Leche de avena,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
@@ -547,11 +586,14 @@ LA-LE-004,Leche de soja,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
 LA-LE-005,Leche desnatada brik,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
 LA-LE-006,Leche entera brik,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
 LA-LE-007,Leche semidesnatada brik,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
-LA-LE-008,Leche desnatada botella,"1,5l",Lácteos y Huevos,"Leche y bebidas ""lácteas"""
-LA-LE-009,Leche entera botella,"1,5l",Lácteos y Huevos,"Leche y bebidas ""lácteas"""
-LA-LE-010,Leche semidesnatada botella,"1,5l",Lácteos y Huevos,"Leche y bebidas ""lácteas"""
+LA-LE-008,Leche desnatada botella,1,5l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
+LA-LE-009,Leche entera botella,1,5l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
+LA-LE-010,Leche semidesnatada botella,1,5l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
 LA-LE-011,Leche sin lactosa entera,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
 LA-LE-012,Leche sin lactosa semi,1l,Lácteos y Huevos,"Leche y bebidas ""lácteas"""
+LA-LE-013,Leche entera Pascual 1L,1l,Lácteos y Huevos,Leche y bebidas lacteas
+LA-LE-014,Leche desnatada Pascual 1L,1l,Lácteos y Huevos,Leche y bebidas lacteas
+LA-LE-015,Leche entera Hacendado 1L,1l,Lácteos y Huevos,Leche y bebidas lacteas
 LA-MA-001,Crema de leche espesa,1ud,Lácteos y Huevos,Mantequillas y Natas
 LA-MA-002,Mantequilla con sal,1ud,Lácteos y Huevos,Mantequillas y Natas
 LA-MA-003,Mantequilla sin sal,1ud,Lácteos y Huevos,Mantequillas y Natas
@@ -575,12 +617,16 @@ LA-QU-011,Queso rallado mezcla,1ud,Lácteos y Huevos,Quesos
 LA-QU-012,Queso rallado mozzarella,1ud,Lácteos y Huevos,Quesos
 LA-QU-013,Queso rallado para gratinar,1ud,Lácteos y Huevos,Quesos
 LA-QU-014,Requesón,1ud,Lácteos y Huevos,Quesos
+LA-QU-015,Queso lonchas Hacendado 200g,200g,Lácteos y Huevos,Quesos
+LA-QU-016,Queso Philadelphia 200g,200g,Lácteos y Huevos,Quesos
 LA-YO-001,Yogur de sabores surtidos,pack,Lácteos y Huevos,Yogures
 LA-YO-002,Yogur griego azucarado,pack,Lácteos y Huevos,Yogures
 LA-YO-003,Yogur griego natural,pack,Lácteos y Huevos,Yogures
 LA-YO-004,Yogur líquido bebible,pack,Lácteos y Huevos,Yogures
 LA-YO-005,Yogur natural azucarado,pack,Lácteos y Huevos,Yogures
 LA-YO-006,Yogur natural sin azúcar,pack,Lácteos y Huevos,Yogures
+LA-YO-007,Yogur natural Danone pack 8,pack 8,Lácteos y Huevos,Yogures
+LA-YO-008,Yogur griego Hacendado pack 4,pack 4,Lácteos y Huevos,Yogures
 MA-AR-001,Arena aglomerante para gatos,1ud,Mascotas,Arena y asea para gatos
 MA-AR-002,Arena de sílice para gatos,1ud,Mascotas,Arena y asea para gatos
 MA-AR-003,Bandeja higiénica para gatos,1ud,Mascotas,Arena y asea para gatos
@@ -605,6 +651,8 @@ PA-BO-004,Croissants rellenos de chocolate,1kg,Panadería y Pastelería,Bollos
 PA-BO-005,Ensaimadas,1kg,Panadería y Pastelería,Bollos
 PA-BO-006,Magdalenas clásicas,1kg,Panadería y Pastelería,Bollos
 PA-BO-007,Magdalenas integrales,1kg,Panadería y Pastelería,Bollos
+PA-BO-008,Croissant mantequilla pack 6,pack 6,Panadería y Pastelería,Bollos
+PA-BO-009,Magdalenas pack 12,pack 12,Panadería y Pastelería,Bollos
 PA-PA-001,Bases de pizza frescas,pack,Panadería y Pastelería,Pan fresco
 PA-PA-002,Pan baguette,1ud,Panadería y Pastelería,Pan fresco
 PA-PA-003,Pan barra artesana,1ud,Panadería y Pastelería,Pan fresco
@@ -617,6 +665,8 @@ PA-PA-009,Pan de pueblo,1ud,Panadería y Pastelería,Pan fresco
 PA-PA-010,Pan integral de molde,pack,Panadería y Pastelería,Pan fresco
 PA-PA-011,Picos de pan,pack,Panadería y Pastelería,Pan fresco
 PA-PA-012,Regañás,pack,Panadería y Pastelería,Pan fresco
+PA-PA-013,Pan molde Bimbo blanco 450g,450g,Panadería y Pastelería,Pan fresco
+PA-PA-014,Pan molde Bimbo integral 450g,450g,Panadería y Pastelería,Pan fresco
 PA-PT-001,Tarta de manzana,1ud,Panadería y Pastelería,Pasteles y Tartas
 PA-PT-002,Tarta de queso,1ud,Panadería y Pastelería,Pasteles y Tartas
 PA-PT-003,Tarta de tres chocolates,1ud,Panadería y Pastelería,Pasteles y Tartas
