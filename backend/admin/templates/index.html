@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mi Mejor Cesta — Admin</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap');
+  :root {
+    --bg: #0d1117; --bg2: #161b22; --bg3: #21262d;
+    --border: #30363d; --green: #037623; --green2: #13ec49;
+    --text: #e6edf3; --muted: #8b949e; --red: #f85149; --yellow: #e3b341;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; }
+  code, .mono { font-family: 'IBM Plex Mono', monospace; }
+  ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  button { cursor: pointer; font-family: inherit; }
+  input, select { font-family: inherit; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+const { useState, useEffect, useCallback } = React;
+const api = (path, opts) => fetch(path, opts).then(r => r.json());
+
+// ── Componentes base ──────────────────────────────────────────────────────────
+const Badge = ({ color, children }) => (
+  <span style={{ background: color+'22', color, border: `1px solid ${color}44`, borderRadius: 4, padding: '2px 8px', fontSize: 11, fontWeight: 600 }}>
+    {children}
+  </span>
+);
+
+const Card = ({ children, style }) => (
+  <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, padding: 20, ...style }}>
+    {children}
+  </div>
+);
+
+const Btn = ({ onClick, color='var(--green)', children, small, disabled }) => (
+  <button onClick={onClick} disabled={disabled} style={{
+    background: disabled ? 'var(--bg3)' : color+'22', color: disabled ? 'var(--muted)' : color,
+    border: `1px solid ${disabled ? 'var(--border)' : color+'66'}`,
+    borderRadius: 6, padding: small ? '4px 10px' : '8px 16px',
+    fontSize: small ? 11 : 13, fontWeight: 600,
+    transition: 'all .15s', opacity: disabled ? .5 : 1
+  }}>{children}</button>
+);
+
+const Input = ({ value, onChange, placeholder, style }) => (
+  <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
+    style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 6,
+      padding: '8px 12px', color: 'var(--text)', width: '100%', ...style }} />
+);
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+const Dashboard = () => {
+  const [stats, setStats] = useState(null);
+  useEffect(() => { api('/api/stats').then(setStats); }, []);
+  if (!stats) return <div style={{color:'var(--muted)', padding:40}}>Cargando estadísticas...</div>;
+
+  const StatBox = ({ label, value, sub, color='var(--green2)' }) => (
+    <Card>
+      <div style={{color:'var(--muted)', fontSize:11, fontWeight:600, letterSpacing:1, marginBottom:6}}>{label}</div>
+      <div style={{fontSize:36, fontWeight:700, color, fontFamily:'IBM Plex Mono'}}>{value?.toLocaleString()}</div>
+      {sub && <div style={{color:'var(--muted)', fontSize:11, marginTop:4}}>{sub}</div>}
+    </Card>
+  );
+
+  return (
+    <div>
+      <h2 style={{marginBottom:20, fontWeight:700}}>📊 Estado de la base de datos</h2>
+      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px,1fr))', gap:12, marginBottom:24}}>
+        <StatBox label="CATÁLOGO" value={stats.catalogo} sub="productos genéricos" />
+        <StatBox label="MERCADONA" value={stats.mercadona} sub="SKUs en BD" />
+        <StatBox label="DIA" value={stats.dia} sub="SKUs en BD" color="var(--yellow)" />
+        <StatBox label="MATCHES TOTAL" value={stats.matches} />
+      </div>
+      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+        <Card>
+          <div style={{fontWeight:600, marginBottom:12}}>Mercadona</div>
+          <div style={{display:'flex', gap:8}}>
+            <Badge color="var(--green2)">✓ {stats.con_mercadona?.toLocaleString()} con precio</Badge>
+            <Badge color="var(--red)">✗ {stats.sin_mercadona?.toLocaleString()} sin precio</Badge>
+          </div>
+          <div style={{marginTop:12, background:'var(--bg3)', borderRadius:4, height:8, overflow:'hidden'}}>
+            <div style={{width:`${(stats.con_mercadona/stats.matches*100).toFixed(1)}%`, height:'100%', background:'var(--green)'}} />
+          </div>
+          <div style={{color:'var(--muted)', fontSize:11, marginTop:4}}>{(stats.con_mercadona/stats.matches*100).toFixed(1)}% cobertura</div>
+        </Card>
+        <Card>
+          <div style={{fontWeight:600, marginBottom:12}}>DIA</div>
+          <div style={{display:'flex', gap:8}}>
+            <Badge color="var(--green2)">✓ {stats.con_dia?.toLocaleString()} con precio</Badge>
+            <Badge color="var(--red)">✗ {stats.sin_dia?.toLocaleString()} sin precio</Badge>
+          </div>
+          <div style={{marginTop:12, background:'var(--bg3)', borderRadius:4, height:8, overflow:'hidden'}}>
+            <div style={{width:`${(stats.con_dia/stats.matches*100).toFixed(1)}%`, height:'100%', background:'var(--yellow)'}} />
+          </div>
+          <div style={{color:'var(--muted)', fontSize:11, marginTop:4}}>{(stats.con_dia/stats.matches*100).toFixed(1)}% cobertura</div>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+// ── Catálogo ──────────────────────────────────────────────────────────────────
+const Catalogo = () => {
+  const [data, setData]   = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage]   = useState(1);
+  const [q, setQ]         = useState("");
+  const [cats, setCats]   = useState([]);
+  const [catFiltro, setCatFiltro] = useState("");
+  const [editing, setEditing] = useState(null);
+  const [editData, setEditData] = useState({});
+
+  useEffect(() => { api('/api/categorias').then(setCats); }, []);
+
+  const load = useCallback(() => {
+    const params = new URLSearchParams({ page, per_page: 50, q, categoria: catFiltro });
+    api(`/api/catalogo?${params}`).then(r => { setData(r.data||[]); setTotal(r.total||0); });
+  }, [page, q, catFiltro]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const startEdit = (p) => { setEditing(p.id); setEditData({ nombre_generico: p.nombre_generico, categoria: p.categoria, subcategoria: p.subcategoria }); };
+
+  const saveEdit = async (id) => {
+    await api(`/api/catalogo/${id}`, { method: 'PATCH', headers: {'Content-Type':'application/json'}, body: JSON.stringify(editData) });
+    setEditing(null); load();
+  };
+
+  const catList = [...new Set(cats.map(c => c.categoria))];
+  const subList = cats.filter(c => c.categoria === editData.categoria).map(c => c.subcategoria);
+
+  return (
+    <div>
+      <h2 style={{marginBottom:16, fontWeight:700}}>📦 Catálogo de productos</h2>
+      <div style={{display:'flex', gap:10, marginBottom:16}}>
+        <Input value={q} onChange={v => { setQ(v); setPage(1); }} placeholder="Buscar producto..." style={{maxWidth:300}} />
+        <select value={catFiltro} onChange={e => { setCatFiltro(e.target.value); setPage(1); }}
+          style={{background:'var(--bg3)', border:'1px solid var(--border)', borderRadius:6, padding:'8px 12px', color:'var(--text)'}}>
+          <option value="">Todas las categorías</option>
+          {catList.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
+        <div style={{color:'var(--muted)', padding:'8px 0', fontSize:13}}>{total.toLocaleString()} productos</div>
+      </div>
+
+      <Card style={{padding:0, overflow:'hidden'}}>
+        <table style={{width:'100%', borderCollapse:'collapse'}}>
+          <thead>
+            <tr style={{background:'var(--bg3)', borderBottom:'1px solid var(--border)'}}>
+              {['ID','Nombre','Categoría','Subcategoría','Acciones'].map(h => (
+                <th key={h} style={{padding:'10px 14px', textAlign:'left', fontSize:11, fontWeight:600, color:'var(--muted)', letterSpacing:.5}}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((p, i) => (
+              <tr key={p.id} style={{borderBottom:'1px solid var(--border)', background: i%2===0?'transparent':'var(--bg3)22'}}>
+                <td style={{padding:'10px 14px'}}><span className="mono" style={{color:'var(--muted)', fontSize:12}}>{p.id}</span></td>
+                <td style={{padding:'10px 14px'}}>
+                  {editing === p.id
+                    ? <Input value={editData.nombre_generico} onChange={v => setEditData(d=>({...d,nombre_generico:v}))} />
+                    : <span>{p.nombre_generico}</span>}
+                </td>
+                <td style={{padding:'10px 14px'}}>
+                  {editing === p.id
+                    ? <select value={editData.categoria} onChange={e => setEditData(d=>({...d,categoria:e.target.value,subcategoria:''}))}
+                        style={{background:'var(--bg3)',border:'1px solid var(--border)',borderRadius:4,padding:'4px 8px',color:'var(--text)',width:'100%'}}>
+                        {catList.map(c=><option key={c}>{c}</option>)}
+                      </select>
+                    : <Badge color="var(--green)">{p.categoria||'—'}</Badge>}
+                </td>
+                <td style={{padding:'10px 14px'}}>
+                  {editing === p.id
+                    ? <select value={editData.subcategoria} onChange={e => setEditData(d=>({...d,subcategoria:e.target.value}))}
+                        style={{background:'var(--bg3)',border:'1px solid var(--border)',borderRadius:4,padding:'4px 8px',color:'var(--text)',width:'100%'}}>
+                        {subList.map(s=><option key={s}>{s}</option>)}
+                      </select>
+                    : <span style={{color:'var(--muted)'}}>{p.subcategoria||'—'}</span>}
+                </td>
+                <td style={{padding:'10px 14px'}}>
+                  {editing === p.id
+                    ? <div style={{display:'flex',gap:6}}>
+                        <Btn small onClick={() => saveEdit(p.id)}>Guardar</Btn>
+                        <Btn small color="var(--muted)" onClick={() => setEditing(null)}>Cancelar</Btn>
+                      </div>
+                    : <Btn small onClick={() => startEdit(p)}>✏️ Editar</Btn>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+
+      <div style={{display:'flex', gap:8, marginTop:12, alignItems:'center'}}>
+        <Btn small disabled={page<=1} onClick={() => setPage(p=>p-1)}>← Anterior</Btn>
+        <span style={{color:'var(--muted)', fontSize:12}}>Página {page} · {Math.ceil(total/50)} páginas</span>
+        <Btn small disabled={page>=Math.ceil(total/50)} onClick={() => setPage(p=>p+1)}>Siguiente →</Btn>
+      </div>
+    </div>
+  );
+};
+
+// ── Matches ───────────────────────────────────────────────────────────────────
+const Matches = () => {
+  const [data, setData]     = useState([]);
+  const [page, setPage]     = useState(1);
+  const [filtro, setFiltro] = useState("todos");
+  const [busqPrecio, setBusqPrecio] = useState({});
+  const [resultsPrecio, setResultsPrecio] = useState({});
+
+  const load = useCallback(() => {
+    const params = new URLSearchParams({ page, per_page: 50, filtro });
+    api(`/api/matches?${params}`).then(r => setData(r.data||[]));
+  }, [page, filtro]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const buscarPrecio = async (catId, q, sup) => {
+    if (!q || q.length < 3) return;
+    const r = await api(`/api/buscar_precio?q=${encodeURIComponent(q)}&super=${sup}`);
+    setResultsPrecio(prev => ({...prev, [`${catId}_${sup}`]: r}));
+  };
+
+  const asignarMatch = async (catId, field, value) => {
+    await api(`/api/matches/${catId}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({[field]:value, revisado:true}) });
+    setResultsPrecio(prev => { const n={...prev}; delete n[`${catId}_${field==='id_mercadona'?'mercadona':'dia'}`]; return n; });
+    load();
+  };
+
+  const filtros = [
+    {v:'todos', label:'Todos'},
+    {v:'sin_dia', label:'Sin DIA'},
+    {v:'sin_mercadona', label:'Sin Mercadona'},
+    {v:'revisado', label:'Revisados'},
+  ];
+
+  return (
+    <div>
+      <h2 style={{marginBottom:16, fontWeight:700}}>🔗 Gestión de matches</h2>
+      <div style={{display:'flex', gap:8, marginBottom:16}}>
+        {filtros.map(f => (
+          <button key={f.v} onClick={() => {setFiltro(f.v); setPage(1);}}
+            style={{padding:'6px 14px', borderRadius:6, border:`1px solid ${filtro===f.v?'var(--green)':'var(--border)'}`,
+              background: filtro===f.v?'var(--green)22':'transparent', color: filtro===f.v?'var(--green2)':'var(--muted)',
+              fontWeight:600, fontSize:12}}>
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <div style={{display:'flex', flexDirection:'column', gap:10}}>
+        {data.map(m => {
+          const prod = m.productos_catalogo;
+          const keyM = `${m.id_catalogo}_mercadona`;
+          const keyD = `${m.id_catalogo}_dia`;
+          return (
+            <Card key={m.id_catalogo} style={{padding:14}}>
+              <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10}}>
+                <div>
+                  <span className="mono" style={{color:'var(--muted)', fontSize:11}}>{m.id_catalogo}</span>
+                  <div style={{fontWeight:600, marginTop:2}}>{prod?.nombre_generico}</div>
+                  <div style={{color:'var(--muted)', fontSize:11, marginTop:2}}>{prod?.categoria} › {prod?.subcategoria}</div>
+                </div>
+                {m.revisado && <Badge color="var(--green)">✓ Revisado</Badge>}
+              </div>
+
+              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+                {/* Mercadona */}
+                <div style={{background:'var(--bg3)', borderRadius:6, padding:10}}>
+                  <div style={{fontSize:11, fontWeight:600, color:'var(--green2)', marginBottom:6}}>MERCADONA</div>
+                  {m.id_mercadona
+                    ? <Badge color="var(--green)">{m.id_mercadona}</Badge>
+                    : <Badge color="var(--red)">Sin match</Badge>}
+                  <div style={{marginTop:8, display:'flex', gap:6}}>
+                    <input placeholder="Buscar en Mercadona..." value={busqPrecio[keyM]||''}
+                      onChange={e => setBusqPrecio(p=>({...p,[keyM]:e.target.value}))}
+                      onKeyDown={e => e.key==='Enter' && buscarPrecio(m.id_catalogo, busqPrecio[keyM], 'mercadona')}
+                      style={{flex:1, background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:4, padding:'4px 8px', color:'var(--text)', fontSize:12}} />
+                    <Btn small onClick={() => buscarPrecio(m.id_catalogo, busqPrecio[keyM], 'mercadona')}>🔍</Btn>
+                  </div>
+                  {resultsPrecio[keyM]?.map(r => (
+                    <div key={r.id} onClick={() => asignarMatch(m.id_catalogo, 'id_mercadona', r.id)}
+                      style={{marginTop:4, padding:'4px 8px', borderRadius:4, background:'var(--bg2)', cursor:'pointer',
+                        border:'1px solid var(--border)', fontSize:12, display:'flex', justifyContent:'space-between'}}>
+                      <span>{r.nombre_comercial}</span>
+                      <span style={{color:'var(--green2)', fontWeight:600}}>{r.precio}€</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* DIA */}
+                <div style={{background:'var(--bg3)', borderRadius:6, padding:10}}>
+                  <div style={{fontSize:11, fontWeight:600, color:'var(--yellow)', marginBottom:6}}>DIA</div>
+                  {m.id_dia
+                    ? <Badge color="var(--yellow)">{m.id_dia}</Badge>
+                    : <Badge color="var(--red)">Sin match</Badge>}
+                  <div style={{marginTop:8, display:'flex', gap:6}}>
+                    <input placeholder="Buscar en DIA..." value={busqPrecio[keyD]||''}
+                      onChange={e => setBusqPrecio(p=>({...p,[keyD]:e.target.value}))}
+                      onKeyDown={e => e.key==='Enter' && buscarPrecio(m.id_catalogo, busqPrecio[keyD], 'dia')}
+                      style={{flex:1, background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:4, padding:'4px 8px', color:'var(--text)', fontSize:12}} />
+                    <Btn small color="var(--yellow)" onClick={() => buscarPrecio(m.id_catalogo, busqPrecio[keyD], 'dia')}>🔍</Btn>
+                  </div>
+                  {resultsPrecio[keyD]?.map(r => (
+                    <div key={r.id} onClick={() => asignarMatch(m.id_catalogo, 'id_dia', r.id)}
+                      style={{marginTop:4, padding:'4px 8px', borderRadius:4, background:'var(--bg2)', cursor:'pointer',
+                        border:'1px solid var(--border)', fontSize:12, display:'flex', justifyContent:'space-between'}}>
+                      <span>{r.nombre_comercial}</span>
+                      <span style={{color:'var(--yellow)', fontWeight:600}}>{r.precio}€</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+
+      <div style={{display:'flex', gap:8, marginTop:12}}>
+        <Btn small disabled={page<=1} onClick={() => setPage(p=>p-1)}>← Anterior</Btn>
+        <Btn small onClick={() => setPage(p=>p+1)}>Siguiente →</Btn>
+      </div>
+    </div>
+  );
+};
+
+// ── Scrapers ──────────────────────────────────────────────────────────────────
+const Scrapers = () => {
+  const [status, setStatus] = useState({});
+  const [logs, setLogs]     = useState({});
+  const [active, setActive] = useState(null);
+
+  useEffect(() => {
+    api('/api/scrapers').then(setStatus);
+    const t = setInterval(() => api('/api/scrapers').then(setStatus), 3000);
+    return () => clearInterval(t);
+  }, []);
+
+  const run = async (name) => {
+    await api(`/api/scrapers/${name}/run`, { method: 'POST' });
+    setActive(name);
+    const es = new EventSource(`/api/scrapers/${name}/stream`);
+    es.onmessage = e => {
+      if (e.data === '__END__') { es.close(); return; }
+      setLogs(prev => ({...prev, [name]: [...(prev[name]||[]), e.data]}));
+    };
+  };
+
+  const scraperDefs = [
+    { key:'mercadona', label:'Scraper Mercadona', desc:'scraper_mercadona_v2.py · API oficial', color:'var(--green2)' },
+    { key:'dia',       label:'Scraper DIA',       desc:'scraper_dia_v3.py', color:'var(--yellow)' },
+    { key:'match_dia', label:'Match DIA',          desc:'match_dia.py · matching automático', color:'#79c0ff' },
+  ];
+
+  const estadoColor = { idle:'var(--muted)', running:'var(--yellow)', ok:'var(--green2)', error:'var(--red)' };
+
+  return (
+    <div>
+      <h2 style={{marginBottom:16, fontWeight:700}}>⚙️ Scrapers y scripts</h2>
+      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(300px,1fr))', gap:12, marginBottom:20}}>
+        {scraperDefs.map(s => {
+          const st = status[s.key] || {};
+          return (
+            <Card key={s.key}>
+              <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10}}>
+                <div>
+                  <div style={{fontWeight:600, color:s.color}}>{s.label}</div>
+                  <div style={{color:'var(--muted)', fontSize:11, marginTop:2}}>{s.desc}</div>
+                </div>
+                <Badge color={estadoColor[st.estado||'idle']}>{st.estado||'idle'}</Badge>
+              </div>
+              {st.ultimo && <div style={{color:'var(--muted)', fontSize:11, marginBottom:8}}>Último: {new Date(st.ultimo).toLocaleString()}</div>}
+              <Btn color={s.color} disabled={st.estado==='running'} onClick={() => run(s.key)}>
+                {st.estado==='running' ? '⏳ Ejecutando...' : '▶ Ejecutar'}
+              </Btn>
+            </Card>
+          );
+        })}
+      </div>
+
+      {active && (
+        <Card>
+          <div style={{fontWeight:600, marginBottom:8}}>📋 Log: {active}</div>
+          <div style={{background:'var(--bg)', border:'1px solid var(--border)', borderRadius:6, padding:12,
+            maxHeight:400, overflowY:'auto', fontFamily:'IBM Plex Mono', fontSize:12, lineHeight:1.6}}>
+            {(logs[active]||[]).map((l, i) => (
+              <div key={i} style={{color: l.startsWith('ERROR')?'var(--red)': l.startsWith('✅')?'var(--green2)':'var(--text)'}}>{l}</div>
+            ))}
+            {status[active]?.estado==='running' && <div style={{color:'var(--yellow)'}}>▌</div>}
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+};
+
+// ── App principal ─────────────────────────────────────────────────────────────
+const TABS = [
+  { key:'dashboard', label:'📊 Dashboard' },
+  { key:'catalogo',  label:'📦 Catálogo' },
+  { key:'matches',   label:'🔗 Matches' },
+  { key:'scrapers',  label:'⚙️ Scrapers' },
+];
+
+const App = () => {
+  const [tab, setTab] = useState('dashboard');
+
+  return (
+    <div style={{minHeight:'100vh', display:'flex', flexDirection:'column'}}>
+      {/* Header */}
+      <header style={{background:'var(--bg2)', borderBottom:'1px solid var(--border)', padding:'0 24px',
+        display:'flex', alignItems:'center', gap:24, height:54, position:'sticky', top:0, zIndex:100}}>
+        <div style={{fontWeight:700, fontSize:15, color:'var(--green2)', fontFamily:'IBM Plex Mono', whiteSpace:'nowrap'}}>
+          🛒 MMC Admin
+        </div>
+        <nav style={{display:'flex', gap:2}}>
+          {TABS.map(t => (
+            <button key={t.key} onClick={() => setTab(t.key)}
+              style={{padding:'6px 14px', borderRadius:6, border:'none',
+                background: tab===t.key ? 'var(--green)22' : 'transparent',
+                color: tab===t.key ? 'var(--green2)' : 'var(--muted)',
+                fontWeight: tab===t.key ? 600 : 400, fontSize:13, transition:'all .15s'}}>
+              {t.label}
+            </button>
+          ))}
+        </nav>
+        <div style={{marginLeft:'auto', color:'var(--muted)', fontSize:11, fontFamily:'IBM Plex Mono'}}>
+          Mi Mejor Cesta · Panel Admin
+        </div>
+      </header>
+
+      {/* Contenido */}
+      <main style={{flex:1, padding:24, maxWidth:1200, width:'100%', margin:'0 auto'}}>
+        {tab === 'dashboard' && <Dashboard />}
+        {tab === 'catalogo'  && <Catalogo />}
+        {tab === 'matches'   && <Matches />}
+        {tab === 'scrapers'  && <Scrapers />}
+      </main>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

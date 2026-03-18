@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9b03b3ce.css",
+    "main.js": "/static/js/main.93b4934f.js",
+    "static/js/453.7224ae0b.chunk.js": "/static/js/453.7224ae0b.chunk.js",
+    "static/media/LaDespensa.jpeg": "/static/media/LaDespensa.830e9b6c95e3c54f7d0b.jpeg",
+    "static/media/BMSupermercados.png": "/static/media/BMSupermercados.2f87b5560915ecb9c44c.png",
+    "static/media/AhorraMas.png": "/static/media/AhorraMas.f82d3550f9b2af7946ba.png",
+    "static/media/carrefour.svg": "/static/media/carrefour.94950b7873c358c4298a5e4b9de686a7.svg",
+    "static/media/mercadona.svg": "/static/media/mercadona.041dc6844b76a3f702aceddf77a617ba.svg",
+    "static/media/hipercor.svg": "/static/media/hipercor.6e64fbba85220edfb6b61a6d48d148ea.svg",
+    "static/media/aldi.svg": "/static/media/aldi.934b4669a41365ba2a384a6e6fc9b2b7.svg",
+    "static/media/alcampo.svg": "/static/media/alcampo.f32094984032c2fe4ba1f801bc988b1b.svg",
+    "index.html": "/index.html",
+    "static/media/DIA.svg": "/static/media/DIA.d6eb66e65a502d6730c7c6a1030fd32a.svg",
+    "static/media/lidl.svg": "/static/media/lidl.55430e4c86db994b188f568d956090f6.svg",
+    "main.9b03b3ce.css.map": "/static/css/main.9b03b3ce.css.map",
+    "main.93b4934f.js.map": "/static/js/main.93b4934f.js.map",
+    "453.7224ae0b.chunk.js.map": "/static/js/453.7224ae0b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9b03b3ce.css",
+    "static/js/main.93b4934f.js"
+  ]
+}

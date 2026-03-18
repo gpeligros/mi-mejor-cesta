@@ -1,0 +1,934 @@
+id_dia,nombre_dia,id_catalogo,nombre_catalogo,score
+76080,Whisky 8 años Dyc 70 cl,557,Whisky DYC,74.1
+38301,Agua mineral Aquarel 1.5 L,3133,Agua mineral grande Aguadoy,72.0
+11416,Judía verde 500 g,132,Judía verde plana,78.6
+296355,Patatas para cocer 2 Kg,155,Patatas para microondas,73.2
+74,Pimiento rojo unidad 320 g aprox.,51,Pimiento rojo,78.8
+10065,Refresco de cola Dia Hola Cola 2 L,3151,Refresco Coca-Cola light,70.4
+82492,Coca-Cola zero azúcar 2 x 2 L,3150,Refresco Coca-Cola Zero azúcar,79.2
+17548P6,Leche semidesnatada Central Lechera Asturiana pack 6 x 1 L,1775,Leche semidesnatada Asturiana,74.4
+16066P6,Leche desnatada Central Lechera Asturiana pack 6 x 1 L,1790,Leche desnatada Asturiana,71.4
+173903P6,Leche semidesnatada Central Lechera Asturiana pack 6 x 2.2 L,1775,Leche semidesnatada Asturiana,76.3
+304738,Leche entera Dia Láctea botella 1.5 L,1795,Leche entera Hacendado,77.4
+74720P6,Leche entera Central Lechera Asturiana pack 6 x 1.5 L,1796,Leche entera Asturiana,71.0
+308772,Leche desnatada sin lactosa alta en proteínas Dia Láctea 1 L,1787,Leche desnatada sin lactosa Hacendado,75.0
+184889P6,Leche entera Central Lechera Asturiana pack 6 x 2.2 L,1796,Leche entera Asturiana,71.0
+5716P6,Leche semidesnatada Central Lechera Asturiana pack 6 x 1.5 L,1775,Leche semidesnatada Asturiana,76.3
+5716,Leche semidesnatada Central Lechera Asturiana botella 1.5 L,1775,Leche semidesnatada Asturiana,71.6
+73676,Leche entera Pascual 1 L,1795,Leche entera Hacendado,75.0
+73678,Leche desnatada Pascual 1 L,1786,Leche desnatada Hacendado,78.9
+173903,Leche semidesnatada Central Lechera Asturiana botella 2.2 L,1775,Leche semidesnatada Asturiana,71.6
+19814,Leche entera Lauki 1 L,1795,Leche entera Hacendado,80.0
+308119,Leche entera Celta 1 L,1795,Leche entera Hacendado,80.0
+74722P6,Leche desnatada Central Lechera Asturiana pack 6 x 1.5 L,1790,Leche desnatada Asturiana,73.5
+73678P6,Leche desnatada Pascual pack 6 x 1 L,1786,Leche desnatada Hacendado,71.4
+73677P6,Leche semidesnatada Pascual pack 6 x 1 L,1772,Leche semidesnatada Hacendado,76.0
+34578P6,Leche semidesnatada Lauki pack 6 x 1 L,1774,Leche semidesnatada calcio Hacendado,80.0
+308120P6,Leche semidesnatada Celta pack 6 x 1 L,1773,Leche semidesnatada sin lactosa Hacendado,80.0
+308119P6,Leche entera Celta pack 6 x 1 L,1795,Leche entera Hacendado,70.6
+19814P6,Leche entera Lauki pack 6 x 1 L,1795,Leche entera Hacendado,70.6
+1917P6,Leche desnatada Lauki pack 6 x 1 L,1786,Leche desnatada Hacendado,75.0
+148777,Leche semidesnatada sin lactosa Central Lechera Asturiana 1 L,1773,Leche semidesnatada sin lactosa Hacendado,70.5
+613,Leche condensada La lechera 370 g,1875,Leche condensada Hacendado,74.4
+48888,Leche desnatada omega 3 Dia Láctea 1 L,1786,Leche desnatada Hacendado,78.9
+78262,Leche infantil crecimiento Peques 3 Puleva 1 L,1825,Preparado lácteo crecimiento Peques 3 Puleva,72.1
+27258,Leche entera calcio Puleva 1 L,1788,Leche desnatada calcio Hacendado,70.8
+27987,Leche semidesnatada fibra Central Lechera Asturiana 1 L,1775,Leche semidesnatada Asturiana,72.5
+83977,Leche crecimiento Peques 2 Puleva 1 L,1825,Preparado lácteo crecimiento Peques 3 Puleva,77.9
+104006,Leche desnatada calcio Pascual Movit 1 L,1788,Leche desnatada calcio Hacendado,75.9
+112295,Leche semidesnatada calcio Pascual Movit 1 L,1774,Leche semidesnatada calcio Hacendado,78.8
+222584,Bebida láctea omega 3 sin Lactosa Puleva 1 L,1789,Bebida láctea Omega 3 Puleva con leche desnatada,70.5
+41309,Leche condensada La lechera 450 g,1875,Leche condensada Hacendado,74.4
+40297,Bebida láctea crecimiento con cereales +12 meses Nativa 1 L,1828,Preparado lácteo con cereales crecimiento Hacendado +1 año,77.1
+307334,Bebida láctea infantil de crecimiento Peques 3 Puleva 3 x 200 ml,1823,Bebida láctea crecimiento y desarrollo Puleva Max,74.3
+239520,Leche evaporada sin lactosa Ideal 525 g,1787,Leche desnatada sin lactosa Hacendado,76.7
+265764,Bebida láctea junior de crecimiento con cereales +3 años Nativa 1 L,1824,Bebida láctea con cereales crecimiento y desarrollo Puleva Max,71.2
+182329,Bebida láctea crecimiento con galleta maria Nativa 1 L,1823,Bebida láctea crecimiento y desarrollo Puleva Max,71.7
+48888P6,Leche desnatada omega 3 Dia Láctea pack 6 x 1 L,1791,Bebida láctea desnatada omega 3 Hacendado,75.9
+46625P6,Leche entera calcio Dia Láctea pack 6 x 1 L,1788,Leche desnatada calcio Hacendado,75.6
+30052P6,Leche desnatada omega 3 Puleva pack 6 x 1 L,1789,Bebida láctea Omega 3 Puleva con leche desnatada,75.6
+22489P6,Leche desnatada calcio Puleva pack 6 x 1 L,1788,Leche desnatada calcio Hacendado,80.0
+121677P6,Bebida láctea omega 3 con nueces Puleva pack 6 x 1 L,1792,Bebida láctea Omega 3 Puleva con nueces y leche desnatada,80.0
+119676P6,Leche desnatada sin lactosa Pascual pack 6 x 1 L,1787,Leche desnatada sin lactosa Hacendado,81.8
+112295P6,Leche semidesnatada calcio Pascual Movit pack 6 x 1 L,1774,Leche semidesnatada calcio Hacendado,74.3
+104006P6,Leche desnatada calcio Pascual Movit pack 6 x 1 L,1788,Leche desnatada calcio Hacendado,71.0
+148491,Chocolate con leche con trozos de oreo Milka 100 g,2402,Tortitas de arroz con chocolate con leche Hacendado,72.9
+285658,Bebida de almendras sin azúcar Alpro 1 L,1803,Bebida de almendras 0% azúcar Hacendado,80.0
+289229,Bebida de avena barista Alpro 1 L,1799,Bebida de avena Alitey,70.6
+99783,Chocolate con leche relleno con caramelo y avellanas Milka 300 g,2244,Cereales rellenos de chocolate y avellana Hacendado,70.7
+203153,Chocolate con leche con trozos de oreo Milka 300 g,2402,Tortitas de arroz con chocolate con leche Hacendado,72.9
+285658P6,Bebida de almendras sin azúcar Alpro pack 6 x 1 L,1803,Bebida de almendras 0% azúcar Hacendado,78.3
+100947,Bollería con pepitas de chocolate con leche Weikis bolsa 240 g,2402,Tortitas de arroz con chocolate con leche Hacendado,72.5
+82868,Chocolate con leche y almendras Dia Temptation 150 g,3172,Chocolate con leche Valor almendras enteras,76.4
+188647,Chocolate con leche y avellanas enteras Milka 95 g,3178,Chocolate con leche Hacendado almendras enteras,80.5
+42594,Galletas de cacao rellenas de crema bañadas con chocolate con leche Galleteca de Dia caja 252 g,2481,Galletas Choco con relleno de crema de cacao Hacendado recubiertas de chocolate con leche,77.3
+82867,Chocolate con leche y avellanas Dia Temptation 150 g,3173,Chocolate con leche Hacendado avellanas troceadas,77.6
+12964,Chocolate con leche relleno de galleta choco-swing Milka 300 g,3175,Chocolate con leche Milka galleta,74.2
+129428,Bebida láctea infantil de crecimiento con cereales y fruta Peques 3 Puleva 3 x 200 ml,1824,Bebida láctea con cereales crecimiento y desarrollo Puleva Max,77.7
+12362,Chocolate con leche con cereales Nestlé Crunch 100 g,3169,Chocolate con leche extrafino Nestlé,70.7
+285985,Chocolate con leche y galleta XXL Nestlé Jungly 235 g,3169,Chocolate con leche extrafino Nestlé,74.7
+220175,Galletas cubiertas de chocolate con leche Galleteca de Dia caja 150 g,2463,Galletas con chocolate y crema de leche Hacendado,72.2
+100267,Galletas rellenas de chocolate estrellas Principe caja 225 g,2453,Galletas rebuenas Hacendado rellenas de chocolate,75.0
+184718,Mini barritas de chocolate con leche y avellanas Kinder bolsa 108 g,3193,Barritas crujientes Hacendado bañadas de chocolate con leche,72.4
+144409,Grageas de chocolate con leche Lacasitos bolsa 190 g,2480,Galletas Divertidas chocolate con leche Hacendado,73.4
+11951,Cacahuete recubierto de chocolate con leche M&M's bolsa 200 g,3186,Cacahuetes Hacendado chocolate con leche,73.4
+107473,Barritas de chocolate con leche y avellanas Kinder bolsa 3 x 43 g,3193,Barritas crujientes Hacendado bañadas de chocolate con leche,74.5
+551,Puré de patatas Mousline 230 g,3121,Puré de patatas Hacendado en copos,70.8
+126410,Cacahuete recubierto de chocolate con leche M&M's bolsa 45 g,3186,Cacahuetes Hacendado chocolate con leche,73.4
+123215,Grageas de chocolate con leche Lacasitos bolsa 80 g,2480,Galletas Divertidas chocolate con leche Hacendado,73.4
+101750,Crema de cacao y leche de avellanas dúo Nocilla bote 180 g,3219,Crema al cacao y leche con avellanas Nocilla,81.3
+243901,Grageas de chocolate con leche Lacasitos bote 20 g,2480,Galletas Divertidas chocolate con leche Hacendado,73.4
+19896,Crema de cacao y leche de avellanas dúo Nocilla bote 620 g,3219,Crema al cacao y leche con avellanas Nocilla,81.3
+80291,Puré de patatas con leche Mousline 230 g,3121,Puré de patatas Hacendado en copos,72.4
+278911,Barritas de galleta y chocolate con leche Nestlé Extrafino pack 108 g,3169,Chocolate con leche extrafino Nestlé,76.6
+310479,Bombones 3 sabores Nestlé Caja Roja bolsa 24 g,3198,Surtido bombones Caja Roja Nestlé,79.3
+70230,Bolitas de chocolate rellenas de leche malteada Maltesers bolsa 175 g,3183,Barritas de chocolate con leche Hacendado rellenas de leche,75.5
+268342,Crema de cacao y leche de avellanas dúo 0% Nocilla bote 180 g,3219,Crema al cacao y leche con avellanas Nocilla,80.9
+156688,Barritas de galleta recubiertas de chocolate con leche Kit Kat bolsa 41.5 g,3183,Barritas de chocolate con leche Hacendado rellenas de leche,74.8
+300067,Chocolate con leche Dia Temptation 100 g,1474,Natillas de chocolate con leche Hacendado,76.9
+53766,Mantequilla Central Lechera Asturiana 250 g,1796,Leche entera Asturiana,71.2
+300974,Chocolate con leche con galleta Dia Temptation 100 g,3175,Chocolate con leche Milka galleta,75.9
+300936,Chocolate con leche con relleno cremoso Nestlé Extrafino 100 g,3169,Chocolate con leche extrafino Nestlé,78.3
+307163,Chocolate con leche y galleta Nestlé Jungly 90 g,3169,Chocolate con leche extrafino Nestlé,78.5
+295387,Chocolate con leche relleno de galleta Dinosaurus Nestlé Extrafino 84 g,3169,Chocolate con leche extrafino Nestlé,70.6
+310663,Chocolate con leche edición limitada Nestlé Extrafino 90 g,3169,Chocolate con leche extrafino Nestlé,80.9
+178025,Chocolate con leche para postres Nestlé 170 g,1474,Natillas de chocolate con leche Hacendado,71.4
+256290,Chocolate con leche relleno de brownie oreo Milka 100 g,3183,Barritas de chocolate con leche Hacendado rellenas de leche,73.5
+299365,Chocolate con leche y almendras 0% azúcares añadidos Trapa 100 g,3174,Chocolate extrafino con leche Hacendado 0% azúcares añadidos,74.1
+49474,Chocolate con leche milkinis Milka bolsa 87.5 g,3170,Chocolate con leche Milka,79.4
+309238,Chocolate con leche relleno de galleta filipinos Nestlé Extrafino 84 g,3169,Chocolate con leche extrafino Nestlé,71.3
+309240,Chocolate con leche relleno de trocitos de maíz Nestlé Extrafino 84 g,3169,Chocolate con leche extrafino Nestlé,72.0
+310421,Chocolate con leche con avellanas enteras Nestlé 100 g,3178,Chocolate con leche Hacendado almendras enteras,77.6
+5691,Nata montada Central Lechera Asturiana 250 g,1796,Leche entera Asturiana,70.0
+101748,Crema de cacao y leche de avellanas dúo Nocilla bote 360 g,3219,Crema al cacao y leche con avellanas Nocilla,81.3
+228021,Cápsulas de café con leche Marcilla 16 unidades,2596,Café con leche en cápsula Tassimo,73.0
+240969,Cápsulas de café con leche intenso Dolce Gusto 16 unidades,2583,Café con leche en cápsula Dolce Gusto,80.9
+273107,Barrita de chocolate con leche nutrageous Reese's bolsa 47 g,3183,Barritas de chocolate con leche Hacendado rellenas de leche,75.5
+308046,Barrita de chocolate con leche flake Cadbury bolsa 32 g,2273,Barritas de cereales Hacendado chocolate con leche,78.6
+153635,Barritas de chocolate con leche con chocochips Bicentury caja 128 g,2273,Barritas de cereales Hacendado chocolate con leche,75.0
+306041,Helado de chocolate con leche Kinder 4 x 38 g,1385,Chocolate con leche fundir Hacendado,71.9
+308086,Ambrosías recubiertas de chocolate con leche Tirma bolsa 86 g,3183,Barritas de chocolate con leche Hacendado rellenas de leche,70.7
+294640,Galleta con chips de chocolate con leche El molino de Dia 76 g,2483,Galletas Biscuit con relleno de crema de chocolate Hacendado,71.0
+244936,Tortitas de arroz con chocolate con leche y avellanas Bicentury bolsa 142 g,2402,Tortitas de arroz con chocolate con leche Hacendado,78.8
+60325,Queso mini Babybel 120 g,2373,Queso en porciones mini Babybel,73.5
+310298,Conejo de Pascua de chocolate con leche 80 g,2478,Rosquillas de chocolate con leche y coco Hacendado,73.4
+306555,Barrita de galleta y chocolate con leche Nestlé Extrafino bolsa 1 unidad,3169,Chocolate con leche extrafino Nestlé,75.8
+270828,Bebida de avena Yosoy 1 L,1809,Bebida de avena con café Hacendado,71.1
+27971,Papilla líquida 8 cereales con miel Nestlé caja 2 x 250 ml,3460,Papilla 8 cereales con miel Nestlé +6 meses,80.9
+241808,Batido de chocolate sin lactosa Puleva 6 x 200 ml,1817,Batido de chocolate 90% leche Puleva,75.3
+151406,Alfajor con chocolate negro Mardel 150 g,3157,Chocolate negro 72% de cacao Hacendado,71.0
+134753,Batido de fresa Dia Láctea 6 x 200 ml,1821,Batido sabor fresa Hacendado,72.2
+143005,Café soluble 3 en 1 Nescafé 180 g,2814,Café soluble descafeinado Hacendado,73.1
+167442,Bebida de almendras Alpro 1 L,1803,Bebida de almendras 0% azúcar Hacendado,81.5
+1546,Cafe capuccino Nescafé 140 g,2820,Café con leche cappuccino Hacendado,80.9
+167442P6,Bebida de almendras Alpro pack 6 x 1 L,1803,Bebida de almendras 0% azúcar Hacendado,79.3
+1533,Café soluble cappuccino en sobres Dia Cafetería 125 g,2818,Café soluble cappuccino Hacendado,70.8
+163737P6,Bebida de avena Alpro pack 6 x 1 L,1799,Bebida de avena Alitey,76.6
+293332P6,Bebida de avena 0% azúcares Dia Vegedia pack 6 x 1 L,1812,Bebida de avena Hacendado 0% azúcar,73.5
+285659,Bebida de avena sin azúcar Alpro 1 L,1812,Bebida de avena Hacendado 0% azúcar,80.7
+285659P6,Bebida de avena sin azúcar Alpro pack 6 x 1 L,1810,Bebida de avellana y arroz sin azúcares añadidos Hacendado,76.2
+267684P6,Bebida de almendras 0% azúcares Dia Vegedia pack 6 x 1 L,1803,Bebida de almendras 0% azúcar Hacendado,76.3
+294323P6,Bebida de soja 0% azúcares Dia Vegedia pack 6 x 1 L,1811,Bebida de soja sabor vainilla Hacendado 0% azúcar,74.1
+128592,Yogur natural desnatado edulcorado Dia Láctea pack 6 x 125 g,560,Yogur natural edulcorado Hacendado 0% MG 0% azúcares añadidos,71.3
+294946,Natillas sabor vainilla Dia Caprichoso pack 4 x 125 g,1473,Natillas sabor vainilla con galleta Hacendado,74.7
+294947,Natillas de chocolate Dia Caprichoso pack 4 x 125 g,1476,Natillas de chocolate Danet,70.8
+63568,Nata montada Dia Láctea 250 g,2041,Nata para montar Hacendado,71.4
+307407,Bebida de avena con cacao Dia Vegedia 1 L,1809,Bebida de avena con café Hacendado,72.1
+125790,Bifrutas tropical Pascual pack 6 x 200 ml,395,Fruta + leche tropical Bifrutas,71.2
+275563,Margarina con sal Tulipán 400 g,2034,Margarina con sal Hacendado,81.0
+301055,Alimento para gatos completo bolsa 7 Kg,3548,Alimento completo para periquitos Granzoo,75.4
+278898,Margarina rica en omega 3 Flora 400 g,2038,Margarina Omega 3 Hacendado,70.8
+295078,Batido de cacao energy Colacao botella 4 x 188 ml,1818,Batido de chocolate ColaCao Energy,78.9
+42812,Bifrutas tropical Pascual pack 3 x 330 ml,395,Fruta + leche tropical Bifrutas,71.2
+1914,Batido de chocolate Cacaolat botella 1 L,1815,Batido de chocolate Hacendado,74.5
+287450,Batido alto en proteínas sabor chocolate Just loading botella 225 ml,1144,Batido lácteo sabor chocolate +Proteínas Hacendado 30 g proteínas,71.0
+26053,Horchata Dia 1 L,3049,Helado de horchata Hacendado,73.3
+304821,Batido de chocolate Cacaolat 4 x 200 ml,1815,Batido de chocolate Hacendado,76.0
+2274,Bebida de soja Alpro 1 L,1802,Bebida de soja 0% azúcar Hacendado,77.3
+307408P6,Bebida de avena con café Dia Vegedia pack 6 x 1 L,1809,Bebida de avena con café Hacendado,75.0
+2274P6,Bebida de soja Alpro pack 6 x 1 L,1802,Bebida de soja 0% azúcar Hacendado,75.0
+72791,Yogur sabor fresa y plátano Dia Láctea pack 8 x 125 g,1180,Yogur griego sabor fresa Hacendado,81.6
+295081,Yogur estilo griego natural con azúcar de caña Dia Fidias tarrina 1 kg,1182,Yogur griego natural Hacendado con azúcar de caña,75.0
+265284,Petit de fresa líquido Dia Láctea pack 4 x 80 g,1134,Yogur líquido de fresa Hacendado,73.9
+5684,Yogur desnatado con frutas Dia Láctea pack 8 x 125 g,711,Yogur con frutas Hacendado,72.7
+128591,Yogur natural desnatado Dia Láctea pack 6 x 125 g,698,Yogur natural Danone,75.6
+294221,Yogur griego stracciatella Danone vaso 4 x 110 g,1179,Yogur griego stracciatella Hacendado,78.8
+142181,Yogur griego natural Danone pack 4 x 110 g,698,Yogur natural Danone,81.6
+272537,Yogur natural azucarado Dia Láctea pack 8 x 125 g,700,Yogur natural de cabra Hacendado,80.9
+100595,Yogur líquido de fresa y platano Actimel pack 6 x 100 g,1134,Yogur líquido de fresa Hacendado,71.0
+303223,Postre lácteo natural alto en proteína Dia Láctea pack 4 x 120 g,572,Postre lácteo natural +Proteínas Hacendado 0% MG 12 g proteínas,79.5
+131735,Yogur líquido de fresa Actimel pack 12 x 100 g,1134,Yogur líquido de fresa Hacendado,77.2
+301464,Yogur griego lima-limón Danone pack 4 x 110 g,1183,Yogur griego con mango Hacendado,70.4
+104887,Yogur con fresa Danone pack 2 x 130 g,706,Yogur sabor fresa Danone,79.2
+306611,Yogur líquido natural Dia Láctea botella 1 Kg,698,Yogur natural Danone,71.1
+33057,Yogur líquido natural Actimel pack 12 x 100 g,1139,Yogur líquido natural Hacendado con azúcar de caña,70.3
+231491,Yogur de fresa líquido Danonino pack 4 x 70 g,1134,Yogur líquido de fresa Hacendado,80.0
+278517,Postre de soja sabor frutos rojos sin azúcar Alpro vaso 400 g,858,Postre de soja sabor mango Alpro sin azúcares añadidos,71.6
+248781,Postre de soja sabor arándanos y frutos rojos Alpro pack 4 x 125 g,861,Postre de soja sabor arándanos Alpro,80.9
+13964,Yogur natural azucarado Danone pack 4 x 120 g,697,Yogur natural con azúcar de caña Hacendado,81.2
+174311,Yogur con plátano y fresa Hero bolsa 100 g,1181,Yogur griego con fresa Hacendado,75.0
+208913,Postre lácteo infantil con puré de plátano Nestlé Yogolino bolsa 100 g,922,Postre lácteo infantil de fresa y plátano Hacendado +8 meses,72.0
+303364,Alimento infantil lácteo con puré de fresa y plátano Dia Fruticampo bolsa 100 g,922,Postre lácteo infantil de fresa y plátano Hacendado +8 meses,74.5
+140493,Copa de chocolate y nata Dia Caprichoso pack 4 x 115 g,1539,Copa crema de chocolate y nata Hacendado,70.4
+108586,Queso semicurado Dia El Cencerro 250 g,2171,Queso semicurado de cabra Hacendado,77.2
+263673,Queso tierno cortado Dia El Cencerro 250 g,2178,Queso tierno mezcla Hacendado cortado en cuñitas,70.3
+115669,Queso fresco de Burgos Dia Láctea 4 x 62.5 g,2052,Queso fresco de cabra Hacendado,80.0
+304214,Queso de oveja curado Dia El Cencerro 200 g,2161,Queso curado DOP manchego de oveja Hacendado,70.4
+115196,Queso fresco de vaca Dia El Cencerro 250 g,2050,Queso fresco de vaca Burgo de Arias,76.1
+263519,Queso de untar natural light Dia Láctea 250 g,2020,Queso untar light de vaca Hacendado,75.5
+263674,Queso semicurado cortado Dia El Cencerro 250 g,2170,Queso semicurado mezcla Hacendado cortado en cuñitas,73.2
+265592,Queso fresco de cabra Dia El Cencerro 250 g,2052,Queso fresco de cabra Hacendado,72.4
+304699,Queso tierno mezcla Dia El Cencerro 1 Kg,2178,Queso tierno mezcla Hacendado cortado en cuñitas,76.7
+310747,Queso cottage Philadelphia 175 g,2019,Queso untar light Philadelphia,71.4
+127523,Queso en porciones La Vaca que ríe 250 g,2374,Queso fundido con palitos La vaca que ríe,74.7
+275734,Hierbabuena Sun&Vegs bolsa 70 g,127,Hierbabuena,71.0
+304700,Queso mini semicurado Dia El Cencerro 1 Kg,2171,Queso semicurado de cabra Hacendado,71.0
+292092,Queso de oveja curado Dia El Cencerro 200 g,2161,Queso curado DOP manchego de oveja Hacendado,70.4
+255335,Queso fresco bajo en sal Dia Láctea 4 x 62.5 g,2052,Queso fresco de cabra Hacendado,72.3
+292414,Queso fresco protein plus Burgo de Arias tarrina 3 x 70 g,2050,Queso fresco de vaca Burgo de Arias,70.6
+310168,Queso de untar natural Soignon 140 g,2025,Queso untar sin lactosa de vaca Hacendado,72.1
+296054,Crema de queso de cabra Dia Láctea 125 g,2021,Crema de queso camembert Hacendado,80.9
+11464,Mandarina malla 1 Kg,60,Mandarina,75.0
+295594,Rulo de queso de vaca Dia Láctea 140 g,2181,Queso tierno gouda de vaca Hacendado,76.6
+216799,Magdalenas con mantequilla La abuela bolsa 450 g,2418,Galletas de mantequilla Hacendado Belgas,72.7
+300935,Huevo de chocolate con smarties Nestlé Extrafino 40 g,3169,Chocolate con leche extrafino Nestlé,78.6
+76578,Huevos de chocolate con sorpresa 3 unidades Kinder caja 60 g,3190,Huevo sorpresa de chocolate Hacendado,76.1
+207884,Galletas huevos de cereales con chocolate Artiach Dinosaurus caja 140 g,2273,Barritas de cereales Hacendado chocolate con leche,70.0
+129278,Tarta laminada nata y chocolate Dia Temptation 525 g,3073,Tarta helada nata y chocolate Hacendado,72.0
+44142,Helado cono nata y chocolate Dia Temptation 4 x 68 g,3073,Tarta helada nata y chocolate Hacendado,70.3
+305811,Frutos rojos congelados Dia Fruticampo bolsa 300 g,1217,Torrijas fritas congeladas,73.5
+190387,Arándanos vaso 170 g,122,Arándanos,78.3
+11463,Limones malla 750 g,58,Limones,70.0
+28887,Melón piel de sapo unidad 2.5 Kg aprox.,50,Melón piel de sapo,78.3
+301694,Frutas variadas en almíbar Dia Fruticampo 240 g,2994,Macedonia mix de frutas en almíbar Hacendado,70.0
+11467,Naranjas de mesa malla 2 Kg,61,Naranja de mesa,81.1
+32070,Aguacate light unidad,95,Aguacate,72.7
+245089,Aguacate bio bandeja 400 g,95,Aguacate,80.0
+37203,Muesli crujiente con frutas Gran Dia caja 500 g,2262,Muesli Crunchy Hacendado con fruta,70.0
+49588,Melocotón en almíbar sin azúcares añadidos Dia Fruticampo 480 g,2993,Melocotón light Hacendado sin azúcares añadidos,81.0
+276992,Piña en su jugo en rodajas Del monte lata 3 x 140 g,2991,Piña en su jugo Hacendado rodajas,75.4
+288261,Barritas con fruta para periquitos Biazoo bolsa 60 g,3549,Barritas de fruta y miel para periquitos Natura,70.5
+141192,Bebida de zumo 10 frutas sin azúcares añadidos Juver Disfruta brik 6 x 200 ml,401,Bebida 5 frutas Hacendado sin azúcares añadidos,71.3
+183576,Mermelada de ciruela y kiwi extra 60% fruta Dia Fruticampo frasco 320 g,3109,Mermelada de ciruela y kiwi Hacendado,70.1
+190851,Pomelo 2 unidades,63,Pomelo,70.6
+298235,Bebida de zumo de piña sin azúcares añadidos Juver Disfruta 1.5 L,471,Bebida de piña Hacendado sin azúcares añadidos,73.5
+146298,"Zumo de piña, manzana y uva pack 6 x 200 ml",470,Zumo de piña y uva Hacendado,75.0
+112643,"Zumo de melocotón, uva y manzana Don Simón 1 L",466,Zumo de melocotón y uva Hacendado,70.8
+265817,Vino blanco Oceanus 75 cl,311,Vino blanco Don Simón,75.0
+135272,Mermelada de fresa extra Dia Fruticampo frasco 390 g,3100,Mermelada de fresa Hacendado,73.5
+135271,Mermelada de melocotón extra Dia Fruticampo frasco 390 g,3104,Mermelada de melocotón Hacendado,77.2
+141570,Mermelada de fresa 0% sin azúcares añadidos Dia Fruticampo frasco 330 g,2269,Cereales Cereal Mix Hacendado 0% azúcares añadidos,71.1
+148313,Mermelada de albaricoque extra Dia Fruticampo frasco 390 g,3107,Mermelada de albaricoque Hacendado,78.7
+212874,Mermelada de arándanos extra Dia Fruticampo frasco 320 g,3103,Mermelada de arándanos Hacendado,77.2
+20568,Mermelada de fresa extra Dia Fruticampo frasco 650 g,3100,Mermelada de fresa Hacendado,73.5
+143249,Mermelada de melocotón 0% sin azúcares añadidos Dia Fruticampo frasco 330 g,467,Bebida de melocotón Hacendado sin azúcares añadidos,71.6
+54878,Calabacín crü 400 g,52,Calabacín verde,78.6
+141571,Mermelada de ciruela extra Dia Fruticampo frasco 390 g,3109,Mermelada de ciruela y kiwi Hacendado,70.0
+20586,Mermelada de melocotón extra Dia Fruticampo frasco 650 g,3104,Mermelada de melocotón Hacendado,77.2
+20577,Mermelada de ciruela extra Dia Fruticampo frasco 650 g,3109,Mermelada de ciruela y kiwi Hacendado,70.0
+213266,Mermelada de tomate extra Dia Fruticampo frasco 320 g,3102,Mermelada de tomate Hacendado,74.5
+212872,Mermelada de frambuesa extra Dia Fruticampo frasco 320 g,3110,Mermelada de frambuesa Hacendado,77.2
+246213,Mermelada de fresas 0% azúcares añadidos Hero frasco 280 g,3114,Confitura de fresa Hacendado 0% azúcares añadidos,70.3
+246214,Mermelada de melocotón 0% azúcares añadidos Hero frasco 280 g,3115,Confitura de melocotón Hacendado 0% azúcares añadidos,73.5
+306538,Mermelada de ciruela 0% sin azúcares añadidos Dia Fruticampo frasco 330 g,3114,Confitura de fresa Hacendado 0% azúcares añadidos,72.5
+303873,Mermelada de cerezas 0% azúcares añadidos Hero frasco 280 g,2269,Cereales Cereal Mix Hacendado 0% azúcares añadidos,71.0
+187209,Mermelada de albaricoque extra Helios frasco 340 g,3107,Mermelada de albaricoque Hacendado,70.6
+246216,Mermelada de ciruela 0% azúcares añadidos Hero frasco 280 g,3114,Confitura de fresa Hacendado 0% azúcares añadidos,71.7
+211535,Mermelada de fresa 0% azúcares añadidos Helios pack 10 x 25 g,2423,Galletas de espelta Hacendado 0% azúcares añadidos,72.7
+93,Calabacín unidad 350 g aprox.,54,Calabacín blanco,75.0
+265079,"Brócoli, coliflor y zanahoria Dia Vegecampo 1 Kg",2222,"Coliflor, brócoli y zanahoria Hacendado ultracongelada",75.9
+272833,Verduras para microondas Dia Vegecampo 300 g,2390,Arroz con verduras para microondas Hacendado ultracongelado,71.3
+13337,Seta ostra bandeja 200 g,194,Ostra viva,70.0
+105782,Canónigos Dia Vegecampo bolsa 70 g,77,Canónigos lavados,70.0
+165430,Espárrago verde grueso manojo aprox. 250 g,147,Espárragos verdes gruesos,72.1
+190539,Judía redonda bandeja 250 g,136,Judía verde redonda,81.2
+301318,Tomate Murice bandeja 400 g,2111,Tomate frito Hacendado,72.0
+10770,Tomate Adora bandeja 300 g,17,Tomate pera,78.3
+191539,Perejil manojo 50 g,1947,Ajo y Perejil Hacendado,81.5
+42184,Alcachofa 250 g aprox.,135,Alcachofa,72.0
+272828,Lechuga iceberg lavada Dia Vegecampo bolsa 200 g,78,Lechuga iceberg cortada y lavada,76.5
+307915,Tomate Monterosa bandeja 500 g,27,Tomate rosa,81.5
+27906,Crema de verduras Dia Al Punto 500 ml,3119,Crema de pollo Hacendado con verduras,73.7
+309226,Crema de verduras Dia Al Punto 300 g,3119,Crema de pollo Hacendado con verduras,73.7
+189160,Caldo de verduras Gallina Blanca 1 L,3097,Caldo de verduras Hacendado en pastillas,71.0
+303315,Gnocchis con pollo y verduras Dia Al Punto 450 g,2397,Gnocchi de pollo y verduras Hacendado ultracongelados,70.6
+187476,Sopa jardinera Gallina Blanca 77 g,1764,Alubias a la jardinera Hacendado,70.6
+250990,Crema de pollo con verduras Gallina Blanca 500 ml,3119,Crema de pollo Hacendado con verduras,78.3
+297551,Caldo de pollo y ocho verduras Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,71.6
+297218,"Alimento para gatos bocaditos con trucha, salmón y verduras Deligato de Dia lata 400 g",3518,"Bocaditos en salsa gato adulto Lechat Excellence con salmón, trucha y verduras",71.9
+263820,Espinacas cortadas Dia Vegecampo 450 g,129,Espinacas cortadas y lavadas,70.0
+309225,Crema de calabaza Dia Al Punto 300 g,3120,Crema de calabaza Hacendado,72.3
+111055,Pisto con aceite de oliva Dia Vegecampo 350 g,2115,Tomate frito Hacendado con aceite de oliva,70.4
+130332,Alimento para perros completo Friskies bolsa 10 Kg,3548,Alimento completo para periquitos Granzoo,75.9
+191535,Cebolla malla 750 g,577,Morcilla de cebolla,75.0
+105300,Ensalada gourmet Dia Vegecampo bolsa 150 g,79,Ensalada mezcla gourmet lavada,70.0
+25904,Corazones de cogollos 6 unidades,86,Cogollos corazón de lechuga,79.2
+50664,Repollo liso unidad 2 Kg aprox.,66,Repollo liso,77.4
+181571,Espárrago verde fino manojo aprox. 250 g,141,Espárragos verdes finos,70.2
+132920,Cebolla dulce malla 1 Kg,577,Morcilla de cebolla,78.9
+310378,Tomate Bárbaro 400 g,16,Tomate canario,78.6
+307912,Champiñón grande bandeja 390 g,2956,Champiñón laminado Hacendado,76.5
+40250,Pimientos rojos asados Campo rico bandeja 350 g,2962,Pimientos asados en tiras Hacendado,72.4
+105318,Cachelos bolsa 3 Kg,1027,Nachos Hacendado,71.4
+304779,Jengibre bio bandeja 100 g,124,Jengibre,80.0
+131988,Pimientos rojos y verdes asados Huerta Camporico bandeja 350 g,2960,Pimientos rojos asados Hacendado en tiras extra,70.6
+13049,Judías verdes planas Dia Vegecampo 360 g,2965,Judías verdes planas Hacendado,74.1
+171371,Judías verdes redondas Dia Vegecampo 360 g,2961,Judías verdes redondas Hacendado,75.9
+264288,Corazones de alcachofas Dia Vegecampo 165 g,2963,Corazones de alcachofa Hacendado,74.6
+303262,Champiñones laminados Dia Vegecampo 2 x 105 g,103,Champiñones laminados limpios,75.8
+52958,Espárragos blancos muy gruesos 6/12 piezas Dia Vegecampo 320 g,2972,Espárragos blancos muy gruesos Hacendado cortos,72.1
+276528,Corazones de alcachofas Dia Vegecampo 330 g,2963,Corazones de alcachofa Hacendado,74.6
+100879,Corazones de alcachofas Dia Vegecampo 115 g,2963,Corazones de alcachofa Hacendado,74.6
+286118,Tomate seco en aceite Dia Vegecampo 110 g,2842,Tomate seco Hacendado en aceite de oliva,70.8
+301860,Maíz dulce sin azúcar añadido Bonduelle 150 g,389,Bebida de mango Hacendado sin azúcares añadidos,71.1
+202646,Pimientos rojos Diamir 3 x 60 g,51,Pimiento rojo,70.3
+278703,Pimientos de piquillo D.O.P. de Lodosa Delicias de Dia 220 g,2974,Ensalada de pimientos del piquillo Cidacos,70.8
+289853,Corazones de alcachofas aliñadas Exito 170 g,2963,Corazones de alcachofa Hacendado,73.3
+206720,Pimientos del piquillo enteros Carretilla 260 g,2958,Pimientos del piquillo enteros Hacendado extra,77.9
+2513,Espárragos blancos cortos Carretilla 110 g,2953,Espárragos blancos delgados Hacendado cortos,74.3
+82533,Espárragos blancos 8/12 piezas Carretilla 205 g,2953,Espárragos blancos delgados Hacendado cortos,70.6
+197612,Zanahorias ralladas Bonduelle 580 g,38,Zanahoria rallada lavada,71.7
+310678,Hélices con tomate y espinacas Gallo 400 g,822,Panes especiales con tomate y orégano Hacendado,71.2
+164337,Lomo de cerdo adobado Selección de Dia 300 g,363,Fiambre de magro de cerdo adobado,70.4
+112150,Longaniza sin tripa Selección de Dia 325 g,575,Longaniza fresca sin tripa,71.0
+261242,Carne picada de vacuno y cerdo Selección de Dia 900 g,774,Preparado de carne picada vacuno y cerdo,75.9
+275700,Longaniza de pollo Selección de Dia 400 g,576,Longaniza fresca de pollo,70.0
+261240,Carne picada de vacuno Selección de Dia 900 g,776,Preparado de carne picada vacuno,70.4
+71826,Fiambre de lomo de pavo Serrano 240 g,771,Hamburguesa de lomo de vacuno,70.0
+309665,Carpaccio Selección de Dia 105 g,481,Carpaccio de vacuno,71.1
+244789,Burger de cerdo y vacuno 6 unidades Selección de Dia 540 g,768,Mini burgers de vacuno y cerdo,71.1
+309986,Cinta de lomo adobada Ibérica Emcesa 240 g aprox.,365,Filetes lomo de cerdo ibérico adobado,70.0
+124733,Redondo de pollo asado La Carloteña 340 g,1278,Lomo asado La Carloteña lonchas,72.7
+274104,Pechuga de pollo Dia Nuestra Alacena 200 g,1268,Tiras de pechuga de pollo al natural Hacendado,72.2
+290890,Caldo de pollo gourmet Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,79.5
+186682,Sopa de cocido con fideos Gallina Blanca 72 g,3075,Sopa de pollo Gallina Blanca con fideos finos,77.6
+525,Sopa de ave con fideos Gallina Blanca 76 g,3075,Sopa de pollo Gallina Blanca con fideos finos,80.5
+162857,Noodles de pollo con soja Gallina Blanca 79 g,3075,Sopa de pollo Gallina Blanca con fideos finos,72.9
+118021,Sopa de pollo con fideos baja en sal Gallina Blanca 68 g,3075,Sopa de pollo Gallina Blanca con fideos finos,81.2
+1767,Sopa de pollo con maravilla Gallina Blanca 85 g,3075,Sopa de pollo Gallina Blanca con fideos finos,73.6
+150915,Caldo de pollo bajo en sal Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,77.9
+197610,Noodles de pollo yakisoba Gallina Blanca Yatekomo 93 g,1753,Fideos orientales Yatekomo sabor pollo Gallina Blanca,78.4
+308834,Noodles pollo Gallina Blanca Yatekomo 79 g,1753,Fideos orientales Yatekomo sabor pollo Gallina Blanca,75.6
+308457,Pechuga de pollo 90% Tello 125 g,1293,Pechuga de pollo 92% Hacendado lonchas,70.4
+235248,Noodles de pollo Gallina Blanca Yatekomo 2 x 60 g,1753,Fideos orientales Yatekomo sabor pollo Gallina Blanca,77.9
+297553,Caldo de pollo con jamón gourmet Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,77.1
+228641,Noodles de pollo yakisoba Gallina Blanca Yatekomo 93 g,1753,Fideos orientales Yatekomo sabor pollo Gallina Blanca,78.4
+295317,Pastillas de caldo de pollo Dia Al Punto 24 unidades,3096,Caldo de pollo Hacendado en pastillas,71.2
+137167,Maxi York Elpozo 300 g,1291,Maxi york Hacendado,72.0
+24712,Pizza jamón y queso Casa Tarradellas 405 g,1586,Mini pizzas jamón y queso Fiesta ultracongeladas,71.4
+235039,Tortitas de maíz sabor jamón ibérico Bicentury bolsa 123.5 g,2404,Tortitas de maíz con sabor a jamón Hacendado,75.3
+308072,Patatas fritas onduladas sabor york queso Dia Snack Maniac 150 g,1014,Patatas fritas onduladas sabor jamón serrano Hacendado,72.5
+15976,Chorizo Revilla 65 g,578,Chorizo oreado,75.9
+276169,Salchichón a la pimienta Sola 100 g,1621,Salchichón extra pimienta Hacendado finas lonchas,70.6
+262430,Atún en aceite de girasol Dia Mari Marinera 6 x 52 g,2736,Atún en aceite de girasol Hacendado,71.4
+50597,Mejillones en escabeche Dia Mari Marinera 3 x 43 g,2783,Mejillones en escabeche Hacendado medianos,74.7
+62059,Filetes de bacalao Pescanova 400 g,3089,Fumet caldo de pescado Hacendado,72.0
+262432,Atún claro en aceite de oliva Dia Mari Marinera 6 x 60 g,2737,Atún claro en aceite de girasol Hacendado,75.0
+182509,Sardinillas en aceite de oliva Dia Mari Marinera 2 x 65 g,2753,Sardinillas en aceite de oliva Hacendado,75.0
+138259,Atún en aceite de girasol Dia Mari Marinera 650 g,2736,Atún en aceite de girasol Hacendado,73.5
+262429,Atún en aceite de girasol Dia Mari Marinera 3 x 52 g,2736,Atún en aceite de girasol Hacendado,71.4
+288045,Atún en aceite de oliva Dia Mari Marinera 3 x 52 g,2736,Atún en aceite de girasol Hacendado,70.6
+262434,Atún claro en aceite de oliva Dia Mari Marinera 3 x 60 g,2737,Atún claro en aceite de girasol Hacendado,75.0
+7975,Sardinas en aceite de oliva Dia Mari Marinera 85 g,337,Filetes de sardina marinada Hacendado en aceite de oliva virgen extra,73.1
+50596,Mejillones en escabeche 14/18 piezas Dia Mari Marinera 69 g,2783,Mejillones en escabeche Hacendado medianos,70.9
+284387,Filetes de caballa del sur en aceite de girasol Dia Mari Marinera 85 g,2748,Filetes de caballa del sur en aceite de oliva Hacendado,80.0
+16527,Mejillones en escabeche 8/12 piezas Dia Mari Marinera 69 g,2783,Mejillones en escabeche Hacendado medianos,71.8
+116670,Atún en aceite girasol Isabel 3 x 52 g,2736,Atún en aceite de girasol Hacendado,78.6
+147678,Calamares en su tinta Albo 72 g,2759,Calamar en tinta Hacendado,76.2
+28245,Mejillones en escabeche 13/18 piezas Isabel 69 g,2783,Mejillones en escabeche Hacendado medianos,76.5
+303963,Atún claro en aceite de girasol Dia Mari Marinera 228 g,2737,Atún claro en aceite de girasol Hacendado,77.5
+303437,Filetes de caballa en aceite de oliva bajo en sal Dia Mari Marinera 85 g,2748,Filetes de caballa del sur en aceite de oliva Hacendado,75.0
+268129,Berberechos al natural Dia Mari Marinera 90 g,2776,Berberechos al natural M Hacendado,75.0
+222366,Bonito del norte en escabeche Dia Mari Marinera 140 g,2747,Bonito del norte en escabeche Hacendado,76.3
+181199,Sardinillas en aceite de oliva bajo en sal Calvo 60 g,2754,Sardinillas reducidas en sal en aceite de oliva Hacendado,77.9
+1334,Melva en aceite de oliva Ubago 85 g,2751,Filetes de melva en aceite de oliva Hacendado,73.8
+57862,Atún con tomate Isabel 3 x 52 g,2742,Atún en salsa de tomate Hacendado,72.3
+10298,Melva en aceite de girasol Ubago 85 g,2736,Atún en aceite de girasol Hacendado,70.2
+39255,Atún claro en aceite de oliva bajo en sal Calvo 3 x 52 g,2743,Ventresca de atún claro en aceite de oliva Hacendado,74.7
+224663,Atún claro en aceite de oliva ligero Calvo 3 x 56 g,2739,Atún claro en aceite de oliva Hacendado,79.5
+41491,Mejillones en escabeche Calvo 3 x 40 g,2783,Mejillones en escabeche Hacendado medianos,76.2
+296869,Trozos de atún en aceite de girasol Ribeira 3 x 52 g,2736,Atún en aceite de girasol Hacendado,71.4
+304092,Atún en aceite de oliva Dia Mari Marinera 6 x 52 g,2736,Atún en aceite de girasol Hacendado,70.6
+164595,Caldo para paella Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,70.6
+304089,Atún en aceite de girasol Dia Mari Marinera 260 g,2736,Atún en aceite de girasol Hacendado,73.5
+303436,Bonito del Norte MSC en aceite de oliva Dia Mari Marinera 140 g,2744,Migas de bonito del norte en aceite de oliva Hacendado,81.2
+308085,Salmón ahumado en dados Skandia bandeja 100 g,345,Taquitos de salmón ahumado Hacendado,70.2
+302603,Bonito en aceite de girasol alto oleico Consorcio 80 g,2737,Atún claro en aceite de girasol Hacendado,70.0
+31178,Chipirones rellenos en aceite girasol Pay pay 72 g,2762,Chipirones rellenos enteros en aceite de girasol Hacendado,79.6
+308441,Trozos de atún en aceite de girasol Friscos 135 g,332,Filetes de anchoa en aceite de girasol Hacendado,74.1
+150914,Caldo de pescado Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,77.6
+189857,Caldo de pescado Knorr 12 unidades,3085,Caldo de pescado Hacendado,72.7
+59239,Preparado de paella con caldo Dia Mari Marinera 500 g,3087,Caldo de marisco o fideuá para paella Hacendado con sofrito,70.8
+119552,Vino blanco Pescador 75 cl,1667,Vinagre de vino blanco Hacendado,71.4
+296058,Snacks para gatos rellenos con salmón Deligato de Dia bolsa 60 g,3542,Snacks gato rellenos con salmón y malta Compy,71.4
+286140,Solomillo de atún bandeja 300 g aprox.,369,Solomillo de cerdo,71.4
+256038,Mejillones en salsa de tomate Aguinamar bandeja 500 g,2742,Atún en salsa de tomate Hacendado,71.0
+264138,Anchoas en aceite de girasol Caprimar frasco 52 g,332,Filetes de anchoa en aceite de girasol Hacendado,75.6
+181667,Filetes de sardina anchoada Kiele bandeja 50 g,344,Filetes de sardina ahumada Hacendado en aceite de girasol,70.0
+293705,Sepia faraónica Dia Mari Marinera 400 g,288,Sepia faraónica limpia Hacendado congelada,70.8
+300418,Coquina del Mediterráneo Aligator 250 g,1863,Agua de colonia S3 Mediterránea,71.9
+297533,Alimento para gatos bocaditos en gelatina Deligato de Dia caja 12 x 100 g,3522,Bocaditos en gelatina gato adulto Delikuit,71.2
+308392,Atún claro en aceite de oliva con aceitunas Friscos 50 g,2739,Atún claro en aceite de oliva Hacendado,72.5
+308391,Atún claro en aceite de oliva con jalapeños Friscos 50 g,2739,Atún claro en aceite de oliva Hacendado,72.5
+54213,Pizza bacon y atún Dia Al Punto 400 g,1567,Pizza atún y bacón Hacendado,73.5
+277674,Chapata de cristal 2 unidades Cristallino 190 g,514,4 Panes chapata de cristal,72.1
+297060,Pan de hamburguesa brioche El molino de Dia 300 g,686,Pan de hamburguesa Brioche Hacendado,75.4
+274757,Pan viena integral 50% El molino de Dia 80 g,665,Pan de molde 100% integral sin corteza Hacendado,70.1
+56444,Pizza 4 quesos Dia Al Punto 390 g,1562,Pizza 4 quesos familiar Hacendado,76.0
+303607,Pan rallado Onena 750 g,746,Pan rallado Hacendado,78.6
+299090,Pan de molde sin gluten El molino de Dia 280 g,668,Pan de molde cereales sin gluten Hacendado,72.2
+39962,Pizza 4 quesos Casa Tarradellas 390 g,1580,Pizza masa fina 4 quesos Hacendado ultracongelada,71.4
+263284,Barra de pan para torrijas 300 g,494,Barra de pan rústica,73.9
+1141,Panecillos tostados integral El molino de Dia 225 g,740,Panecillo tostado 100% integral de trigo Hacendado,70.6
+10164,Palitos de pan con pipas Velarte 80 g,818,Palitos de pan con pipas Anitin,76.2
+178617,Pan de molde sin gluten Dr. Schar 300 g,668,Pan de molde cereales sin gluten Hacendado,73.8
+256378,Baguette rústica sin gluten Proceli 120 g,497,Baguette sin gluten,70.4
+167940,Levadura de panadería Royal 27.5 g,1386,Levadura de panadería Hacendado,80.8
+144918,Pan de avena vitalité Wasa 280 g,742,Pan tostado vitalité Wasa,70.6
+279210,Mini biscotes El molino de Dia 240 g,738,Mini biscotes de trigo Diatosta,75.4
+279208,Biscotes El molino de Dia 540 g,738,Mini biscotes de trigo Diatosta,71.4
+161018,Espuma rizos definidos Pantene spray 200 ml,2430,Espuma cabello Rizos Definidos Pantene fijación 5,70.6
+304615,Acondicionador repara y protege cabello dañado Pantene tubo 275 ml,2335,Acondicionador Repara & Protege Pantene,75.5
+168171,Ampollas rescate 1 min tratamiento intensivo Pantene caja 3 unidades,2363,Ampollas tratamiento intensivo Repara & Protege Pantene cabello dañado,70.9
+268405,Pañales 13-20 kgs talla 5 Planeta Bebé de Dia bolsa 40 unidades,3455,Pañales bebé talla 5 de 13-18 kg Deliplus,75.6
+268404,Pañales 8-15 kgs talla 4 Planeta Bebé de Dia bolsa 44 unidades,3443,Pañales bebé talla 3 de 4-10 kg Deliplus,72.5
+268406,Pañales 17-28 kgs talla 6 Planeta Bebé de Dia bolsa 28 unidades,3457,Pañales bebé talla 6 de 17-28 kg Deliplus,75.6
+268403,Pañales 4-9 kgs talla 3 Planeta Bebé de Dia bolsa 50 unidades,3443,Pañales bebé talla 3 de 4-10 kg Deliplus,75.0
+268411,Pañales 15-25 kg talla XL Planeta Bebé de Dia bolsa 18 unidades,3455,Pañales bebé talla 5 de 13-18 kg Deliplus,70.7
+268410,Pañales 13-20 kg talla L Planeta Bebé de Dia bolsa 20 unidades,3455,Pañales bebé talla 5 de 13-18 kg Deliplus,74.1
+268402,Pañales 3-6 kgs talla 2 Planeta Bebé de Dia bolsa 40 unidades,3440,Pañales bebé talla 2 de 3-6 kg Deliplus,75.0
+268401,Pañales 2-5 kgs talla 1 Planeta Bebé de Dia bolsa 24 unidades,3444,Pañales bebé talla 1 de 2-4 kg Deliplus,75.0
+263492,Pañales 8-15 kg talla M Planeta Bebé de Dia bolsa 22 unidades,3440,Pañales bebé talla 2 de 3-6 kg Deliplus,73.4
+307511,Salsa amatriciana Barilla 300 g,2758,Calamar en salsa americana Hacendado,70.6
+13356,Tortillas de trigo Dia Al Punto 320 g,689,Mini tortillas de trigo Hacendado,77.8
+142625,Preparado para hornear en polvo Royal 96 g,1390,Preparado en polvo gelatina fresa Hacendado,71.4
+87036,Tortillas de trigo Old El Paso 244 g,687,Maxi tortillas de trigo Hacendado,75.5
+163262,Harina de trigo para repostería Gallo 1 Kg,1367,Harina semolosa de trigo Hacendado especial para fritos,70.7
+303732,Harina de trigo integral El molino de Dia 1 Kg,1364,Harina integral de trigo Hacendado,73.8
+288022,Croissants rellenos de cacao y avellanas El molino de Dia bolsa 315 g,2250,Cereales rellenos de crema de cacao y avellana Hacendado sin gluten,71.9
+288021,Croissants El molino de Dia bolsa 390 g,927,12 Mini croissants de mantequilla,70.0
+271495,Cañas rellenas de crema Dulcesol bolsa 150 g,1131,Hojaldre relleno de crema de cacao Hacendado,72.7
+307937,Rosquilla rellena de crema Biscoff cubierta de chocolate blanco y galleta 76 g,3181,Chocolate blanco Fussion Hacendado relleno de crema de galleta y cacao,70.7
+73170,Bollos rellenos de cacao Bollycao bolsa 228 g,2467,Barquillos rellenos con crema de cacao Hacendado,70.4
+307916,Lunas al cacao Dulcesol bolsa 90 g,1117,Magdalenas al cacao Hacendado,71.4
+86108,Magdalenas rellenas con crema de cacao El molino de Dia bolsa 336 g,2460,Galletas mini de cacao Caocream Hacendado rellenas de crema,76.9
+119528,Magdalenas concha Arenas bolsa 300 g,1117,Magdalenas al cacao Hacendado,74.4
+271494,Tarta de manzana Dulcesol bolsa 135 g,43,Manzana roja dulce,74.4
+303498,Magdalenas sin gluten El molino de Dia bolsa 160 g,1115,Magdalenas sin gluten Hacendado,71.2
+89469,Conchas de chocolate Codan bolsa 330 g,2255,Muesli Crunchy Hacendado con chocolate,74.1
+297957,Rondo de chocolate Mandul bolsa 400 g,3060,Helado de chocolate Hacendado,72.7
+303687,Rosquillas de azúcar El cateto bolsa 260 g,1133,Rosquilla de cacao Caocream Hacendado,70.2
+308714,Bizcocho sabor chocolate Cuétara caja 112 g,1114,Bizcocho de chocolate sin gluten Hacendado,71.9
+310815,Gofre de chocolate Lacasitos 80 g,1611,Fideos de chocolate Hacendado,72.3
+271643,Pistachos tostados sin sal añadida Dia Naturmundo 250 g,1300,Pistacho tostado Hacendado 0% sal añadida,70.0
+298912,Cacahuetes tostados sin sal añadida Dia Naturmundo 200 g,1336,Cacahuete tostado Hacendado pelado 0% sal añadida,74.2
+300379,"Cerveza tostada 0,0% alcohol Dia Ramblers pack 6 x 25 cl",3335,"Cerveza 0,0% sin alcohol tostada Falke",80.5
+275859P12,"Cerveza tostada 0,0% alcohol Dia Ramblers pack 12 x 33 cl",3335,"Cerveza 0,0% sin alcohol tostada Falke",80.5
+271642,Pistachos tostados con sal Dia Naturmundo 250 g,1298,Pistacho tostado Hacendado con sal,73.8
+260302,"Cerveza tostada 0,0% alcohol Amstel Oro 33 cl",3333,"Cerveza 0,0% sin alcohol tostada Mahou",77.9
+275588,Almendras tostadas con piel sin sal Dia Naturmundo 200 g,1312,Almendra tostada Hacendado 0% sal añadida con piel,71.1
+250793,"Cerveza tostada 0,0% alcohol Estrella Galicia 33 cl",3333,"Cerveza 0,0% sin alcohol tostada Mahou",77.1
+308712,"Cerveza tostada 0,0% alcohol Victoria 33 cl",3333,"Cerveza 0,0% sin alcohol tostada Mahou",74.7
+130842,Cereales copos de maíz tostados Kellogg's Frosties caja 400 g,2247,Cereales copos de maíz Corn Flakes Kellogg's,76.6
+220326,Cerveza Maestra Mahou Maestra 33 cl,3311,Cerveza especial Mahou,70.6
+47840,Fabada asturiana Dia Al Punto 435 g,1762,Fabada asturiana Litoral,71.7
+183750,Mini tortilla de patatas con cebolla Dia Al Punto 220 g,1748,Pincho tortilla de patata con cebolla Listo para Comer,71.8
+266359,Lasaña boloñesa Dia Al Punto 350 g,2393,Lasaña a la boloñesa Hacendado ultracongelada,73.0
+262523,Tortilla de patatas sin cebolla Dia Al Punto 600 g,1743,Tortilla de patata y cebolla Hacendado,72.2
+6630,Albóndigas Dia Al Punto 415 g,780,Albóndigas de vacuno,74.4
+308574,Macarrones boloñesa 350 g,1718,Lasaña boloñesa Hacendado,70.6
+294769,Lasaña boloñesa Dia Al Punto 900 g,2393,Lasaña a la boloñesa Hacendado ultracongelada,73.0
+264423,Ensaladilla rusa Dia Al Punto 250 g,1931,Ensaladilla rusa Hacendado,71.1
+119818,Fabada asturiana Dia Al Punto 865 g,1762,Fabada asturiana Litoral,71.7
+276778,Café latte cappuccino Kaiku 370 ml,2591,Café en cápsula cappuccino Hacendado,79.2
+189917,Patatas alioli Ensalandia 250 g,1933,Patatas con allioli Hacendado,72.7
+244183,Fabada asturiana reducido en sal Litoral 435 g,1762,Fabada asturiana Litoral,75.0
+28188,Chili con carne Old El Paso 418 g,2144,Chili con carne Hacendado,71.4
+275223,Lasaña boloñesa Dia Al Punto 300 g,2393,Lasaña a la boloñesa Hacendado ultracongelada,73.0
+296802,Agua de colonia Frozen frasco 30 ml,1830,Agua de colonia S3 Classic fresh,73.7
+213216,Tarta de queso con cookies congelada San Martín 350 g,1218,Tarta Cookies & Cream Hacendado congelada,71.8
+283701,Cornetto de chocolate 4 x 60 g,1549,Coulant de chocolate Hacendado,79.1
+306566,Cornetto de vainilla 4 x 60 g,1382,Aroma de vainilla Hacendado,71.8
+133408,Granizado de limón Mercader 4 x 190 g,3048,Granizado de limón Hacendado,76.6
+280104,Helado mini bombón almendrado 6 unidades Temptation de Dia caja 216 g,3028,Helado mini bombón almendrado Hacendado,71.6
+271097,Sándwich cookie y vainilla Dia Temptation 4 x 60 g,3031,Helado mini sándwich vainilla y cookie Hacendado,71.6
+147919,Café latte cappuccino Kaiku 230 ml,2591,Café en cápsula cappuccino Hacendado,79.2
+309195,Bebida láctea de café arábica Pascual 230 ml,1152,Bebida láctea natural azucarada L-casei,71.1
+26995,Agua mineral Dia 1.5 L,3134,Agua mineral mediana Aguadoy,72.3
+26996,Agua mineral Dia 5 L,3137,Agua mineral grande Liviana,74.4
+37776,Agua mineral Dia 500 ml,3137,Agua mineral grande Liviana,74.4
+44302P6,Agua mineral Bezoya pack 6 x 1.5 L,3129,Agua mineral grande Bezoya,80.9
+38301P6,Agua mineral Aquarel pack 6 x 1.5 L,3133,Agua mineral grande Aguadoy,73.5
+53267P6,Agua mineral Aquabona pack 6 x 1.5 L,3134,Agua mineral mediana Aguadoy,74.5
+40570,Agua mineral Aquarel 5 L,3133,Agua mineral grande Aguadoy,76.6
+302520,Agua mineral Dia 750 ml,3137,Agua mineral grande Liviana,74.4
+41117P6,Agua mineral Aquarel pack 6 x 330 ml,3130,Agua mineral grande Nestlé Aquarel,77.2
+50567,Agua mineral Dia 330 ml,3137,Agua mineral grande Liviana,74.4
+24874,Agua mineral con gas Dia 500 ml,3134,Agua mineral mediana Aguadoy,73.1
+40570P2,Agua mineral Aquarel pack 2 x 5 L,3130,Agua mineral grande Nestlé Aquarel,75.0
+53267,Agua mineral Aquabona 1.5 L,3134,Agua mineral mediana Aguadoy,73.1
+41117,Agua mineral Aquarel 330 ml,3133,Agua mineral grande Aguadoy,76.6
+258807,Agua mineral Aquarel 750 ml,3133,Agua mineral grande Aguadoy,76.6
+292973,Agua con gas San Pellegrino 500 ml,3143,Agua mineral con gas grande San Pellegrino,78.3
+146199,Agua con gas San Pellegrino 1 L,3143,Agua mineral con gas grande San Pellegrino,78.3
+143041,Pipas gigantes aguasal Dia Snack Maniac 200 g,1302,Pipas girasol tostadas Hacendado gigante aguasal,70.1
+1792,Gaseosa La Casera 1.5 L,3149,Gaseosa La Casera grande,77.3
+230940,Limonada con gas San Pellegrino 330 ml,3143,Agua mineral con gas grande San Pellegrino,71.2
+296952,Toallitas aqua Planeta Bebé de Dia bolsa 60 unidades,3433,Toallitas bebé Aqua Deliplus,73.5
+130617,Refresco de cola zero Dia Hola Cola 2 L,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,71.2
+107157,Refresco de cola zero Dia Hola Cola 330 ml,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,71.2
+5392,Refresco de cola Dia Hola Cola 330 ml,3151,Refresco Coca-Cola light,70.4
+687,Fanta de naranja 330 ml,61,Naranja de mesa,77.4
+81844,Coca-Cola zero azúcar 1.25 L,3150,Refresco Coca-Cola Zero azúcar,77.8
+685,Fanta de naranja 2 L,61,Naranja de mesa,77.4
+300605,Refresco de naranja Dia Upss 1.5 L,3282,Refresco de naranja sin gas,79.3
+7658,Pepsi 330 ml,35,Pepino,72.7
+686,Fanta de limón 330 ml,3048,Granizado de limón Hacendado,75.0
+276989,Coca-Cola zero azúcar zero cafeína 1.25 L,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,80.0
+54604,Red bull sin azúcar 250 ml,3043,Azúcar blanco en sobres Hacendado,70.3
+684,Fanta de limón 2 L,3048,Granizado de limón Hacendado,75.0
+13179,Fanta de naranja zero 330 ml,3241,Refresco Fanta naranja,79.1
+261395,Monster mango loco 500 ml,412,Smoothie mango y coco Hacendado,71.8
+300608,Refresco de limón con gas zero Dia Upss 1.5 L,3236,Refresco de limón Hacendado zero azúcar fresh gas,71.6
+300609,Refresco de lima limón zero Dia Upss 1.5 L,3240,Refresco lima limón Hacendado zero azúcar fresh gas,72.5
+696,Coca-Cola light 330 ml,3151,Refresco Coca-Cola light,76.9
+68685,Refresco de té al limón Dia Upss 330 ml,3238,Refresco lima limón Sprite,72.4
+16288,Refresco sin gas de manzana Dia Upss 1.5 L,3282,Refresco de naranja sin gas,72.7
+207361,Refresco de naranja zero Dia Upss 330 ml,3244,Refresco de naranja Hacendado zero fresh gas,77.6
+13185,Fanta de limón zero 330 ml,3233,Refresco Fanta limón,76.9
+79802,Coca-Cola zero azúcar 12 x 330 ml,3150,Refresco Coca-Cola Zero azúcar,81.5
+250113,Coca-Cola zero azúcar zero cafeína 2 x 2 L,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,81.1
+272911,Pepsi zero azúcar zero cafeína 330 ml,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,79.4
+43869,Refresco de limón Dia Upss 330 ml,3238,Refresco lima limón Sprite,73.1
+103131,Fanta de limón zero 2 L,3233,Refresco Fanta limón,76.9
+300610,Refresco de limón zero Dia Upss 330 ml,3276,Refresco té sabor limón Hacendado zero,71.2
+203768,Refresco de cola zero Dia Hola Cola 500 ml,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,71.2
+66536,Fanta de naranja 2 x 2 L,61,Naranja de mesa,72.7
+280018,Coca-Cola zero azúcar 2 x 1.25 L,3150,Refresco Coca-Cola Zero azúcar,79.2
+18956,Fanta de naranja 500 ml,61,Naranja de mesa,77.4
+268555,Coca-Cola zero azúcar 6 x 200 ml,3150,Refresco Coca-Cola Zero azúcar,81.5
+272820,Pepsi 1 L,35,Pepino,72.7
+12650,Kas de naranja zero 330 ml,2109,Zumo de naranja Hacendado,76.5
+1797,Coca-Cola light 2 L,3151,Refresco Coca-Cola light,76.9
+250112,Coca-Cola zero azúcar zero cafeína 12 x 330 ml,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,80.0
+285829,Red bull de albaricoque 250 ml,3107,Mermelada de albaricoque Hacendado,76.6
+27153,Kas de naranja zero 2 L,2109,Zumo de naranja Hacendado,76.5
+20846,Coca-Cola light sin cafeína 330 ml,2821,Café con leche light sin lactosa Hacendado,71.2
+150102,Fanta de naranja 9 x 330 ml,61,Naranja de mesa,70.6
+17736,Coca-Cola light 1.25 L,3151,Refresco Coca-Cola light,71.4
+141304,Gatorade sabor frambuesa 500 ml,1534,Gelatina sabor fresa Hacendado,72.7
+289695,Red bull sin azúcar 355 ml,3043,Azúcar blanco en sobres Hacendado,70.3
+247154,Tónica con toque de lima Schweppes 200 ml,3247,Tónica zero calorías Schweppes,71.9
+5168P24,Pepsi zero azúcar pack 24 x 330 ml,3153,Refresco cola Hacendado Zero azúcar,71.1
+280311,Refresco tónica Organics Lata 1 L,3286,Refresco Tropical Hacendado sin gas,73.5
+272911P24,Pepsi zero azúcar zero cafeína pack 24 x 330 ml,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,81.7
+203768P6,Refresco de cola zero Dia Hola Cola 6 x 500 ml,3154,Refresco cola Hacendado Zero azúcar Zero cafeína,70.1
+13185P24,Fanta de limón zero pack 24 x 330 ml,3233,Refresco Fanta limón,71.4
+13179P24,Fanta de naranja zero pack 24 x 330 ml,3241,Refresco Fanta naranja,73.9
+12650P24,Kas de naranja zero pack 24 x 330 ml,2109,Zumo de naranja Hacendado,70.3
+288687,Bebida de zumo de piña sin azúcares añadidos Dia Saborfera 1 L,471,Bebida de piña Hacendado sin azúcares añadidos,76.6
+288690,Bebida de zumo de manzana sin azúcares añadidos Dia Saborfera 1 L,400,"Bebida de zumo de naranja, mango y zanahoria La Verja sin azúcares añadidos",75.0
+146289,Zumo de melocotón y uva Dia Saborfera pack 6 x 200 ml,466,Zumo de melocotón y uva Hacendado,73.0
+118161,Bebida de zumo de melocotón sin azúcares añadidos Dia Saborfera pack 6 x 200 ml,467,Bebida de melocotón Hacendado sin azúcares añadidos,76.6
+31803,Bebida de zumo piña sin azúcares añadidos Juver Disfruta pack 6 x 200 ml,471,Bebida de piña Hacendado sin azúcares añadidos,75.8
+298234,Bebida de zumo de naranja sin azúcares añadidos Juver Disfruta 1.5 L,2108,Bebida de naranja Hacendado sin azúcares añadidos,75.0
+298233,Bebida de zumo de melocotón sin azúcares añadidos Juver Disfruta 1.5 L,467,Bebida de melocotón Hacendado sin azúcares añadidos,75.9
+298232,Bebida de zumo de manzana sin azúcares añadidos Juver Disfruta 1.5 L,2108,Bebida de naranja Hacendado sin azúcares añadidos,71.2
+307182,Zumo de naranja 100% exprimido Auara 330 ml,2104,Zumo de naranja recién exprimido Hacendado,73.5
+304091,Bebida de zumo de pera y piña sin azúcares añadidos Juver 1.5 L,471,Bebida de piña Hacendado sin azúcares añadidos,75.0
+21543,Zumo de naranja con pulpa Don Simón 1 L,2106,Zumo pura naranja con pulpa Hacendado,74.2
+114567,Zumo de naranja sin pulpa Don Simón 1 L,2106,Zumo pura naranja con pulpa Hacendado,71.0
+86202,Zumo de naranja con pulpa Don Simón 1 L,2106,Zumo pura naranja con pulpa Hacendado,74.2
+31800,Bebida de zumo de melocotón sin azúcares añadidos Juver Disfruta pack 6 x 200 ml,467,Bebida de melocotón Hacendado sin azúcares añadidos,75.9
+189922,Mosto blanco Don Simón 1 L,311,Vino blanco Don Simón,74.4
+192,Cerveza clásica Dia Ramblers 33 cl,3309,Cerveza Clásica Steinburg,71.7
+6171,Cerveza Mahou 5 Estrellas pack 12 x 33 cl,3312,Cerveza clásica Mahou,73.5
+81852,Cerveza shandy sin alcohol Dia Ramblers 33 cl,3337,Cerveza sin alcohol Falke,71.9
+54701P12,"Cerveza 0,0% alcohol Dia Ramblers pack 12 x 33 cl",3330,"Cerveza Radler Falke 0,0% sin alcohol",79.5
+54101,Cerveza Alhambra 33 cl,3321,Cerveza reserva 1925 Alhambra,71.1
+5600,Cerveza Mahou 5 Estrellas pack 12 x 25 cl,3312,Cerveza clásica Mahou,73.5
+20958,Cerveza clásica Dia Ramblers 50 cl,3309,Cerveza Clásica Steinburg,71.7
+135217,Cerveza Desperados 33 cl,3117,Crema de espárragos Hacendado,70.3
+5331,Cerveza clásica Dia Ramblers 1 L,3309,Cerveza Clásica Steinburg,71.7
+228450,Cerveza Victoria 33 cl,3326,Cerveza Corona,80.0
+292471,Cerveza de trigo Dia Ramblers 50 cl,3325,Cerveza de trigo Paulaner,77.8
+182,Cerveza Mahou 5 Estrellas 33 cl,3311,Cerveza especial Mahou,76.6
+54570,Cerveza doble malta Dia Ramblers 33 cl,3313,Cerveza doble malta Voll-Damm,72.1
+36797,Cerveza especial Dia Ramblers 33 cl,3315,Cerveza especial San Miguel,71.4
+263592,Cerveza clásica Dia Ramblers 1 L,3309,Cerveza Clásica Steinburg,71.7
+119052,Cerveza lager Alhambra 33 cl,3321,Cerveza reserva 1925 Alhambra,74.5
+12077,Cerveza Mahou 5 Estrellas 50 cl,3311,Cerveza especial Mahou,76.6
+43818,Cerveza San Miguel 50 cl,3315,Cerveza especial San Miguel,80.0
+271369,Cerveza Mahou 5 Estrellas 25 cl,3311,Cerveza especial Mahou,76.6
+181,Cerveza Mahou 5 Estrellas pack 6 x 25 cl,3312,Cerveza clásica Mahou,73.5
+216394,Cerveza Alhambra pack 6 x 25 cl,3321,Cerveza reserva 1925 Alhambra,70.8
+291052,Cerveza Mahou 5 Estrellas pack 6 x 20 cl,3312,Cerveza clásica Mahou,73.5
+293648,Cerveza dorada El águila pack 6 x 20 cl,3322,Cerveza El Águila sin filtrar,71.4
+277140,Cerveza La sagra 33 cl,3312,Cerveza clásica Mahou,70.3
+305557,Cerveza radler sin alcohol Dia Ramblers 33 cl,3330,"Cerveza Radler Falke 0,0% sin alcohol",76.3
+125715,Cerveza radler sin alcohol San Miguel 33 cl,3330,"Cerveza Radler Falke 0,0% sin alcohol",75.7
+295266,Cerveza rosé Mahou 33 cl,3323,Cerveza sin gluten Mahou,71.4
+57520,Cerveza triple zero Ambar 33 cl,3320,Cerveza negra Ambar,72.7
+29359,"Cerveza 0,0% alcohol San Miguel pack 6 x 25 cl",3332,"Cerveza 0,0% sin alcohol Falke",81.2
+242751,Cerveza sin gluten Mahou 5 Estrellas 33 cl,3323,Cerveza sin gluten Mahou,80.0
+308080,"Cerveza 0,0% alcohol Corona 33 cl",3332,"Cerveza 0,0% sin alcohol Falke",77.2
+277265,Cerveza original 8.6 50 cl,3326,Cerveza Corona,70.6
+307562,Cerveza excepcional Madri 33 cl,3311,Cerveza especial Mahou,72.3
+187040,Cerveza sin gluten Ambar 33 cl,3323,Cerveza sin gluten Mahou,75.0
+305557P12,Cerveza radler sin alcohol Dia Ramblers pack 12 x 33 cl,3330,"Cerveza Radler Falke 0,0% sin alcohol",73.4
+1596P12,Cerveza sin alcohol Dia Ramblers pack 12 x 33 cl,3337,Cerveza sin alcohol Falke,76.7
+277140P24,Cerveza La sagra pack 24 x 33 cl,3312,Cerveza clásica Mahou,70.0
+248453,Cerveza radler sin alcohol Amstel 33 cl,3337,Cerveza sin alcohol Falke,79.3
+236249,"Cerveza 0,0% alcohol Heineken 33 cl",3332,"Cerveza 0,0% sin alcohol Falke",81.4
+112888,Vino blanco Castillo de Velasco 1 L,315,Vino blanco El Coto DO Rioja,71.2
+271563,Tinto de verano sin alcohol con limón Fiesta del Dia 1.5 L,3899,"Tinto de verano 0,0% sin alcohol limón Don Simón",73.8
+26585,Vino blanco verdejo D.O. Rueda Vega del Báron 75 cl,324,Vino blanco verdejo Arribeño DO Rueda,78.0
+127644,Vino blanco verdejo D.O. Rueda Vega del Báron 75 cl,324,Vino blanco verdejo Arribeño DO Rueda,78.0
+83978,Tinto de verano con limón Fiesta del Dia 1.5 L,3345,Tinto de verano limón Casón Histórico,72.5
+222265,Vino tinto Crianza D.O. La Mancha Ribera de Algodor 75 cl,224,Vino tinto crianza Fidencio DO La Mancha,74.7
+12931,Vino blanco Castillo de Velasco 75 cl,315,Vino blanco El Coto DO Rioja,71.2
+263403,Vino tinto crianza D.O. Rioja Castillo de Haro 75 cl,214,Vino tinto crianza El Coto DO Rioja,81.5
+82850,Tinto de verano con limón La Casera 1.5 L,3345,Tinto de verano limón Casón Histórico,74.7
+263597,Vino blanco D.O. Valdepeñas Viña Danza 75 cl,221,Vino tinto crianza Viña Albali DO Valdepeñas,73.2
+103004,Ron añejo Barceló 70 cl,588,Ron añejo La Recompensa,70.0
+263722,Vino tinto roble D.O. Toro Campo curero 75 cl,238,Vino tinto roble Fariña DO Dama de Toro,74.4
+291340,Vermouth reserva Topaz 75 cl,540,Vermouth rojo Maronti reserva,70.6
+79739,Vino blanco Castillo de Velasco 2 L,315,Vino blanco El Coto DO Rioja,71.2
+132499,Vino tinto roble D.O. Ribera del Duero Protos 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,76.9
+46244,Vino tinto reserva D.O. Valdepeñas Viña Albalí 75 cl,221,Vino tinto crianza Viña Albali DO Valdepeñas,80.0
+947,Whisky J&B 70 cl,555,Whisky escocés J&B,71.4
+716,Vino blanco Cumbre de Gredos 1 L,1667,Vinagre de vino blanco Hacendado,72.0
+209608,Vino blanco verdejo Viña Albalí 75 cl,1667,Vinagre de vino blanco Hacendado,71.7
+263598,Vino tinto joven D.O. Valdepeñas Viña Danza 75 cl,221,Vino tinto crianza Viña Albali DO Valdepeñas,78.2
+263701,Vino tinto crianza D.O. Ribera del Duero Arco del Sol 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,74.7
+187127,Vino blanco verdejo D.O. Rueda Veliterra 75 cl,326,Vino blanco verdejo Condado de Teón DO Rueda,73.8
+40350,Vino tinto crianza D.O Rioja Señorío de Ondas 75 cl,216,Vino tinto crianza Cune DO Rioja,72.7
+267780,Vino tinto crianza D.O. Cariñena Geraldino 75 cl,214,Vino tinto crianza El Coto DO Rioja,74.0
+269521,Vino tinto roble D.O. Ribera del Duero Heredad Baran 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,75.5
+77654,Vino blanco semidulce D.O. Rioja Señorío de Ondas 75 cl,328,Vino blanco semidulce Diamante DO Rioja,72.7
+103423,Ron añejo Brugal 70 cl,585,Ron añejo Negrita,72.7
+269522,Vino tinto crianza D.O. Ribera del Duero Heredad Baran 75 cl,230,Vino tinto crianza Abadía Mantrús DO Ribera del Duero,76.6
+272407,Licor de hierbas Mourama 70 cl,638,Licor de hierbas Puente Pazos,71.7
+218564,Vino tinto reserva Faustino Rivero 75 cl,218,Vino tinto reserva Comportillo DO Rioja,71.2
+55935,Licor de hierbas Ruavieja 70 cl,638,Licor de hierbas Puente Pazos,70.4
+166038,Vino blanco verdejo D.O. Rueda Mayor de Castilla 75 cl,326,Vino blanco verdejo Condado de Teón DO Rueda,76.1
+262787,Vino tinto reserva D.O. Valdepeñas Viña Danza 75 cl,221,Vino tinto crianza Viña Albali DO Valdepeñas,74.2
+265815,Vino blanco verdejo D.O. Rueda Rioseco 75 cl,325,Vino blanco verdejo Abadía Mantrús DO Rueda,76.5
+176701,Vino tinto crianza D.O Rioja Ramón Bilbao 75 cl,214,Vino tinto crianza El Coto DO Rioja,78.9
+20574,Ron blanco Velero 70 cl,3900,Velote blanco Roura,77.8
+263818,Vino rosado D.O. Valdepeñas Viña Danza 75 cl,221,Vino tinto crianza Viña Albali DO Valdepeñas,70.7
+125351,Vino tinto crianza D.O. Rioja Marqués de Caceres 75 cl,214,Vino tinto crianza El Coto DO Rioja,74.7
+272358,Vino blanco albariño D.O. Rías baixas Viña Balcis 75 cl,318,Vino blanco albariño Ponte Tamuxe DO Rías Baixas,76.3
+293708,Vino tinto Mucho mas 75 cl,210,Vino tinto Don Simón,70.0
+132500,Vino blanco verdejo D.O. Rueda Protos 75 cl,325,Vino blanco verdejo Abadía Mantrús DO Rueda,77.5
+103843,Vino tinto D.O. Rioja Castillo de Albai 75 cl,218,Vino tinto reserva Comportillo DO Rioja,71.8
+3475,Vino tinto crianza D.O. Rioja Ederra 75 cl,214,Vino tinto crianza El Coto DO Rioja,81.7
+306460,Vino blanco semidulce Luminis 75 cl,328,Vino blanco semidulce Diamante DO Rioja,73.5
+297271,Vino tinto joven D.O. Rioja Castillo de Haro 75 cl,215,Vino tinto cosecha Comportillo DO Rioja,72.3
+207808,Vino blanco chardonnay D.O. Castilla Señorío de Ayerbe 75 cl,309,Vino blanco Don Simón chardonnay airén,71.7
+67977,Vino tinto roble D.O. Ribera del Duero Altos de Tamarón 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,75.2
+265214,Vino frizzante verde Fizzy 75 cl,406,Vino blanco verdejo frizzante DulZ.Ze,73.0
+80111,Vino tinto gran reserva D.O. Valdepeñas Viña Albalí 75 cl,221,Vino tinto crianza Viña Albali DO Valdepeñas,80.0
+275283,Vino blanco Dulce María 75 cl,1667,Vinagre de vino blanco Hacendado,75.6
+304871,Tinto de verano con limón Fiesta del Dia 330 ml,3345,Tinto de verano limón Casón Histórico,75.3
+178251,Vino tinto crianza D.O. Rioja Azpilicueta 75 cl,214,Vino tinto crianza El Coto DO Rioja,78.9
+189921,Vino rosado D.O. Rioja El coto 75 cl,315,Vino blanco El Coto DO Rioja,72.4
+105588,Vino blanco verdejo D.O. Rueda Cuatro rayas 75 cl,326,Vino blanco verdejo Condado de Teón DO Rueda,73.6
+77318,Vino tinto crianza D.O. Ribera del Duero Altos del Tamarón 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,71.2
+303651,Vermut rojo Ardanche 75 cl,543,Vermouth rojo Martini,73.2
+36194,Vino tinto crianza D.O. Rioja Beronia 75 cl,214,Vino tinto crianza El Coto DO Rioja,80.6
+187106,Vino tinto crianza D.O. Rioja Glorioso 75 cl,214,Vino tinto crianza El Coto DO Rioja,79.5
+187084,Vino tinto roble D.O. Ribera del Duero Ribera del Duero 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,77.2
+143920,Tinto de verano con limón La Casera 33 cl,3345,Tinto de verano limón Casón Histórico,77.8
+108145,Vino tinto crianza D.O. Rioja Faustino Rivero 75 cl,216,Vino tinto crianza Cune DO Rioja,72.7
+183435,Vino blanco verdejo D.O. Rueda Pata negra 75 cl,325,Vino blanco verdejo Abadía Mantrús DO Rueda,73.8
+114428,Vino tinto roble D.O. Ribera del Duero Mayor de Castilla 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,76.5
+282757,Vino tinto crianza D.O. Rioja López de Haro 75 cl,214,Vino tinto crianza El Coto DO Rioja,76.9
+176704,Vino tinto crianza D.O. Ribera del Duero Protos 75 cl,230,Vino tinto crianza Abadía Mantrús DO Ribera del Duero,76.0
+138540,Vino tinto reserva D.O. Ribera del Duero Altos del Tamarón 75 cl,231,Vino tinto reserva Abadía Mantrús DO Ribera del Duero,72.1
+84588,Vino tinto crianza D.O. Madrid Puerta de Alcalá 75 cl,230,Vino tinto crianza Abadía Mantrús DO Ribera del Duero,72.0
+177319,Vino tinto roble D.O. Ribera del Duero Legaris 75 cl,232,Vino tinto roble Atardecer DO Ribera del Duero,76.1
+275278,Vino blanco Habla de ti 75 cl,1667,Vinagre de vino blanco Hacendado,71.1
+308262,Vino blanco verdejo DO Rueda Pata negra 20 cl,325,Vino blanco verdejo Abadía Mantrús DO Rueda,75.6
+221712,Vino tinto D.O. Rioja Beronia 75 cl,216,Vino tinto crianza Cune DO Rioja,75.4
+224032,Tinto de verano sin alcohol con limón La casera 33 cl,3899,"Tinto de verano 0,0% sin alcohol limón Don Simón",75.8
+55937,Ron añejo Havana 70 cl,585,Ron añejo Negrita,72.7
+185547,Vino tinto gran reserva D.O. Rioja Faustino 75 cl,218,Vino tinto reserva Comportillo DO Rioja,73.2
+280261,Vermouth blanco verdejo 61 75 cl,541,Vermouth blanco Maronti,73.5
+302893,"Beefeater 0,0 sin alcohol 70 cl",3332,"Cerveza 0,0% sin alcohol Falke",76.4
+275400,Vino blanco D.O. Madrid Puerta de Alcalá 75 cl,313,Vino blanco Marina Alta DO Alicante,72.0
+308227,Licor de hierbas Del mono 70 cl,638,Licor de hierbas Puente Pazos,70.4
+422,Vinagre de vino blanco Aliña tu Dia 1 L,1667,Vinagre de vino blanco Hacendado,77.2
+211412,Vinagre de vino tinto Borges 1 L,1667,Vinagre de vino blanco Hacendado,72.0
+101,Aceite refinado de girasol Diasol 1 L,1674,"Aceite de girasol refinado 0,2º Hacendado",81.2
+112529,Aceite de oliva virgen extra Dia La Almazara del Olivar 1 L,1666,Aceite de oliva virgen extra Picual Casa Juncal,70.6
+266129,Aceite de oliva virgen extra Dia La Almazara del Olivar 3 L,1666,Aceite de oliva virgen extra Picual Casa Juncal,70.6
+12360,Aceite de oliva virgen extra Dia La Almazara del Olivar 750 ml,1666,Aceite de oliva virgen extra Picual Casa Juncal,70.6
+193,Aceite de girasol Koipe 1 L,2736,Atún en aceite de girasol Hacendado,70.8
+309958,Aceite de oliva virgen extra squizz Coosur 500 ml,1662,Aceite de oliva virgen extra Hacendado,80.0
+188385,Aceite de oliva intenso Carbonell 1 L,2738,Atún en aceite de oliva Hacendado,75.0
+282336,Aceite de girasol La masía 5 L,1674,"Aceite de girasol refinado 0,2º Hacendado",70.2
+280370,Aceite de oliva virgen extra ecológico Oro de Génave 500 ml,337,Filetes de sardina marinada Hacendado en aceite de oliva virgen extra,70.3
+280367,Aceite de oliva virgen extra de ajo La española 250 ml,1662,Aceite de oliva virgen extra Hacendado,74.7
+280366,Aceite de oliva virgen extra de trufa La española 250 ml,337,Filetes de sardina marinada Hacendado en aceite de oliva virgen extra,74.1
+280363,Aceite de girasol Coosol 5 L,2736,Atún en aceite de girasol Hacendado,73.5
+45500,Tomate frito casero Dia Vegecampo 350 g,2114,Tomate frito estilo casero Hacendado,71.2
+114545,Tomate frito Orlando 350 g,2113,Tomate frito Hida,75.7
+19518,Sal yodada Dia Dia 1 Kg,1678,Sal yodada fina Hacendado,78.8
+84060,Vinagre de manzana Aliña tu Dia 1 L,1668,Vinagre de manzana Hacendado,73.5
+56586,Mostaza Dia Salseo 330 g,2140,Salsa Miel y Mostaza Hacendado,73.7
+115525,Tomate frito Orlando 3 x 212 g,2113,Tomate frito Hida,71.8
+299147,Pimienta negra molida Dia Vegecampo 65 g,1986,Pimienta negra molida Hacendado,75.0
+220347,Mayonesa Calvé 430 ml,2081,Mayonesa Hacendado,72.7
+277454,Ketchup Heinz 700 g,2087,Ketchup Hacendado,70.0
+297208,Pimentón dulce Dia Vegecampo 58 g,1964,Pimentón dulce de la Vera Hacendado,75.5
+302308,Tomate frito 0% azúcares añadidos Dia Vegecampo 390 g,2116,Tomate frito sin azúcares añadidos Hacendado,74.1
+78731,Tomate frito Solís 350 g,2111,Tomate frito Hacendado,80.0
+303982,Sal fina Dia 250 g,1676,Sal fina Hacendado,80.0
+132345,Salsa boloñesa Gallo 350 g,1718,Lasaña boloñesa Hacendado,74.3
+31118,Ketchup Heinz 460 g,2087,Ketchup Hacendado,70.0
+129986,Tomate frito Solís 2 x 460 g,2113,Tomate frito Hida,75.7
+107992,Orégano Dani 11 g,1939,Orégano Hacendado,73.7
+188953,Salsa barbacoa Hellmann's 250 ml,2117,Salsa Barbacoa Hacendado,71.8
+106144,Vinagre balsámico de Módena Dia Selección Mundial 500 ml,1673,Vinagre balsámico de Módena Hacendado,71.1
+117881,Sazonador para pollo asado Maggi 34 g,2011,Sazonador barbacoa Hacendado para pollo y costillas,71.2
+187983,Canela en rama Carmencita 5 g,1994,Canela en rama Hacendado,71.8
+81337,Salsa de soja Heinz 150 ml,2131,Salsa de Soja Hacendado,81.2
+138138,Salsa basilico Barilla 400 g,2117,Salsa Barbacoa Hacendado,72.2
+139419,Sazonador para fajitas Old El Paso 30 g,2008,Sazonador para fajitas Hacendado sabor tex-mex,71.4
+308076,Salsa de cebolla caramelizada Ybarra 250 ml,2975,Cebolla caramelizada Hacendado,71.4
+306536,Mayonesa de ajo asado Hellmann's 250 ml,2083,Mayonesa Hellmann's,74.5
+307992,Salsa ranchera Hellmann's 245 ml,2083,Mayonesa Hellmann's,72.7
+14107,Salsa de queso Old El Paso 320 g,2143,Salsa de Queso Hacendado,70.0
+282359,Sal rosa del himalaya fina Toque 250 g,1687,Sal rosa del Himalaya Hacendado,79.2
+104003,Mayonesa Prima 400 ml,2085,Mayonesa Ybarra,75.9
+1748,Tomate frito Solís 360 g,2111,Tomate frito Hacendado,80.0
+187984,Hojas de laurel Carmencita 8 g,1941,Hoja de laurel Hacendado,70.0
+125629,Bechamel Knorr 500 ml,2042,Bechamel Hacendado,72.7
+309959,Pasta de tomate doble concentrado Montali 128 g,2839,Tomate doble concentrado Hacendado extra,76.1
+284529,Sazonador para burritos suave Old El Paso 40 g,2013,Sazonador para burritos Hacendado,71.9
+187990,Canela molida Carmencita 43 g,1993,Canela molida Hacendado,70.3
+107990,Perejil Dani 13 g,1940,Perejil Hacendado,73.7
+187992,Cayena guindillas Carmencita 16 g,2000,Cayena guindillas Hacendado,75.6
+188317,Ajo y perejil Carmencita 55 g,1947,Ajo y Perejil Hacendado,70.3
+187899,Pimentón dulce Carmencita 47 g,1968,Pimentón dulce Hacendado,71.8
+187993,Colorante Carmencita 65 g,1963,Colorante alimentario Hacendado,78.0
+302726,Salsa barbacoa Bull's eye 300 ml,2117,Salsa Barbacoa Hacendado,71.8
+188324,Salsa barbacoa Heinz 0.22 ml,2117,Salsa Barbacoa Hacendado,75.7
+282303,Sazonador para paella de carne Pote 12.5 g,2012,Sazonador para paella con azafrán Hacendado,72.2
+187972,Hierbas provenzales Carmencita 10 g,1942,Hierbas provenzales Hacendado,77.6
+183217,Crema de vinagre de módena con frambuesa Aliña tu Dia 220 ml,1670,Crema de vinagre balsámico de Módena Hacendado,71.9
+1233,Alubias blancas cocidas Dia Vegecampo 400 g,2557,Alubia cocida blanca Hacendado,70.2
+28055,Arroz vaporizado Brillante 1 Kg,2381,Arroz vaporizado Hacendado,76.2
+239441,Tortitas de arroz y quinoa Ecocesta bolsa 120 g,2403,Tortitas de legumbres y arroz Hacendado,71.9
+280402,Noodles de arroz Tiger Khan 375 g,2520,Noodles de arroz Hacendado,74.4
+10284,Cereales copos de arroz y trigo integral con frutos rojos Gran Dia caja 300 g,2261,Cereales copos tostados de trigo integral y arroz Hacendado con chocolate,74.4
+68890,Tortitas de arroz integral con chocolate negro Bicentury bolsa 130 g,2402,Tortitas de arroz con chocolate con leche Hacendado,70.1
+161621,Tortitas de arroz integral con chocolate blanco Dia Naturmundo bolsa 130 g,2400,Tortitas de arroz con chocolate blanco sabor yogur Hacendado,73.2
+515,Fideo cabellín Dia Al Diante 500 g,2489,Fideo cabello de ángel Hacendado,72.0
+268896,Garbanzos cocidos pedrosillanos Dia Vegecampo 400 g,2553,Garbanzo cocido Pedrosillano Hacendado,76.7
+189343,Lentejas pardinas Luengo 1 Kg,2566,Lenteja pardina Hacendado,76.9
+101720,Garbanzos cocidos Luengo 400 g,2552,Garbanzo cocido Hacendado,76.9
+194830,Garbanzos pedrosillanos Dia Vegecampo 1 Kg,2555,Garbanzo pedrosillano Hacendado,72.4
+1878,Lentejas pardinas Luengo 500 g,2566,Lenteja pardina Hacendado,76.9
+189486,Tortelloni de carne Gallo 200 g,2521,Tortellini carne Pagani,75.0
+118805,Cous cous Gallo 500 g,2380,Cous cous mediano Hacendado,75.0
+119810,Alubias blancas cocidas Luengo 400 g,2557,Alubia cocida blanca Hacendado,80.0
+102510,Alubias blancas Luengo 1 Kg,2560,Alubia blanca Hacendado,74.3
+53235,Alubias blancas cocidas La Asturiana 400 g,2557,Alubia cocida blanca Hacendado,71.4
+38252,Lentejas pardinas La Asturiana 1 Kg,1760,Lentejas a la riojana Hacendado,70.6
+204541,Cous cous marroquí Trevijano 300 g,2380,Cous cous mediano Hacendado,71.1
+310674,Tallarines Gallo 400 g,2511,Tallarines Hacendado,76.9
+302017,Pasta de dientes Colgate Triple Action tubo 100 ml,794,Dentífrico Triple Acción Colgate menta intensa,71.9
+155149,Aceitunas rellenas de anchoa La española 150 g,1420,Aceitunas verdes rellenas de anchoa Hacendado,74.7
+69057,Aceitunas rellenas de anchoa Dia Vegecampo 3 x 50 g,1420,Aceitunas verdes rellenas de anchoa Hacendado,81.0
+302193,Aceitunas rellenas de anchoa grandes Dia Vegecampo 150 g,1420,Aceitunas verdes rellenas de anchoa Hacendado,75.3
+150917,Caldo de cocido Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,78.8
+308783,Caldo gourmet de cocido Gallina Blanca 1 L,3084,Caldo de pollo casero Gallina Blanca,75.7
+217167,Caldo de cocido Gallina Blanca 2 L,3084,Caldo de pollo casero Gallina Blanca,78.8
+295308,Pastillas de caldo de carne Dia Al Punto 24 unidades,3092,Caldo de carne Hacendado en pastillas,71.2
+262784,Mix Ups snacks sabor queso 125 g,1049,Snack Balls sabor queso Hacendado,73.5
+141492,Lay's 3D's sabor queso y bacon 28 g,1032,Conos sabor bacón y queso Hacendado,76.4
+64783,Palomitas con sal para microondas Popitas 300 g,1304,Palomitas de maíz con sal Hacendado para microondas,80.5
+4670,Maíz para palomitas Dia Snack Maniac 500 g,1304,Palomitas de maíz con sal Hacendado para microondas,72.7
+296059,Snack para gatos rellenos con pollo y malta Deligato de Dia bolsa 60 g,3544,Snacks gato rellenos con pollo y malta Compy,73.8
+122725,Patatas fritas onduladas Dia Snack Maniac 180 g,1025,Patatas fritas onduladas sabor campestre Hacendado,71.6
+162083,Pipas gigantes con sal Dia Snack Maniac 200 g,1299,Pipas girasol tostadas Hacendado gigante con sal,70.1
+277767,Cacahuetes fritos con miel Dia Snack Maniac 200 g,1319,Cacahuete frito con miel Hacendado,71.6
+286894,Maíz frito sabor barbacoa Dia Snack Maniac 170 g,1028,Tiras de maíz frito sabor barbacoa Hacendado,76.3
+3165,Patatas fritas Santa Ana 270 g,1022,Patatas fritas 0% sal añadida Hacendado,79.2
+142050,Pepinillos y cebollitas Dia Vegecampo 380 g,1451,Mix de pepinillos y cebollitas Hacendado,77.6
+303692,Pepinillos agridulces Hugo reitzel 360 g,1453,Pepinillos agridulces Hacendado,76.4
+298160,Piparras Rioverde 120 g,141,Espárragos verdes finos,70.0
+308480,Ajos aliñados Rioverde 220 g,1449,Ajos aliñados Hacendado,74.3
+146920,Aceitunas rellenas de anchoa Jolca 130 g,1420,Aceitunas verdes rellenas de anchoa Hacendado,81.2
+142058,Aceitunas negras sin hueso Dia Vegecampo 150 g,1435,Aceitunas negras sin hueso Hacendado,78.8
+116850,Aceitunas verdes sin hueso Dia Vegecampo 3 x 75 g,1421,Aceitunas verdes sin hueso Hacendado,76.5
+273264,Aceitunas rellenas de anchoa suave Dia Vegecampo 150 g,1422,Aceitunas verdes rellenas de anchoa Hacendado reducidas en sal,78.0
+273617,Aceitunas rellenas de anchoa suave Dia Vegecampo 3 x 50 g,1422,Aceitunas verdes rellenas de anchoa Hacendado reducidas en sal,76.5
+302192,Aceitunas camperas sin hueso Dia Vegecampo 150 g,1426,Aceitunas verdes sin hueso aliñadas Hacendado,72.7
+20654,Aceitunas con hueso Jolca 120 g,1429,Aceitunas verdes con hueso Hacendado,78.4
+273340,Aceitunas negras de Aragón Dia Vegecampo 250 g,1436,Aceitunas negras de Aragón Campo Nature,70.9
+169170,Aceitunas rellenas de boquerón en vinagre El faro 150 g,333,Boquerones en vinagre Hacendado en aceite de girasol,74.7
+64784,Aceitunas rellenas de anchoa La española 3 x 50 g,1420,Aceitunas verdes rellenas de anchoa Hacendado,72.7
+308092,Aceitunas rellenas de gilda La española 130 g,1432,Aceitunas verdes rellenas de pepinillo Hacendado,72.7
+44073,Aceitunas rellenas de anchoa suaves La española 130 g,1422,Aceitunas verdes rellenas de anchoa Hacendado reducidas en sal,78.8
+308094,Aceitunas rellenas de anchoa suave Jolca 3 x 50 g,1420,Aceitunas verdes rellenas de anchoa Hacendado,80.5
+235055,Chocolate negro 85% cacao Dia Temptation 100 g,3155,Chocolate negro 85% cacao Hacendado,76.9
+300066,Chocolate blanco Dia Temptation 100 g,1380,Chocolate blanco fundir Hacendado,70.4
+58237,Chocolate negro con almendras enteras Dia Temptation 200 g,3160,Chocolate puro Valor con almendras enteras,78.7
+235070,Chocolate negro 74% cacao Dia Temptation 100 g,3157,Chocolate negro 72% de cacao Hacendado,76.5
+11185,Chocolate negro sin azúcares añadidos Dia Temptation 100 g,1822,Batido de chocolate Hacendado 0% sin azúcares añadidos,70.8
+243992,Perlitas de chocolate Dr. Oetker bolsa 100 g,1378,Gotas de chocolate negro para fundir Hacendado,70.6
+10410,Galletas digestive con chocolate Galleteca de Dia paquete 300 g,2456,Galletas Digestive chocolate con leche Hacendado,77.9
+3053,Chocolate a la taza en polvo Dia Temptation 400 g,2830,Cacao puro en polvo La Chocolatera,70.1
+301463,Crema de avellanas y cacao Dia Temptation frasco 380 g,3214,Crema de avellanas y cacao Hacendado,70.3
+300059,Chocolate blanco con galleta Dia Temptation 100 g,2468,Galletas con chocolate blanco Hacendado,77.8
+33076,Barrita de chocolate caramelo y galleta Dia Temptation bolsa 290 g,3187,Barritas de galleta y caramelo Hacendado bañadas de chocolate con leche,74.8
+223308,Cacao soluble 0% azúcares añadidos ColaCao 325 g,3174,Chocolate extrafino con leche Hacendado 0% azúcares añadidos,71.7
+288256,Chocolate blanco sin azúcar añadido Trapa 90 g,1822,Batido de chocolate Hacendado 0% sin azúcares añadidos,75.3
+239709,Chocolate negro 85% cacao sin azúcar añadido Valor 100 g,1822,Batido de chocolate Hacendado 0% sin azúcares añadidos,74.5
+27083,Cacao soluble ColaCao 2.2 Kg,2825,Cacao soluble ColaCao original,77.8
+14013,Chocolate negro 85% cacao Lindt Excellence 100 g,3155,Chocolate negro 85% cacao Hacendado,74.6
+284307,Cacao soluble instantáneo Dia Temptation 800 g,2826,Cacao soluble instantáneo Hacendado,76.9
+54432,Chocolate negro 70% cacao Lindt Excellence 100 g,3157,Chocolate negro 72% de cacao Hacendado,74.3
+307164,Chocolate blanco y galleta Nestlé Jungly 90 g,2468,Galletas con chocolate blanco Hacendado,72.5
+188427,Chocolate negro 70% cacao relleno con mousse de naranja Valor 150 g,3164,Chocolate negro 72% cacao Hacendado con trozos de naranja,79.6
+310413,Cacao soluble instantáneo alto en proteínas Nesquik 330 g,2824,Cacao soluble instantáneo Nesquik,78.6
+279423,Cacao soluble instantáneo 0% azúcares añadidos Nesquik 320 g,2824,Cacao soluble instantáneo Nesquik,75.9
+148194,Chocolate puro con almendras sin azúcar Valor 150 g,3160,Chocolate puro Valor con almendras enteras,78.2
+288257,Chocolate negro con almendras Trapa 100 g,3158,Chocolate negro 55% cacao Hacendado con almendras,78.4
+205513,Chocolate blanco con lacasitos Lacasitos 100 g,2468,Galletas con chocolate blanco Hacendado,72.5
+267782,Chocolate negro 85% cacao Nestlé Dark 120 g,3155,Chocolate negro 85% cacao Hacendado,80.6
+219060,Chocolate negro 70% cacao Nestlé 120 g,3155,Chocolate negro 85% cacao Hacendado,80.7
+4914,Galletas con chocolate rellenas de naranja Galleteca de Dia caja 300 g,2453,Galletas rebuenas Hacendado rellenas de chocolate,71.4
+207756,Cereales crujientes con chocolate y avellanas Kellogg's Extra caja 375 g,2244,Cereales rellenos de chocolate y avellana Hacendado,74.5
+119449,Cereales con chocolate y avellana Kellogg's Krave caja 410 g,2244,Cereales rellenos de chocolate y avellana Hacendado,80.0
+299366,Chocolate negro 100% cacao Trapa 80 g,3155,Chocolate negro 85% cacao Hacendado,80.7
+310480,Bombones de chocolate cuore Nestlé Caja Roja bolsa 24 g,3201,Surtido bombones Senzza de chocolate,72.0
+306557,"Barrita de galleta, chocolate y cereales Nestlé Crunch bolsa 1 unidad",2273,Barritas de cereales Hacendado chocolate con leche,75.0
+18992,Galleta rellena de crema de chocolate Principe paquete 300 g,2460,Galletas mini de cacao Caocream Hacendado rellenas de crema,71.8
+74306,Cereales de pétalos de trigo y chocolate Gran Dia caja 500 g,2261,Cereales copos tostados de trigo integral y arroz Hacendado con chocolate,71.4
+278202,Chocolate blanco con trozos de oreo Milka 100 g,3164,Chocolate negro 72% cacao Hacendado con trozos de naranja,72.7
+76223,Cereales de bolas con chocolate Gran Dia caja 500 g,2275,Barritas de cereales muesli Hacendado con chocolate,76.5
+106852,Cereales rellenos de cacao y avellana Gran Dia caja 500 g,2250,Cereales rellenos de crema de cacao y avellana Hacendado sin gluten,81.6
+18237,Barritas de chocolate con caramelo y cacahuetes Snickers bolsa 150 g,2273,Barritas de cereales Hacendado chocolate con leche,70.8
+3539,Barritas de chocolate y galleta rellena de caramelo Twix bolsa 150 g,3187,Barritas de galleta y caramelo Hacendado bañadas de chocolate con leche,78.6
+60744,Barritas de chocolate rellenas de caramelo y galleta Twix bolsa 50 g,3187,Barritas de galleta y caramelo Hacendado bañadas de chocolate con leche,78.0
+179570,Galletas rellenas de chocolate maxi choc Principe paquete 250 g,2453,Galletas rebuenas Hacendado rellenas de chocolate,70.8
+189842,Galleta rellena de crema de chocolate Principe paquete 3 x 300 g,2460,Galletas mini de cacao Caocream Hacendado rellenas de crema,70.5
+267606,Galletas de cacao rellenas de crema bañadas con chocolate crunchy bites Oreo bolsa 110 g,2464,Galletas de cacao Caocream bañadas de chocolate blanco Hacendado rellenas de crema,75.7
+282763,Crema de cacao noir Nocilla bote 180 g,1133,Rosquilla de cacao Caocream Hacendado,70.4
+18242,Barritas de chocolate y caramelo 3 unidades Mars bolsa 135 g,3187,Barritas de galleta y caramelo Hacendado bañadas de chocolate con leche,71.8
+13068,Roscos de galleta con chocolate blanco chocoaros Galleteca de Dia bolsa 128 g,3181,Chocolate blanco Fussion Hacendado relleno de crema de galleta y cacao,70.4
+236662,Mini galletas de cacao rellenas de crema Galleteca de Dia bolsa 100 g,2460,Galletas mini de cacao Caocream Hacendado rellenas de crema,77.4
+220172,Barquillos rellenos de cacao Galleteca de Dia bolsa 210 g,2467,Barquillos rellenos con crema de cacao Hacendado,74.7
+283093,Cereales granola de avena con chocolate negro Kellogg's Special K caja 320 g,2248,Cereales de arroz inflado Choco Krispies Kellogg's con chocolate,71.3
+297860,Barritas de galleta con doble chocolate Kit Kat 99 g,3183,Barritas de chocolate con leche Hacendado rellenas de leche,70.8
+110671,Galletas con pepitas de chocolate Galleteca de Dia bolsa 225 g,934,8 Magdalenas con pepitas de chocolate,73.6
+258933,Galletas digestive finas con chocolate negro Fontaneda caja 170 g,2456,Galletas Digestive chocolate con leche Hacendado,73.9
+16559,Galletas con pepitas de chocolate Chips Ahoy caja 256 g,934,8 Magdalenas con pepitas de chocolate,79.0
+220178,Mini galletas con pepitas de chocolate Galleteca de Dia caja 160 g,1119,Mini magdalenas con pepitas de chocolate con leche Hacendado,74.3
+26136,Mini galletas con pepitas de chocolate Chips Ahoy caja 160 g,934,8 Magdalenas con pepitas de chocolate,74.4
+271106,Galletas caramelizadas rellenas de chocolate Lotus Biscoff bolsa 150 g,2417,Galletas caramelizadas Lotus Biscoff,76.6
+220174,Galletas de cacao rellenas de crema Galleteca de Dia caja 220 g,2459,Galletas de cacao Caocream Hacendado rellenas de crema,75.0
+293811,Cereales con chocolate Kit Kat caja 330 g,2275,Barritas de cereales muesli Hacendado con chocolate,70.4
+296112,Bombones de chocolate negro 70% cacao Nestlé Dark caja 142 g,3199,Surtido bombones Senzza de chocolate negro 70%,73.7
+310423,Barrita de chocolate con pistacho Nestlé 30 g,3194,Pistachos bañados de chocolate con leche Hacendado,80.0
+295319,Galletas con chocolate choco sticks Milka bolsa 112 g,2472,Galletas Choco leche con chocolatina Hacendado,77.9
+156729,Barrita de chocolate y caramelo Mars bolsa 51 g,2275,Barritas de cereales muesli Hacendado con chocolate,72.7
+301595,Barrita de chocolate con 30% de proteínas Corny bolsa 50 g,2402,Tortitas de arroz con chocolate con leche Hacendado,72.7
+294639,Galleta con tres chocolates El molino de Dia 76 g,2456,Galletas Digestive chocolate con leche Hacendado,70.7
+301379,Mini barritas de chocolate y galleta rellena de caramelo Twix bolsa 227 g,3187,Barritas de galleta y caramelo Hacendado bañadas de chocolate con leche,75.4
+303699,Cereales cubiertos de chocolate y galleta balls Huesitos bolsa 140 g,2251,Cereales cubiertos de chocolate blanco rellenos con leche Hacendado,72.6
+296176,Galletas de cereales con chocolate blanco Artiach Dinosaurus caja 264 g,2274,Barritas de cereales Hacendado con chocolate blanco,73.3
+306420,Mini galletas bañadas con chocolate ColaCao bolsa 100 g,2457,Galletas Roditas bañadas con chocolate blanco Hacendado,72.7
+310758,Galletas rellenas de Nutella 166 g,2453,Galletas rebuenas Hacendado rellenas de chocolate,71.6
+120826,Café molido mezcla Dia Cafetería 2 x 250 g,2770,Café molido mezcla intensa La Estrella,70.3
+1161,Café molido natural descafeinado Dia Cafetería 250 g,2599,Café monodosis descafeinado natural Hacendado,74.1
+245,Café molido mezcla Saimaza 250 g,2764,Café molido mezcla Hacendado,81.8
+139219,Caramelos sabor miel y limón Halls bolsa 2 x 32 g,3225,Caramelos limón mentol Respiral Halls,76.7
+42570,Azúcar moreno de caña integral Azucarera brik 800 g,3046,Panela azúcar moreno de caña integral Hacendado,77.9
+151636,Café molido natural Marcilla 250 g,2763,Café molido natural Hacendado,80.9
+139202,Caramelos sabor eucalipto Halls bolsa 2 x 32 g,3224,Caramelos eucaliptus mentol Respiral Halls,72.0
+308473,Cápsulas intenso espresso Dia Cafetería 16 unidades,2578,Café en cápsula espresso intenso Dolce Gusto,74.2
+229,Café soluble descafeinado Dia Cafetería 100 g,2814,Café soluble descafeinado Hacendado,78.1
+273825,Cápsulas de café descafeinado Dia Arom'arte 20 unidades,2571,Café en cápsula descafeinado Hacendado,70.1
+231,Café soluble clásico Dia Cafetería 100 g,2811,Café soluble Classic Hacendado,70.4
+149700,Caramelos de eucalipto sin azúcar Pictolin bolsa 200 g,3223,Caramelos sabor eucalipto y mentol Hacendado 0% azúcares,72.7
+154331,Manzanilla con anís Hornimans 25 unidades,2917,Infusión Manzanilla con anís Hacendado,73.0
+271237,Caramelos de limón y miel Mentolin bolsa 100 g,3225,Caramelos limón mentol Respiral Halls,73.2
+303592,Golosinas shiny mix Damel bolsa 135 g,3258,Golosinas Fresi Pink Mix Hacendado,73.5
+124236,Gelatina en láminas Dr. Oetker bolsa 20 g,1376,Gelatina neutra en láminas Foodsy,73.0
+265005,Crema de galletas para untar Lotus Biscoff bote 400 g,2417,Galletas caramelizadas Lotus Biscoff,71.8
+265465,Azúcar glacé Dia bote 300 g,3047,Azúcar glas Hacendado,74.1
+204478,Golosinas beans Fini bolsa 165 g,3253,Golosinas Boca Fruit Hacendado,75.0
+171845,Golosinas spaguetti sabor fresa pika Haribo bolsa 150 g,3265,Golosinas tubos pica Hacendado sabor fresa y nata,70.7
+207234,Café molido mezcla descafeinado Marcilla 200 g,2769,Café molido mezcla Marcilla gran aroma,76.9
+308672,Cápsulas de café descafeinado Dia Cafetería 16 unidades,2571,Café en cápsula descafeinado Hacendado,70.1
+235854,Cápsulas de café ristretto descafeinado L'Or 10 unidades,2576,Café en cápsula descafeinado espresso Hacendado,73.6
+152675,Golosinas starmix Haribo bolsa 150 g,3257,Golosinas Mix Hacendado,70.3
+34828,Azúcar blanco Azucarera brik 800 g,3042,Azúcar blanco Hacendado,72.2
+267623,Infusión quema grasa Pompadour 20 unidades,2929,Infusión quema grasas Hacendado,70.2
+184422,Cápsulas de café grande intenso Dolce Gusto 16 unidades,2578,Café en cápsula espresso intenso Dolce Gusto,79.6
+188331,Infusión de cola de caballo Pompadour 20 unidades,2916,Infusión Cola de caballo Hacendado,71.6
+187420,Azúcar moreno de caña en sobres Azucarera caja 400 g,3044,Azúcar moreno de caña Hacendado,73.7
+305847,Cápsulas de café latte Genova Dolce Gusto 14 unidades,2583,Café con leche en cápsula Dolce Gusto,73.8
+189181,Azúcar moreno integral en terrones Azucarera caja 500 g,3046,Panela azúcar moreno de caña integral Hacendado,76.5
+235862,Cápsulas de café ristretto L'Or 10 unidades,2574,Café en cápsula ristretto Hacendado,77.4
+203923,Café soluble crema Dia Cafetería 100 g,2815,Café soluble descafeinado en sobres Hacendado,71.0
+290659,Café molido mezcla Saimaza 500 g,2764,Café molido mezcla Hacendado,81.8
+147899,Colorantes alimentarios Dr. Oetker caja 40 g,1963,Colorante alimentario Hacendado,76.4
+254975,Cápsulas de café Colombia L'Or 20 unidades,2572,Café en cápsula Colombia Hacendado,76.7
+225574,Café molido natural intenso Toscaf 250 g,2763,Café molido natural Hacendado,71.7
+210776,Edulcorante stevia Dia frasco 150 unidades,3057,Edulcorante stevia en sobres Hacendado,74.6
+253585,Café molido natural Marcilla 500 g,2763,Café molido natural Hacendado,80.9
+306467,Café soluble cappuccino sabor caramelo en sobres Dia Cafetería 125 g,2819,Café soluble cappuccino caramelo Hacendado,71.9
+264767,Cápsulas de café ristretto Marcilla 20 unidades,2585,Café en cápsula ristretto napoli Dolce Gusto,72.9
+187421,Edulcorante Natreen caja 400 unidades,3052,Edulcorante sacarina en sobres Hacendado,70.6
+149804,Caramelos de eucalipto sin azúcar Smint lata 35 g,3223,Caramelos sabor eucalipto y mentol Hacendado 0% azúcares,70.6
+309606,Café en grano Colombia L'Or 500 g,2767,Café molido Colombia Hacendado,72.3
+189203,Golosinas selection mix Fini bolsa 150 g,3258,Golosinas Fresi Pink Mix Hacendado,73.1
+310414,Cápsulas de café descafeinado Dolce Gusto 30 unidades,2582,Café en cápsula descafeinado espresso intenso Dolce Gusto,76.9
+238516,Caramelos tradicionales Solano bolsa 99 g,671,Barra de pan tradicional,70.4
+280010,Edulcorante granulado en sobres Natreen caja 90 unidades,3055,Edulcorante granulado stevia Hacendado,70.6
+300415,Azúcar moreno de caña integral Azucarera brik 500 g,3046,Panela azúcar moreno de caña integral Hacendado,77.9
+245400,Cápsulas de café fuerte Saimaza 20 unidades,2570,Café en cápsula extra fuerte Hacendado,70.8
+207235,Café molido natural descafeinado gran aroma Marcilla 200 g,2772,Café en grano natural Hacendado descafeinado,72.1
+310425,Cápsulas de café ristretto Starbucks 10 unidades,2574,Café en cápsula ristretto Hacendado,71.6
+43193,Café molido mezcla créme express Marcilla 250 g,2769,Café molido mezcla Marcilla gran aroma,73.4
+273719,Cápsulas de café ristretto descafeinado L'Or 20 unidades,2576,Café en cápsula descafeinado espresso Hacendado,73.6
+293150,Golosinas funiverse mix Trolli bolsa 100 g,3258,Golosinas Fresi Pink Mix Hacendado,70.4
+305456,Café en grano natural La estrella 500 g,2771,Café en grano natural Hacendado,77.8
+262263,Gelatina sabor limón Royal caja 114 g,1129,Rollo con sabor avellana Hacendado,72.0
+310501,Cápsulas de café espresso Palermo Dolce Gusto 14 unidades,2578,Café en cápsula espresso intenso Dolce Gusto,80.0
+295031,Golosinas tropical mix Vidal bolsa 180 g,3266,Golosinas Tropical Jelly Hacendado,73.1
+307733,Café soluble sabor avellana Nescafé 95 g,2814,Café soluble descafeinado Hacendado,70.0
+298563,Galletas Cuétara María Oro bolsa 600 g,2406,Galletas María dorada Hacendado,72.3
+114234,Galletas rellenas de crema de limón Cuétara paquete 150 g,2460,Galletas mini de cacao Caocream Hacendado rellenas de crema,70.0
+273426,Mini galletas rellenas de crema Oreo caja 160 g,2460,Galletas mini de cacao Caocream Hacendado rellenas de crema,72.9
+275423,Galletas caramelizadas rellenas de crema de vainilla Lotus Biscoff bolsa 150 g,2417,Galletas caramelizadas Lotus Biscoff,70.6
+289548,Galletas caramelizadas rellenas de crema Lotus Biscoff bolsa 150 g,2417,Galletas caramelizadas Lotus Biscoff,80.0
+164754,Galletas maría sin gluten Gullón caja 400 g,2413,Galletas María sin gluten y sin lactosa Hacendado,78.9
+293490,Papilla de cereales y galleta Nestlé caja 475 g,3459,Papilla 8 cereales con galleta María Nestlé +6 meses,72.7
+307320,Tortitas con coco Inés Rosales bolsa 120 g,1112,Tortas de aceite Inés Rosales,74.6
+307898,Mini tortitas de maíz Bicentury bolsa 65 g,2405,Tortitas de maíz campestre Hacendado,73.7
+191844,Cereales copos de maíz corn flakes sin gluten Nestlé caja 375 g,2247,Cereales copos de maíz Corn Flakes Kellogg's,75.0
+250333,Barritas de cereales de avena y miel crunchy Nature Valley caja 210 g,2282,Barritas de avena Crunchy Nature Valley con chocolate negro,73.5
+18319,Cereales integrales con miel Nestlé Estrellitas caja 270 g,2245,Cereales estrellas de maíz Stars Hacendado con miel,72.7
+298227,Barritas de cereales sin gluten Nestlé caja 88 g,2276,Barritas de cereales con frutos secos Hacendado,72.0
+309766,Papilla de 8 cereales doble 0% Nestlé caja 330 g,3460,Papilla 8 cereales con miel Nestlé +6 meses,75.0
+257968,Papilla 8 cereales sin azúcares añadidos Hero Baby caja 410 g,471,Bebida de piña Hacendado sin azúcares añadidos,72.1
+307914,Champú anticaspa mentol Dia Imaqe botella 380 ml,2305,Champú anticaspa Menthol Fresh H&S,73.2
+307913,Champú y acondicionador anticaspa 2 en 1 Dia Imaqe botella 380 ml,2306,Champú y acondicionador anticaspa Classic 2 en 1 H&S,81.1
+301685,Champú anticaspa classic H&s botella 250 ml,2305,Champú anticaspa Menthol Fresh H&S,72.7
+291103,Champú anticaspa mentol Dia Imaqe botella 500 ml,2305,Champú anticaspa Menthol Fresh H&S,73.2
+294087,Gel de baño nutritivo original Lactovit botella 750 ml,873,Gel de baño nutritivo Lactovit piel normal y seca,76.1
+293505,Esponja de baño flor acción exfoliante Dia Imaqe bolsa 1 unidad,897,Esponja de baño flor Deliplus exfoliación suave,72.2
+302917,Jabón de manos avena Dia Imaqe pastilla 100 g,885,Jabón de manos en pastilla Beauty Cream Bar Dove,71.3
+160996,Lavavajillas a mano concentrado ultra Fairy botella 1.15 L,3610,Lavavajillas Ultra Todo en 1 Fairy en pastillas,74.2
+293507,Esponjas de baño exfoliante suave Dia Imaqe bolsa 2 unidades,897,Esponja de baño flor Deliplus exfoliación suave,73.7
+293508,Esponja de baño vegetal suave Dia Imaqe bolsa 1 unidad,900,Esponja de baño vegetal fibras naturales Deliplus,73.3
+188482,Limpiador desinfectante baños Sanytol spray 750 ml,3632,Limpiador Baños desinfectante Bosque Verde,72.9
+283092,Tabletas limpiadoras para prótesis dental Botikit de Dia caja 30 unidades,851,Tabletas limpiadoras prótesis dentales Benfix y ortodoncias,72.7
+292412,Rodillo quitapelusas Scotch brite 1 unidad,3881,Rodillo quitapelusas Bosque Verde,70.6

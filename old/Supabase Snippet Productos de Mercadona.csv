@@ -1,0 +1,392 @@
+﻿id_producto;nombre;precio;categoria_actual;subcategoria_actual;categoria_nueva;subcategoria_nueva
+ME-4080;Biberón 150 ml tetina silicona flujo lento Deliplus +0 meses;330;Bazar y Varios;Otros bazar;BEBES;OTROS
+ME-4081;Biberón 360 ml tetina silicona tres posiciones Deliplus +1 mes;380;Bazar y Varios;Otros bazar;BEBES;OTROS
+ME-4029;Cambiador multiusos desechable Deliplus;415;Bazar y Varios;Otros bazar;BEBES;OTROS
+ME-4083;Limpiador bebé para biberones y tetinas Deliplus;290;Bebidas;Licores y destilados;Bebes;Toallitas y algodón
+ME-3785;Bebida isotónica Iso On blue Hacendado;155;Bazar y Varios;Otros bazar;BEBIDA;OTROS
+ME-3775;Bebida isotónica sabor cítrico Iso drink;100;Bazar y Varios;Otros bazar;BEBIDA;OTROS
+ME-3787;Bebida isotónica sabor cítrico Iso drink zero;100;Bazar y Varios;Otros bazar;BEBIDA;OTROS
+ME-1228;Bebida Kéfir de coco Hacendado;110;Bazar y Varios;Otros bazar;BEBIDA;OTROS
+ME-1229;Bebida Kéfir natural Hacendado 0% MG;90;Bazar y Varios;Otros bazar;BEBIDA;OTROS
+ME-0428;Bebida multivitaminas Hacendado sin azúcares añadidos;100;Bazar y Varios;Otros bazar;BEBIDA;OTROS
+ME-0423;Bebida tropical Hacendado sin azúcares añadidos;100;Bazar y Varios;Otros bazar;BEBIDA;ZUMOS
+ME-0583;Brandy de Jerez solera reserva Convidado de Baco;600;Bazar y Varios;Otros bazar;BEBIDAS;LICORES Y DESTILADOS
+ME-3723;Bitter Kas sin alcohol;784;Bazar y Varios;Otros bazar;BEBIDAS;REFRESCOS
+ME-0198;Buey de mar cocido Hacendado;990;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-0801;Burger americana gruesas;320;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-0802;Burger Crunchy Chicken;200;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-0804;Burger de vaca madurada;290;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-0793;Burger de vacuno;620;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-0796;Burger de vacuno gruesas;510;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-1907;Burgers vegetales Hacendado con calabaza;200;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-1748;Cabecero de lomo Hacendado lonchas;270;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-1755;Caña de lomo cebo ibérico La Hacienda del ibérico;7600;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-1825;Canelones de carne y boletus Hacendado;370;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CARNE PREPARADA
+ME-0613;Butifarra fresca;362;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;CHARCUTERÍA
+ME-2780;Bloc foie gras de pato Hacendado;525;Bazar y Varios;Otros bazar;CARNICERÍA Y CHARCUTERIA;OTROS
+ME-3431;Helado chocolate y cookies Hacendado;315;Desayuno y Snack;Té e infusiones;CONGELADOS;HELADOS
+ME-3439;Helado Cookie Dough Hacendado de crema de vainilla con trozos de galletas;335;Desayuno y Snack;Galletas dulces;CONGELADOS;HELADOS
+ME-3428;Helado de chocolate Hacendado;330;Desayuno y Snack;Té e infusiones;CONGELADOS;HELADOS
+ME-3433;Helado caramelo con salsa de caramelo salado y trozos de caramelo Hacendado;325;Despensa;Sales;CONGELADOS;HELADOS
+ME-3442;Barra de helado sabor vainilla, chocolate y nata Hacendado;190;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3409;Helado cucurucho choco nata Hacendado;245;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3408;Helado cucurucho Hacendado de nata;245;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3406;Helado mini cucurucho nata Hacendado;330;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3395;Helado mini sándwich nata Hacendado;260;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3429;Helado nata Hacendado;230;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3437;Helado sabor huevo de chocolate Hacendado;365;Lácteos y Huevos;Huevos;CONGELADOS;HELADOS
+ME-3393;Helado sándwich de nata Hacendado;230;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3397;Helado sándwich super nata Hacendado;330;Lácteos y Huevos;Mantequillas y Natas;CONGELADOS;HELADOS
+ME-3436;Helado tarta de queso Hacendado con fresas;315;Lácteos y Huevos;Quesos;CONGELADOS;HELADOS
+ME-1866;Callos a la madrileña Hacendado;245;Bazar y Varios;Otros bazar;CONSERVAS Y ENLATADOS;CONSERVAS DE CARNE
+ME-3096;Berberecho al natural XS Hacendado;320;Bazar y Varios;Otros bazar;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3098;Berberechos al natural M Hacendado;425;Bazar y Varios;Otros bazar;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3097;Berberechos al natural S Hacendado;305;Bazar y Varios;Otros bazar;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3039;Atún claro en aceite de girasol Hacendado;430;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3042;Atún claro en aceite de oliva Hacendado;490;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3038;Atún en aceite de girasol Hacendado;650;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3041;Atún en aceite de oliva Hacendado;770;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-0344;Filetes de anchoa en aceite de girasol Hacendado;210;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-0347;Filetes de anchoa en aceite de oliva Hacendado;130;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3051;Filetes de bonito del norte en aceite de oliva Hacendado;810;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3055;Filetes de caballa del sur contenido reducido en sal Hacendado en aceite de oliva;320;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3053;Filetes de caballa del sur en aceite de oliva Hacendado;270;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-3056;Filetes de melva en aceite de oliva Hacendado;185;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-0361;Filetes de sardina ahumada Hacendado en aceite de girasol;215;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-0350;Filetes de sardina marinada Hacendado en aceite de oliva virgen extra;155;Despensa;Aceites;CONSERVAS Y ENLATADOS;CONSERVAS DE PESCADO Y MARISCO
+ME-2681;Gel fijador cabello con aceite de oliva Eco style;285;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;CABELLO
+ME-2915;Coloración permanente 0% amoníaco 4.15 chocolate helado Colorcor;390;Desayuno y Snack;Té e infusiones;CUIDADO PERSONAL E HIGIENE;CABELLO
+ME-2914;Coloración permanente 4.15 chocolate helado Colorcor;390;Desayuno y Snack;Té e infusiones;CUIDADO PERSONAL E HIGIENE;CABELLO
+ME-3947;Aceite árbol del té 100% puro Deliplus con pipeta dosificadora;300;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-1116;Aceite corporal aloe vera Deliplus;165;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-1117;Aceite corporal de almendras Deliplus 100% natural;340;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-1118;Aceite corporal de romero Deliplus 100% natural;320;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-1119;Aceite corporal rosa mosqueta Deliplus;480;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-0913;Gel aceite de baño Deliplus piel atópica;350;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-1126;Exfoliante corporal marino Deliplus Sal Mar Muerto;455;Despensa;Sales;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-0907;Gel de baño con sales minerales La Toja;295;Despensa;Sales;CUIDADO PERSONAL E HIGIENE;CORPORAL
+ME-3238;Brillo de labios Volumizer gloss Deliplus 01 transparente;500;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;COSMETICA
+ME-3239;Brillo de labios Volumizer gloss Deliplus 02 nude;500;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;COSMETICA
+ME-3240;Brillo de labios Volumizer gloss Deliplus 03 nude rosa;500;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;COSMETICA
+ME-3241;Brillo de labios Volumizer gloss Deliplus 05 rosa;500;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;COSMETICA
+ME-3242;Brillo de labios Volumizer gloss Deliplus 06 morado;500;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;COSMETICA
+ME-3243;Brillo de labios Volumizer gloss Deliplus 07 transparente con destellos;500;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;COSMETICA
+ME-3037;Bruma facial multifuncional Make Up Fixer Deliplus;550;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;COSMETICA
+ME-0647;Aceite facial doble limpieza Facial Clean desmaquillante y limpiador;375;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;COSMETICO
+ME-0637;Gel facial limpiador Facial Clean;250;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;FACIAL
+ME-0640;Mousse facial limpiadora purificante Deliplus Oil Free;400;Desayuno y Snack;Té e infusiones;CUIDADO PERSONAL E HIGIENE;FACIAL
+ME-0647;Aceite facial doble limpieza Facial Clean desmaquillante y limpiador;375;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;FACIAL
+ME-0635;Leche facial limpiadora Facial Clean;150;Lácteos y Huevos;"Leche y bebidas ""lácteas""";CUIDADO PERSONAL E HIGIENE;FACIAL
+ME-0888;Tabletas limpiadoras prótesis dentales Benfix y ortodoncias;245;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;HIGIENE BUCAL
+ME-0690;Aceite de Ricino Deliplus;345;Despensa;Aceites;CUIDADO PERSONAL E HIGIENE;OTROS
+ME-3973;Alcohol 96º Deliplus antiséptico;75;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-3982;Alcohol de romero Deliplus;200;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-1821;Alicate uñas Deliplus;490;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-3206;Bálsamo reparador labios Deliplus;260;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-3977;Bandas adhesivas fijación fuerte color beige Deliplus para cortar;150;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-1474;Bandas de cera especial piernas Deliplus piel sensible;130;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-1473;Bandas de cera facial Deliplus piel sensible;100;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-3960;Cápsulas Alcachofa Deliplus;395;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-3964;Cápsulas Articular Forte Deliplus;420;Bazar y Varios;Otros bazar;CUIDADO PERSONAL E HIGIENE;PARAFARMACIA
+ME-3169;Cacao en polvo a la taza Hacendado;185;Bazar y Varios;Otros bazar;DESAYUNO Y SNACK;CACAOS
+ME-3166;Cacao en polvo a la taza Valor;410;Bazar y Varios;Otros bazar;DESAYUNO Y SNACK;CACAOS
+ME-3160;Cacao soluble Hacendado;500;Bazar y Varios;Otros bazar;DESAYUNO Y SNACK;CACAOS
+ME-3158;Cacao soluble instantáneo Hacendado;375;Bazar y Varios;Otros bazar;DESAYUNO Y SNACK;CACAOS
+ME-3152;Cacao soluble instantáneo Nesquik;1500;Bazar y Varios;Otros bazar;DESAYUNO Y SNACK;CACAOS
+ME-3605;99% cacao negro Hacendado;260;Desayuno y Snack;Cremas;Desayuno y Snack;Café y cacaos
+ME-3165;Cacao puro en polvo La Chocolatera;495;Desayuno y Snack;Cremas;Desayuno y Snack;Café y cacaos
+ME-2486;Barritas con proteínas Enervit Sport sabor coco y chocolate;295;Desayuno y Snack;Cremas;Desayuno y Snack;DULCES
+ME-2491;Barritas de avena Crunchy Nature Valley con chocolate negro;260;Desayuno y Snack;Té e infusiones;Desayuno y Snack;DULCES
+ME-2485;Barritas de cereales con frutos secos Hacendado;165;Desayuno y Snack;Cereales para desayuno;Desayuno y Snack;DULCES
+ME-2490;Barritas de cereales con galleta animada Hacendado;155;Desayuno y Snack;Galletas dulces;Desayuno y Snack;DULCES
+ME-2483;Barritas de cereales Hacendado con chocolate blanco;155;Desayuno y Snack;Cremas;Desayuno y Snack;DULCES
+ME-2489;Barritas de cereales Hacendado sabor mango;165;Desayuno y Snack;Cereales para desayuno;Desayuno y Snack;DULCES
+ME-2484;Barritas de cereales muesli Hacendado con chocolate;155;Desayuno y Snack;Cereales para desayuno;Desayuno y Snack;DULCES
+ME-2488;Barritas de galleta rellenas de arándanos Hacendado;155;Desayuno y Snack;Galletas dulces;Desayuno y Snack;DULCES
+ME-1521;Altramuces Hacendado;175;Bazar y Varios;Otros bazar;DESAYUNO Y SNACK;FRUTOS SECOS EMBASADOS
+ME-1951;Bebida de almendras 0% azúcar Hacendado;690;Desayuno y Snack;Frutos secos embasados;Desayuno y Snack;OTROS
+ME-1955;Bebida de almendras con calcio Hacendado;690;Desayuno y Snack;Frutos secos embasados;Desayuno y Snack;OTROS
+ME-0749;Bífidus probióticos con cereales y fibras Hacendado;130;Desayuno y Snack;Cereales para desayuno;Desayuno y Snack;OTROS
+ME-0790;Galletas saladas con semillas y orégano Hacendado;145;Despensa;Sales;DESAYUNO Y SNACK;SNACK
+ME-0785;Galletas saladas salpicks Galbusera;190;Despensa;Sales;DESAYUNO Y SNACK;SNACK
+ME-1094;Galletitas saladas Hacendado;120;Despensa;Sales;DESAYUNO Y SNACK;SNACK
+ME-3462;Caldo de carne con sofrito Hacendado;180;Bazar y Varios;Otros bazar;DESPENSA;CALDOS
+ME-3463;Caldo de carne Hacendado en pastillas;90;Bazar y Varios;Otros bazar;DESPENSA;CALDOS
+ME-3461;Caldo de cocido Hacendado;90;Bazar y Varios;Otros bazar;DESPENSA;CALDOS
+ME-3458;Caldo de marisco o fideuá para paella Hacendado con sofrito;200;Bazar y Varios;Otros bazar;DESPENSA;CALDOS
+ME-3457;Caldo de verduras Hacendado;100;Bazar y Varios;Otros bazar;DESPENSA;CALDOS
+ME-3468;Caldo de verduras Hacendado en pastillas;90;Bazar y Varios;Otros bazar;DESPENSA;CALDOS
+ME-2170;Canela en rama Hacendado;150;Bazar y Varios;Otros bazar;DESPENSA;ESPECIAS
+ME-2169;Canela molida Hacendado;100;Bazar y Varios;Otros bazar;DESPENSA;ESPECIAS
+ME-1441;Harina de arroz Hacendado;131;Despensa;Arroz, pasta y quinoa;Despensa;Harinas
+ME-1784;Bicarbonato de sódio Hacendado;145;Bazar y Varios;Otros bazar;DESPENSA;OTROS
+ME-1953;Bebida de arroz sin azúcares añadidos Hacendado;660;Despensa;Arroz, pasta y quinoa;Despensa;OTROS
+ME-1962;Bebida de avellana y arroz sin azúcares añadidos Hacendado;840;Despensa;Arroz, pasta y quinoa;Despensa;OTROS
+ME-1958;Bebida de coco y arroz sin azúcares añadidos Hacendado;960;Despensa;Arroz, pasta y quinoa;Despensa;OTROS
+ME-2223;Bechamel Hacendado;235;Bazar y Varios;Otros bazar;DESPENSA;SALSAS
+ME-0139;Brócoli;114;Bazar y Varios;Otros bazar;FRUTAS Y VERDURAS;VERDURAS
+ME-0056;Calabacín verde;78;Bazar y Varios;Otros bazar;FRUTAS Y VERDURAS;VERDURAS
+ME-0083;Canónigos lavados;120;Bazar y Varios;Otros bazar;FRUTAS Y VERDURAS;VERDURAS
+ME-4190;Detergente Lavado a Mano Bosque Verde en polvo;190;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4178;Detergente ropa Ariel líquido;795;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4189;Detergente ropa blanca y color Bosque Verde en cápsulas;440;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4174;Detergente ropa Blanca y de Color Bosque Verde en gel concentrado;335;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4185;Detergente ropa blanca y de color Bosque Verde en polvo;665;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4176;Detergente ropa Blanca y de Color Bosque Verde líquido;565;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4180;Detergente ropa colada mixta Micolor en gel;595;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4183;Detergente ropa Colonia Hipoalergénico Bosque Verde líquido;340;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4175;Detergente ropa de Color Bosque Verde líquido;440;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4184;Detergente ropa Frescura Bosque Verde líquido;340;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4188;Detergente ropa jabón de Marsella Bosque Verde en polvo;565;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4181;Detergente ropa oscura Bosque Verde líquido;400;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4179;Detergente ropa Pieles Sensibles Bosque Verde líquido;480;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4177;Detergente ropa Prendas Delicadas Bosque Verde líquido;250;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4186;Detergente ropa todo en 1 Ariel Pods en cápsulas;690;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4187;Detergente ropa todo en 1 frescor floral Ariel Pods en cápsulas;690;Desayuno y Snack;Té e infusiones;HOGAR;DETERGENTE
+ME-4173;Detergente ropa jabón natural de Marsella Bosque Verde líquido;340;Mascotas;Juguetes y accesorios;HOGAR;DETERGENTE
+ME-4237;Crema limpiadora Vitrocerámicas Vitroclen 5 en 1;490;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4276;Limpiador abrillantador Bosque Verde;290;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4248;Limpiador Antical Bosque Verde;160;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4245;Limpiador Baños Bosque Verde en gel;145;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4288;Limpiador concentrado Las 3 Brujas;285;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4234;Limpiador de Hornos Bosque Verde;135;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4262;Limpiador de Muebles con ceras Bosque Verde;165;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4265;Limpiador de Muebles y Parquet Bosque Verde;200;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4209;Limpiador de Ollas y Cacerolas Bosque Verde;190;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4310;Limpiador de Tuberías Bosque Verde;380;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4255;Limpiador Ducha Bosque Verde;210;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4311;Limpiador fosas sépticas Bosque Verde bolsitas solubles;625;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4236;Limpiador Placas de Inducción Bosque Verde líquido;175;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4235;Limpiador Vitrocerámicas Bosque Verde 3 en 1;170;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4247;Limpiador WC Aqua Bosque Verde en gel antical;115;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4244;Limpiador WC con lejía Bosque Verde en gel;95;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4250;Limpiador WC Flor de Cerezo Bosque Verde en gel;115;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4256;Limpiador WC Polvo Activo Bosque Verde;180;Bazar y Varios;Otros bazar;HOGAR;LIMPIEZA
+ME-4252;Toallitas limpiadoras de baños Bosque Verde;130;Bebes;Toallitas y algodón;HOGAR;LIMPIEZA
+ME-4320;Toallitas limpiadoras de Cristales y Espejos Bosque Verde;140;Bebes;Toallitas y algodón;HOGAR;LIMPIEZA
+ME-4263;Toallitas limpiadoras de Muebles Bosque Verde;150;Bebes;Toallitas y algodón;HOGAR;LIMPIEZA
+ME-4285;Toallitas limpiadoras de suelo Bosque Verde;160;Bebes;Toallitas y algodón;HOGAR;LIMPIEZA
+ME-4233;Toallitas limpiadoras desengrasantes de Cocina Bosque Verde;130;Bebes;Toallitas y algodón;HOGAR;LIMPIEZA
+ME-4264;Limpiador de Muebles Classic Pronto;290;Bebidas;Licores y destilados;HOGAR;LIMPIEZA
+ME-4298;Lejía Perfumada con detergente Bosque Verde;115;Desayuno y Snack;Té e infusiones;HOGAR;LIMPIEZA
+ME-4300;Lejía Perfumada con detergente limón Bosque Verde;115;Desayuno y Snack;Té e infusiones;HOGAR;LIMPIEZA
+ME-4251;Limpiador Baños desinfectante Bosque Verde;155;Desayuno y Snack;Té e infusiones;HOGAR;LIMPIEZA
+ME-4240;Limpiador desincrustante y chimeneas Bosque Verde;355;Desayuno y Snack;Té e infusiones;HOGAR;LIMPIEZA
+ME-4254;Limpiador Potente Bosque Verde cal y suciedad;170;Desayuno y Snack;Té e infusiones;HOGAR;LIMPIEZA
+ME-4253;Limpiador WC Desincrustante Bosque Verde en gel;165;Desayuno y Snack;Té e infusiones;HOGAR;LIMPIEZA
+ME-4454;Bol biodegradable Bosque Verde;200;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4443;Bolsa de rafia;65;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4442;Bolsa isotérmica;190;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4440;Bolsas congelación grandes Bosque Verde;130;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4438;Bolsas congelación medianas Bosque Verde;85;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4364;Bolsas de basura compostables Bosque Verde 10L cubo pequeño;230;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4367;Bolsas de basura cubo alto Bosque Verde 30L cubo mediano;275;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4363;Bolsas de basura envases Bosque Verde 30L cubo mediano;220;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4359;Bolsas de basura extra perfumadas Bosque Verde 30L cubo mediano;215;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4360;Bolsas de basura grande perfumadas Bosque Verde 50L cubo grande;210;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4362;Bolsas de basura jardín Bosque Verde 100L cubo industrial;265;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4365;Bolsas de basura mini Bosque Verde 5L cubo pequeño;130;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4361;Bolsas de basura mini perfumadas Bosque Verde 10L cubo pequeño;135;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4358;Bolsas de basura perfumadas Bosque Verde 30L cubo mediano;165;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4366;Bolsas de basura saco Bosque Verde 100L cubo industrial;200;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4121;Bolsas para residuos caninos Nuske Doggy bags;130;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4444;Bolsas reutilizables Bosque Verde;120;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4441;Bolsas zip congelación grandes Bosque Verde;130;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4439;Bolsas zip congelación medianas Bosque Verde;120;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4393;Bolsitas antipolillas Lavanda Bosque Verde;155;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-4331;Borrador mágico Bosque Verde;145;Bazar y Varios;Otros bazar;HOGAR;UTENSILIOS Y CONSUMIBLES DE LIMPIEZA
+ME-0755;Bífidus cremoso probiótico con coco Hacendado;130;Bazar y Varios;Otros bazar;LÁCTEOS Y HUEVOS;"LECHE Y BEBIDAS ""LÁCTEAS"""
+ME-0753;Bífidus probióticos con ciruelas pasas Hacendado;130;Bazar y Varios;Otros bazar;LÁCTEOS Y HUEVOS;"LECHE Y BEBIDAS ""LÁCTEAS"""
+ME-0759;Bífidus probióticos natural Hacendado;120;Bazar y Varios;Otros bazar;LÁCTEOS Y HUEVOS;"LECHE Y BEBIDAS ""LÁCTEAS"""
+ME-2247;Burrata fresca Hacendado;230;Bazar y Varios;Otros bazar;LÁCTEOS Y HUEVOS;QUESOS
+ME-2567;Queso rallado mozzarella pizza-Roma de vaca Hacendado;165;Lácteos y Huevos;Quesos;LÁCTEOS Y HUEVOS;QUESOS
+ME-0990;Berlina al cacao;155;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-1005;Berlina con cobertura de cacao crunch rellena de crema de cacao;125;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-0989;Berlina glacé;135;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-1167;Bocaditos bañados al cacao Hacendado;230;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-3644;Bombones delicias de avellana Delizze Hacendado;420;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-1186;Caña de hojaldre rellena de crema sabor vainilla Hacendado con cobertura de cacao;170;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-1004;8 Croissants surtidos rellenos de crema de cacao y crema con leche sabor a chocolate blanco;255;Desayuno y Snack;Bollos;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-2706;Barquillos con crema de avellanas Hacendado;160;Desayuno y Snack;Cremas;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-2698;Barquillos rellenos con crema de cacao Hacendado;100;Desayuno y Snack;Cremas;PANEDERÍA, BOLLERÍA Y PASTELERÍA;BOLLOS
+ME-3363;Cabello de Ángel Hida;260;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;OTROS
+ME-3941;Brioche Listo para Comer;300;Bazar y Varios;Otros bazar;PANEDERÍA, BOLLERÍA Y PASTELERÍA;PAN FRESCO
+ME-0211;Berberecho vivo;610;Bazar y Varios;Otros bazar;PESCADERÍA;MARISCO
+ME-0257;Boquerón limpio sin cabeza;159;Bazar y Varios;Otros bazar;PESCADERÍA;PESCADO
+ME-0258;Boquerón limpio sin espina;580;Bazar y Varios;Otros bazar;PESCADERÍA;PESCADO
+ME-0256;Boquerón sin limpiar;159;Bazar y Varios;Otros bazar;PESCADERÍA;PESCADO
+ME-0171;Filete de salmón;840;Despensa;Sales;PESCADERÍA;PESCADO
+ME-1668;Pizza Pepperoni barbacoa Hacendado ultracongelada;350;Bebidas;Licores y destilados;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1654;Pizza pepperoni Hacendado;290;Bebidas;Licores y destilados;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1677;Pizza Kebab con pollo asado Hacendado ultracongelada;290;Carnicería y Charcutería;Pollo;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1657;Pizza pollo Hacendado;290;Carnicería y Charcutería;Pollo;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1661;Pizza pollo y bacón Hacendado;290;Carnicería y Charcutería;Pollo;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1682;Masa fresca pizza de cereales y semillas Hacendado;250;Desayuno y Snack;Cereales para desayuno;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1658;Pizza romana Hacendado con champiñones salteados;290;Frutas y Verduras;Setas;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1675;Mini pizzas jamón y queso Fiesta ultracongeladas;290;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-0859;Panes especiales sabor pizza con queso Hacendado;85;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1649;Pizza 4 quesos familiar Hacendado;340;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1648;Pizza 4 quesos Hacendado;290;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1673;Pizza 4 quesos sin gluten y sin lactosa Hacendado ultracongelada;310;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1662;Pizza Calzone con jamón cocido y queso Hacendado;350;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1664;Pizza Formaggi Hacendado 4 quesos;390;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1643;Pizza jamón y queso familiar Hacendado;340;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1642;Pizza jamón y queso Hacendado;250;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1660;Pizza jamón y queso sin gluten y sin lactosa Hacendado;320;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1669;Pizza masa fina 4 quesos Hacendado ultracongelada;250;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1663;Pizza Prosciutto Hacendado jamón y queso;390;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1676;Pizza Truffata con queso, champiñones y trufa Hacendado ultracongelada;290;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1667;Pizzas tomate y queso Hacendado ultracongeladas;240;Lácteos y Huevos;Quesos;PIZZAS Y PLATOS PREPARADOS;PIZZA
+ME-1382;Almendra frita y salada Hacendado pelada;315;Desayuno y Snack;Frutos secos embasados;;
+ME-1702;Almendra laminada Hacendado;215;Desayuno y Snack;Frutos secos embasados;;
+ME-1697;Almendra molida Hacendado;215;Desayuno y Snack;Frutos secos embasados;;
+ME-1369;Almendra natural Hacendado;250;Desayuno y Snack;Frutos secos embasados;;
+ME-1396;Almendra natural Hacendado sin piel;290;Desayuno y Snack;Frutos secos embasados;;
+ME-1705;Almendra palitos Hacendado;185;Desayuno y Snack;Frutos secos embasados;;
+ME-1384;Almendra tostada Hacendado 0% sal añadida con piel;295;Desayuno y Snack;Frutos secos embasados;;
+ME-1379;Almendra tostada y salada Hacendado con piel;240;Desayuno y Snack;Frutos secos embasados;;
+ME-1377;Anacardo frito salado Hacendado;280;Desayuno y Snack;Frutos secos embasados;;
+ME-1375;Anacardo natural Hacendado;280;Desayuno y Snack;Frutos secos embasados;;
+ME-1087;Aperitivo de patata sabor barbacoa Hacendado;175;Desayuno y Snack;Snack salados;;
+ME-1079;Aperitivo de patata sabor crema agria y cebolla Pringles;195;Desayuno y Snack;Snack salados;;
+ME-1104;Aros de maíz Hacendado;85;Desayuno y Snack;Snack salados;;
+ME-1378;Avellana tostada Hacendado 0% sal añadida;430;Desayuno y Snack;Frutos secos embasados;;
+ME-1409;Cacahuete +Proteínas en polvo desgrasado Hacendado 14 g proteínas 70% reducido en grasa;275;Desayuno y Snack;Frutos secos embasados;;
+ME-1391;Cacahuete frito con miel Hacendado;165;Desayuno y Snack;Frutos secos embasados;;
+ME-1373;Cacahuete frito con sal Hacendado pelado;100;Desayuno y Snack;Frutos secos embasados;;
+ME-1380;Cacahuete frito y salado Hacendado con piel;130;Desayuno y Snack;Frutos secos embasados;;
+ME-1392;Cacahuete tostado con sal Hacendado;165;Desayuno y Snack;Frutos secos embasados;;
+ME-1383;Cacahuete tostado Hacendado 0% sal añadida;165;Desayuno y Snack;Frutos secos embasados;;
+ME-1408;Cacahuete tostado Hacendado pelado 0% sal añadida;115;Desayuno y Snack;Frutos secos embasados;;
+ME-3631;Cacahuetes Chocoiris Hacendado bañados de chocolate con leche coloreados;190;Desayuno y Snack;Frutos secos embasados;;
+ME-3629;Cacahuetes Hacendado chocolate con leche;225;Desayuno y Snack;Frutos secos embasados;;
+ME-3628;Cacahuetes Hacendado chocolate negro;225;Desayuno y Snack;Frutos secos embasados;;
+ME-3148;Café con leche cappuccino Hacendado;85;Desayuno y Snack;Café y cacaos;;
+ME-3151;Café con leche descafeinado Hacendado;85;Desayuno y Snack;Café y cacaos;;
+ME-2870;Café con leche en cápsula descafeinado Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2864;Café con leche en cápsula Dolce Gusto;395;Desayuno y Snack;Café y cacaos;;
+ME-2865;Café con leche en cápsula Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2893;Café con leche en cápsula Tassimo;589;Desayuno y Snack;Café y cacaos;;
+ME-3150;Café con leche espresso Hacendado;85;Desayuno y Snack;Café y cacaos;;
+ME-3149;Café con leche light sin lactosa Hacendado;85;Desayuno y Snack;Café y cacaos;;
+ME-2869;Café cortado en cápsula Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2873;Café en cápsula cappuccino Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2862;Café en cápsula classic Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2853;Café en cápsula Colombia Hacendado;380;Desayuno y Snack;Café y cacaos;;
+ME-2867;Café en cápsula cortado Dolce Gusto;395;Desayuno y Snack;Café y cacaos;;
+ME-2891;Café en cápsula cortado Tassimo;589;Desayuno y Snack;Café y cacaos;;
+ME-2857;Café en cápsula descafeinado espresso Hacendado;385;Desayuno y Snack;Café y cacaos;;
+ME-2863;Café en cápsula descafeinado espresso intenso Dolce Gusto;395;Desayuno y Snack;Café y cacaos;;
+ME-2852;Café en cápsula descafeinado Hacendado;385;Desayuno y Snack;Café y cacaos;;
+ME-2892;Café en cápsula descafeinado Tassimo;589;Desayuno y Snack;Café y cacaos;;
+ME-2872;Café en cápsula doble espresso Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2854;Café en cápsula espresso Hacendado;380;Desayuno y Snack;Café y cacaos;;
+ME-2859;Café en cápsula espresso intenso Dolce Gusto;395;Desayuno y Snack;Café y cacaos;;
+ME-2889;Café en cápsula espresso Tassimo;589;Desayuno y Snack;Café y cacaos;;
+ME-2860;Café en cápsula extra forte Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2851;Café en cápsula extra fuerte Hacendado;380;Desayuno y Snack;Café y cacaos;;
+ME-2861;Café en cápsula forte Hacendado;355;Desayuno y Snack;Café y cacaos;;
+ME-2890;Café en cápsula largo Tassimo;589;Desayuno y Snack;Café y cacaos;;
+ME-2855;Café en cápsula ristretto Hacendado;380;Desayuno y Snack;Café y cacaos;;
+ME-2866;Café en cápsula ristretto napoli Dolce Gusto;395;Desayuno y Snack;Café y cacaos;;
+ME-2858;Café en cápsula sabor Caramel Hacendado;240;Desayuno y Snack;Café y cacaos;;
+ME-2856;Café en cápsulas doble espresso Hacendado;380;Desayuno y Snack;Café y cacaos;;
+ME-3093;Café en grano extra fuerte Hacendado;1100;Desayuno y Snack;Café y cacaos;;
+ME-3091;Café en grano natural Hacendado;1100;Desayuno y Snack;Café y cacaos;;
+ME-3092;Café en grano natural Hacendado descafeinado;1250;Desayuno y Snack;Café y cacaos;;
+ME-3076;Café molido Colombia Hacendado;370;Desayuno y Snack;Café y cacaos;;
+ME-3074;Café molido descafeinado Hacendado;520;Desayuno y Snack;Café y cacaos;;
+ME-3077;Café molido descafeinado Hacendado Espresso;380;Desayuno y Snack;Café y cacaos;;
+ME-3072;Café molido fuerte Hacendado;490;Desayuno y Snack;Café y cacaos;;
+ME-3070;Café molido mezcla Hacendado;520;Desayuno y Snack;Café y cacaos;;
+ME-3079;Café molido mezcla intensa La Estrella;395;Desayuno y Snack;Café y cacaos;;
+ME-3078;Café molido mezcla Marcilla gran aroma;395;Desayuno y Snack;Café y cacaos;;
+ME-3068;Café molido natural Hacendado;490;Desayuno y Snack;Café y cacaos;;
+ME-2901;Café monodosis descafeinado natural Hacendado;330;Desayuno y Snack;Café y cacaos;;
+ME-2900;Café monodosis mezcla Hacendado;340;Desayuno y Snack;Café y cacaos;;
+ME-2899;Café monodosis natural Hacendado;300;Desayuno y Snack;Café y cacaos;;
+ME-3147;Café soluble cappuccino caramelo Hacendado;300;Desayuno y Snack;Café y cacaos;;
+ME-3146;Café soluble cappuccino Hacendado;275;Desayuno y Snack;Café y cacaos;;
+ME-3137;Café soluble classic en sobres Hacendado;110;Desayuno y Snack;Café y cacaos;;
+ME-3135;Café soluble Classic Hacendado;440;Desayuno y Snack;Café y cacaos;;
+ME-3142;Café soluble descafeinado en sobres Hacendado;120;Desayuno y Snack;Café y cacaos;;
+ME-3140;Café soluble descafeinado Hacendado;465;Desayuno y Snack;Café y cacaos;;
+ME-3143;Café soluble descafeinado Nescafé classic;850;Desayuno y Snack;Café y cacaos;;
+ME-3145;Café soluble Espresso Creme Hacendado;290;Desayuno y Snack;Café y cacaos;;
+ME-3138;Café soluble natural Nescafé classic;850;Desayuno y Snack;Café y cacaos;;
+ME-3674;Caramelos miel sabor limón Pifarré;115;Desayuno y Snack;Mermelada y Miel;;
+ME-2479;Cereales avena Crunchy Hacendado;190;Desayuno y Snack;Cereales para desayuno;;
+ME-2480;Cereales avena Crunchy Hacendado de cacao;215;Desayuno y Snack;Cereales para desayuno;;
+ME-2478;Cereales Cereal Mix Hacendado 0% azúcares añadidos;240;Desayuno y Snack;Cereales para desayuno;;
+ME-2474;Cereales con salvado de trigo Fibra Sticks Hacendado;180;Desayuno y Snack;Cereales para desayuno;;
+ME-2455;Cereales copos de maíz Corn Flakes Hacendado 0% azúcares añadidos;150;Desayuno y Snack;Cereales para desayuno;;
+ME-2456;Cereales copos de maíz Corn Flakes Kellogg's;250;Desayuno y Snack;Cereales para desayuno;;
+ME-1779;Aceite de coco virgen Hacendado;525;Despensa;Aceites;;
+ME-1777;Aceite de girasol refinado 0,2º Hacendado;845;Despensa;Aceites;;
+ME-1758;Aceite de oliva 0,4º Hacendado;1975;Despensa;Aceites;;
+ME-1763;Aceite de oliva 1º Hacendado;2085;Despensa;Aceites;;
+ME-1760;Aceite de oliva virgen extra Hacendado;1455;Despensa;Aceites;;
+ME-1762;Aceite de oliva virgen extra Hacendado Gran Selección;595;Despensa;Aceites;;
+ME-1768;Aceite de oliva virgen extra Picual Casa Juncal;485;Despensa;Aceites;;
+ME-1765;Aceite de oliva virgen Hacendado;1285;Despensa;Aceites;;
+ME-2341;Aliño de aceite con perejil y ajo Hacendado;180;Despensa;Aceites;;
+ME-2590;Arroz Albufera Hacendado;295;Despensa;Arroz, pasta y quinoa;;
+ME-2594;Arroz basmati aromático Hacendado;210;Despensa;Arroz, pasta y quinoa;;
+ME-1830;Arroz cocido basmati Sabroz;115;Despensa;Arroz, pasta y quinoa;;
+ME-1831;Arroz cocido integral Sabroz;110;Despensa;Arroz, pasta y quinoa;;
+ME-1833;Arroz cocido redondo Sabroz;110;Despensa;Arroz, pasta y quinoa;;
+ME-2605;Arroz con verduras para microondas Hacendado ultracongelado;200;Despensa;Arroz, pasta y quinoa;;
+ME-1836;Arroz de verduras Hacendado;350;Despensa;Arroz, pasta y quinoa;;
+ME-2599;Arroz integral largo Hacendado;165;Despensa;Arroz, pasta y quinoa;;
+ME-2587;Arroz largo Hacendado;125;Despensa;Arroz, pasta y quinoa;;
+ME-2606;Arroz marinera Hacendado ultracongelado;220;Despensa;Arroz, pasta y quinoa;;
+ME-2604;Arroz negro Hacendado ultracongelado;300;Despensa;Arroz, pasta y quinoa;;
+ME-2602;Arroz para microondas Hacendado ultracongelado;200;Despensa;Arroz, pasta y quinoa;;
+ME-2586;Arroz redondo Hacendado;130;Despensa;Arroz, pasta y quinoa;;
+ME-2593;Arroz redondo J Sendra Hacendado;160;Despensa;Arroz, pasta y quinoa;;
+ME-2600;Arroz redondo Sabor;245;Despensa;Arroz, pasta y quinoa;;
+ME-2598;Arroz redondo SOS;188;Despensa;Arroz, pasta y quinoa;;
+ME-2601;Arroz tres delicias Hacendado ultracongelado;285;Despensa;Arroz, pasta y quinoa;;
+ME-2596;Arroz vaporizado Hacendado;155;Despensa;Arroz, pasta y quinoa;;
+ME-3415;Azúcar glas Hacendado;260;Despensa;Azúcares y edulcorantes;;
+ME-3412;Azúcar moreno de caña Hacendado;190;Despensa;Azúcares y edulcorantes;;
+ME-3413;Azúcar moreno en sobres Hacendado;175;Despensa;Azúcares y edulcorantes;;
+ME-1701;Azúcar vainillado Hacendado;130;Despensa;Azúcares y edulcorantes;;
+ME-1455;Aroma de vainilla Hacendado;200;Despensa;Especias e hierbas secas;;
+ME-2142;Azafrán hebra Hacendado;195;Despensa;Especias e hierbas secas;;
+ME-2141;Azafrán molido Hacendado;190;Despensa;Especias e hierbas secas;;
+ME-2472;Avena molida Hacendado;115;Despensa;Harinas;;
+ME-1439;Harina de espelta Hacendado 100% integral;145;Despensa;Harinas;;
+ME-1433;Harina de fuerza Hacendado;95;Despensa;Harinas;;
+ME-1444;Harina de garbanzo Hacendado;200;Despensa;Harinas;;
+ME-1432;Harina de trigo grande Hacendado;295;Despensa;Harinas;;
+ME-1431;Harina de trigo Hacendado;72;Despensa;Harinas;;
+ME-2840;Alubia blanca Hacendado;245;Despensa;Legumbres secas;;
+ME-2836;Alubia cocida blanca Hacendado;80;Despensa;Legumbres secas;;
+ME-2843;Alubia cocida granja Hacendado;175;Despensa;Legumbres secas;;
+ME-2839;Alubia cocida pinta Hacendado;125;Despensa;Legumbres secas;;
+ME-2838;Alubia cocida roja Hacendado;120;Despensa;Legumbres secas;;
+ME-2845;Alubia granja Hacendado;345;Despensa;Legumbres secas;;
+ME-2841;Alubia negra Hacendado;250;Despensa;Legumbres secas;;
+ME-2844;Alubia pinta Hacendado;240;Despensa;Legumbres secas;;
+ME-2842;Alubia roja Hacendado;320;Despensa;Legumbres secas;;
+ME-1873;Alubias a la jardinera Hacendado;120;Despensa;Legumbres secas;;
+ME-3508;Crema de lentejas Hacendado;170;Despensa;Legumbres secas;;
+ME-2794;Garbanzo cocido Hacendado;85;Despensa;Legumbres secas;;
+ME-2796;Garbanzo cocido Pedrosillano Hacendado;95;Despensa;Legumbres secas;;
+ME-2797;Garbanzo Hacendado;220;Despensa;Legumbres secas;;
+ME-2799;Garbanzo lechoso Andaluz Hacendado;250;Despensa;Legumbres secas;;
+ME-2798;Garbanzo pedrosillano Hacendado;190;Despensa;Legumbres secas;;
+ME-1875;Garbanzos a la jardinera Hacendado;120;Despensa;Legumbres secas;;
+ME-1874;Garbanzos a la riojana Hacendado;135;Despensa;Legumbres secas;;
+ME-1786;Escamas de sal marina natural Polasal;200;Despensa;Sales;;
+ME-1411;Habas fritas con sal Hacendado;130;Despensa;Sales;;
+ME-2281;Allioli Chovi;155;Despensa;Salsas, caldos y condimentos preparados;;
+ME-2283;Allioli en sobres individuales Hacendado;160;Despensa;Salsas, caldos y condimentos preparados;;
+ME-2282;Allioli Hacendado;110;Despensa;Salsas, caldos y condimentos preparados;;
+ME-3464;Caldo de pollo Avecrem en pastillas;295;Despensa;Salsas, caldos y condimentos preparados;;
+ME-3455;Caldo de pollo casero Gallina Blanca;185;Despensa;Salsas, caldos y condimentos preparados;;
+ME-3454;Caldo de pollo Hacendado;80;Despensa;Salsas, caldos y condimentos preparados;;
+ME-3459;Caldo de pollo Hacendado bajo en sal;120;Despensa;Salsas, caldos y condimentos preparados;;
+ME-3467;Caldo de pollo Hacendado en pastillas;145;Despensa;Salsas, caldos y condimentos preparados;;
+ME-1772;Crema de vinagre balsámico de Módena Hacendado;180;Despensa;Vinagres;;

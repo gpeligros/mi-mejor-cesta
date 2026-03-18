@@ -1,0 +1,6 @@
+# Mi Mejor Cesta - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap (cuando tengas dominio)
+# Sitemap: https://mimejorcesta.com/sitemap.xml
