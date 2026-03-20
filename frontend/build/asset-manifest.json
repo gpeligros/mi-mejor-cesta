@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.9b03b3ce.css",
+    "main.css": "/static/css/main.600f1f5c.css",
     "main.js": "/static/js/main.7a9d66f5.js",
     "static/js/453.7224ae0b.chunk.js": "/static/js/453.7224ae0b.chunk.js",
     "static/media/LaDespensa.jpeg": "/static/media/LaDespensa.830e9b6c95e3c54f7d0b.jpeg",
@@ -14,12 +14,12 @@
     "index.html": "/index.html",
     "static/media/DIA.svg": "/static/media/DIA.d6eb66e65a502d6730c7c6a1030fd32a.svg",
     "static/media/lidl.svg": "/static/media/lidl.55430e4c86db994b188f568d956090f6.svg",
-    "main.9b03b3ce.css.map": "/static/css/main.9b03b3ce.css.map",
+    "main.600f1f5c.css.map": "/static/css/main.600f1f5c.css.map",
     "main.7a9d66f5.js.map": "/static/js/main.7a9d66f5.js.map",
     "453.7224ae0b.chunk.js.map": "/static/js/453.7224ae0b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9b03b3ce.css",
+    "static/css/main.600f1f5c.css",
     "static/js/main.7a9d66f5.js"
   ]
 }
