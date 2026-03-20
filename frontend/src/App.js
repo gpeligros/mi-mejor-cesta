@@ -515,7 +515,7 @@ const App = () => {
   }
 
   return (
-    <div style={{ background: '#f4f7f5', minHeight: '100vh', overflowX: 'hidden', width: '100%' }}>
+    <div style={{ background: '#f4f7f5', minHeight: '100vh', overflowX: 'hidden', width: '100%', boxSizing: 'border-box' }}>
       <SyncHeader 
         session={session}
         syncActiva={syncActiva}
@@ -562,7 +562,7 @@ const App = () => {
         />
       )}
 
-      <div style={{ padding: '30px' }}>
+      <div style={{ padding: isMobile ? '12px' : '30px', boxSizing: 'border-box' }}>
         {seccionActual === 'comparador' && !modoTienda && (
           <StoreSelector 
             listaSupers={listaSupers} 
