@@ -48,24 +48,6 @@ const ListaColaborativa = ({ session, seleccionados, setSeleccionados, comprados
     }).eq('id', listaId);
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const toggleProducto = async (id) => {
-    const nvas = seleccionados.includes(id)
-      ? seleccionados.filter(x => x !== id)
-      : [...seleccionados, id];
-    setSeleccionados(nvas);
-    await sincronizar(nvas, comprados);
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const toggleComprado = async (id) => {
-    const nvas = comprados.includes(id)
-      ? comprados.filter(x => x !== id)
-      : [...comprados, id];
-    setComprados(nvas);
-    await sincronizar(seleccionados, nvas);
-  };
-
   const crearLista = async () => {
     if (!session) return setError('Debes iniciar sesión para crear una lista colaborativa.');
     setCargando(true); setError(null);
