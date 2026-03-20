@@ -48,6 +48,7 @@ const ListaColaborativa = ({ session, seleccionados, setSeleccionados, comprados
     }).eq('id', listaId);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const toggleProducto = async (id) => {
     const nvas = seleccionados.includes(id)
       ? seleccionados.filter(x => x !== id)
@@ -56,6 +57,7 @@ const ListaColaborativa = ({ session, seleccionados, setSeleccionados, comprados
     await sincronizar(nvas, comprados);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const toggleComprado = async (id) => {
     const nvas = comprados.includes(id)
       ? comprados.filter(x => x !== id)
