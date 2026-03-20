@@ -38,16 +38,6 @@ const ListaColaborativa = ({ session, seleccionados, setSeleccionados, comprados
     canalRef.current = canal;
     return () => supabase.removeChannel(canal);
   }, [listaId, setSeleccionados, setComprados]);
-
-  // Sincronizar cambios locales a Supabase
-  const sincronizar = async (prods, comps) => {
-    if (!listaId) return;
-    await supabase.from('listas_colaborativas').update({
-      productos: prods,
-      comprados: comps,
-    }).eq('id', listaId);
-  };
-
   const crearLista = async () => {
     if (!session) return setError('Debes iniciar sesión para crear una lista colaborativa.');
     setCargando(true); setError(null);
