@@ -515,7 +515,7 @@ const App = () => {
   }
 
   return (
-    <div style={{ background: '#f4f7f5', minHeight: '100vh' }}>
+    <div style={{ background: '#f4f7f5', minHeight: '100vh', overflowX: 'hidden', width: '100%' }}>
       <SyncHeader 
         session={session}
         syncActiva={syncActiva}
