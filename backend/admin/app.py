@@ -88,31 +88,29 @@ def index():
 @app.route("/api/stats")
 def stats():
     try:
-        cat    = supabase.table("productos_catalogo").select("id", count="exact").execute()
-        merc   = supabase.table("precios_mercadona").select("id", count="exact").execute()
-        dia    = supabase.table("precios_dia").select("id", count="exact").execute()
-        match  = supabase.table("productos_match").select(
-            "id_catalogo,id_mercadona,id_dia", count="exact").execute()
+        cat      = supabase.table("productos_catalogo").select("id", count="exact").limit(1).execute()
+        merc     = supabase.table("precios_mercadona").select("id", count="exact").limit(1).execute()
+        dia      = supabase.table("precios_dia").select("id", count="exact").limit(1).execute()
+        matches  = supabase.table("productos_match").select("id_catalogo", count="exact").limit(1).execute()
+        con_merc = supabase.table("productos_match").select("id_catalogo", count="exact").not_.is_("id_mercadona", "null").limit(1).execute()
+        con_dia  = supabase.table("productos_match").select("id_catalogo", count="exact").not_.is_("id_dia", "null").limit(1).execute()
+        revisados = supabase.table("productos_match").select("id_catalogo", count="exact").eq("revisado", True).limit(1).execute()
 
-        con_merc = sum(1 for r in match.data if r.get("id_mercadona"))
-        con_dia  = sum(1 for r in match.data if r.get("id_dia"))
-        revisados = sum(1 for r in
-            supabase.table("productos_match").select("revisado").execute().data
-            if r.get("revisado"))
-
-        usuarios = supabase.table("cestas_online").select("user_id", count="exact").execute()
+        total = matches.count or 0
+        cm    = con_merc.count or 0
+        cd    = con_dia.count or 0
 
         return jsonify({
-            "catalogo":       cat.count,
-            "mercadona":      merc.count,
-            "dia":            dia.count,
-            "matches":        match.count,
-            "con_mercadona":  con_merc,
-            "con_dia":        con_dia,
-            "sin_mercadona":  match.count - con_merc,
-            "sin_dia":        match.count - con_dia,
-            "revisados":      revisados,
-            "usuarios":       usuarios.count,
+            "catalogo":       cat.count or 0,
+            "mercadona":      merc.count or 0,
+            "dia":            dia.count or 0,
+            "matches":        total,
+            "con_mercadona":  cm,
+            "con_dia":        cd,
+            "sin_mercadona":  total - cm,
+            "sin_dia":        total - cd,
+            "revisados":      revisados.count or 0,
+            "usuarios":       0,
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -131,7 +129,7 @@ def get_catalogo():
 
     query = supabase.table("productos_catalogo").select("*", count="exact")
     if q:        query = query.ilike("nombre_generico", f"%{q}%")
-    if categoria: query = query.eq("categoria", categoria)
+    if categoria: query = query.eq("id_categoria", categoria)
 
     res = query.range(start, start + per_page - 1).order("id").execute()
     return jsonify({"data": res.data, "total": res.count})
@@ -139,14 +137,14 @@ def get_catalogo():
 @app.route("/api/catalogo/<id>", methods=["PATCH"])
 def update_catalogo(id):
     body   = request.json
-    campos = ["nombre_generico", "marca", "categoria", "subcategoria"]
+    campos = ["nombre_generico", "marca", "id_categoria"]
     update = {k: v for k, v in body.items() if k in campos}
     res    = supabase.table("productos_catalogo").update(update).eq("id", id).execute()
     return jsonify(res.data)
 
 @app.route("/api/categorias")
 def get_categorias():
-    res = supabase.table("categorias_maestra").select("*").order("orden").execute()
+    res = supabase.table("categorias_maestras").select("*").order("orden").execute()
     return jsonify(res.data)
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -198,7 +196,7 @@ def get_matches():
 
     query = supabase.table("productos_match").select(
         "id_catalogo,id_mercadona,id_dia,revisado,"
-        "productos_catalogo(nombre_generico,categoria,subcategoria)",
+        "vista_productos(nombre_generico,categoria,subcategoria)",
         count="exact"
     )
     if filtro == "sin_dia":       query = query.is_("id_dia", "null")
@@ -259,7 +257,7 @@ TABLAS_EXPORTABLES = {
     "mercadona":  ("precios_mercadona",  "*"),
     "dia":        ("precios_dia",        "*"),
     "matches":    ("productos_match",    "*"),
-    "categorias": ("categorias_maestra", "*"),
+    "categorias": ("categorias_maestras", "*"),
 }
 
 @app.route("/api/exportar/<nombre>")

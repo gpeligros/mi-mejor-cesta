@@ -8,8 +8,10 @@ import SuperCard from './components/SuperCard';
 import Sidebar from './components/Sidebar';
 import listaSupers from './components/LogosSuper';
 import Privacidad from './components/Privacidad';
+import Landing from './components/Landing';
 import Terminos from './components/Terminos';
 import Cookies from './components/Cookies';
+import ListaColaborativa from './components/ListaColaborativa';
 
 const App = () => {
   // Estados
@@ -39,6 +41,8 @@ const App = () => {
   const [estadoSync, setEstadoSync] = useState('idle');
   const [seccionActual, setSeccionActual] = useState('comparador');
   const [mostrarCookies, setMostrarCookies] = useState(() => !localStorage.getItem('cookies_aceptadas'));
+  const [mostrarLanding, setMostrarLanding] = useState(() => !localStorage.getItem('landing_vista'));
+  const [mostrarColaborativa, setMostrarColaborativa] = useState(false);
   const [escaneando, setEscaneando] = useState(false);
   const fileInputRef = useRef(null);
   
@@ -51,6 +55,10 @@ const App = () => {
   // ============================================================================
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
     
     const cargarDatos = async () => {
       try {
@@ -163,6 +171,8 @@ const App = () => {
     };
 
     cargarDatos();
+
+    return () => subscription.unsubscribe();
   }, []);
 
   // Detectar cambios de tamaño
@@ -255,6 +265,95 @@ const App = () => {
 
   // Helper: precio numérico (precios sigue siendo número directo)
   const getPrecio = (id, super_) => precios[id]?.[super_] || 0;
+
+  // Exportar PDF limpio solo con la cesta
+  const exportarPDF = () => {
+    if (seleccionados.length === 0) {
+      alert('Añade productos a tu cesta antes de exportar.');
+      return;
+    }
+
+    const fecha = new Date().toLocaleDateString('es-ES');
+
+    // Construir filas por supermercado
+    const supersConDatos = supersActivos.filter(s =>
+      seleccionados.some(id => (precios[id]?.[s] || 0) > 0)
+    );
+
+    const tablasHTML = supersConDatos.map(s => {
+      const filas = seleccionados.map(id => {
+        const prod = getProdFull(id);
+        if (!prod) return '';
+        const nombre = (getNombreReal && getNombreReal(id, s)) || prod.nombre;
+        const precio = precios[id]?.[s] || 0;
+        // Marca precio mínimo en verde
+        const preciosValidos = supersActivos.map(x => precios[id]?.[x] || 0).filter(p => p > 0);
+        const esMinimo = precio > 0 && precio === Math.min(...preciosValidos);
+        return `<tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:13px;">${nombre}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:right;font-weight:900;font-size:13px;color:${esMinimo ? '#037623' : '#102215'}">
+            ${precio > 0 ? precio.toFixed(2) + '€' : '—'}
+          </td>
+        </tr>`;
+      }).join('');
+
+      const total = seleccionados.reduce((acc, id) => acc + (precios[id]?.[s] || 0), 0);
+
+      return `
+        <div style="margin-bottom:32px;break-inside:avoid;">
+          <div style="background:#037623;color:white;padding:12px 16px;border-radius:10px 10px 0 0;font-weight:900;font-size:15px;">${s}</div>
+          <table style="width:100%;border-collapse:collapse;background:white;border:1px solid #e8f0e9;border-top:none;">
+            ${filas}
+            <tr style="background:#f4faf6;">
+              <td style="padding:10px 12px;font-weight:900;font-size:13px;">TOTAL EN ${s.toUpperCase()}</td>
+              <td style="padding:10px 12px;text-align:right;font-weight:900;font-size:16px;color:#037623;">${total.toFixed(2)}€</td>
+            </tr>
+          </table>
+        </div>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>Mi Mejor Cesta — ${fecha}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 24px; background: #f4f7f5; color: #102215; }
+    @media print { body { background: white; padding: 0; } }
+  </style>
+</head>
+<body>
+  <div style="text-align:center;margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid #037623;">
+    <h1 style="color:#037623;font-size:28px;font-weight:900;margin:0;">🛒 MI MEJOR CESTA</h1>
+    <p style="color:#666;font-size:13px;margin:6px 0 0;">${fecha} · ${seleccionados.length} productos</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:28px;">
+    <div style="background:#037623;color:white;padding:16px 20px;border-radius:12px;">
+      <div style="font-size:11px;font-weight:700;opacity:0.8;margin-bottom:4px;">MI MEJOR CESTA</div>
+      <div style="font-size:26px;font-weight:900;">${stats.multi.toFixed(2)}€</div>
+      <div style="font-size:11px;opacity:0.8;">comprando en el más barato</div>
+    </div>
+    <div style="background:#102215;color:white;padding:16px 20px;border-radius:12px;">
+      <div style="font-size:11px;font-weight:700;color:#13ec49;margin-bottom:4px;">ESTÁS AHORRANDO</div>
+      <div style="font-size:26px;font-weight:900;color:#13ec49;">${stats.ahorro.toFixed(2)}€</div>
+      <div style="font-size:11px;opacity:0.8;">respecto al más caro</div>
+    </div>
+  </div>
+
+  ${tablasHTML}
+
+  <p style="text-align:center;font-size:11px;color:#999;margin-top:24px;">
+    Generado por mimejorcesta.vercel.app · Los precios pueden variar
+  </p>
+</body>
+</html>`;
+
+    const ventana = window.open('', '_blank');
+    ventana.document.write(html);
+    ventana.document.close();
+    ventana.onload = () => ventana.print();
+  };
 
   // Helper: nombre real del super para un producto
   const getNombreReal = (id, super_) => nombresReales[id]?.[super_] || null;
@@ -406,6 +505,15 @@ const App = () => {
     );
   }
 
+  if (mostrarLanding) {
+    return (
+      <Landing onEntrar={() => {
+        localStorage.setItem('landing_vista', '1');
+        setMostrarLanding(false);
+      }} />
+    );
+  }
+
   return (
     <div style={{ background: '#f4f7f5', minHeight: '100vh' }}>
       <SyncHeader 
@@ -502,6 +610,8 @@ const App = () => {
               escaneando={escaneando}
               fileInputRef={fileInputRef}
               handleFoto={handleFoto}
+              exportarPDF={exportarPDF}
+              onCompartir={() => setMostrarColaborativa(true)}
             />
           </div>
 
@@ -554,7 +664,18 @@ const App = () => {
       </div>
       
       <Footer setSeccionActual={setSeccionActual} />
-      
+
+      {mostrarColaborativa && (
+        <ListaColaborativa
+          session={session}
+          seleccionados={seleccionados}
+          setSeleccionados={setSeleccionados}
+          comprados={comprados}
+          setComprados={setComprados}
+          onClose={() => setMostrarColaborativa(false)}
+        />
+      )}
+
       {mostrarCookies && (
         <div style={{
           position: 'fixed',

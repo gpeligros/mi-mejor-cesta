@@ -41,7 +41,7 @@ const Sidebar = ({
   seleccionados, setSeleccionados, setComprados, 
   escaneando, fileInputRef, handleFoto, 
   busqueda, setBusqueda, db, acordeon, setAcordeon, 
-  toggleProd, vaciarCesta
+  toggleProd, vaciarCesta, exportarPDF, onCompartir
 }) => {
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
@@ -50,7 +50,7 @@ const Sidebar = ({
   const categoriasOrdenadas = Object.keys(db).sort();
 
   return (
-    <aside className="no-print" style={{ width: '350px' }}>
+    <aside className="no-print" style={{ width: '100%', boxSizing: 'border-box' }}>
       {/* PANEL AHORRO */}
       <div style={{ background: '#037623', color: 'white', padding: '25px', borderRadius: '25px', marginBottom: '15px' }}>
         <h3 style={{ margin: '0', fontSize: '11px', fontWeight: '900', color: '#13ec49' }}>ESTÁS AHORRANDO</h3>
@@ -66,8 +66,11 @@ const Sidebar = ({
 
       {/* BOTONES ACCIÓN */}
       <div style={{ marginBottom: '20px', display: 'grid', gap: '8px' }}>
-        <button onClick={() => window.print()} style={{ background: '#102215', color: 'white', border: 'none', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}>
+        <button onClick={exportarPDF} style={{ background: '#102215', color: 'white', border: 'none', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}>
           📄 EXPORTAR PDF
+        </button>
+        <button onClick={onCompartir} style={{ background: '#e8fdf0', color: '#037623', border: '1px solid #037623', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}>
+          👥 LISTA COLABORATIVA
         </button>
         <button 
           onClick={() => { const n = window.prompt("Nombre de la lista favorita:"); if(n) setCestasGuardadas(prev => ({...prev, [n]: seleccionados})); }} 

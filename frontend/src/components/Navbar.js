@@ -2,21 +2,22 @@ import React from 'react';
 
 const Navbar = () => (
   <nav style={{ 
-    padding: '20px', 
+    padding: '15px 20px', 
     backgroundColor: 'white', 
     borderBottom: '1px solid #eee', 
-    fontFamily: 'system-ui, sans-serif' 
+    fontFamily: 'system-ui, sans-serif',
+    width: '100%',
+    boxSizing: 'border-box',
   }}>
     <div style={{ 
       display: 'flex', 
       alignItems: 'center', 
       gap: '10px',
-      flexWrap: 'wrap',
       justifyContent: 'center'
     }}>
       <svg 
-        width="45" 
-        height="45" 
+        width="36" 
+        height="36" 
         viewBox="0 0 24 24" 
         fill="none"
         style={{ flexShrink: 0 }}
@@ -28,19 +29,20 @@ const Navbar = () => (
       <h1 style={{ 
         color: '#037623', 
         fontWeight: '900', 
-        fontSize: 'clamp(20px, 5vw, 38px)', 
+        fontSize: 'clamp(18px, 5vw, 36px)', 
         margin: 0,
-        textAlign: 'center'
+        whiteSpace: 'nowrap',
       }}>
         MI MEJOR CESTA
       </h1>
     </div>
     <p style={{ 
       color: '#666', 
-      fontSize: 'clamp(12px, 3vw, 14px)', 
-      margin: '8px 0 0 0', 
+      fontSize: 'clamp(11px, 3vw, 14px)', 
+      margin: '6px 0 0 0', 
       fontWeight: '500',
-      textAlign: 'center'
+      textAlign: 'center',
+      padding: '0 10px',
     }}>
       Ahorra en tu compra diaria comparando todos los supermercados
     </p>
