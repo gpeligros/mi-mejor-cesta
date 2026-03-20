@@ -9,20 +9,23 @@ const SuperCard = ({ sId, logo, seleccionados, precios, supersActivos, getProdFu
   return (
     <div style={{ 
       backgroundColor: 'white', 
-      padding: '25px', 
+      padding: '20px', 
       borderRadius: '30px', 
       borderTop: '8px solid #037623', 
-      boxShadow: '0 10px 20px rgba(0,0,0,0.02)' 
+      boxShadow: '0 10px 20px rgba(0,0,0,0.02)',
+      width: '100%',
+      boxSizing: 'border-box',
+      minWidth: 0,
     }}>
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <img src={logo} alt={sId} style={{ height: '35px' }} />
-          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '900' }}>{sId}</h3>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '8px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+          <img src={logo} alt={sId} style={{ height: '30px', flexShrink: 0 }} />
+          <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '900', whiteSpace: 'nowrap' }}>{sId}</h3>
         </div>
         <button 
           onClick={() => setModoTienda(sId)} 
-          style={{ background: '#e8fdf0', color: '#037623', border: 'none', padding: '8px 12px', borderRadius: '10px', fontSize: '11px', fontWeight: '900', cursor: 'pointer' }}
+          style={{ background: '#e8fdf0', color: '#037623', border: 'none', padding: '6px 10px', borderRadius: '10px', fontSize: '10px', fontWeight: '900', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}
         >
           CONTROL LISTA →
         </button>
