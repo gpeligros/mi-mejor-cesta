@@ -33,7 +33,7 @@ const App = () => {
   });
   const [comprados, setComprados] = useState([]);
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
-  const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
+  const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA"]);
   const [acordeon, setAcordeon] = useState(null);
   const [busqueda, setBusqueda] = useState("");
   const [modoTienda, setModoTienda] = useState(null);
@@ -73,7 +73,7 @@ const App = () => {
         // ── Cargar matches + precios Mercadona ────────────────────────────
         const { data: matches, error: errMatch } = await supabase
           .from('productos_match')
-          .select('id_catalogo, id_mercadona, id_dia, id_alcampo')
+          .select('id_catalogo, id_mercadona, id_dia')
           .range(0, 10000);
 
         if (errMatch) console.error('❌ Error matches:', errMatch);
@@ -92,13 +92,6 @@ const App = () => {
 
         if (errDia) console.error('❌ Error precios DIA:', errDia);
 
-        const { data: preciosAlcampo, error: errAlcampo } = await supabase
-          .from('precios_alcampo')
-          .select('id, precio, nombre_comercial')
-          .range(0, 10000);
-
-        if (errAlcampo) console.error('❌ Error precios Alcampo:', errAlcampo);
-
         if (catalogo && matches) {
           // ── Índices de precios por ID ──────────────────────────────────
           const idxMerc = {};
@@ -116,15 +109,6 @@ const App = () => {
             if (p.precio) {
               idxDia[p.id] = parseFloat(p.precio);
               nombresDia[p.id] = p.nombre_comercial || null;
-            }
-          });
-
-          const idxAlcampo = {};
-          const nombresAlcampo = {};
-          (preciosAlcampo || []).forEach(p => {
-            if (p.precio) {
-              idxAlcampo[p.id] = parseFloat(p.precio);
-              nombresAlcampo[p.id] = p.nombre_comercial || null;
             }
           });
 
@@ -166,10 +150,6 @@ const App = () => {
             if (m.id_dia && idxDia[m.id_dia]) {
               precios_prod['DIA'] = idxDia[m.id_dia];
               nombres_prod['DIA'] = nombresDia[m.id_dia];
-            }
-            if (m.id_alcampo && idxAlcampo[m.id_alcampo]) {
-              precios_prod['Alcampo'] = idxAlcampo[m.id_alcampo];
-              nombres_prod['Alcampo'] = nombresAlcampo[m.id_alcampo];
             }
             if (Object.keys(precios_prod).length > 0) {
               mapa[String(p.id)] = precios_prod;
