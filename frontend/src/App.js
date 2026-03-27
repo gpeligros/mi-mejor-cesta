@@ -12,6 +12,7 @@ import Landing from './components/Landing';
 import Terminos from './components/Terminos';
 import Cookies from './components/Cookies';
 import ListaColaborativa from './components/ListaColaborativa';
+import Cestita from './components/Cestita';
 
 const App = () => {
   // Estados
@@ -516,21 +517,39 @@ const App = () => {
 
   if (cargando) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f4f7f5' }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '48px', marginBottom: '20px' }}>🛒</div>
-          <div style={{ fontSize: '18px', fontWeight: '800', color: '#037623' }}>Cargando productos...</div>
+      <>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f4f7f5' }}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '48px', marginBottom: '20px' }}>🛒</div>
+            <div style={{ fontSize: '18px', fontWeight: '800', color: '#037623' }}>Cargando productos...</div>
+          </div>
         </div>
-      </div>
+        <Cestita
+          seleccionados={seleccionados}
+          precios={precios}
+          supersActivos={supersActivos}
+          getProdFull={getProdFull}
+          session={session}
+        />
+      </>
     );
   }
 
   if (mostrarLanding) {
     return (
-      <Landing onEntrar={() => {
-        localStorage.setItem('landing_vista', '1');
-        setMostrarLanding(false);
-      }} />
+      <>
+        <Landing onEntrar={() => {
+          localStorage.setItem('landing_vista', '1');
+          setMostrarLanding(false);
+        }} />
+        <Cestita
+          seleccionados={seleccionados}
+          precios={precios}
+          supersActivos={supersActivos}
+          getProdFull={getProdFull}
+          session={session}
+        />
+      </>
     );
   }
 
@@ -684,6 +703,14 @@ const App = () => {
       </div>
       
       <Footer setSeccionActual={setSeccionActual} />
+
+      <Cestita
+        seleccionados={seleccionados}
+        precios={precios}
+        supersActivos={supersActivos}
+        getProdFull={getProdFull}
+        session={session}
+      />
 
       {mostrarColaborativa && (
         <ListaColaborativa
