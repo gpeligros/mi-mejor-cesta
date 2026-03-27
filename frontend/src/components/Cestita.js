@@ -13,7 +13,7 @@ const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session }
   ]);
   const [input, setInput]           = useState('');
   const [cargando, setCargando]     = useState(false);
-  const [error, setError]           = useState(null);
+  const [, setError]                = useState(null);
   const mensajesRef                 = useRef(null);
   const inputRef                    = useRef(null);
 
