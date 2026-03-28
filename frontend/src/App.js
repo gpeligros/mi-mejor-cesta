@@ -37,6 +37,9 @@ const App = () => {
   const [comprados, setComprados] = useState([]);
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
+  const [modalUpgrade, setModalUpgrade] = useState(null);
+  const { plan, puedeUsar, limiteSupers, limiteProductos } = usePlan(session);
+
   const setSupersActivosConLimite = (nuevosSups) => {
     if (nuevosSups.length > limiteSupers()) {
       setModalUpgrade({ funcionalidad: 'maxSupers', planRequerido: 'basic' });
@@ -59,8 +62,6 @@ const App = () => {
   // Estados responsive
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-  const [modalUpgrade, setModalUpgrade] = useState(null); // {funcionalidad, planRequerido}
-  const { plan, puedeUsar, limiteSupers, limiteProductos } = usePlan(session);
 
   // ============================================================================
   // ✅ CAMBIO PRINCIPAL: Cargar datos de NUEVAS TABLAS
