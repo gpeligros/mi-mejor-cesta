@@ -13,6 +13,8 @@ import Terminos from './components/Terminos';
 import Cookies from './components/Cookies';
 import ListaColaborativa from './components/ListaColaborativa';
 import Cestita from './components/Cestita';
+import ModalUpgrade from './components/ModalUpgrade';
+import { usePlan } from './hooks/usePlan';
 
 const App = () => {
   // Estados
@@ -35,6 +37,13 @@ const App = () => {
   const [comprados, setComprados] = useState([]);
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
+  const setSupersActivosConLimite = (nuevosSups) => {
+    if (nuevosSups.length > limiteSupers()) {
+      setModalUpgrade({ funcionalidad: 'maxSupers', planRequerido: 'basic' });
+      return;
+    }
+    setSupersActivos(nuevosSups);
+  };
   const [acordeon, setAcordeon] = useState(null);
   const [busqueda, setBusqueda] = useState("");
   const [modoTienda, setModoTienda] = useState(null);
@@ -50,6 +59,8 @@ const App = () => {
   // Estados responsive
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [modalUpgrade, setModalUpgrade] = useState(null); // {funcionalidad, planRequerido}
+  const { plan, puedeUsar, limiteSupers, limiteProductos } = usePlan(session);
 
   // ============================================================================
   // ✅ CAMBIO PRINCIPAL: Cargar datos de NUEVAS TABLAS
@@ -236,7 +247,12 @@ const App = () => {
   };
 
   const toggleProd = (id) => {
-    const nvas = seleccionados.includes(id) ? seleccionados.filter(x => x !== id) : [...seleccionados, id];
+    const estaEnCesta = seleccionados.includes(id);
+    if (!estaEnCesta && seleccionados.length >= limiteProductos()) {
+      setModalUpgrade({ funcionalidad: 'maxProductos', planRequerido: 'basic' });
+      return;
+    }
+    const nvas = estaEnCesta ? seleccionados.filter(x => x !== id) : [...seleccionados, id];
     setSeleccionados(nvas);
     sincronizarNube(nvas, comprados);
   };
@@ -517,39 +533,21 @@ const App = () => {
 
   if (cargando) {
     return (
-      <>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f4f7f5' }}>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '48px', marginBottom: '20px' }}>🛒</div>
-            <div style={{ fontSize: '18px', fontWeight: '800', color: '#037623' }}>Cargando productos...</div>
-          </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f4f7f5' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '48px', marginBottom: '20px' }}>🛒</div>
+          <div style={{ fontSize: '18px', fontWeight: '800', color: '#037623' }}>Cargando productos...</div>
         </div>
-        <Cestita
-          seleccionados={seleccionados}
-          precios={precios}
-          supersActivos={supersActivos}
-          getProdFull={getProdFull}
-          session={session}
-        />
-      </>
+      </div>
     );
   }
 
   if (mostrarLanding) {
     return (
-      <>
-        <Landing onEntrar={() => {
-          localStorage.setItem('landing_vista', '1');
-          setMostrarLanding(false);
-        }} />
-        <Cestita
-          seleccionados={seleccionados}
-          precios={precios}
-          supersActivos={supersActivos}
-          getProdFull={getProdFull}
-          session={session}
-        />
-      </>
+      <Landing onEntrar={() => {
+        localStorage.setItem('landing_vista', '1');
+        setMostrarLanding(false);
+      }} />
     );
   }
 
@@ -606,7 +604,8 @@ const App = () => {
           <StoreSelector 
             listaSupers={listaSupers} 
             supersActivos={supersActivos} 
-            setSupersActivos={setSupersActivos} 
+            setSupersActivos={setSupersActivosConLimite}
+            planActual={plan} 
           />
         )}
 
@@ -651,6 +650,8 @@ const App = () => {
               handleFoto={handleFoto}
               exportarPDF={exportarPDF}
               onCompartir={() => setMostrarColaborativa(true)}
+              plan={plan}
+              onUpgrade={(f, p) => setModalUpgrade({ funcionalidad: f, planRequerido: p || 'basic' })}
             />
           </div>
 
@@ -703,6 +704,14 @@ const App = () => {
       </div>
       
       <Footer setSeccionActual={setSeccionActual} />
+
+      {modalUpgrade && (
+        <ModalUpgrade
+          funcionalidad={modalUpgrade.funcionalidad}
+          planRequerido={modalUpgrade.planRequerido}
+          onCerrar={() => setModalUpgrade(null)}
+        />
+      )}
 
       <Cestita
         seleccionados={seleccionados}
