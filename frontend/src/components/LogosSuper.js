@@ -1,13 +1,13 @@
-import logoMercadona from '../assets/mercadona.svg';
+import logoMercadona from '../assets/mercadona.png';
 import logoCarrefour from '../assets/carrefour.svg';
 import logoLidl from '../assets/lidl.svg';
 import logoAldi from '../assets/aldi.svg';
-import logoAlcampo from '../assets/alcampo.svg';
+import logoAlcampo from '../assets/alcampo.png';
 import logoHipercor from '../assets/hipercor.svg';
 import logoDIA from '../assets/DIA.svg';
-import logoLadespensa from '../assets/LaDespensa.svg';
-import logoAhorraMas from '../assets/AhorraMas.svg';
-import logoBM from '../assets/BMSupermercados.svg';
+import logoLadespensa from '../assets/LaDespensa.jpeg';
+import logoAhorraMas from '../assets/AhorraMas.png';
+import logoBM from '../assets/BMSupermercados.png';
 
 // visible: true  → aparece en el selector
 // visible: false → oculto (próximamente) — cambiar a true cuando tenga datos

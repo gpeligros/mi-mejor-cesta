@@ -51,7 +51,7 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
                 src={s.logo}
                 alt={s.id}
                 title={s.id}
-                style={{ height: '18px', maxWidth: '50px', objectFit: 'contain' }}
+                style={{ height: "26px", maxWidth: '80px', objectFit: 'contain' }}
               />
             </label>
           ))}
