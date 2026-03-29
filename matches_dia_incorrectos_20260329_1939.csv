@@ -1,0 +1,52 @@
+id_catalogo,id_dia,nombre_catalogo,tipo,marca_catalogo,nombre_dia,marca_dia,precio_dia,score,motivo
+CAT-6440,DI-3844,salsa de tomate con albahaca,marca_blanca,,Pan crujiente de centeno con tomate y albahaca Melvit 170 g,Melvit,2.29,0,"salsa de tomate vs pan con tomate y albahaca, productos distintos"
+CAT-1500,DI-1743,agua mineral,marca_fabricante,Nestlé,Agua mineral Aquarel 750 ml,Aquarel,0.79,0,"agua mineral pero marcas distintas (Nestlé vs Aquarel), productos diferentes"
+CAT-2125,DI-1231,lima,marca_blanca,,Calippo lima limón 5 x 105 g,Calippo,4.99,0,productos completamente distintos: lima fruta vs Calippo helado de lima
+CAT-3440,DI-2427,setas,marca_blanca,,Pasta fresca rellena con setas del bosque Gallo 250 g,Gallo,2.96,0,"setas vs pasta fresca rellena con setas - categorías distintas, productos diferentes"
+CAT-1757,DI-0407,huevos,marca_blanca,,Huevos de chocolate relleno de leche y avellanas Kinder bolsa 125 g,Kinder,3.29,0,productos completamente distintos: huevos frescos vs huevos de chocolate Kinder
+CAT-1765,DI-0429,piña,marca_blanca,,Queso de untar con piña Castello 125 g,Castello,2.59,0,"piña (fruta) vs queso de untar con piña, productos completamente distintos"
+CAT-0953,DI-2575,calamar en tinta,marca_blanca,,Espaguetis con tinta de calamar La molisana 500 g,La molisana,3.25,0,"categorías distintas: conserva de calamar vs pasta, productos completamente diferentes"
+CAT-2642,DI-2988,mousse de pato,marca_blanca,,Mousse para gatos con pato Deligato de Dia lata 85 g,Deligato de Dia,0.65,0,"mousse de pato humano vs mousse para gatos, categorías distintas"
+CAT-0254,DI-0004,chocolate blanco,marca_blanca,,Galletas rellenas de chocolate blanco estrellas Principe caja 225 g,Principe,2.75,0,chocolate blanco vs galletas rellenas - categorías distintas
+CAT-4253,DI-1282,quinoa,marca_blanca,,Vasos de arroz integral con quinoa Brillante 2 x 125 g,Brillante,1.49,0,quinoa vs arroz integral con quinoa - productos diferentes
+CAT-0857,DI-3744,bruma facial multifuncional,marca_blanca,,7 Up 330 ml,7 Up,0.65,0,categorías distintas: bruma facial vs bebida refrescante
+CAT-3346,DI-0110,hierbabuena,marca_blanca,,Chicles sabor hierbabuena 60 minutos sin azúcar Trident caja 22 g,Trident,1.2,0,categorías distintas: hierbabuena (condimento/hierba) vs chicles (golosina)
+CAT-0897,DI-2179,leche de coco,marca_blanca,,Gel de ducha reparador leche de coco Fruit Revolution Dia Imaqe botella 750 ml,Dia Imaqe,1.55,0,"leche de coco vs gel de ducha, categorías completamente distintas"
+CAT-3374,DI-0613,patata,marca_blanca,,Ñoquis de patata Gallo 400 g,Gallo,1.49,0,categorías distintas: patata fresca vs ñoquis elaborados (producto procesado)
+CAT-1023,DI-0652,yogur sabor limón,marca_blanca,,Galletas sabor yogur con limón Bicentury caja 160 g,Bicentury,2.59,0,"yogur sabor limón vs galletas sabor yogur, categorías distintas"
+CAT-3433,DI-0291,zanahorias,marca_blanca,,Guisantes y zanahorias Bonduelle 3 x 130 g,Bonduelle,3.99,2,"zanahorias vs guisantes y zanahorias - productos diferentes, solo palabra común"
+CAT-3843,DI-1347,bizcochos,marca_blanca,,Harina para bizcochos Gallo 1 Kg,Gallo,1.79,2,"bizcochos vs harina para bizcochos, productos distintos en la misma categoría amplia"
+CAT-1378,DI-0255,ketchup,marca_blanca,,Apetinas sabor ketchup Tosfrit 90 g,Tosfrit,1.25,2,ambos relacionados con ketchup pero diferente formato: condimento vs snack/aperitivo
+CAT-0230,DI-2812,carbón vegetal,marca_blanca,,Pasta de dientes blanqueadora carbón vegetal natural ecocert  Dia Imaqe tubo 75 ml,Dia Imaqe,2.1,2,"carbón vegetal es ingrediente en pasta de dientes, no es el mismo producto, categorías distintas"
+CAT-0776,DI-4566,margarina proactiv,marca_fabricante,Flora,Margarina Proactiv 225 g,Proactiv,3.19,2,"margarina Proactiv pero marca Flora en catálogo vs Proactiv en DIA, marca_fabricante requiere coincidencia"
+CAT-1122,DI-3610,piadina,marca_blanca,,Pizza piadina prosciutto Dr. Oetker Ristorante 280 g,Dr. Oetker,3.99,2,"piadina vs pizza piadina, productos diferentes aunque relacionados en categoría de masas"
+CAT-7083,DI-2736,café molido descafeinado espresso,marca_blanca,,Cápsulas de café espresso intenso descafeinado red Dolce Gusto 30 unidades,Nescafé,8.55,2,"café molido vs cápsulas, formatos completamente distintos"
+CAT-1848,DI-0885,curry,marca_blanca,,Noodles curry Gallina Blanca Yatekomo 61 g,Gallina Blanca,1.52,2,"curry vs noodles curry, productos completamente distintos"
+CAT-0652,DI-1431,romero,marca_blanca,,Miel de romero Mielove de Dia frasco 350 g,Mielove de Dia,3.99,2,"romero vs miel de romero, productos completamente distintos aunque comparten palabra"
+CAT-1857,DI-1982,cúrcuma,marca_blanca,,Infusión de cúrcuma con té matcha Hornimans 20 unidades,Hornimans,2.99,2,"cúrcuma vs infusión de cúrcuma, productos completamente distintos"
+CAT-2830,DI-2716,semillas de chía,marca_blanca,,Galletas saladas con semillas de chía Biscuits Galicia bolsa 200 g,Biscuits Galicia,1.85,2,categorías distintas: semillas de chía vs galletas con semillas de chía
+CAT-0246,DI-0960,cacahuetes con chocolate con leche,marca_blanca,,Barritas de chocolate con caramelo y cacahuetes Snickers bolsa 150 g,Snickers,2.99,2,"cacahuetes con chocolate vs barritas de chocolate Snickers, productos distintos aunque ambos tienen chocolate"
+CAT-2803,DI-0958,salchichas cocidas hot dog de pollo y cerdo sabor ahumado,marca_fabricante,Oscar Mayer,Bacón sabor ahumado Oscar Mayer 100 g,Oscar Mayer,1.5,2,"salchichas hot dog vs bacón, misma marca Oscar Mayer pero productos distintos"
+CAT-6405,DI-1098,mostaza a la antigua,marca_blanca,,Mostaza a la antigua Maille 210 g,Maille,3.59,4,"mostaza a la antigua pero marcas distintas (marca_blanca vs Maille), marca_fabricante requiere coincidencia"
+CAT-0225,DI-0471,chocolate extrafino con leche y almendras enteras,marca_blanca,,Chocolate con leche con almendras enteras Valor 250 g,Valor,5.25,4,"chocolate con leche y almendras pero marcas distintas (marca_blanca Valor vs Valor marca_fabricante), especificaciones diferentes"
+CAT-4547,DI-1025,vino tinto roble,marca_fabricante,Atardecer,Vino tinto roble D.O. Ribera del Duero Ribera del Duero 75 cl,Ribera del Duero,9.8,4,"vino tinto roble pero marcas distintas (Atardecer vs Ribera del Duero), marca_fabricante requiere coincidencia"
+CAT-3196,DI-1725,helado de chocolate,marca_blanca,,Tarrina de helado menta con chocolate Dia Temptation 350 g,Dia Temptation,2.99,4,"marca_blanca, helado chocolate vs menta con chocolate, distinto sabor/subtipo"
+CAT-2253,DI-3626,limpiador de baños en gel,marca_blanca,,Limpiador desinfectante gel baños Sanytol botella 1.2 L,Sanytol,3.99,4,ambos son limpiadores de baño gel desinfectantes pero marcas diferentes (Sanytol vs marca_blanca)
+CAT-2817,DI-2373,lenteja,marca_blanca,,Hélices 100% de lenteja roja Gallo 250 g,Gallo,1.99,4,ambos con lenteja pero diferente formato: lenteja seca vs hélices/pasta de lenteja
+CAT-1127,DI-0997,mix mini barritas de chocolate,marca_blanca,,Mini barritas de chocolate con leche y avellanas Kinder bolsa 108 g,Kinder,2.99,4,"mini barritas de chocolate pero marca Kinder no coincide con marca_blanca, especificaciones distintas"
+CAT-3030,DI-0033,bechamel,marca_blanca,,Crema de bechamel con lenguado Hero frasco 235 g,Hero,1.85,4,ambos bechamel pero diferente: bechamel pura vs bechamel con lenguado
+CAT-1019,DI-1703,yogur sabor coco,marca_blanca,,Yogur líquido sabor piña y coco Dia Láctea botella 1 Kg,Dia Láctea,1.49,4,"yogur sabor coco vs yogur líquido piña y coco, formato y sabores diferentes"
+CAT-2140,DI-0137,zumo de manzana,marca_blanca,,"Zumo de melocotón, uva y manzana Don Simón 1 L",Don Simón,1.5,4,"zumo de manzana vs zumo mezcla melocotón-uva-manzana, distinto tipo"
+CAT-0358,DI-3443,pollo teriyaki,marca_blanca,,Yarroz con pollo teriyaki Gallina Blanca 84 g,Gallina Blanca,1.99,4,"pollo teriyaki vs arroz con pollo, categoría diferente (plato preparado vs componente)"
+CAT-0182,DI-2348,café molido,marca_blanca,,Café molido natural Colombia Marcilla 200 g,Marcilla,6.05,4,café molido pero distinta marca fabricante: Dia vs Marcilla
+CAT-3306,DI-4742,crema catalana,marca_blanca,,Preparado para crema catalana Royal caja 120 g,Royal,1.99,4,"crema catalana vs preparado para crema catalana, diferente formato (producto terminado vs preparado)"
+CAT-0662,DI-1630,confitura de fresa sin azúcar,marca_blanca,,Confitura de arándanos y frambuesas 0% azúcares añadidos Hero bote 280 g,Hero,2.99,4,misma categoría (confituras) pero distinto tipo: fresa vs arándanos-frambuesas
+CAT-2636,DI-3006,garbanzo,marca_blanca,,Hélices 100% de garbanzo Gallo 250 g,Gallo,1.99,4,ambos con garbanzo pero diferente formato: garbanzo seco vs hélices/pasta de garbanzo
+CAT-4040,DI-0007,yogur líquido de fresa,marca_blanca,,Yogur líquido de fresa y platano Actimel pack 6 x 100 g,Actimel,3.99,4,"yogur líquido, pero sabor distinto (fresa vs fresa+plátano) y marca diferente"
+CAT-0748,DI-4613,chocolate con leche avellanas troceadas,marca_blanca,,Chocolate con leche con avellanas Milka 250 g,Milka,5.75,4,"chocolate con leche y avellanas pero marcas distintas (marca_blanca vs Milka), especificaciones diferentes"
+CAT-2237,DI-1075,limpiador baños desinfectante,marca_blanca,,Limpiador desinfectante baños Sanytol spray 750 ml,Sanytol,3.29,4,"ambos son limpiadores de baño desinfectantes pero marcas diferentes (Sanytol vs marca_blanca), no coinciden requisitos marca_fabricante"
+CAT-2578,DI-3753,queso viejo ahumado de oveja,marca_blanca,,Queso de oveja tierno ahumado 175 g,DIA,3.99,4,"queso viejo ahumado oveja vs queso tierno ahumado oveja, distintos tipos de maduración"
+CAT-1112,DI-0903,tarta de queso,marca_blanca,,Preparado para tarta de queso Royal caja 300 g,Royal,3.99,4,"tarta de queso vs preparado para tarta de queso, productos distintos"
+CAT-4017,DI-2853,refresco té sabor melocotón sin azúcar,marca_blanca,,Refresco de té con melocotón zero San Benedetto 500 ml,San Benedetto,0.75,4,"marca blanca vs San Benedetto, ambos té melocotón zero pero marcas distintas"
+CAT-1568,DI-1468,refresco té verde,marca_blanca,,Refresco de té verde con aloe vera San Benedetto 1.5 L,San Benedetto,1.15,4,"ambos té verde pero marca blanca vs San Benedetto con aloe vera, distinto producto"
+CAT-0928,DI-1691,filetes de melva en aceite de oliva,marca_blanca,,Filetes de caballa en aceite de oliva bajo en sal Calvo 82 g,Calvo,2.39,4,"productos de pescado en aceite pero distinto tipo: melva vs caballa, categóricamente diferentes"

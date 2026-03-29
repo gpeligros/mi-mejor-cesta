@@ -1,16 +1,6 @@
 import React from 'react';
 
-// Palabras clave de marca blanca — ampliar si se añaden más supers
-const MARCAS_BLANCAS = ['hacendado', 'dia láctea', 'dia lactea', 'hola cola', 'delicious', 'bosque verde'];
-
-const esMarcaBlanca = (nombre) => {
-  const n = nombre.toLowerCase();
-  return MARCAS_BLANCAS.some(m => n.includes(m));
-};
-
-// Formatea el nombre mostrando solo la parte diferenciadora del slug:
-// "Refresco Coca-Cola (Refresco Coca Cola Pack 12)" → "Refresco Coca-Cola · Pack 12"
-// "Mayonesa Hellmann's" → "Mayonesa Hellmann's"
+// Limpia el nombre quitando la parte redundante del slug
 const limpiarNombre = (nombre) => {
   const match = nombre.match(/^(.+?)\s*\((.+)\)\s*$/);
   if (!match) return nombre;
@@ -41,7 +31,8 @@ const Sidebar = ({
   seleccionados, setSeleccionados, setComprados, 
   escaneando, fileInputRef, handleFoto, 
   busqueda, setBusqueda, db, acordeon, setAcordeon, 
-  toggleProd, vaciarCesta, exportarPDF, onCompartir
+  toggleProd, vaciarCesta, exportarPDF, onCompartir,
+  plan, onUpgrade,
 }) => {
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
@@ -111,20 +102,31 @@ const Sidebar = ({
 
       {/* BUSCADOR Y LISTADO */}
       <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '25px', border: '1px solid #e0e6e1' }}>
-        <input type="text" placeholder="🔍 Buscar productos..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #ddd', marginBottom: '10px', boxSizing: 'border-box' }} />
+        <input
+          type="text"
+          placeholder="🔍 Buscar productos..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #ddd', marginBottom: '10px', boxSizing: 'border-box' }}
+        />
 
-        {/* Toggle marca blanca */}
+        {/* Toggle marca blanca — usa campo tipo de la BBDD */}
         <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: '#666', marginBottom: '15px', cursor: 'pointer' }}>
-          <input type="checkbox" checked={mostrarMarcaBlanca} onChange={() => setMostrarMarcaBlanca(v => !v)} />
+          <input
+            type="checkbox"
+            checked={mostrarMarcaBlanca}
+            onChange={() => setMostrarMarcaBlanca(v => !v)}
+          />
           Mostrar marca blanca (Hacendado, etc.)
         </label>
-        
+
         <div style={{ maxHeight: '800px', overflowY: 'auto' }}>
           {categoriasOrdenadas.map(categoria => {
             const subcategoriasFiltradas = Object.keys(db[categoria] || {}).filter(subcategoria => {
               return db[categoria][subcategoria].some(producto => {
+                // Filtro marca blanca usando campo tipo de la BBDD
+                if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                 const nombreLimpio = limpiarNombre(producto.nombre);
-                if (!mostrarMarcaBlanca && esMarcaBlanca(nombreLimpio)) return false;
                 return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
               });
             });
@@ -132,28 +134,34 @@ const Sidebar = ({
 
             return (
               <div key={`cat-${categoria}`} style={{ marginBottom: '10px' }}>
-                <div onClick={() => setAcordeon(acordeon === categoria ? null : categoria)} style={{ cursor: 'pointer', fontWeight: '900', fontSize: '13px', padding: '8px 0', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between' }}>
+                <div
+                  onClick={() => setAcordeon(acordeon === categoria ? null : categoria)}
+                  style={{ cursor: 'pointer', fontWeight: '900', fontSize: '13px', padding: '8px 0', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between' }}
+                >
                   {categoria.toUpperCase()} <span>{(acordeon === categoria || busqueda) ? '−' : '+'}</span>
                 </div>
-                
+
                 {(acordeon === categoria || busqueda) && subcategoriasFiltradas.sort().map(subcategoria => {
                   const subcatKey = `${categoria}__${subcategoria}`;
                   const subcatVisible = busqueda || subcatAbierta === subcatKey;
                   const productosFiltrados = db[categoria][subcategoria]
                     .filter(producto => {
+                      if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                       const nombreLimpio = limpiarNombre(producto.nombre);
-                      if (!mostrarMarcaBlanca && esMarcaBlanca(nombreLimpio)) return false;
                       return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
                     })
                     .sort((a, b) => limpiarNombre(a.nombre).localeCompare(limpiarNombre(b.nombre)));
-                  
+
                   return (
                     <div key={`sub-${categoria}-${subcategoria}`} style={{ paddingLeft: '15px', marginTop: '5px' }}>
-                      <div onClick={() => !busqueda && setSubcatAbierta(subcatAbierta === subcatKey ? null : subcatKey)} style={{ fontSize: '10px', color: '#037623', fontWeight: '900', marginBottom: '5px', cursor: busqueda ? 'default' : 'pointer', display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #f0f0f0' }}>
+                      <div
+                        onClick={() => !busqueda && setSubcatAbierta(subcatAbierta === subcatKey ? null : subcatKey)}
+                        style={{ fontSize: '10px', color: '#037623', fontWeight: '900', marginBottom: '5px', cursor: busqueda ? 'default' : 'pointer', display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #f0f0f0' }}
+                      >
                         <span>{subcategoria.toUpperCase()}</span>
                         {!busqueda && <span style={{ color: '#999' }}>{subcatVisible ? '−' : '+'}</span>}
                       </div>
-                      
+
                       {subcatVisible && productosFiltrados.map(producto => {
                         const productoId = producto.id_producto;
                         if (!productoId) return null;

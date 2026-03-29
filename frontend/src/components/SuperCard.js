@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SuperCard = ({ sId, logo, seleccionados, precios, supersActivos, getProdFull, setModoTienda, getNombreReal, toggleProd }) => {
+const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActivos, getProdFull, setModoTienda, getNombreReal, toggleProd }) => {
   const totalS = seleccionados.reduce((acc, id) => {
     const precio = precios[id]?.[sId];
     return acc + (precio && precio > 0 ? precio : 0);
@@ -38,6 +38,9 @@ const SuperCard = ({ sId, logo, seleccionados, precios, supersActivos, getProdFu
 
         const precioActual = precios[id]?.[sId];
         const precioValido = precioActual && precioActual > 0 ? precioActual : 0;
+
+        // Precio de referencia por unidad (€/L, €/kg...) — solo Mercadona por ahora
+        const refPrecio = referencias?.[id]?.[sId] || null;
 
         const preciosDisponibles = supersActivos
           .map(s => precios[id]?.[s])
@@ -83,16 +86,24 @@ const SuperCard = ({ sId, logo, seleccionados, precios, supersActivos, getProdFu
               </div>
             </div>
 
-            {/* Precio */}
-            <span style={{ 
-              fontWeight: '900', 
-              color: esPrecioMinimo ? '#037623' : '#102215', 
-              background: esPrecioMinimo ? '#e8fdf0' : 'transparent', 
-              padding: '4px 8px', borderRadius: '6px', fontSize: '14px',
-              minWidth: '60px', textAlign: 'right', flexShrink: 0
-            }}>
-              {precioValido > 0 ? `${precioValido.toFixed(2)}€` : '--'}
-            </span>
+            {/* Precio + referencia */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
+              <span style={{ 
+                fontWeight: '900', 
+                color: esPrecioMinimo ? '#037623' : '#102215', 
+                background: esPrecioMinimo ? '#e8fdf0' : 'transparent', 
+                padding: '4px 8px', borderRadius: '6px', fontSize: '14px',
+                minWidth: '60px', textAlign: 'right',
+              }}>
+                {precioValido > 0 ? `${precioValido.toFixed(2)}€` : '--'}
+              </span>
+              {/* Precio por unidad de medida */}
+              {refPrecio && precioValido > 0 && (
+                <span style={{ fontSize: '9px', color: '#aaa', marginTop: '2px', paddingRight: '8px' }}>
+                  {refPrecio}
+                </span>
+              )}
+            </div>
           </div>
         );
       })}

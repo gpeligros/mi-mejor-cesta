@@ -8,6 +8,7 @@ Esquema de precios_mercadona:
   id           → ME-xxxx  (generado por nosotros)
   id_api       → ID numérico original de la API de Mercadona
   nombre_comercial, precio, precio_unidad, marca, url, imagen, disponible, actualizado
+  ean          → código EAN/GTIN del producto (Fase 3)
 
 Uso:
   cd scrapers
@@ -97,6 +98,32 @@ def calcular_precio_unidad(pi):
     return None
 
 
+def extraer_ean(item):
+    """
+    Extrae el EAN/GTIN del producto desde la respuesta de la API de Mercadona.
+    La API puede devolver el EAN en distintos campos según la versión.
+    """
+    # Campo directo más habitual
+    ean = item.get("ean") or item.get("ean13") or item.get("gtin")
+    if ean:
+        return str(ean).strip()
+
+    # A veces está en details o en legal
+    details = item.get("details") or {}
+    if isinstance(details, dict):
+        ean = details.get("ean") or details.get("ean13")
+        if ean:
+            return str(ean).strip()
+
+    # A veces en price_instructions
+    pi = item.get("price_instructions") or {}
+    ean = pi.get("ean") or pi.get("ean13")
+    if ean:
+        return str(ean).strip()
+
+    return None
+
+
 def parsear_producto(item):
     """Transforma un item de la API al formato de precios_mercadona."""
     nombre = (item.get("display_name") or "").strip()
@@ -109,18 +136,30 @@ def parsear_producto(item):
     except:
         precio = 0
 
+    # reference_price: precio por unidad de medida (€/L, €/kg) — disponible en objeto resumido
+    try:
+        ref_price = float(pi.get("reference_price") or 0) or None
+    except:
+        ref_price = None
+
+    # reference_format: unidad de medida ("L", "kg", "ud") — disponible en objeto resumido
+    ref_format = (pi.get("reference_format") or "").strip() or None
+
     id_api = str(item.get("id") or "")
     url    = item.get("share_url") or f"https://tienda.mercadona.es/product/{id_api}"
 
     return {
-        "id_api":          id_api,
-        "nombre_comercial": nombre,
-        "precio":          round(precio, 2) if precio else None,
-        "precio_unidad":   calcular_precio_unidad(pi),
-        "marca":           None,  # Mercadona no devuelve marca en la API
-        "url":             url,
-        "imagen":          item.get("thumbnail") or "",
-        "disponible":      True,
+        "id_api":            id_api,
+        "nombre_comercial":  nombre,
+        "precio":            round(precio, 2) if precio else None,
+        "precio_unidad":     calcular_precio_unidad(pi),
+        "marca":             None,  # Mercadona no devuelve marca en objeto resumido
+        "url":               url,
+        "imagen":            item.get("thumbnail") or "",
+        "disponible":        True,
+        "ean":               extraer_ean(item),
+        "reference_price":   ref_price,   # ← precio €/L o €/kg
+        "reference_format":  ref_format,  # ← "L", "kg", "ud"...
     }
 
 
@@ -252,7 +291,8 @@ def asignar_ids(productos):
 
 def guardar_csv(productos):
     campos = ["id", "id_api", "nombre_comercial", "precio", "precio_unidad",
-              "marca", "url", "imagen", "disponible"]
+              "marca", "url", "imagen", "disponible", "ean",
+              "reference_price", "reference_format"]
     with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
         csv.DictWriter(f, fieldnames=campos, extrasaction="ignore").writeheader()
         csv.DictWriter(f, fieldnames=campos, extrasaction="ignore").writerows(productos)
@@ -266,7 +306,8 @@ def guardar_csv(productos):
 def subir_supabase(productos):
     """Sube/actualiza precios_mercadona usando id_api como clave de upsert."""
     campos = ["id", "id_api", "nombre_comercial", "precio", "precio_unidad",
-              "marca", "url", "imagen", "disponible"]
+              "marca", "url", "imagen", "disponible", "ean",
+              "reference_price", "reference_format"]
     HEADERS_SB["Prefer"] = "resolution=merge-duplicates,return=minimal"
 
     ok = err = 0
@@ -322,10 +363,14 @@ def main():
         print("❌ No se obtuvieron productos")
         return
 
-    con_pu = sum(1 for p in productos if p.get("precio_unidad"))
+    con_pu      = sum(1 for p in productos if p.get("precio_unidad"))
+    con_ean     = sum(1 for p in productos if p.get("ean"))
+    con_ref     = sum(1 for p in productos if p.get("reference_price"))
     print(f"\n{'='*55}")
-    print(f"  Total descargados:  {len(productos)}")
-    print(f"  Con precio_unidad:  {con_pu} ({con_pu/len(productos)*100:.1f}%)")
+    print(f"  Total descargados:    {len(productos)}")
+    print(f"  Con precio_unidad:    {con_pu} ({con_pu/len(productos)*100:.1f}%)")
+    print(f"  Con EAN:              {con_ean} ({con_ean/len(productos)*100:.1f}%)")
+    print(f"  Con reference_price:  {con_ref} ({con_ref/len(productos)*100:.1f}%)")
 
     # 2. Asignar IDs ME-xxxx
     productos = asignar_ids(productos)

@@ -164,9 +164,9 @@ def guardar_matches(client, resultados):
     return total
 
 
-def main(dry_run=False):
+def main(dry_run=False, umbral=0.75):
     log.info("━" * 55)
-    log.info("  MATCH ALCAMPO — IA (Claude)")
+    log.info(f"  MATCH ALCAMPO — IA (Claude) | umbral: {umbral}")
     log.info("━" * 55)
 
     if not ANTHROPIC_KEY:
@@ -176,7 +176,15 @@ def main(dry_run=False):
     client = get_supabase()
     catalogo, alcampo, ya_matched = cargar_datos(client)
 
-    # Solo los que no tienen match aún
+    # IDs de alcampo ya matcheados
+    res = client.table("productos_match").select("id_alcampo").not_.is_("id_alcampo", "null").execute()
+    alcampo_ya_matcheados = {r["id_alcampo"] for r in (res.data or [])}
+
+    # Solo alcampo sin match — invertir la búsqueda
+    alcampo_sin_match = [a for a in alcampo if a["id"] not in alcampo_ya_matcheados]
+    log.info(f"{len(alcampo_sin_match)} productos Alcampo sin match")
+
+    # Solo catálogo sin match en Alcampo
     pendientes = [p for p in catalogo if str(p["id"]) not in ya_matched]
     log.info(f"\n{len(pendientes)} productos pendientes de match")
     log.info(f"Procesando en lotes de {BATCH_CATALOGO}...\n")
@@ -239,5 +247,6 @@ def main(dry_run=False):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--umbral", type=float, default=0.75, help="Umbral mínimo de confianza (0-1)")
     args = ap.parse_args()
-    main(dry_run=args.dry_run)
+    main(dry_run=args.dry_run, umbral=args.umbral)

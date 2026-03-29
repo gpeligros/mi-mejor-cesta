@@ -38,7 +38,16 @@ const App = () => {
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
-  const { plan, puedeUsar, limiteSupers, limiteProductos } = usePlan(session);
+  const { plan, cargando: planCargando, puedeUsar, limiteSupers, limiteProductos } = usePlan(session);
+  console.log('PLAN DEBUG:', plan, '| limProd:', limiteProductos(), '| limSup:', limiteSupers());
+
+  // Recortar cesta si supera el límite del plan al cargar
+  useEffect(() => {
+    if (!planCargando && seleccionados.length > limiteProductos()) {
+      const recortados = seleccionados.slice(0, limiteProductos());
+      setSeleccionados(recortados);
+    }
+  }, [planCargando]);
 
   const setSupersActivosConLimite = (nuevosSups) => {
     if (nuevosSups.length > limiteSupers()) {
@@ -47,6 +56,7 @@ const App = () => {
     }
     setSupersActivos(nuevosSups);
   };
+  const [referencias, setReferencias] = useState({});
   const [acordeon, setAcordeon] = useState(null);
   const [busqueda, setBusqueda] = useState("");
   const [modoTienda, setModoTienda] = useState(null);
@@ -83,6 +93,14 @@ const App = () => {
 
         if (errCat) console.error('❌ Error catálogo:', errCat);
 
+        // ── Cargar tipo de productos_catalogo (marca_fabricante / marca_blanca) ──
+        const { data: tiposCat } = await supabase
+          .from('productos_catalogo')
+          .select('id, tipo')
+          .range(0, 10000);
+        const idxTipo = {};
+        (tiposCat || []).forEach(p => { if (p.tipo) idxTipo[p.id] = p.tipo; });
+
         // ── Cargar matches + precios Mercadona ────────────────────────────
         const { data: matches, error: errMatch } = await supabase
           .from('productos_match')
@@ -93,7 +111,7 @@ const App = () => {
 
         const { data: preciosMerc, error: errMerc } = await supabase
           .from('precios_mercadona')
-          .select('id, precio, precio_unidad, nombre_comercial')
+          .select('id, precio, precio_unidad, nombre_comercial, reference_price, reference_format')
           .range(0, 10000);
 
         if (errMerc) console.error('❌ Error precios Mercadona:', errMerc);
@@ -116,10 +134,14 @@ const App = () => {
           // ── Índices de precios por ID ──────────────────────────────────
           const idxMerc = {};
           const nombresMerc = {};
+          const idxMercRef = {}; // reference_price por id Mercadona
           (preciosMerc || []).forEach(p => {
             if (p.precio) {
               idxMerc[p.id] = parseFloat(p.precio);
               nombresMerc[p.id] = p.nombre_comercial || null;
+            }
+            if (p.reference_price && p.reference_format) {
+              idxMercRef[p.id] = `${parseFloat(p.reference_price).toFixed(2)}€/${p.reference_format}`;
             }
           });
 
@@ -148,15 +170,18 @@ const App = () => {
           // ── Construir sidebar (db) ─────────────────────────────────────
           const dbMap = {};
           catalogo.forEach(p => {
-            const cat   = p.categoria    || 'General';
+            const cat   = p.categoria    || null;
             const subcat = p.subcategoria || 'Otros';
+            // Filtrar categoría General — productos sin categoría asignada
+            if (!cat || cat.toLowerCase() === 'general') return;
             if (!dbMap[cat]) dbMap[cat] = {};
             if (!dbMap[cat][subcat]) dbMap[cat][subcat] = [];
             dbMap[cat][subcat].push({
-              id_producto: String(p.id),
-              nombre:      p.nombre_generico,
-              categoria:   cat,
+              id_producto:  String(p.id),
+              nombre:       p.nombre_generico,
+              categoria:    cat,
               subcategoria: subcat,
+              tipo:         idxTipo[p.id] || null, // marca_fabricante | marca_blanca
             });
           });
           setDb(dbMap);
@@ -192,6 +217,21 @@ const App = () => {
           setPrecios(mapa);
           // Guardar nombres reales en estado separado
           setNombresReales(mapaNombres);
+
+          // ── Construir mapa de precios de referencia (€/L, €/kg) ────────
+          const mapaRef = {};
+          catalogo.forEach(p => {
+            const m = idxMatch[p.id];
+            if (!m) return;
+            const refs = {};
+            if (m.id_mercadona && idxMercRef[m.id_mercadona]) {
+              refs['Mercadona'] = idxMercRef[m.id_mercadona];
+            }
+            if (Object.keys(refs).length > 0) {
+              mapaRef[String(p.id)] = refs;
+            }
+          });
+          setReferencias(mapaRef);
 
           console.log('✅ Catálogo:', catalogo.length, '| Matches:', matches.length,
             '| Con precios:', Object.keys(mapa).length);
@@ -672,6 +712,7 @@ const App = () => {
                     logo={listaSupers.find(x => x.id === sId).logo} 
                     seleccionados={seleccionados} 
                     precios={precios}
+                    referencias={referencias}
                     getPrecio={getPrecio}
                     getNombreReal={getNombreReal}
                     supersActivos={supersActivos} 
