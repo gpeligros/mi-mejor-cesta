@@ -1,8 +1,0 @@
-id_catalogo,id_alcampo,nombre_catalogo,tipo,marca_catalogo,nombre_alcampo,marca_alcampo,precio_alcampo,score,motivo
-CAT-7085,AL-7085,café molido mezcla intensa,marca_fabricante,La Estrella,,,,0,"producto Alcampo sin datos, no se puede verificar marca_fabricante La Estrella"
-CAT-2826,AL-2851,lomo,marca_blanca,,,,,0,"producto Alcampo sin datos, no se puede verificar"
-CAT-2853,AL-2853,jamón de pavo finas lonchas,marca_blanca,,,,,0,"producto Alcampo sin datos, no se puede verificar"
-CAT-1499,AL-50743,agua mineral,marca_fabricante,Cortes,"ESMIAGUA Agua mineral botella de 1,5 L, pack de 6 uds.",ESMIAGUA,1.8,0,"marca_fabricante Cortes vs ESMIAGUA, marcas completamente distintas"
-CAT-0603,AL-603,torreznos,marca_blanca,,,,,0,"producto Alcampo sin datos, no se puede verificar"
-CAT-0771,AL-771,patatas light,marca_blanca,,,,,0,"producto Alcampo sin datos, no se puede verificar"
-CAT-0186,AL-29527,café molido natural,marca_fabricante,Bonka,"DOLCE GUSTO Café  en cápsulas espresso bonka I8, 16 uds.",NESCAFÉ DOLCE GUSTO,4.7,2,"Bonka vs Dolce Gusto, café pero formato distinto (molido vs cápsula), marcas fabricante diferentes"

@@ -1,4 +1,0 @@
-id_catalogo,id_dia,nombre_catalogo,tipo,marca_catalogo,nombre_dia,marca_dia,precio_dia,score,motivo
-CAT-6440,DI-3844,salsa de tomate con albahaca,marca_blanca,,Pan crujiente de centeno con tomate y albahaca Melvit 170 g,Melvit,2.29,0,"salsa de tomate vs pan con tomate, productos diferentes aunque comparten ingrediente"
-CAT-1500,DI-1743,agua mineral,marca_fabricante,Nestlé,Agua mineral Aquarel 750 ml,Aquarel,0.79,2,"agua mineral pero marca Nestlé vs Aquarel, son marcas completamente distintas"
-CAT-1568,DI-1468,refresco té verde,marca_blanca,,Refresco de té verde con aloe vera San Benedetto 1.5 L,San Benedetto,1.15,4,"ambos té verde pero marcas distintas, DIA tiene marca específica San Benedetto no genérica"
