@@ -36,7 +36,6 @@ const Sidebar = ({
 }) => {
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
-  const [mostrarMarcaBlanca, setMostrarMarcaBlanca] = React.useState(false);
 
   const categoriasOrdenadas = Object.keys(db).sort();
 
@@ -110,22 +109,10 @@ const Sidebar = ({
           style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #ddd', marginBottom: '10px', boxSizing: 'border-box' }}
         />
 
-        {/* Toggle marca blanca — usa campo tipo de la BBDD */}
-        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: '#666', marginBottom: '15px', cursor: 'pointer' }}>
-          <input
-            type="checkbox"
-            checked={mostrarMarcaBlanca}
-            onChange={() => setMostrarMarcaBlanca(v => !v)}
-          />
-          Mostrar marca blanca (Hacendado, etc.)
-        </label>
-
         <div style={{ maxHeight: '800px', overflowY: 'auto' }}>
           {categoriasOrdenadas.map(categoria => {
             const subcategoriasFiltradas = Object.keys(db[categoria] || {}).filter(subcategoria => {
               return db[categoria][subcategoria].some(producto => {
-                // Filtro marca blanca usando campo tipo de la BBDD
-                if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                 const nombreLimpio = limpiarNombre(producto.nombre);
                 return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
               });
@@ -146,7 +133,6 @@ const Sidebar = ({
                   const subcatVisible = busqueda || subcatAbierta === subcatKey;
                   const productosFiltrados = db[categoria][subcategoria]
                     .filter(producto => {
-                      if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                       const nombreLimpio = limpiarNombre(producto.nombre);
                       return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
                     })
