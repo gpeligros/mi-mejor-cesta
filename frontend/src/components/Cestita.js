@@ -119,8 +119,8 @@ INSTRUCCIONES:
       const respuesta = data.content?.[0]?.text || 'No he podido procesar tu mensaje.';
 
       setMensajes(prev => [...prev, { rol: 'assistant', texto: respuesta }]);
-    } catch (_error) {
-      setError(e.message);
+    } catch (err) {
+      setError(err.message);
       setMensajes(prev => [...prev, {
         rol: 'assistant',
         texto: '😔 Ha ocurrido un error. Por favor, inténtalo de nuevo.',
