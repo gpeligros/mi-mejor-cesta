@@ -13,7 +13,7 @@ const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session }
   ]);
   const [input, setInput]           = useState('');
   const [cargando, setCargando]     = useState(false);
-  const [, setError]                = useState(null);
+
   const mensajesRef                 = useRef(null);
   const inputRef                    = useRef(null);
 
@@ -64,7 +64,7 @@ const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session }
     setMensajes(nuevosMensajes);
     setInput('');
     setCargando(true);
-    setError(null);
+
 
     try {
       const apiKey = process.env.REACT_APP_ANTHROPIC_API_KEY;
@@ -120,7 +120,7 @@ INSTRUCCIONES:
 
       setMensajes(prev => [...prev, { rol: 'assistant', texto: respuesta }]);
     } catch (err) {
-      setError(err.message);
+
       setMensajes(prev => [...prev, {
         rol: 'assistant',
         texto: '😔 Ha ocurrido un error. Por favor, inténtalo de nuevo.',
@@ -143,7 +143,7 @@ INSTRUCCIONES:
       rol: 'assistant',
       texto: '¡Hola de nuevo! Soy CESTITA 🛒\n¿En qué te ayudo?'
     }]);
-    setError(null);
+
   };
 
   // Sugerencias rápidas según el estado de la cesta
