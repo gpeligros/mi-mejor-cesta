@@ -5,9 +5,9 @@ import logoAldi from '../assets/aldi.svg';
 import logoAlcampo from '../assets/alcampo.svg';
 import logoHipercor from '../assets/hipercor.svg';
 import logoDIA from '../assets/DIA.svg';
-import logoLadespensa from '../assets/LaDespensa.jpeg';
-import logoAhorraMas from '../assets/AhorraMas.png';
-import logoBM from '../assets/BMSupermercados.png';
+import logoLadespensa from '../assets/LaDespensa.svg';
+import logoAhorraMas from '../assets/AhorraMas.svg';
+import logoBM from '../assets/BMSupermercados.svg';
 
 // visible: true  → aparece en el selector
 // visible: false → oculto (próximamente) — cambiar a true cuando tenga datos
@@ -21,7 +21,7 @@ const listaSupers = [
   { id: "Aldi",             logo: logoAldi,         visible: true  },
   { id: "La Despensa",      logo: logoLadespensa,   visible: true  },
   { id: "AhorraMas",        logo: logoAhorraMas,    visible: true  },
-  { id: "BM Supermercados", logo: logoBM,           visible: false }, // sin datos aún
+  { id: "BM Supermercados", logo: logoBM,           visible: false },
 ];
 
 export default listaSupers;
