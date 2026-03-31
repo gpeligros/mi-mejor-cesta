@@ -41,6 +41,10 @@ const Sidebar = ({
   const [historialAbierto, setHistorialAbierto] = React.useState(false);
   const [cargandoHistorial, setCargandoHistorial] = React.useState(false);
 
+  React.useEffect(() => {
+    if (session && historialAbierto) cargarHistorial();
+  }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const cargarHistorial = async () => {
     if (!session) return;
     setCargandoHistorial(true);
@@ -55,8 +59,9 @@ const Sidebar = ({
   };
 
   const toggleHistorial = () => {
-    if (!historialAbierto && historial.length === 0) cargarHistorial();
-    setHistorialAbierto(v => !v);
+    const nuevoEstado = !historialAbierto;
+    setHistorialAbierto(nuevoEstado);
+    if (nuevoEstado) cargarHistorial();
   };
 
   const categoriasOrdenadas = Object.keys(db).sort();
@@ -113,48 +118,45 @@ const Sidebar = ({
       )}
 
       {/* HISTORIAL DE COMPRAS */}
-      {session && (
-        <div style={{ marginBottom: '20px', background: 'white', borderRadius: '15px', border: '1px solid #eee', overflow: 'hidden' }}>
-          <div
-            onClick={toggleHistorial}
-            style={{ padding: '14px 15px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <span style={{ fontWeight: '800', fontSize: '12px' }}>🧾 MIS COMPRAS</span>
-            <span style={{ color: '#037623', fontWeight: '900' }}>{historialAbierto ? '−' : '+'}</span>
-          </div>
-          {historialAbierto && (
-            <div style={{ borderTop: '1px solid #f0f0f0', padding: '10px' }}>
-              {cargandoHistorial ? (
-                <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>Cargando...</div>
-              ) : historial.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>
-                  Aún no tienes compras guardadas.<br/>
-                  <span style={{ fontSize: '11px' }}>Usa "Finalizar compra" en el modo tienda.</span>
-                </div>
-              ) : (
-                historial.map(c => (
-                  <div key={c.id} style={{ padding: '10px 5px', borderBottom: '1px solid #f8f8f8', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <div style={{ fontWeight: '700', fontSize: '12px' }}>{c.supermercado}</div>
-                      <div style={{ fontSize: '10px', color: '#999' }}>
-                        {new Date(c.fecha).toLocaleDateString('es-ES')} · {c.num_productos} productos
-                      </div>
-                    </div>
-                    <div style={{ fontWeight: '900', fontSize: '14px', color: '#037623' }}>
-                      {parseFloat(c.total).toFixed(2)}€
+      <div style={{ marginBottom: '20px', background: 'white', borderRadius: '15px', border: '1px solid #eee', overflow: 'hidden' }}>
+        <div
+          onClick={toggleHistorial}
+          style={{ padding: '14px 15px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+        >
+          <span style={{ fontWeight: '800', fontSize: '12px' }}>🧾 MIS COMPRAS</span>
+          <span style={{ color: '#037623', fontWeight: '900' }}>{historialAbierto ? '−' : '+'}</span>
+        </div>
+        {historialAbierto && (
+          <div style={{ borderTop: '1px solid #f0f0f0', padding: '10px' }}>
+            {!session ? (
+              <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>
+                Inicia sesión para ver tus compras.
+              </div>
+            ) : cargandoHistorial ? (
+              <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>Cargando...</div>
+            ) : historial.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>
+                Aún no tienes compras guardadas.<br/>
+                <span style={{ fontSize: '11px' }}>Usa "Finalizar compra" en el modo tienda.</span>
+              </div>
+            ) : (
+              historial.map(c => (
+                <div key={c.id} style={{ padding: '10px 5px', borderBottom: '1px solid #f8f8f8', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontWeight: '700', fontSize: '12px' }}>{c.supermercado}</div>
+                    <div style={{ fontSize: '10px', color: '#999' }}>
+                      {new Date(c.fecha).toLocaleDateString('es-ES')} · {c.num_productos} productos
                     </div>
                   </div>
-                ))
-              )}
-              {historial.length > 0 && (
-                <div style={{ padding: '8px 5px 0', textAlign: 'right' }}>
-                  <span style={{ fontSize: '10px', color: '#bbb' }}>Últimas {historial.length} compras</span>
+                  <div style={{ fontWeight: '900', fontSize: '14px', color: '#037623' }}>
+                    {parseFloat(c.total).toFixed(2)}€
+                  </div>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+              ))
+            )}
+          </div>
+        )}
+      </div>
 
       {/* ESCÁNER */}
       <div style={{ background: 'linear-gradient(135deg, #102215 0%, #037623 100%)', color: 'white', padding: '20px', borderRadius: '20px', marginBottom: '20px' }}>
