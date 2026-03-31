@@ -13,6 +13,7 @@ import Terminos from './components/Terminos';
 import Cookies from './components/Cookies';
 import ListaColaborativa from './components/ListaColaborativa';
 import Cestita from './components/Cestita';
+import MisCompras from './components/MisCompras';
 import ModalUpgrade from './components/ModalUpgrade';
 import { usePlan } from './hooks/usePlan';
 
@@ -38,6 +39,7 @@ const App = () => {
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
+  const [mostrarHistorial, setMostrarHistorial] = useState(false);
   const { plan, cargando: planCargando, limiteSupers, limiteProductos } = usePlan(session);
   console.log('PLAN DEBUG:', plan, '| limProd:', limiteProductos(), '| limSup:', limiteSupers());
 
@@ -799,6 +801,8 @@ const App = () => {
               handleFoto={handleFoto}
               exportarPDF={exportarPDF}
               onCompartir={() => setMostrarColaborativa(true)}
+              onVerHistorial={() => setMostrarHistorial(true)}
+              session={session}
               plan={plan}
               onUpgrade={(f, p) => setModalUpgrade({ funcionalidad: f, planRequerido: p || 'basic' })}
             />
@@ -879,6 +883,13 @@ const App = () => {
           comprados={comprados}
           setComprados={setComprados}
           onClose={() => setMostrarColaborativa(false)}
+        />
+      )}
+
+      {mostrarHistorial && (
+        <MisCompras
+          session={session}
+          onCerrar={() => setMostrarHistorial(false)}
         />
       )}
 

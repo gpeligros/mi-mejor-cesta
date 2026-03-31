@@ -32,10 +32,12 @@ const Sidebar = ({
   escaneando, fileInputRef, handleFoto, 
   busqueda, setBusqueda, db, acordeon, setAcordeon, 
   toggleProd, vaciarCesta, exportarPDF, onCompartir,
+  onVerHistorial, session,
   plan, onUpgrade,
 }) => {
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
+  const [mostrarMarcaBlanca, setMostrarMarcaBlanca] = React.useState(false);
 
   const categoriasOrdenadas = Object.keys(db).sort();
 
@@ -62,6 +64,11 @@ const Sidebar = ({
         <button onClick={onCompartir} style={{ background: '#e8fdf0', color: '#037623', border: '1px solid #037623', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}>
           👥 LISTA COLABORATIVA
         </button>
+        {session && (
+          <button onClick={onVerHistorial} style={{ background: '#e8fdf0', color: '#037623', border: '1px solid #037623', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}>
+            🧾 MIS COMPRAS
+          </button>
+        )}
         <button 
           onClick={() => { const n = window.prompt("Nombre de la lista favorita:"); if(n) setCestasGuardadas(prev => ({...prev, [n]: seleccionados})); }} 
           style={{ background: '#e8fdf0', color: '#037623', border: '1px solid #037623', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}
@@ -90,6 +97,51 @@ const Sidebar = ({
         </div>
       )}
 
+      {/* HISTORIAL DE COMPRAS */}
+      {session && (
+        <div style={{ marginBottom: '20px', background: 'white', borderRadius: '15px', border: '1px solid #eee', overflow: 'hidden' }}>
+          <div
+            onClick={toggleHistorial}
+            style={{ padding: '14px 15px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            <span style={{ fontWeight: '800', fontSize: '12px' }}>🧾 MIS COMPRAS</span>
+            <span style={{ color: '#037623', fontWeight: '900' }}>{historialAbierto ? '−' : '+'}</span>
+          </div>
+
+          {historialAbierto && (
+            <div style={{ borderTop: '1px solid #f0f0f0', padding: '10px' }}>
+              {cargandoHistorial ? (
+                <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>Cargando...</div>
+              ) : historial.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>
+                  Aún no tienes compras guardadas.<br/>
+                  <span style={{ fontSize: '11px' }}>Usa "Finalizar compra" en el modo tienda.</span>
+                </div>
+              ) : (
+                historial.map(c => (
+                  <div key={c.id} style={{ padding: '10px 5px', borderBottom: '1px solid #f8f8f8', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ fontWeight: '700', fontSize: '12px' }}>{c.supermercado}</div>
+                      <div style={{ fontSize: '10px', color: '#999' }}>
+                        {new Date(c.fecha).toLocaleDateString('es-ES')} · {c.num_productos} productos
+                      </div>
+                    </div>
+                    <div style={{ fontWeight: '900', fontSize: '14px', color: '#037623' }}>
+                      {parseFloat(c.total).toFixed(2)}€
+                    </div>
+                  </div>
+                ))
+              )}
+              {historial.length > 0 && (
+                <div style={{ padding: '8px 5px 0', textAlign: 'right' }}>
+                  <span style={{ fontSize: '10px', color: '#bbb' }}>Últimas {historial.length} compras</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* ESCÁNER */}
       <div style={{ background: 'linear-gradient(135deg, #102215 0%, #037623 100%)', color: 'white', padding: '20px', borderRadius: '20px', marginBottom: '20px' }}>
         <h4 style={{ margin: '0 0 10px 0', fontSize: '13px', fontWeight: '900' }}>📸 ESCANEAR LISTA</h4>
@@ -109,10 +161,22 @@ const Sidebar = ({
           style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #ddd', marginBottom: '10px', boxSizing: 'border-box' }}
         />
 
+        {/* Toggle marca blanca — usa campo tipo de la BBDD */}
+        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: '#666', marginBottom: '15px', cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            checked={mostrarMarcaBlanca}
+            onChange={() => setMostrarMarcaBlanca(v => !v)}
+          />
+          Mostrar marca blanca (Hacendado, etc.)
+        </label>
+
         <div style={{ maxHeight: '800px', overflowY: 'auto' }}>
           {categoriasOrdenadas.map(categoria => {
             const subcategoriasFiltradas = Object.keys(db[categoria] || {}).filter(subcategoria => {
               return db[categoria][subcategoria].some(producto => {
+                // Filtro marca blanca usando campo tipo de la BBDD
+                if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                 const nombreLimpio = limpiarNombre(producto.nombre);
                 return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
               });
@@ -133,6 +197,7 @@ const Sidebar = ({
                   const subcatVisible = busqueda || subcatAbierta === subcatKey;
                   const productosFiltrados = db[categoria][subcategoria]
                     .filter(producto => {
+                      if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                       const nombreLimpio = limpiarNombre(producto.nombre);
                       return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
                     })
