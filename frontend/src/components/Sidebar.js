@@ -1,27 +1,21 @@
 import React from 'react';
+import { supabase } from '../supabaseClient';
 
-// Limpia el nombre quitando la parte redundante del slug
 const limpiarNombre = (nombre) => {
   const match = nombre.match(/^(.+?)\s*\((.+)\)\s*$/);
   if (!match) return nombre;
-
   const base = match[1].trim();
   const slug = match[2].trim();
-
   const normalizar = (s) => s.toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9\s]/g, '');
-
   const baseWords = normalizar(base).split(/\s+/).filter(w => w.length > 2);
-
   const diferenciador = slug.split(/\s+/)
     .filter(w => {
       const wn = normalizar(w);
       return wn.length > 0 && !baseWords.some(bw => wn === bw || bw.startsWith(wn) || wn.startsWith(bw));
     })
-    .join(' ')
-    .trim();
-
+    .join(' ').trim();
   if (!diferenciador) return base;
   return base + ' · ' + diferenciador;
 };
@@ -32,17 +26,37 @@ const Sidebar = ({
   escaneando, fileInputRef, handleFoto, 
   busqueda, setBusqueda, db, acordeon, setAcordeon, 
   toggleProd, vaciarCesta, exportarPDF, onCompartir,
-  onVerHistorial, session,
-  plan, onUpgrade,
+  plan, onUpgrade, session,
 }) => {
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
-  const [mostrarMarcaBlanca, setMostrarMarcaBlanca] = React.useState(false);
+  const [historial, setHistorial] = React.useState([]);
+  const [historialAbierto, setHistorialAbierto] = React.useState(false);
+  const [cargandoHistorial, setCargandoHistorial] = React.useState(false);
+
+  const cargarHistorial = async () => {
+    if (!session) return;
+    setCargandoHistorial(true);
+    const { data } = await supabase
+      .from('compras')
+      .select('id, supermercado, total, num_productos, fecha')
+      .eq('user_id', session.user.id)
+      .order('fecha', { ascending: false })
+      .limit(20);
+    setHistorial(data || []);
+    setCargandoHistorial(false);
+  };
+
+  const toggleHistorial = () => {
+    if (!historialAbierto && historial.length === 0) cargarHistorial();
+    setHistorialAbierto(v => !v);
+  };
 
   const categoriasOrdenadas = Object.keys(db).sort();
 
   return (
     <aside className="no-print" style={{ width: '100%', boxSizing: 'border-box' }}>
+
       {/* PANEL AHORRO */}
       <div style={{ background: '#037623', color: 'white', padding: '25px', borderRadius: '25px', marginBottom: '15px' }}>
         <h3 style={{ margin: '0', fontSize: '11px', fontWeight: '900', color: '#13ec49' }}>ESTÁS AHORRANDO</h3>
@@ -64,11 +78,6 @@ const Sidebar = ({
         <button onClick={onCompartir} style={{ background: '#e8fdf0', color: '#037623', border: '1px solid #037623', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}>
           👥 LISTA COLABORATIVA
         </button>
-        {session && (
-          <button onClick={onVerHistorial} style={{ background: '#e8fdf0', color: '#037623', border: '1px solid #037623', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}>
-            🧾 MIS COMPRAS
-          </button>
-        )}
         <button 
           onClick={() => { const n = window.prompt("Nombre de la lista favorita:"); if(n) setCestasGuardadas(prev => ({...prev, [n]: seleccionados})); }} 
           style={{ background: '#e8fdf0', color: '#037623', border: '1px solid #037623', padding: '12px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', fontSize: '12px' }}
@@ -107,7 +116,6 @@ const Sidebar = ({
             <span style={{ fontWeight: '800', fontSize: '12px' }}>🧾 MIS COMPRAS</span>
             <span style={{ color: '#037623', fontWeight: '900' }}>{historialAbierto ? '−' : '+'}</span>
           </div>
-
           {historialAbierto && (
             <div style={{ borderTop: '1px solid #f0f0f0', padding: '10px' }}>
               {cargandoHistorial ? (
@@ -160,29 +168,15 @@ const Sidebar = ({
           onChange={(e) => setBusqueda(e.target.value)}
           style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #ddd', marginBottom: '10px', boxSizing: 'border-box' }}
         />
-
-        {/* Toggle marca blanca — usa campo tipo de la BBDD */}
-        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: '#666', marginBottom: '15px', cursor: 'pointer' }}>
-          <input
-            type="checkbox"
-            checked={mostrarMarcaBlanca}
-            onChange={() => setMostrarMarcaBlanca(v => !v)}
-          />
-          Mostrar marca blanca (Hacendado, etc.)
-        </label>
-
         <div style={{ maxHeight: '800px', overflowY: 'auto' }}>
           {categoriasOrdenadas.map(categoria => {
             const subcategoriasFiltradas = Object.keys(db[categoria] || {}).filter(subcategoria => {
               return db[categoria][subcategoria].some(producto => {
-                // Filtro marca blanca usando campo tipo de la BBDD
-                if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                 const nombreLimpio = limpiarNombre(producto.nombre);
                 return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
               });
             });
             if (subcategoriasFiltradas.length === 0) return null;
-
             return (
               <div key={`cat-${categoria}`} style={{ marginBottom: '10px' }}>
                 <div
@@ -191,18 +185,15 @@ const Sidebar = ({
                 >
                   {categoria.toUpperCase()} <span>{(acordeon === categoria || busqueda) ? '−' : '+'}</span>
                 </div>
-
                 {(acordeon === categoria || busqueda) && subcategoriasFiltradas.sort().map(subcategoria => {
                   const subcatKey = `${categoria}__${subcategoria}`;
                   const subcatVisible = busqueda || subcatAbierta === subcatKey;
                   const productosFiltrados = db[categoria][subcategoria]
                     .filter(producto => {
-                      if (!mostrarMarcaBlanca && producto.tipo === 'marca_blanca') return false;
                       const nombreLimpio = limpiarNombre(producto.nombre);
                       return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
                     })
                     .sort((a, b) => limpiarNombre(a.nombre).localeCompare(limpiarNombre(b.nombre)));
-
                   return (
                     <div key={`sub-${categoria}-${subcategoria}`} style={{ paddingLeft: '15px', marginTop: '5px' }}>
                       <div
@@ -212,7 +203,6 @@ const Sidebar = ({
                         <span>{subcategoria.toUpperCase()}</span>
                         {!busqueda && <span style={{ color: '#999' }}>{subcatVisible ? '−' : '+'}</span>}
                       </div>
-
                       {subcatVisible && productosFiltrados.map(producto => {
                         const productoId = producto.id_producto;
                         if (!productoId) return null;
