@@ -40,7 +40,7 @@ export function usePlan(session) {
     }
 
     const cargar = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('profiles')
         .select('plan')
         .eq('id', session.user.id)

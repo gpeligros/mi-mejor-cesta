@@ -42,9 +42,13 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
               <input
                 type="checkbox"
                 checked={supersActivos.includes(s.id)}
-                onChange={() => setSupersActivos(prev =>
-                  prev.includes(s.id) ? prev.filter(x => x !== s.id) : [...prev, s.id]
-                )}
+                onChange={() => {
+                  if (supersActivos.includes(s.id)) {
+                    setSupersActivos(prev => prev.filter(x => x !== s.id));
+                  } else {
+                    setSupersActivos([...supersActivos, s.id]);
+                  }
+                }}
                 style={{ width: '12px', height: '12px', cursor: 'pointer' }}
               />
               <img
@@ -101,9 +105,13 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
                   <input
                     type="checkbox"
                     checked={supersActivos.includes(s.id)}
-                    onChange={() => setSupersActivos(prev =>
-                      prev.includes(s.id) ? prev.filter(x => x !== s.id) : [...prev, s.id]
-                    )}
+                    onChange={() => {
+                      if (supersActivos.includes(s.id)) {
+                        setSupersActivos(prev => prev.filter(x => x !== s.id));
+                      } else {
+                        setSupersActivos([...supersActivos, s.id]);
+                      }
+                    }}
                     style={{ width: '20px', height: '20px', cursor: 'pointer' }}
                   />
                   <img src={s.logo} alt={s.id} style={{ width: '28px', height: '28px', objectFit: 'contain' }} />
