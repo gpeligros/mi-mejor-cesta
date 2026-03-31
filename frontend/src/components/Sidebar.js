@@ -41,10 +41,6 @@ const Sidebar = ({
   const [historialAbierto, setHistorialAbierto] = React.useState(false);
   const [cargandoHistorial, setCargandoHistorial] = React.useState(false);
 
-  React.useEffect(() => {
-    if (session && historialAbierto) cargarHistorial();
-  }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const cargarHistorial = async () => {
     if (!session) return;
     setCargandoHistorial(true);
@@ -63,6 +59,10 @@ const Sidebar = ({
     setHistorialAbierto(nuevoEstado);
     if (nuevoEstado) cargarHistorial();
   };
+
+  React.useEffect(() => {
+    if (session) cargarHistorial();
+  }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const categoriasOrdenadas = Object.keys(db).sort();
 
