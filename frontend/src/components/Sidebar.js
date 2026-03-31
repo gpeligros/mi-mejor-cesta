@@ -42,7 +42,8 @@ const Sidebar = ({
   const [cargandoHistorial, setCargandoHistorial] = React.useState(false);
 
   const cargarHistorial = async () => {
-    if (!session) return;
+    if (!session) { console.log('cargarHistorial: session es null'); return; }
+    console.log('cargarHistorial: cargando para', session.user.email);
     setCargandoHistorial(true);
     const { data } = await supabase
       .from('compras')
@@ -57,7 +58,10 @@ const Sidebar = ({
   const toggleHistorial = () => {
     const nuevoEstado = !historialAbierto;
     setHistorialAbierto(nuevoEstado);
-    if (nuevoEstado) cargarHistorial();
+    if (nuevoEstado) {
+      setHistorial([]);
+      cargarHistorial();
+    }
   };
 
   React.useEffect(() => {
