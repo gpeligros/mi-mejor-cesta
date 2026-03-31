@@ -38,16 +38,20 @@ const App = () => {
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
-  const { plan, cargando: planCargando, puedeUsar, limiteSupers, limiteProductos } = usePlan(session);
+  const { plan, cargando: planCargando, limiteSupers, limiteProductos } = usePlan(session);
   console.log('PLAN DEBUG:', plan, '| limProd:', limiteProductos(), '| limSup:', limiteSupers());
 
   // Recortar cesta si supera el límite del plan al cargar
   useEffect(() => {
-    if (!planCargando && seleccionados.length > limiteProductos()) {
-      const recortados = seleccionados.slice(0, limiteProductos());
-      setSeleccionados(recortados);
+    if (!planCargando) {
+      if (seleccionados.length > limiteProductos()) {
+        setSeleccionados(prev => prev.slice(0, limiteProductos()));
+      }
+      if (supersActivos.length > limiteSupers()) {
+        setSupersActivos(prev => prev.slice(0, limiteSupers()));
+      }
     }
-  }, [planCargando]);
+  }, [planCargando]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setSupersActivosConLimite = (nuevosSups) => {
     if (nuevosSups.length > limiteSupers()) {
@@ -476,6 +480,68 @@ const App = () => {
     };
   })();
 
+  const guardarCompra = async () => {
+    if (!session) {
+      alert('Necesitas iniciar sesión para guardar compras.');
+      return;
+    }
+    const prodComprados = seleccionados
+      .map(id => {
+        const p = getProdFull(id);
+        if (!p || !comprados.includes(id)) return null;
+        const precioVal = precios[id]?.[modoTienda] || 0;
+        if (precioVal <= 0) return null;
+        return {
+          id_catalogo: id,
+          nombre_producto: getNombreReal(id, modoTienda) || p.nombre,
+          precio: precioVal,
+          supermercado: modoTienda,
+        };
+      })
+      .filter(Boolean);
+
+    if (prodComprados.length === 0) {
+      alert('Marca al menos un producto como comprado antes de finalizar.');
+      return;
+    }
+
+    const total = prodComprados.reduce((acc, p) => acc + p.precio, 0);
+
+    try {
+      const { data: compra, error: errCompra } = await supabase
+        .from('compras')
+        .insert({
+          user_id: session.user.id,
+          supermercado: modoTienda,
+          total: parseFloat(total.toFixed(2)),
+          num_productos: prodComprados.length,
+        })
+        .select()
+        .single();
+
+      if (errCompra) throw errCompra;
+
+      const { error: errDetalle } = await supabase
+        .from('compras_detalle')
+        .insert(prodComprados.map(p => ({
+          compra_id: compra.id,
+          id_catalogo: p.id_catalogo,
+          nombre_producto: p.nombre_producto,
+          precio: p.precio,
+          supermercado: p.supermercado,
+        })));
+
+      if (errDetalle) throw errDetalle;
+
+      alert(`✅ Compra guardada: ${prodComprados.length} productos por ${total.toFixed(2)}€`);
+      setComprados([]);
+      setModoTienda(null);
+    } catch (err) {
+      console.error('Error guardando compra:', err);
+      alert('❌ Error al guardar la compra. Inténtalo de nuevo.');
+    }
+  };
+
   const RenderModoTienda = () => {
     const prods = seleccionados
       .map(id => {
@@ -488,6 +554,11 @@ const App = () => {
       })
       .filter(Boolean)
       .sort((a, b) => (b.precio || 0) - (a.precio || 0));
+
+    const numComprados = comprados.filter(id => prods.some(p => p.id_producto === id)).length;
+    const totalComprados = prods
+      .filter(p => comprados.includes(p.id_producto))
+      .reduce((acc, p) => acc + p.precio, 0);
 
     return (
       <div style={{ 
@@ -566,6 +637,44 @@ const App = () => {
             </div>
           ))}
         </div>
+
+        {/* Botón finalizar compra */}
+        {numComprados > 0 && (
+          <div style={{
+            marginTop: '25px',
+            padding: '20px',
+            background: '#f4faf6',
+            borderRadius: '16px',
+            border: '2px solid #037623',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+            <div>
+              <div style={{ fontSize: '11px', color: '#666', fontWeight: '700' }}>
+                {numComprados} producto{numComprados !== 1 ? 's' : ''} comprado{numComprados !== 1 ? 's' : ''}
+              </div>
+              <div style={{ fontSize: '28px', fontWeight: '900', color: '#102215' }}>
+                {totalComprados.toFixed(2)}€
+              </div>
+            </div>
+            <button
+              onClick={guardarCompra}
+              style={{
+                background: '#037623',
+                color: 'white',
+                border: 'none',
+                borderRadius: '14px',
+                padding: '14px 24px',
+                fontWeight: '900',
+                fontSize: '14px',
+                cursor: 'pointer',
+              }}
+            >
+              ✅ Finalizar compra
+            </button>
+          </div>
+        )}
       </div>
     );
   };
