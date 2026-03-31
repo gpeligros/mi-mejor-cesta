@@ -1,4 +1,5 @@
 import React from 'react';
+import { supabase } from '../supabaseClient';
 
 // Limpia el nombre quitando la parte redundante del slug
 const limpiarNombre = (nombre) => {
@@ -32,10 +33,31 @@ const Sidebar = ({
   escaneando, fileInputRef, handleFoto, 
   busqueda, setBusqueda, db, acordeon, setAcordeon, 
   toggleProd, vaciarCesta, exportarPDF, onCompartir,
-  plan, onUpgrade,
+  plan, onUpgrade, session,
 }) => {
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
+  const [historial, setHistorial] = React.useState([]);
+  const [historialAbierto, setHistorialAbierto] = React.useState(false);
+  const [cargandoHistorial, setCargandoHistorial] = React.useState(false);
+
+  const cargarHistorial = async () => {
+    if (!session) return;
+    setCargandoHistorial(true);
+    const { data } = await supabase
+      .from('compras')
+      .select('id, supermercado, total, num_productos, fecha')
+      .eq('user_id', session.user.id)
+      .order('fecha', { ascending: false })
+      .limit(20);
+    setHistorial(data || []);
+    setCargandoHistorial(false);
+  };
+
+  const toggleHistorial = () => {
+    if (!historialAbierto && historial.length === 0) cargarHistorial();
+    setHistorialAbierto(v => !v);
+  };
 
   const categoriasOrdenadas = Object.keys(db).sort();
 
@@ -87,6 +109,50 @@ const Sidebar = ({
               <button onClick={() => { const nvas = {...cestasGuardadas}; delete nvas[nombre]; setCestasGuardadas(nvas); }} style={{ padding: '8px', color: '#d32f2f', border:'none', background:'none', cursor:'pointer', fontSize: '14px' }}>✕</button>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* HISTORIAL DE COMPRAS */}
+      {session && (
+        <div style={{ marginBottom: '20px', background: 'white', borderRadius: '15px', border: '1px solid #eee', overflow: 'hidden' }}>
+          <div
+            onClick={toggleHistorial}
+            style={{ padding: '14px 15px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            <span style={{ fontWeight: '800', fontSize: '12px' }}>🧾 MIS COMPRAS</span>
+            <span style={{ color: '#037623', fontWeight: '900' }}>{historialAbierto ? '−' : '+'}</span>
+          </div>
+          {historialAbierto && (
+            <div style={{ borderTop: '1px solid #f0f0f0', padding: '10px' }}>
+              {cargandoHistorial ? (
+                <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>Cargando...</div>
+              ) : historial.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '15px', fontSize: '12px', color: '#999' }}>
+                  Aún no tienes compras guardadas.<br/>
+                  <span style={{ fontSize: '11px' }}>Usa "Finalizar compra" en el modo tienda.</span>
+                </div>
+              ) : (
+                historial.map(c => (
+                  <div key={c.id} style={{ padding: '10px 5px', borderBottom: '1px solid #f8f8f8', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ fontWeight: '700', fontSize: '12px' }}>{c.supermercado}</div>
+                      <div style={{ fontSize: '10px', color: '#999' }}>
+                        {new Date(c.fecha).toLocaleDateString('es-ES')} · {c.num_productos} productos
+                      </div>
+                    </div>
+                    <div style={{ fontWeight: '900', fontSize: '14px', color: '#037623' }}>
+                      {parseFloat(c.total).toFixed(2)}€
+                    </div>
+                  </div>
+                ))
+              )}
+              {historial.length > 0 && (
+                <div style={{ padding: '8px 5px 0', textAlign: 'right' }}>
+                  <span style={{ fontSize: '10px', color: '#bbb' }}>Últimas {historial.length} compras</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
