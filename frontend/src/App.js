@@ -804,6 +804,7 @@ const App = () => {
               onCompartir={() => setMostrarColaborativa(true)}
               plan={plan}
               onUpgrade={(f, p) => setModalUpgrade({ funcionalidad: f, planRequerido: p || 'basic' })}
+              session={session}
             />
           </div>
 
