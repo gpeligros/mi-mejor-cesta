@@ -13,7 +13,7 @@ const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session }
   ]);
   const [input, setInput]           = useState('');
   const [cargando, setCargando]     = useState(false);
-  const [, setError]                = useState(null);
+
   const mensajesRef                 = useRef(null);
   const inputRef                    = useRef(null);
 
@@ -64,9 +64,12 @@ const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session }
     setMensajes(nuevosMensajes);
     setInput('');
     setCargando(true);
-    setError(null);
+
 
     try {
+      const apiKey = process.env.REACT_APP_ANTHROPIC_API_KEY;
+      if (!apiKey) throw new Error('Falta REACT_APP_ANTHROPIC_API_KEY en el .env');
+
       const contextoCesta = buildContextoCesta();
       const systemPrompt = `Eres CESTITA, la asistente de inteligencia artificial de Mi Mejor Cesta. 
 Eres simpática, cercana y experta en compras de supermercado en España.
@@ -91,14 +94,19 @@ INSTRUCCIONES:
         .filter(m => !(m.rol === 'assistant' && m === mensajes[0]))
         .map(m => ({ role: m.rol === 'user' ? 'user' : 'assistant', content: m.texto }));
 
-      // Llamada al backend seguro (Vercel Serverless Function)
-      const res = await fetch('/api/cestita', {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
         body: JSON.stringify({
-          system: systemPrompt,
-          messages: historial,
+          model: 'claude-sonnet-4-20250514',
           max_tokens: 1024,
+          system: systemPrompt,
+          messages: historial
         })
       });
 
@@ -111,8 +119,8 @@ INSTRUCCIONES:
       const respuesta = data.content?.[0]?.text || 'No he podido procesar tu mensaje.';
 
       setMensajes(prev => [...prev, { rol: 'assistant', texto: respuesta }]);
-    } catch (_error) {
-      setError(e.message);
+    } catch (err) {
+
       setMensajes(prev => [...prev, {
         rol: 'assistant',
         texto: '😔 Ha ocurrido un error. Por favor, inténtalo de nuevo.',
@@ -135,7 +143,7 @@ INSTRUCCIONES:
       rol: 'assistant',
       texto: '¡Hola de nuevo! Soy CESTITA 🛒\n¿En qué te ayudo?'
     }]);
-    setError(null);
+
   };
 
   // Sugerencias rápidas según el estado de la cesta
