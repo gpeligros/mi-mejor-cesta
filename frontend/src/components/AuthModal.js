@@ -40,10 +40,24 @@ const AuthModal = ({ onClose }) => {
   };
 
   const handleGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin }
+      options: {
+        redirectTo: window.location.origin,
+        skipBrowserRedirect: true,
+      }
     });
+
+    if (error || !data?.url) return;
+
+    const popup = window.open(data.url, 'google-login', 'width=500,height=600,left=200,top=100');
+
+    const timer = setInterval(() => {
+      if (popup && popup.closed) {
+        clearInterval(timer);
+        onClose();
+      }
+    }, 500);
   };
 
   const inputStyle = {
