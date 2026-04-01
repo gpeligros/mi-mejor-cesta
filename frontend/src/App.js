@@ -30,7 +30,6 @@ const App = () => {
       const parsed = JSON.parse(saved);
       return Array.isArray(parsed) ? parsed.filter(id => id && typeof id === 'string' && id.trim() !== '') : [];
     } catch (e) {
-      console.error('Error parseando localStorage:', e);
       return [];
     }
   });
@@ -39,7 +38,6 @@ const App = () => {
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
   const { plan, cargando: planCargando, limiteSupers, limiteProductos } = usePlan(session);
-  console.log('PLAN DEBUG:', plan, '| limProd:', limiteProductos(), '| limSup:', limiteSupers());
 
   // Recortar cesta si supera el límite del plan al cargar
   useEffect(() => {
@@ -238,9 +236,6 @@ const App = () => {
             }
           });
           setReferencias(mapaRef);
-
-          console.log('✅ Catálogo:', catalogo.length, '| Matches:', matches.length,
-            '| Con precios:', Object.keys(mapa).length);
         }
       } catch (err) {
         console.error('❌ Error general:', err);
@@ -333,7 +328,6 @@ const App = () => {
     setEscaneando(true);
     
     try {
-      console.log('Procesando imagen:', file.name);
       await new Promise(resolve => setTimeout(resolve, 2000));
       alert('Función de escaneo OCR pendiente de implementar.\n\nOpciones recomendadas:\n- Tesseract.js (gratis, en navegador)\n- Google Cloud Vision API\n- OpenAI Vision API');
     } catch (err) {
