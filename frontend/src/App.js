@@ -14,9 +14,9 @@ import Cookies from './components/Cookies';
 import ListaColaborativa from './components/ListaColaborativa';
 import Cestita from './components/Cestita';
 import ModalUpgrade from './components/ModalUpgrade';
-import { usePlan } from './hooks/usePlan';
 import ToolBar from './components/ToolBar';
 import MenuSemanal from './components/MenuSemanal';
+import { usePlan } from './hooks/usePlan';
 
 const App = () => {
   // Estados
@@ -750,8 +750,14 @@ const App = () => {
 
       <div style={{ padding: isMobile ? '12px' : '30px', boxSizing: 'border-box' }}>
         {seccionActual === 'comparador' && !modoTienda && (
-          <StoreSelector ... />
+          <StoreSelector 
+            listaSupers={listaSupers} 
+            supersActivos={supersActivos} 
+            setSupersActivos={setSupersActivosConLimite}
+            planActual={plan} 
+          />
         )}
+
         {seccionActual === 'comparador' && !modoTienda && (
           <ToolBar
             plan={plan}
@@ -856,17 +862,6 @@ const App = () => {
               </>
             )}
           </main>
-
-          {mostrarMenuSemanal && (
-            <MenuSemanal
-              onClose={() => setMostrarMenuSemanal(false)}
-              supersActivos={supersActivos}
-              precios={precios}
-              seleccionados={seleccionados}
-              getProdFull={getProdFull}
-            />
-          )}  
-
         </div>
       </div>
       
@@ -896,6 +891,16 @@ const App = () => {
           comprados={comprados}
           setComprados={setComprados}
           onClose={() => setMostrarColaborativa(false)}
+        />
+      )}
+
+      {mostrarMenuSemanal && (
+        <MenuSemanal
+          onClose={() => setMostrarMenuSemanal(false)}
+          supersActivos={supersActivos}
+          precios={precios}
+          seleccionados={seleccionados}
+          getProdFull={getProdFull}
         />
       )}
 
