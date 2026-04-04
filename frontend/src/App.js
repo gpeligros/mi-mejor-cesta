@@ -748,7 +748,7 @@ const App = () => {
         />
       )}
 
-      <div style={{ padding: isMobile ? '12px' : '30px', boxSizing: 'border-box' }}>
+      <div style={{ padding: isMobile ? '12px' : '30px', boxSizing: 'border-box', overflow: 'visible' }}>
         {seccionActual === 'comparador' && !modoTienda && (
           <StoreSelector 
             listaSupers={listaSupers} 

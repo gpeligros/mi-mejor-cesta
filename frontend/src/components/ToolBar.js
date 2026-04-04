@@ -62,7 +62,7 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
         gridTemplateColumns: 'repeat(3, 1fr)',
         gap: '10px',
         marginBottom: '20px',
-        paddingTop: '10px',
+        paddingTop: '14px',
       }}
     >
       {botones.map(b => (
