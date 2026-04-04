@@ -18,7 +18,7 @@ log = logging.getLogger("match_ia")
 SUPABASE_URL    = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY    = os.getenv("SUPABASE_KEY", "")
 ANTHROPIC_KEY   = os.getenv("ANTHROPIC_API_KEY", "")
-BATCH_CATALOGO  = 30   # productos del catálogo por llamada a la IA
+BATCH_CATALOGO  = 10   # productos del catálogo por llamada a la IA
 MODEL           = "claude-sonnet-4-20250514"
 
 
@@ -214,7 +214,7 @@ def main(dry_run=False, umbral=0.75):
             log.info(f"  ✅ [{r.get('confianza', 0):.2f}] {nom_cat[:35]:<35} → {nom_alc[:35]}")
 
         todos_resultados.extend(resultados)
-        time.sleep(1)  # respetar rate limit
+        time.sleep(15)  # respetar rate limit
 
     # Resumen
     total_match    = len([r for r in todos_resultados if r.get("id_alcampo")])
