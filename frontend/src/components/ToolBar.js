@@ -58,11 +58,11 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
     <div
       className="no-print"
       style={{
-        display: 'flex',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
         gap: '10px',
         marginBottom: '20px',
-        overflowX: 'auto',
-        paddingBottom: '2px',
+        paddingTop: '10px',
       }}
     >
       {botones.map(b => (
@@ -89,7 +89,7 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
           {b.badge && (
             <span style={{
               position: 'absolute',
-              top: '-8px',
+              top: '-10px',
               right: '8px',
               background: b.desactivado ? '#999' : VERDE,
               color: 'white',
