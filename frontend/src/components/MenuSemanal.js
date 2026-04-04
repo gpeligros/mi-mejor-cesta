@@ -157,6 +157,10 @@ Formato de respuesta:
 
   // ── Generar sugerencias de recetas con la cesta ──────────────
   const generarRecetas = async () => {
+    if (!seleccionados || seleccionados.length === 0) {
+      setError('Añade productos a tu cesta antes de pedir sugerencias de recetas.');
+      return;
+    }
     setPaso('generando');
     setError(null);
 

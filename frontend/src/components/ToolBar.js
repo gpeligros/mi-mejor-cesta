@@ -16,6 +16,10 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
   const handleSugerirRecetas = () => {
     if (!session) { onUpgrade('recetas', 'basic'); return; }
     if (!esBasic)  { onUpgrade('recetas', 'basic'); return; }
+    if (!seleccionados || seleccionados.length === 0) {
+      alert('Añade productos a tu cesta para recibir sugerencias de recetas.');
+      return;
+    }
     onSugerirRecetas();
   };
 
