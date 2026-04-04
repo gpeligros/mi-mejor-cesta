@@ -15,6 +15,8 @@ import ListaColaborativa from './components/ListaColaborativa';
 import Cestita from './components/Cestita';
 import ModalUpgrade from './components/ModalUpgrade';
 import { usePlan } from './hooks/usePlan';
+import ToolBar from './components/ToolBar';
+import MenuSemanal from './components/MenuSemanal';
 
 const App = () => {
   // Estados
@@ -68,6 +70,7 @@ const App = () => {
   const [mostrarCookies, setMostrarCookies] = useState(() => !localStorage.getItem('cookies_aceptadas'));
   const [mostrarLanding, setMostrarLanding] = useState(() => !localStorage.getItem('landing_vista'));
   const [mostrarColaborativa, setMostrarColaborativa] = useState(false);
+  const [mostrarMenuSemanal, setMostrarMenuSemanal] = useState(false);
   const [escaneando, setEscaneando] = useState(false);
   const fileInputRef = useRef(null);
   
@@ -747,11 +750,16 @@ const App = () => {
 
       <div style={{ padding: isMobile ? '12px' : '30px', boxSizing: 'border-box' }}>
         {seccionActual === 'comparador' && !modoTienda && (
-          <StoreSelector 
-            listaSupers={listaSupers} 
-            supersActivos={supersActivos} 
-            setSupersActivos={setSupersActivosConLimite}
-            planActual={plan} 
+          <StoreSelector ... />
+        )}
+        {seccionActual === 'comparador' && !modoTienda && (
+          <ToolBar
+            plan={plan}
+            onUpgrade={(f, p) => setModalUpgrade({ funcionalidad: f, planRequerido: p || 'basic' })}
+            session={session}
+            seleccionados={seleccionados}
+            onMenuSemanal={() => setMostrarMenuSemanal(true)}
+            onSugerirRecetas={() => setMostrarMenuSemanal(true)}
           />
         )}
 
@@ -848,6 +856,17 @@ const App = () => {
               </>
             )}
           </main>
+
+          {mostrarMenuSemanal && (
+            <MenuSemanal
+              onClose={() => setMostrarMenuSemanal(false)}
+              supersActivos={supersActivos}
+              precios={precios}
+              seleccionados={seleccionados}
+              getProdFull={getProdFull}
+            />
+          )}  
+
         </div>
       </div>
       
