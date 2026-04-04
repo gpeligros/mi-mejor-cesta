@@ -8,14 +8,14 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
   const esBasic   = plan === 'basic' || esPremium;
 
   const handleMenuSemanal = () => {
-    if (!session) { onUpgrade('menuSemanal', 'basic'); return; }
-    if (!esBasic)  { onUpgrade('menuSemanal', 'basic'); return; }
+    if (!session) { onUpgrade('menuSemanal', 'premium'); return; }
+    if (!esPremium) { onUpgrade('menuSemanal', 'premium'); return; }
     onMenuSemanal();
   };
 
   const handleSugerirRecetas = () => {
-    if (!session) { onUpgrade('recetas', 'basic'); return; }
-    if (!esBasic)  { onUpgrade('recetas', 'basic'); return; }
+    if (!session) { onUpgrade('recetas', 'premium'); return; }
+    if (!esPremium) { onUpgrade('recetas', 'premium'); return; }
     if (!seleccionados || seleccionados.length === 0) {
       alert('Añade productos a tu cesta para recibir sugerencias de recetas.');
       return;
@@ -30,8 +30,8 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
       label: 'Menú semanal',
       sublabel: 'IA genera tu semana',
       onClick: handleMenuSemanal,
-      activo: esBasic && !!session,
-      badge: !esBasic ? 'BÁSICO' : null,
+      activo: esPremium && !!session,
+      badge: !esPremium ? 'PREMIUM' : null,
     },
     {
       id: 'recetas',
@@ -39,8 +39,8 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
       label: 'Sugerir recetas',
       sublabel: seleccionados?.length > 0 ? `Con tus ${seleccionados.length} productos` : 'Basado en tu cesta',
       onClick: handleSugerirRecetas,
-      activo: esBasic && !!session,
-      badge: !esBasic ? 'BÁSICO' : null,
+      activo: esPremium && !!session,
+      badge: !esPremium ? 'PREMIUM' : null,
     },
     {
       id: 'nutricional',
