@@ -27,7 +27,35 @@ const BENEFICIOS = {
   ],
 };
 
-const ModalUpgrade = ({ onCerrar, funcionalidad = '', planRequerido = 'basic' }) => {
+const ModalUpgrade = ({ onCerrar, funcionalidad = '', planRequerido = 'basic', session }) => {
+  const [cargando, setCargando] = React.useState(false);
+  const [error, setError] = React.useState(null);
+
+  const handlePago = async (plan) => {
+    if (!session) {
+      setError('Necesitas iniciar sesión antes de suscribirte.');
+      return;
+    }
+    setCargando(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/stripe-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          planRequerido: plan,
+          userEmail: session.user.email,
+          userId: session.user.id,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || 'Error al crear sesión de pago');
+      window.location.href = data.url;
+    } catch (e) {
+      setError(e.message);
+      setCargando(false);
+    }
+  };
   const mensajes = {
     guardarListas:    'Guardar listas requiere registrarte',
     listasFavoritas:  'Más listas favoritas disponibles en plan Básico',
@@ -123,23 +151,53 @@ const ModalUpgrade = ({ onCerrar, funcionalidad = '', planRequerido = 'basic' })
           </div>
         </div>
 
+        {/* Error */}
+        {error && (
+          <div style={{ background: '#fff0f0', color: '#d32f2f', padding: '10px 14px', borderRadius: '10px', fontSize: '13px', fontWeight: '600', marginBottom: '12px' }}>
+            {error}
+          </div>
+        )}
+
         {/* CTA */}
+        {!esPremium && (
+          <button
+            onClick={() => handlePago('basic')}
+            disabled={cargando}
+            style={{
+              width: '100%',
+              background: VERDE,
+              color: 'white',
+              border: 'none',
+              borderRadius: '14px',
+              padding: '16px',
+              fontSize: '16px',
+              fontWeight: '900',
+              cursor: cargando ? 'not-allowed' : 'pointer',
+              opacity: cargando ? 0.7 : 1,
+              marginBottom: '10px',
+            }}
+          >
+            {cargando ? 'Redirigiendo...' : 'Activar plan Básico — 2,99€/mes →'}
+          </button>
+        )}
         <button
-          onClick={() => alert('Próximamente — integración con Stripe en desarrollo')}
+          onClick={() => handlePago('premium')}
+          disabled={cargando}
           style={{
             width: '100%',
-            background: VERDE,
+            background: esPremium ? VERDE : OSCURO,
             color: 'white',
             border: 'none',
             borderRadius: '14px',
             padding: '16px',
             fontSize: '16px',
             fontWeight: '900',
-            cursor: 'pointer',
+            cursor: cargando ? 'not-allowed' : 'pointer',
+            opacity: cargando ? 0.7 : 1,
             marginBottom: '10px',
           }}
         >
-          Activar plan {esPremium ? 'Premium' : 'Básico'} →
+          {cargando ? 'Redirigiendo...' : 'Activar plan Premium — 6,99€/mes →'}
         </button>
         <button
           onClick={onCerrar}

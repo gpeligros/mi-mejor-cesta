@@ -872,6 +872,7 @@ const App = () => {
           funcionalidad={modalUpgrade.funcionalidad}
           planRequerido={modalUpgrade.planRequerido}
           onCerrar={() => setModalUpgrade(null)}
+          session={session}
         />
       )}
 
