@@ -3,7 +3,37 @@ import React, { useState, useRef, useEffect } from 'react';
 const CESTITA_VERDE = '#037623';
 const CESTITA_OSCURO = '#102215';
 
-const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session }) => {
+// Busca el producto más parecido en db por nombre
+const buscarProductoEnDb = (db, nombreBuscado) => {
+  if (!db || !nombreBuscado) return null;
+  const nombreNorm = nombreBuscado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  let mejorMatch = null;
+  let mejorScore = 0;
+
+  for (const cat of Object.values(db)) {
+    for (const prods of Object.values(cat)) {
+      for (const prod of prods) {
+        const nombreProd = (prod.nombre || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        if (nombreProd === nombreNorm) return prod;
+        if (nombreProd.includes(nombreNorm) || nombreNorm.includes(nombreProd)) {
+          const score = Math.min(nombreNorm.length, nombreProd.length) / Math.max(nombreNorm.length, nombreProd.length);
+          if (score > mejorScore) { mejorScore = score; mejorMatch = prod; }
+        }
+      }
+    }
+  }
+  return mejorScore > 0.5 ? mejorMatch : null;
+};
+
+const parsearAccion = (texto) => {
+  const match = texto.match(/<accion>(.*?)<\/accion>/s);
+  if (!match) return null;
+  try { return JSON.parse(match[1]); } catch { return null; }
+};
+
+const limpiarTexto = (texto) => texto.replace(/<accion>.*?<\/accion>/s, '').trim();
+
+const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session, toggleProd, db }) => {
   const [abierto, setAbierto]       = useState(false);
   const [mensajes, setMensajes]     = useState([
     {
@@ -68,6 +98,13 @@ const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session }
 
     try {
       const contextoCesta = buildContextoCesta();
+
+      // Construir lista de productos en cesta con IDs para acciones de quitar
+      const productosEnCestaParaAcciones = (seleccionados || []).map(id => {
+        const p = getProdFull(id);
+        return p ? `ID:${id} → ${p.nombre}` : null;
+      }).filter(Boolean).join('\n');
+
       const systemPrompt = `Eres CESTITA, la asistente de inteligencia artificial de Mi Mejor Cesta. 
 Eres simpática, cercana y experta en compras de supermercado en España.
 Tu objetivo es ayudar al usuario a ahorrar en su cesta de la compra.
@@ -78,13 +115,28 @@ ${contextoCesta}
 Supermercados activos en la app: ${(supersActivos || []).join(', ')}
 Usuario autenticado: ${session ? 'Sí' : 'No (plan gratuito)'}
 
-INSTRUCCIONES:
+PRODUCTOS EN LA CESTA (con sus IDs para poder quitarlos):
+${productosEnCestaParaAcciones || 'Cesta vacía'}
+
+INSTRUCCIONES GENERALES:
 - Responde siempre en español, con tono amigable y cercano
 - Sé concisa y directa — respuestas cortas y útiles
 - Si el usuario pregunta por precios, usa los datos de la cesta que tienes
-- Si pregunta algo que no puedes saber (ubicación exacta de tiendas, stock en tiempo real), díselo con honestidad
-- Usa emojis con moderación para hacer la conversación más amigable
-- Nunca inventes precios o datos que no tengas`;
+- Usa emojis con moderación
+- Nunca inventes precios o datos que no tengas
+
+INSTRUCCIONES DE ACCIONES EN LA CESTA:
+Puedes añadir y quitar productos de la cesta del usuario.
+Cuando el usuario pida añadir un producto, incluye AL FINAL de tu respuesta este bloque exacto:
+<accion>{"tipo":"add","nombre":"nombre exacto del producto"}</accion>
+
+Cuando el usuario pida quitar un producto que está en la cesta, usa su ID exacto:
+<accion>{"tipo":"remove","id":"CAT-xxxx"}</accion>
+
+Cuando el usuario pida vaciar la cesta:
+<accion>{"tipo":"clear"}</accion>
+
+IMPORTANTE: Solo incluye el bloque <accion> cuando el usuario pida EXPLÍCITAMENTE añadir o quitar algo. No lo incluyas en respuestas informativas.`;
 
       // Construir historial para la API (sin el mensaje de bienvenida inicial)
       const historial = nuevosMensajes
@@ -108,7 +160,26 @@ INSTRUCCIONES:
       }
 
       const data = await res.json();
-      const respuesta = data.content?.[0]?.text || 'No he podido procesar tu mensaje.';
+      const respuestaRaw = data.content?.[0]?.text || 'No he podido procesar tu mensaje.';
+
+      // Parsear y ejecutar acción si existe
+      const accion = parsearAccion(respuestaRaw);
+      const respuesta = limpiarTexto(respuestaRaw);
+
+      if (accion && toggleProd) {
+        if (accion.tipo === 'add' && accion.nombre && db) {
+          const prod = buscarProductoEnDb(db, accion.nombre);
+          if (prod && !seleccionados.includes(prod.id_producto)) {
+            toggleProd(prod.id_producto);
+          }
+        } else if (accion.tipo === 'remove' && accion.id) {
+          if (seleccionados.includes(accion.id)) {
+            toggleProd(accion.id);
+          }
+        } else if (accion.tipo === 'clear') {
+          (seleccionados || []).forEach(id => toggleProd(id));
+        }
+      }
 
       setMensajes(prev => [...prev, { rol: 'assistant', texto: respuesta }]);
     } catch (e) {

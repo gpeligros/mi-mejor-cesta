@@ -882,6 +882,8 @@ const App = () => {
         supersActivos={supersActivos}
         getProdFull={getProdFull}
         session={session}
+        toggleProd={toggleProd}
+        db={db}
       />
 
       {mostrarColaborativa && (
