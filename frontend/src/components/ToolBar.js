@@ -3,9 +3,8 @@ import React from 'react';
 const VERDE = '#037623';
 const OSCURO = '#102215';
 
-const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, seleccionados }) => {
+const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, onNutricional, seleccionados }) => {
   const esPremium = plan === 'premium';
-  const esBasic   = plan === 'basic' || esPremium;
 
   const handleMenuSemanal = () => {
     if (!session) { onUpgrade('menuSemanal', 'premium'); return; }
@@ -21,6 +20,16 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
       return;
     }
     onSugerirRecetas();
+  };
+
+  const handleNutricional = () => {
+    if (!session) { onUpgrade('nutricional', 'premium'); return; }
+    if (!esPremium) { onUpgrade('nutricional', 'premium'); return; }
+    if (!seleccionados || seleccionados.length === 0) {
+      alert('Añade productos a tu cesta para ver el análisis nutricional.');
+      return;
+    }
+    onNutricional();
   };
 
   const botones = [
@@ -46,11 +55,10 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
       id: 'nutricional',
       emoji: '🥗',
       label: 'Nutricional',
-      sublabel: 'Próximamente',
-      onClick: null,
-      activo: false,
-      badge: 'PRONTO',
-      desactivado: true,
+      sublabel: seleccionados?.length > 0 ? `${seleccionados.length} productos` : 'Análisis de tu cesta',
+      onClick: handleNutricional,
+      activo: esPremium && !!session,
+      badge: !esPremium ? 'PREMIUM' : null,
     },
   ];
 
@@ -69,21 +77,19 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
         <button
           key={b.id}
           onClick={b.onClick || undefined}
-          disabled={b.desactivado}
           style={{
             flex: '1',
             minWidth: '100px',
             background: 'white',
-            border: `1.5px solid ${b.activo ? VERDE : b.desactivado ? '#e0e0e0' : '#ccc'}`,
+            border: `1.5px solid ${b.activo ? VERDE : '#ccc'}`,
             borderRadius: '14px',
             padding: '10px 12px',
-            cursor: b.desactivado ? 'not-allowed' : 'pointer',
+            cursor: 'pointer',
             textAlign: 'center',
-            opacity: b.desactivado ? 0.5 : 1,
             transition: 'all 0.15s ease',
             position: 'relative',
           }}
-          onMouseEnter={e => { if (!b.desactivado) e.currentTarget.style.background = '#f0fdf4'; }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#f0fdf4'; }}
           onMouseLeave={e => { e.currentTarget.style.background = 'white'; }}
         >
           {b.badge && (
@@ -91,7 +97,7 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, se
               position: 'absolute',
               top: '-10px',
               right: '8px',
-              background: b.desactivado ? '#999' : VERDE,
+              background: VERDE,
               color: 'white',
               fontSize: '8px',
               fontWeight: '900',

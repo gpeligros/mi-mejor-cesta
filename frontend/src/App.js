@@ -71,6 +71,7 @@ const App = () => {
   const [mostrarLanding, setMostrarLanding] = useState(() => !localStorage.getItem('landing_vista'));
   const [mostrarColaborativa, setMostrarColaborativa] = useState(false);
   const [mostrarMenuSemanal, setMostrarMenuSemanal] = useState(false);
+  const [modoMenuSemanal, setModoMenuSemanal] = useState('menu');
   const [escaneando, setEscaneando] = useState(false);
   const fileInputRef = useRef(null);
   
@@ -764,8 +765,9 @@ const App = () => {
             onUpgrade={(f, p) => setModalUpgrade({ funcionalidad: f, planRequerido: p || 'basic' })}
             session={session}
             seleccionados={seleccionados}
-            onMenuSemanal={() => setMostrarMenuSemanal(true)}
-            onSugerirRecetas={() => setMostrarMenuSemanal(true)}
+            onMenuSemanal={() => { setModoMenuSemanal('menu'); setMostrarMenuSemanal(true); }}
+            onSugerirRecetas={() => { setModoMenuSemanal('recetas'); setMostrarMenuSemanal(true); }}
+            onNutricional={() => { setModoMenuSemanal('nutricional'); setMostrarMenuSemanal(true); }}
           />
         )}
 
@@ -904,6 +906,7 @@ const App = () => {
           precios={precios}
           seleccionados={seleccionados}
           getProdFull={getProdFull}
+          modoInicial={modoMenuSemanal}
         />
       )}
 

@@ -87,11 +87,11 @@ const TarjetaDia = ({ dia, comidas }) => (
   </div>
 );
 
-const MenuSemanal = ({ onClose, supersActivos, precios, seleccionados, getProdFull }) => {
-  const [paso, setPaso]           = useState('form');   // form | generando | resultado | recetas
+const MenuSemanal = ({ onClose, supersActivos, precios, seleccionados, getProdFull, modoInicial = 'menu' }) => {
+  const [paso, setPaso]           = useState(modoInicial === 'nutricional' ? 'nutricional_generando' : 'form');
   const [respuestaIA, setRespuestaIA] = useState('');
   const [error, setError]         = useState(null);
-  const [modoVista, setModoVista] = useState('menu');   // menu | lista
+  const [modoVista, setModoVista] = useState('menu');
 
   // Formulario
   const [personas,    setPersonas]    = useState('2');
@@ -205,6 +205,56 @@ Adapta las recetas a la cocina española.`;
     }
   };
 
+  // ── Generar análisis nutricional ─────────────────────────────
+  const generarNutricional = React.useCallback(async () => {
+    setPaso('nutricional_generando');
+    setError(null);
+
+    const productosEnCesta = (seleccionados || []).map(id => {
+      const p = getProdFull(id);
+      return p ? p.nombre : null;
+    }).filter(Boolean);
+
+    const prompt = `Analiza nutricionalmente estos productos de supermercado español:
+${productosEnCesta.map((p, i) => `${i + 1}. ${p}`).join('\n')}
+
+Para cada producto proporciona una estimación de calorías, proteínas, carbohidratos, grasas y valoración (SALUDABLE / MODERADO / OCASIONAL).
+
+Al final incluye un RESUMEN NUTRICIONAL de la cesta y 2-3 recomendaciones concretas.
+
+Formato para cada producto:
+**[Nombre]**
+- Calorías: X kcal | Proteínas: X g | Carbohidratos: X g | Grasas: X g
+- Valoración: [SALUDABLE/MODERADO/OCASIONAL]
+
+Nota aclaratoria al final: los datos son estimaciones orientativas.`;
+
+    try {
+      const res = await fetch('/api/cestita', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system: `Eres un nutricionista experto. Proporcionas estimaciones nutricionales orientativas de productos de supermercado español. Siempre aclaras que son estimaciones y no consejo médico.`,
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: 2048,
+        }),
+      });
+      if (!res.ok) throw new Error(`Error ${res.status}`);
+      const data = await res.json();
+      setRespuestaIA(data.content?.[0]?.text || '');
+      setPaso('nutricional_resultado');
+    } catch (e) {
+      setError('No se pudo generar el análisis. Inténtalo de nuevo.');
+      setPaso('form');
+    }
+  }, [seleccionados, getProdFull]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  React.useEffect(() => {
+    if (modoInicial === 'nutricional') {
+      generarNutricional();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div style={{
       position: 'fixed',
@@ -238,13 +288,17 @@ Adapta las recetas a la cocina española.`;
         }}>
           <div>
             <div style={{ color: 'white', fontWeight: '900', fontSize: '17px' }}>
-              {paso === 'recetas' ? '💡 Sugerencias de recetas' : '🍽️ Menú semanal con IA'}
+              {paso === 'recetas' ? '💡 Sugerencias de recetas' :
+               paso.startsWith('nutricional') ? '🥗 Análisis nutricional' :
+               '🍽️ Menú semanal con IA'}
             </div>
             <div style={{ color: '#a8f0be', fontSize: '12px', marginTop: '2px' }}>
               {paso === 'form' && 'Cuéntame tus preferencias'}
               {paso === 'generando' && 'Generando con inteligencia artificial...'}
               {paso === 'resultado' && 'Tu menú está listo'}
               {paso === 'recetas' && 'Basado en tu cesta actual'}
+              {paso === 'nutricional_generando' && 'Analizando tu cesta...'}
+              {paso === 'nutricional_resultado' && 'Análisis listo — datos orientativos'}
             </div>
           </div>
           <button
@@ -512,6 +566,73 @@ Adapta las recetas a la cocina española.`;
                   style={{ background: '#f0fdf4', color: VERDE, border: `1.5px solid ${VERDE}`, padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer' }}
                 >
                   🔄 Volver
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── GENERANDO NUTRICIONAL ─────────────────────────── */}
+          {paso === 'nutricional_generando' && (
+            <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+              <div style={{ fontSize: '40px', marginBottom: '16px' }}>🥗</div>
+              <div style={{ fontWeight: '900', fontSize: '16px', color: OSCURO, marginBottom: '8px' }}>
+                Analizando tu cesta...
+              </div>
+              <div style={{ fontSize: '13px', color: '#888' }}>
+                La IA está calculando los valores nutricionales orientativos.<br/>
+                Puede tardar unos segundos.
+              </div>
+              <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', gap: '6px' }}>
+                {[0, 1, 2].map(i => (
+                  <div key={i} style={{
+                    width: '8px', height: '8px', borderRadius: '50%', background: VERDE,
+                    animation: `bounce 1s infinite ${i * 0.2}s`,
+                  }} />
+                ))}
+              </div>
+              <style>{`@keyframes bounce { 0%,100%{transform:translateY(0);opacity:0.4} 50%{transform:translateY(-6px);opacity:1} }`}</style>
+            </div>
+          )}
+
+          {/* ── RESULTADO NUTRICIONAL ─────────────────────────── */}
+          {paso === 'nutricional_resultado' && (
+            <div>
+              <div style={{
+                background: '#f8faf9',
+                borderRadius: '12px',
+                padding: '16px',
+                fontSize: '13px',
+                lineHeight: '1.8',
+                color: OSCURO,
+                whiteSpace: 'pre-wrap',
+                maxHeight: '450px',
+                overflowY: 'auto',
+              }}>
+                {respuestaIA}
+              </div>
+              <div style={{
+                marginTop: '12px',
+                padding: '10px 14px',
+                background: '#fff8e1',
+                borderRadius: '10px',
+                fontSize: '11px',
+                color: '#856404',
+                fontWeight: '600',
+              }}>
+                ⚠️ Datos orientativos generados por IA. No constituyen consejo médico ni nutricional profesional.
+              </div>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '14px' }}>
+                <button
+                  onClick={() => { setRespuestaIA(''); generarNutricional(); }}
+                  style={{ background: '#f0fdf4', color: VERDE, border: `1.5px solid ${VERDE}`, padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer' }}
+                >
+                  🔄 Regenerar
+                </button>
+                <button
+                  onClick={onClose}
+                  style={{ background: OSCURO, color: 'white', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: '800', fontSize: '12px', cursor: 'pointer' }}
+                >
+                  ✓ Cerrar
                 </button>
               </div>
             </div>
