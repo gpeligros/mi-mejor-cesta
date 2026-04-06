@@ -180,8 +180,6 @@ const App = () => {
             const subcat = p.subcategoria || 'Otros';
             // Filtrar categoría General — productos sin categoría asignada
             if (!cat || cat.toLowerCase() === 'general') return;
-            // Filtrar marca blanca — no aparece en el catálogo, solo en las SuperCards
-            if (idxTipo[p.id] === 'marca_blanca') return;
             if (!dbMap[cat]) dbMap[cat] = {};
             if (!dbMap[cat][subcat]) dbMap[cat][subcat] = [];
             dbMap[cat][subcat].push({
