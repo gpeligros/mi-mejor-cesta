@@ -124,7 +124,7 @@ def extraer_ean(item):
     return None
 
 
-def parsear_producto(item):
+def parsear_producto(item, cat_nombre="", sub_nombre=""):
     """Transforma un item de la API al formato de precios_mercadona."""
     nombre = (item.get("display_name") or "").strip()
     if not nombre:
@@ -149,17 +149,19 @@ def parsear_producto(item):
     url    = item.get("share_url") or f"https://tienda.mercadona.es/product/{id_api}"
 
     return {
-        "id_api":            id_api,
-        "nombre_comercial":  nombre,
-        "precio":            round(precio, 2) if precio else None,
-        "precio_unidad":     calcular_precio_unidad(pi),
-        "marca":             None,  # Mercadona no devuelve marca en objeto resumido
-        "url":               url,
-        "imagen":            item.get("thumbnail") or "",
-        "disponible":        True,
-        "ean":               extraer_ean(item),
-        "reference_price":   ref_price,   # ← precio €/L o €/kg
-        "reference_format":  ref_format,  # ← "L", "kg", "ud"...
+        "id_api":                  id_api,
+        "nombre_comercial":        nombre,
+        "precio":                  round(precio, 2) if precio else None,
+        "precio_unidad":           calcular_precio_unidad(pi),
+        "marca":                   None,
+        "url":                     url,
+        "imagen":                  item.get("thumbnail") or "",
+        "disponible":              True,
+        "ean":                     extraer_ean(item),
+        "reference_price":         ref_price,
+        "reference_format":        ref_format,
+        "categoria_mercadona":     cat_nombre,
+        "subcategoria_mercadona":  sub_nombre,
     }
 
 
@@ -199,7 +201,7 @@ def descargar_productos():
 
             nuevos = 0
             for item in items_raw:
-                p = parsear_producto(item)
+                p = parsear_producto(item, cat_nombre, sub_nombre)
                 if p and p["id_api"] and p["id_api"] not in vistos:
                     vistos.add(p["id_api"])
                     productos.append(p)
@@ -292,7 +294,8 @@ def asignar_ids(productos):
 def guardar_csv(productos):
     campos = ["id", "id_api", "nombre_comercial", "precio", "precio_unidad",
               "marca", "url", "imagen", "disponible", "ean",
-              "reference_price", "reference_format"]
+              "reference_price", "reference_format",
+              "categoria_mercadona", "subcategoria_mercadona"]
     with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
         csv.DictWriter(f, fieldnames=campos, extrasaction="ignore").writeheader()
         csv.DictWriter(f, fieldnames=campos, extrasaction="ignore").writerows(productos)
@@ -307,7 +310,8 @@ def subir_supabase(productos):
     """Sube/actualiza precios_mercadona usando id_api como clave de upsert."""
     campos = ["id", "id_api", "nombre_comercial", "precio", "precio_unidad",
               "marca", "url", "imagen", "disponible", "ean",
-              "reference_price", "reference_format"]
+              "reference_price", "reference_format",
+              "categoria_mercadona", "subcategoria_mercadona"]
     HEADERS_SB["Prefer"] = "resolution=merge-duplicates,return=minimal"
 
     ok = err = 0
