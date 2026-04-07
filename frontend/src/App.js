@@ -110,7 +110,7 @@ const App = () => {
         // ── Cargar matches + precios Mercadona ────────────────────────────
         const { data: matches, error: errMatch } = await supabase
           .from('productos_match')
-          .select('id_catalogo, id_mercadona, id_dia, id_alcampo')
+          .select('id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas')
           .range(0, 10000);
 
         if (errMatch) console.error('❌ Error matches:', errMatch);
@@ -135,6 +135,13 @@ const App = () => {
           .range(0, 10000);
 
         if (errAlcampo) console.error('❌ Error precios Alcampo:', errAlcampo);
+
+        const { data: preciosAhorramas, error: errAhorramas } = await supabase
+          .from('precios_ahorramas')
+          .select('id, precio, precio_unidad, nombre_comercial')
+          .range(0, 10000);
+
+        if (errAhorramas) console.error('❌ Error precios Ahorramas:', errAhorramas);
 
         if (catalogo && matches) {
           // ── Índices de precios por ID ──────────────────────────────────
@@ -166,6 +173,15 @@ const App = () => {
             if (p.precio) {
               idxAlcampo[p.id] = parseFloat(p.precio);
               nombresAlcampo[p.id] = p.nombre_comercial || null;
+            }
+          });
+
+          const idxAhorramas = {};
+          const nombresAhorramas = {};
+          (preciosAhorramas || []).forEach(p => {
+            if (p.precio) {
+              idxAhorramas[p.id] = parseFloat(p.precio);
+              nombresAhorramas[p.id] = p.nombre_comercial || null;
             }
           });
 
@@ -214,6 +230,10 @@ const App = () => {
             if (m.id_alcampo && idxAlcampo[m.id_alcampo]) {
               precios_prod['Alcampo'] = idxAlcampo[m.id_alcampo];
               nombres_prod['Alcampo'] = nombresAlcampo[m.id_alcampo];
+            }
+            if (m.id_ahorramas && idxAhorramas[m.id_ahorramas]) {
+              precios_prod['AhorraMas'] = idxAhorramas[m.id_ahorramas];
+              nombres_prod['AhorraMas'] = nombresAhorramas[m.id_ahorramas];
             }
             if (Object.keys(precios_prod).length > 0) {
               mapa[String(p.id)] = precios_prod;
