@@ -131,7 +131,7 @@ const App = () => {
 
         const { data: preciosAlcampo, error: errAlcampo } = await supabase
           .from('precios_alcampo')
-          .select('id, precio, nombre_comercial')
+          .select('id, precio, precio_unidad, nombre_comercial')
           .range(0, 10000);
 
         if (errAlcampo) console.error('❌ Error precios Alcampo:', errAlcampo);
@@ -160,28 +160,40 @@ const App = () => {
 
           const idxDia = {};
           const nombresDia = {};
+          const idxDiaRef = {};
           (preciosDia || []).forEach(p => {
             if (p.precio) {
               idxDia[p.id] = parseFloat(p.precio);
               nombresDia[p.id] = p.nombre_comercial || null;
             }
+            if (p.precio_unidad) {
+              idxDiaRef[p.id] = p.precio_unidad;
+            }
           });
 
           const idxAlcampo = {};
           const nombresAlcampo = {};
+          const idxAlcampoRef = {};
           (preciosAlcampo || []).forEach(p => {
             if (p.precio) {
               idxAlcampo[p.id] = parseFloat(p.precio);
               nombresAlcampo[p.id] = p.nombre_comercial || null;
             }
+            if (p.precio_unidad) {
+              idxAlcampoRef[p.id] = p.precio_unidad;
+            }
           });
 
           const idxAhorramas = {};
           const nombresAhorramas = {};
+          const idxAhorramasRef = {};
           (preciosAhorramas || []).forEach(p => {
             if (p.precio) {
               idxAhorramas[p.id] = parseFloat(p.precio);
               nombresAhorramas[p.id] = p.nombre_comercial || null;
+            }
+            if (p.precio_unidad) {
+              idxAhorramasRef[p.id] = p.precio_unidad;
             }
           });
 
@@ -252,6 +264,15 @@ const App = () => {
             const refs = {};
             if (m.id_mercadona && idxMercRef[m.id_mercadona]) {
               refs['Mercadona'] = idxMercRef[m.id_mercadona];
+            }
+            if (m.id_dia && idxDiaRef[m.id_dia]) {
+              refs['DIA'] = idxDiaRef[m.id_dia];
+            }
+            if (m.id_alcampo && idxAlcampoRef[m.id_alcampo]) {
+              refs['Alcampo'] = idxAlcampoRef[m.id_alcampo];
+            }
+            if (m.id_ahorramas && idxAhorramasRef[m.id_ahorramas]) {
+              refs['AhorraMas'] = idxAhorramasRef[m.id_ahorramas];
             }
             if (Object.keys(refs).length > 0) {
               mapaRef[String(p.id)] = refs;

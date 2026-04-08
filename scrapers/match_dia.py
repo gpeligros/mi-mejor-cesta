@@ -23,7 +23,7 @@ except ImportError:
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://scpuriaofisssalsbzqv.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
-SCORE_MIN    = 75
+SCORE_MIN    = 85
 
 if not SUPABASE_KEY:
     print("❌ SUPABASE_KEY no encontrada en .env")
