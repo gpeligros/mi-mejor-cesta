@@ -435,6 +435,13 @@ const Matches = () => {
   );
 };
 
+const SUPERS_CONFIG = [
+  { id: 'mercadona', tabla: 'precios_mercadona', label: 'Mercadona' },
+  { id: 'dia', tabla: 'precios_dia', label: 'DIA' },
+  { id: 'alcampo', tabla: 'precios_alcampo', label: 'Alcampo' },
+  { id: 'ahorramas', tabla: 'precios_ahorramas', label: 'Ahorramas' },
+];
+
 const Precios = () => {
   const [super_, setSuper] = useState('mercadona');
   const [productos, setProductos] = useState([]);
@@ -443,16 +450,9 @@ const Precios = () => {
   const [pagina, setPagina] = useState(1);
   const POR_PAGINA = 50;
 
-  const SUPERS = [
-    { id: 'mercadona', tabla: 'precios_mercadona', label: 'Mercadona' },
-    { id: 'dia', tabla: 'precios_dia', label: 'DIA' },
-    { id: 'alcampo', tabla: 'precios_alcampo', label: 'Alcampo' },
-    { id: 'ahorramas', tabla: 'precios_ahorramas', label: 'Ahorramas' },
-  ];
-
   const cargar = async () => {
     setCargando(true);
-    const config = SUPERS.find(s => s.id === super_);
+    const config = SUPERS_CONFIG.find(s => s.id === super_);
     let q = supabase.from(config.tabla).select('id, nombre_comercial, precio, precio_unidad, marca, disponible');
     if (busqueda) q = q.ilike('nombre_comercial', `%${busqueda}%`);
     const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
@@ -468,7 +468,7 @@ const Precios = () => {
         <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>💰 Precios</h2>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', gap: 6 }}>
-            {SUPERS.map(s => (
+            {SUPERS_CONFIG.map(s => (
               <button key={s.id} onClick={() => { setSuper(s.id); setPagina(1); }}
                 style={{
                   padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, cursor: 'pointer',
