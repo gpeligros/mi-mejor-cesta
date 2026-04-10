@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import AdminPanel from './components/AdminPanel';
 import { supabase } from './supabaseClient';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -67,6 +68,7 @@ const App = () => {
   const [cargando, setCargando] = useState(true);
   const [estadoSync, setEstadoSync] = useState('idle');
   const [seccionActual, setSeccionActual] = useState('comparador');
+  const [modoAdmin, setModoAdmin] = useState(false);
   const [mostrarCookies, setMostrarCookies] = useState(() => !localStorage.getItem('cookies_aceptadas'));
   const [mostrarLanding, setMostrarLanding] = useState(() => !localStorage.getItem('landing_vista'));
   const [mostrarColaborativa, setMostrarColaborativa] = useState(false);
@@ -740,6 +742,11 @@ const App = () => {
     );
   }
 
+  // ── Modo admin ─────────────────────────────────────────────
+  if (modoAdmin) {
+    return <AdminPanel session={session} onSalir={() => setModoAdmin(false)} />;
+  }
+
   return (
     <div style={{ background: '#f4f7f5', minHeight: '100vh', overflowX: 'hidden', width: '100%', boxSizing: 'border-box' }}>
       <SyncHeader 
@@ -851,6 +858,7 @@ const App = () => {
               handleFoto={handleFoto}
               exportarPDF={exportarPDF}
               onCompartir={() => setMostrarColaborativa(true)}
+              onAdmin={() => setModoAdmin(true)}
               plan={plan}
               onUpgrade={(f, p) => setModalUpgrade({ funcionalidad: f, planRequerido: p || 'basic' })}
               session={session}

@@ -52,8 +52,16 @@ const Sidebar = ({
   escaneando, fileInputRef, handleFoto, 
   busqueda, setBusqueda, db, acordeon, setAcordeon, 
   toggleProd, vaciarCesta, exportarPDF, onCompartir,
-  plan, onUpgrade, session,
+  plan, onUpgrade, session, onAdmin,
 }) => {
+
+  const [esAdmin, setEsAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!session) { setEsAdmin(false); return; }
+    supabase.from('profiles').select('rol').eq('id', session.user.id).single()
+      .then(({ data }) => setEsAdmin(data?.rol === 'admin'));
+  }, [session]);
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
   const [historial, setHistorial] = React.useState([]);
@@ -221,6 +229,11 @@ const Sidebar = ({
           <button onClick={() => { if(window.confirm("¿Vaciar cesta?")){ vaciarCesta(); } }} style={{ color: '#ff4b4b', background: 'none', border: 'none', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}>
             🗑️ VACIAR CESTA
           </button>
+          {esAdmin && (
+            <button onClick={onAdmin} style={{ color: '#6200ea', background: 'none', border: 'none', fontSize: '12px', fontWeight: '800', cursor: 'pointer', marginTop: '4px' }}>
+              ⚙️ PANEL ADMIN
+            </button>
+          )}
         )}
       </div>
 

@@ -173,8 +173,24 @@ def parsear_producto(item):
     except:
         precio = 0
 
-    # Precio por unidad
-    precio_unidad = str(precios.get("price_per_unit") or "").strip() or None
+    # Precio por unidad con etiqueta de medida
+    price_per_unit = precios.get("price_per_unit")
+    measure_unit   = (precios.get("measure_unit") or "").strip().upper()
+    unit_map = {
+        "LITRO": "L", "LITROS": "L",
+        "KILOGRAMO": "kg", "KILO": "kg", "KILOS": "kg",
+        "GRAMO": "g", "GRAMOS": "g",
+        "MILILITRO": "ml", "MILILITROS": "ml",
+        "UNIDAD": "ud", "UNIDADES": "ud",
+        "METRO": "m", "METROS": "m",
+    }
+    unit_label = unit_map.get(measure_unit, measure_unit.lower() if measure_unit else "")
+    if price_per_unit and unit_label:
+        precio_unidad = f"{float(price_per_unit):.2f}€/{unit_label}"
+    elif price_per_unit:
+        precio_unidad = f"{float(price_per_unit):.2f}€/ud"
+    else:
+        precio_unidad = None
 
     # Imagen
     imagen = item.get("image") or ""
