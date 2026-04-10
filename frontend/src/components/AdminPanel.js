@@ -233,10 +233,10 @@ const Catalogo = () => {
 
   const cargar = async () => {
     setCargando(true);
-    let q = supabase.from('vista_productos')
-      .select('id, nombre_generico, categoria, subcategoria, tipo, id_categoria', { count: 'exact' });
+    let q = supabase.from('productos_catalogo')
+      .select('id, nombre_generico, tipo, id_categoria, categorias_maestras(categoria, subcategoria)', { count: 'exact' });
     if (busqueda) q = q.ilike('nombre_generico', `%${busqueda}%`);
-    if (catFiltro) q = q.eq('id_categoria', catFiltro);
+    if (catFiltro) q = q.eq('id_categoria', parseInt(catFiltro) || catFiltro);
     const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
     setProductos(data || []);
     setCargando(false);
@@ -305,7 +305,7 @@ const Catalogo = () => {
                             <option key={c.id} value={c.id}>{c.categoria} › {c.subcategoria}</option>
                           ))}
                         </select>
-                      ) : `${p.categoria} › ${p.subcategoria}`}
+                      ) : `${p.categorias_maestras?.categoria} › ${p.categorias_maestras?.subcategoria}`}
                     </td>
                     <td style={{ padding: '10px 16px' }}>
                       <Badge text={p.tipo || '?'} color={tipoColor[p.tipo] || '#888'} />
@@ -353,7 +353,7 @@ const Matches = () => {
   const cargar = async () => {
     setCargando(true);
     let q = supabase.from('productos_match')
-      .select('id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas, vista_productos(nombre_generico, categoria)', { count: 'exact' });
+      .select('id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas, productos_catalogo(nombre_generico, id_categoria)', { count: 'exact' });
     if (filtro === 'sin_dia') q = q.is('id_dia', null);
     else if (filtro === 'sin_alcampo') q = q.is('id_alcampo', null);
     else if (filtro === 'sin_ahorramas') q = q.is('id_ahorramas', null);
@@ -405,8 +405,8 @@ const Matches = () => {
                 <tr key={m.id_catalogo} style={{ background: i % 2 === 0 ? 'white' : GRIS, borderBottom: '1px solid #f0f0f0' }}>
                   <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontSize: 11, color: '#888' }}>{m.id_catalogo}</td>
                   <td style={{ padding: '10px 16px', fontWeight: 600, color: OSCURO, maxWidth: 200 }}>
-                    <div style={{ fontSize: 13 }}>{m.vista_productos?.nombre_generico}</div>
-                    <div style={{ fontSize: 10, color: '#aaa' }}>{m.vista_productos?.categoria}</div>
+                    <div style={{ fontSize: 13 }}>{m.productos_catalogo?.nombre_generico}</div>
+                    <div style={{ fontSize: 10, color: '#aaa' }}>CAT {m.id_catalogo}</div>
                   </td>
                   <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_mercadona)}</td>
                   <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_dia)}</td>
