@@ -229,11 +229,11 @@ const Sidebar = ({
           <button onClick={() => { if(window.confirm("¿Vaciar cesta?")){ vaciarCesta(); } }} style={{ color: '#ff4b4b', background: 'none', border: 'none', fontSize: '12px', fontWeight: '800', cursor: 'pointer' }}>
             🗑️ VACIAR CESTA
           </button>
-          {esAdmin && (
-            <button onClick={onAdmin} style={{ color: '#6200ea', background: 'none', border: 'none', fontSize: '12px', fontWeight: '800', cursor: 'pointer', marginTop: '4px' }}>
-              ⚙️ PANEL ADMIN
-            </button>
-          )}
+        )}
+        {esAdmin && (
+          <button onClick={onAdmin} style={{ color: '#6200ea', background: 'none', border: 'none', fontSize: '12px', fontWeight: '800', cursor: 'pointer', marginTop: '4px' }}>
+            ⚙️ PANEL ADMIN
+          </button>
         )}
       </div>
 
