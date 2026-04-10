@@ -212,14 +212,6 @@ const Catalogo = () => {
   const [edit, setEdit] = useState({});
   const POR_PAGINA = 50;
 
-  useEffect(() => {
-    cargarCategorias();
-  }, []);
-
-  useEffect(() => {
-    cargar();
-  }, [busqueda, catFiltro, pagina]); // eslint-disable-line
-
   const cargarCategorias = async () => {
     const { data } = await supabase.from('categorias_maestras').select('id, categoria, subcategoria').order('categoria');
     setCategorias(data || []);
@@ -231,10 +223,19 @@ const Catalogo = () => {
       .select('id, nombre_generico, tipo, id_categoria, categorias_maestras(categoria, subcategoria)', { count: 'exact' });
     if (busqueda) q = q.ilike('nombre_generico', `%${busqueda}%`);
     if (catFiltro) q = q.eq('id_categoria', parseInt(catFiltro) || catFiltro);
-    const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
+    const { data, error } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
+    if (error) console.error('Error catálogo:', error);
     setProductos(data || []);
     setCargando(false);
   };
+
+  useEffect(() => {
+    cargarCategorias();
+  }, []); // eslint-disable-line
+
+  useEffect(() => {
+    cargar();
+  }, [busqueda, catFiltro, pagina]); // eslint-disable-line
 
   const guardar = async (id) => {
     await supabase.from('productos_catalogo').update({
@@ -342,8 +343,6 @@ const Matches = () => {
   const [pagina, setPagina] = useState(1);
   const POR_PAGINA = 40;
 
-  useEffect(() => { cargar(); }, [filtro, pagina]); // eslint-disable-line
-
   const cargar = async () => {
     setCargando(true);
     let q = supabase.from('productos_match')
@@ -355,6 +354,8 @@ const Matches = () => {
     setMatches(data || []);
     setCargando(false);
   };
+
+  useEffect(() => { cargar(); }, [filtro, pagina]); // eslint-disable-line
 
   const limpiarMatch = async (idCatalogo, campo) => {
     await supabase.from('productos_match').update({ [campo]: null }).eq('id_catalogo', idCatalogo);
@@ -444,8 +445,6 @@ const Precios = () => {
     { id: 'alcampo', tabla: 'precios_alcampo', label: 'Alcampo' },
     { id: 'ahorramas', tabla: 'precios_ahorramas', label: 'Ahorramas' },
   ];
-
-  useEffect(() => { cargar(); }, [super_, busqueda, pagina]); // eslint-disable-line
 
   const cargar = async () => {
     setCargando(true);
