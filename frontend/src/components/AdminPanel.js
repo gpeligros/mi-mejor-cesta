@@ -85,8 +85,7 @@ const Usuarios = () => {
 
   const cargar = async () => {
     setCargando(true);
-    const { data } = await supabase.rpc('admin_get_usuarios').maybeSingle();
-    // Fallback: cargar desde profiles + auth.users
+    // Cargar desde profiles
     const { data: profiles } = await supabase
       .from('profiles')
       .select('id, plan, stripe_id, plan_desde, plan_hasta, rol, created_at')
