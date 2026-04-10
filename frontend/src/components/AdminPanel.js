@@ -219,13 +219,17 @@ const Catalogo = () => {
 
   const cargar = async () => {
     setCargando(true);
-    let q = supabase.from('productos_catalogo')
-      .select('id, nombre_generico, tipo, id_categoria, categorias_maestras(categoria, subcategoria)', { count: 'exact' });
-    if (busqueda) q = q.ilike('nombre_generico', `%${busqueda}%`);
-    if (catFiltro) q = q.eq('id_categoria', parseInt(catFiltro) || catFiltro);
-    const { data, error } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
-    if (error) console.error('Error catálogo:', error);
-    setProductos(data || []);
+    try {
+      let q = supabase.from('productos_catalogo')
+        .select('id, nombre_generico, tipo, id_categoria', { count: 'exact' });
+      if (busqueda) q = q.ilike('nombre_generico', `%${busqueda}%`);
+      if (catFiltro) q = q.eq('id_categoria', parseInt(catFiltro));
+      const { data, error } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
+      if (error) console.error('Error catálogo:', error);
+      setProductos(data || []);
+    } catch(e) {
+      console.error('Catch catálogo:', e);
+    }
     setCargando(false);
   };
 
@@ -300,7 +304,7 @@ const Catalogo = () => {
                             <option key={c.id} value={c.id}>{c.categoria} › {c.subcategoria}</option>
                           ))}
                         </select>
-                      ) : `${p.categorias_maestras?.categoria} › ${p.categorias_maestras?.subcategoria}`}
+                      ) : (categorias.find(c => c.id === p.id_categoria)?.subcategoria || p.id_categoria)}
                     </td>
                     <td style={{ padding: '10px 16px' }}>
                       <Badge text={p.tipo || '?'} color={tipoColor[p.tipo] || '#888'} />
