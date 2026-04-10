@@ -460,6 +460,8 @@ const Precios = () => {
     setCargando(false);
   };
 
+  useEffect(() => { cargar(); }, [super_, busqueda, pagina]); // eslint-disable-line
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
