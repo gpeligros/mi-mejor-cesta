@@ -128,7 +128,7 @@ const Usuarios = () => {
       {cargando ? (
         <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>Cargando usuarios...</div>
       ) : (
-        <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+        <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: OSCURO, color: 'white' }}>
@@ -277,7 +277,7 @@ const Catalogo = () => {
         <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>Cargando catálogo...</div>
       ) : (
         <>
-          <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+          <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: OSCURO, color: 'white' }}>
@@ -390,7 +390,7 @@ const Matches = () => {
       {cargando ? (
         <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>Cargando matches...</div>
       ) : (
-        <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+        <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: OSCURO, color: 'white' }}>
@@ -486,7 +486,7 @@ const Precios = () => {
       {cargando ? (
         <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>Cargando precios...</div>
       ) : (
-        <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+        <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: OSCURO, color: 'white' }}>
@@ -561,7 +561,7 @@ const Estadisticas = () => {
       </div>
 
       <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>Compras por día (últimas 100)</h3>
-      <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+      <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ background: OSCURO, color: 'white' }}>
@@ -661,50 +661,75 @@ const AdminPanel = ({ session, onSalir }) => {
     { id: 'estadisticas', emoji: '📈', label: 'Estadísticas' },
   ];
 
+  const isMobile = window.innerWidth < 768;
+
   return (
     <div style={{ minHeight: '100vh', background: GRIS, fontFamily: 'system-ui, sans-serif' }}>
       {/* Topbar */}
       <div style={{
-        background: OSCURO, padding: '0 24px', height: 56,
+        background: OSCURO, padding: '0 16px', height: 52,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         position: 'sticky', top: 0, zIndex: 100,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ color: VERDE, fontWeight: 900, fontSize: 16 }}>MI MEJOR CESTA</span>
-          <span style={{ color: '#ffffff40', fontSize: 14 }}>|</span>
-          <span style={{ color: '#aaa', fontSize: 13, fontWeight: 700 }}>ADMIN</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ color: VERDE, fontWeight: 900, fontSize: 14 }}>MI MEJOR CESTA</span>
+          <span style={{ color: '#ffffff40' }}>|</span>
+          <span style={{ color: '#aaa', fontSize: 12, fontWeight: 700 }}>ADMIN</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ color: '#aaa', fontSize: 12 }}>{session?.user?.email}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {!isMobile && <span style={{ color: '#aaa', fontSize: 11 }}>{session?.user?.email}</span>}
           <Btn size="sm" variant="ghost" onClick={onSalir}>← App</Btn>
         </div>
       </div>
 
-      <div style={{ display: 'flex' }}>
-        {/* Sidebar */}
+      {/* Nav móvil — barra horizontal */}
+      {isMobile && (
         <div style={{
-          width: 220, background: 'white', minHeight: 'calc(100vh - 56px)',
-          padding: '24px 12px', boxShadow: '2px 0 12px rgba(0,0,0,0.04)',
-          position: 'sticky', top: 56, alignSelf: 'flex-start',
+          background: 'white', borderBottom: '1px solid #eee',
+          display: 'flex', overflowX: 'auto', padding: '6px 8px', gap: 4,
+          position: 'sticky', top: 52, zIndex: 99,
         }}>
           {MENU.map(item => (
             <button key={item.id} onClick={() => setSeccion(item.id)}
               style={{
-                width: '100%', padding: '10px 14px', borderRadius: 12, border: 'none',
-                background: seccion === item.id ? VERDE : 'transparent',
+                padding: '7px 12px', borderRadius: 20, border: 'none', whiteSpace: 'nowrap',
+                background: seccion === item.id ? VERDE : GRIS,
                 color: seccion === item.id ? 'white' : OSCURO,
-                fontSize: 14, fontWeight: 700, cursor: 'pointer', textAlign: 'left',
-                marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10,
-                transition: 'all 0.15s',
+                fontSize: 12, fontWeight: 700, cursor: 'pointer', flexShrink: 0,
               }}>
-              <span>{item.emoji}</span>
-              <span>{item.label}</span>
+              {item.emoji} {item.label}
             </button>
           ))}
         </div>
+      )}
+
+      <div style={{ display: 'flex' }}>
+        {/* Sidebar — solo desktop */}
+        {!isMobile && (
+          <div style={{
+            width: 200, background: 'white', minHeight: 'calc(100vh - 52px)',
+            padding: '20px 10px', boxShadow: '2px 0 12px rgba(0,0,0,0.04)',
+            position: 'sticky', top: 52, alignSelf: 'flex-start', flexShrink: 0,
+          }}>
+            {MENU.map(item => (
+              <button key={item.id} onClick={() => setSeccion(item.id)}
+                style={{
+                  width: '100%', padding: '9px 12px', borderRadius: 10, border: 'none',
+                  background: seccion === item.id ? VERDE : 'transparent',
+                  color: seccion === item.id ? 'white' : OSCURO,
+                  fontSize: 13, fontWeight: 700, cursor: 'pointer', textAlign: 'left',
+                  marginBottom: 3, display: 'flex', alignItems: 'center', gap: 8,
+                  transition: 'all 0.15s',
+                }}>
+                <span>{item.emoji}</span>
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Contenido */}
-        <div style={{ flex: 1, padding: 32, maxWidth: 1200, minWidth: 0 }}>
+        <div style={{ flex: 1, padding: isMobile ? 16 : 28, maxWidth: 1200, minWidth: 0, overflowX: 'hidden' }}>
           {seccion === 'dashboard' && <Dashboard stats={stats} />}
           {seccion === 'usuarios' && <Usuarios />}
           {seccion === 'catalogo' && <Catalogo />}
