@@ -9,6 +9,14 @@ export const PLANES = {
   premium:  { nombre: 'Premium',           maxSupers: 999, maxProductos: 999, precio: 6.99 },
 };
 
+// Límites de menús guardados en biblioteca (funcionalidad premium)
+export const MAX_MENUS_GUARDADOS = {
+  free:     0,
+  free_reg: 0,
+  basic:    0,   // básico no tiene acceso a menús semanales
+  premium:  30,
+};
+
 export const FUNCIONALIDADES = {
   guardarListas:      { free: false, free_reg: true,  basic: true,  premium: true  },
   listasFavoritas:    { free: false, free_reg: 1,     basic: 999,   premium: 999   },
@@ -26,6 +34,7 @@ export const FUNCIONALIDADES = {
   nutricional:        { free: false, free_reg: false, basic: false, premium: true  },
   cestivaBasic:       { free: true,  free_reg: true,  basic: true,  premium: true  },
   cestivaFull:        { free: false, free_reg: false, basic: true,  premium: true  },
+  guardarMenus:       { free: false, free_reg: false, basic: false, premium: true  },
 };
 
 export function usePlan(session) {
@@ -60,8 +69,18 @@ export function usePlan(session) {
 
   const limiteSupers = () => PLANES[plan]?.maxSupers || 2;
   const limiteProductos = () => PLANES[plan]?.maxProductos || 20;
+  const limiteMenusGuardados = () => MAX_MENUS_GUARDADOS[plan] || 0;
   const esPago = () => plan === 'basic' || plan === 'premium';
   const esPremium = () => plan === 'premium';
 
-  return { plan, cargando, puedeUsar, limiteSupers, limiteProductos, esPago, esPremium };
+  return { 
+    plan, 
+    cargando, 
+    puedeUsar, 
+    limiteSupers, 
+    limiteProductos, 
+    limiteMenusGuardados,
+    esPago, 
+    esPremium 
+  };
 }

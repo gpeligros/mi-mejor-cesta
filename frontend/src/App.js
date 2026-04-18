@@ -40,7 +40,7 @@ const App = () => {
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
-  const { plan, cargando: planCargando, limiteSupers, limiteProductos } = usePlan(session);
+  const { plan, cargando: planCargando, limiteSupers, limiteProductos, limiteMenusGuardados } = usePlan(session);
 
   // Recortar cesta si supera el límite del plan al cargar
   useEffect(() => {
@@ -954,6 +954,9 @@ const App = () => {
           seleccionados={seleccionados}
           getProdFull={getProdFull}
           modoInicial={modoMenuSemanal}
+          session={session}
+          plan={plan}
+          limiteMenusGuardados={limiteMenusGuardados}
         />
       )}
 
