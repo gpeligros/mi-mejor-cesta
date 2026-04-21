@@ -1,0 +1,163 @@
+- generic [ref=e62]:
+  - generic [ref=e63]:
+    - generic [ref=e65]: MODO LOCAL
+    - button "LOGIN / REGISTRO" [ref=e67] [cursor=pointer]
+  - navigation [ref=e68]:
+    - generic [ref=e69]:
+      - img [ref=e70]
+      - heading "MI MEJOR CESTA" [level=1] [ref=e74]
+    - paragraph [ref=e75]: Ahorra en tu compra diaria comparando todos los supermercados
+  - generic [ref=e76]:
+    - generic [ref=e78]:
+      - generic [ref=e79]: "MIS TIENDAS:"
+      - generic [ref=e80] [cursor=pointer]:
+        - checkbox "Mercadona" [checked] [ref=e81]
+        - img "Mercadona" [ref=e82]
+      - generic [ref=e83] [cursor=pointer]:
+        - checkbox "DIA" [checked] [ref=e84]
+        - img "DIA" [ref=e85]
+      - generic [ref=e86] [cursor=pointer]:
+        - checkbox "Alcampo" [ref=e87]
+        - img "Alcampo" [ref=e88]
+      - generic [ref=e89] [cursor=pointer]:
+        - checkbox "Carrefour" [ref=e90]
+        - img "Carrefour" [ref=e91]
+      - generic [ref=e92] [cursor=pointer]:
+        - checkbox "Lidl" [ref=e93]
+        - img "Lidl" [ref=e94]
+      - generic [ref=e95] [cursor=pointer]:
+        - checkbox "Hipercor" [ref=e96]
+        - img "Hipercor" [ref=e97]
+      - generic [ref=e98] [cursor=pointer]:
+        - checkbox "Aldi" [ref=e99]
+        - img "Aldi" [ref=e100]
+      - generic [ref=e101] [cursor=pointer]:
+        - checkbox "La Despensa" [ref=e102]
+        - img "La Despensa" [ref=e103]
+      - generic [ref=e104] [cursor=pointer]:
+        - checkbox "AhorraMas" [ref=e105]
+        - img "AhorraMas" [ref=e106]
+    - generic [ref=e107]:
+      - button "PREMIUM 🍽️ Menú semanal IA genera tu semana" [ref=e108] [cursor=pointer]:
+        - generic [ref=e109]: PREMIUM
+        - generic [ref=e110]: 🍽️
+        - generic [ref=e111]: Menú semanal
+        - generic [ref=e112]: IA genera tu semana
+      - button "PREMIUM 💡 Sugerir recetas Basado en tu cesta" [ref=e113] [cursor=pointer]:
+        - generic [ref=e114]: PREMIUM
+        - generic [ref=e115]: 💡
+        - generic [ref=e116]: Sugerir recetas
+        - generic [ref=e117]: Basado en tu cesta
+      - button "PREMIUM 🥗 Nutricional Análisis de tu cesta" [ref=e118] [cursor=pointer]:
+        - generic [ref=e119]: PREMIUM
+        - generic [ref=e120]: 🥗
+        - generic [ref=e121]: Nutricional
+        - generic [ref=e122]: Análisis de tu cesta
+    - generic [ref=e123]:
+      - complementary [ref=e125]:
+        - generic [ref=e126]:
+          - heading "ESTÁS AHORRANDO" [level=3] [ref=e127]
+          - generic [ref=e128]: 0.00€
+          - paragraph [ref=e129]: Diferencia entre el súper más barato y el más caro.
+        - generic [ref=e130]:
+          - 'heading "💡 MI MEJOR CESTA: 0.00€" [level=3] [ref=e131]'
+          - paragraph [ref=e132]: Precio mínimo comprando cada cosa en su sitio más barato.
+        - generic [ref=e133]:
+          - button "📄 EXPORTAR PDF" [ref=e134] [cursor=pointer]
+          - button "👥 LISTA COLABORATIVA" [ref=e135] [cursor=pointer]
+          - button "⭐ GUARDAR FAVORITA" [ref=e136] [cursor=pointer]
+        - generic [ref=e138] [cursor=pointer]:
+          - generic [ref=e139]: 🧾 MIS COMPRAS
+          - generic [ref=e140]: +
+        - generic [ref=e142] [cursor=pointer]:
+          - generic [ref=e143]: 📊 MIS ESTADÍSTICASBÁSICO
+          - generic [ref=e144]: +
+        - generic [ref=e145]:
+          - heading "📸 ESCANEAR LISTA" [level=4] [ref=e146]
+          - button "SUBIR FOTO" [ref=e147] [cursor=pointer]
+        - generic [ref=e148]:
+          - textbox "🔍 Buscar productos..." [ref=e149]
+          - generic [ref=e150]:
+            - generic [ref=e152] [cursor=pointer]:
+              - text: AZÚCAR, CARAMELOS Y CHOCOLATE
+              - generic [ref=e153]: +
+            - generic [ref=e155] [cursor=pointer]:
+              - text: BAZAR Y VARIOS
+              - generic [ref=e156]: +
+            - generic [ref=e158] [cursor=pointer]:
+              - text: BEBES
+              - generic [ref=e159]: +
+            - generic [ref=e161] [cursor=pointer]:
+              - text: BEBIDAS
+              - generic [ref=e162]: +
+            - generic [ref=e164] [cursor=pointer]:
+              - text: CARNICERÍA Y CHARCUTERÍA
+              - generic [ref=e165]: +
+            - generic [ref=e167] [cursor=pointer]:
+              - text: CONGELADOS
+              - generic [ref=e168]: +
+            - generic [ref=e170] [cursor=pointer]:
+              - text: CONSERVAS Y ENLATADOS
+              - generic [ref=e171]: +
+            - generic [ref=e173] [cursor=pointer]:
+              - text: CUIDADO PERSONAL E HIGIENE
+              - generic [ref=e174]: +
+            - generic [ref=e176] [cursor=pointer]:
+              - text: DESAYUNO Y SNACK
+              - generic [ref=e177]: +
+            - generic [ref=e179] [cursor=pointer]:
+              - text: DESPENSA
+              - generic [ref=e180]: +
+            - generic [ref=e182] [cursor=pointer]:
+              - text: FRUTAS Y VERDURAS
+              - generic [ref=e183]: +
+            - generic [ref=e185] [cursor=pointer]:
+              - text: HOGAR
+              - generic [ref=e186]: +
+            - generic [ref=e188] [cursor=pointer]:
+              - text: LÁCTEOS Y HUEVOS
+              - generic [ref=e189]: +
+            - generic [ref=e191] [cursor=pointer]:
+              - text: MASCOTAS
+              - generic [ref=e192]: +
+            - generic [ref=e194] [cursor=pointer]:
+              - text: PANADERÍA Y PASTELERÍA
+              - generic [ref=e195]: +
+            - generic [ref=e197] [cursor=pointer]:
+              - text: PESCADERÍA
+              - generic [ref=e198]: +
+            - generic [ref=e200] [cursor=pointer]:
+              - text: PLATOS PREPARADOS
+              - generic [ref=e201]: +
+      - main [ref=e202]:
+        - generic [ref=e203]:
+          - generic [ref=e204]:
+            - generic [ref=e205]:
+              - img "Mercadona" [ref=e206]
+              - heading "Mercadona" [level=3] [ref=e207]
+            - button "CONTROL LISTA →" [ref=e208] [cursor=pointer]
+          - generic [ref=e209]:
+            - generic [ref=e210]: TOTAL EN TIENDA
+            - generic [ref=e211]: 0.00€
+        - generic [ref=e212]:
+          - generic [ref=e213]:
+            - generic [ref=e214]:
+              - img "DIA" [ref=e215]
+              - heading "DIA" [level=3] [ref=e216]
+            - button "CONTROL LISTA →" [ref=e217] [cursor=pointer]
+          - generic [ref=e218]:
+            - generic [ref=e219]: TOTAL EN TIENDA
+            - generic [ref=e220]: 0.00€
+  - contentinfo [ref=e221]:
+    - heading "MI MEJOR CESTA" [level=2] [ref=e222]
+    - paragraph [ref=e223]: Tu comparador de confianza para el ahorro diario. Analizamos los precios de los principales supermercados para que siempre pagues lo mínimo.
+    - generic [ref=e224]:
+      - generic [ref=e225] [cursor=pointer]: INICIO
+      - generic [ref=e226] [cursor=pointer]: MIS LISTAS
+      - generic [ref=e227] [cursor=pointer]: AHORRO
+    - generic [ref=e228]:
+      - generic [ref=e229] [cursor=pointer]: PRIVACIDAD
+      - generic [ref=e230] [cursor=pointer]: TÉRMINOS
+      - generic [ref=e231] [cursor=pointer]: COOKIES
+      - generic [ref=e232]: © 2026
+  - button "🛒" [ref=e233] [cursor=pointer]

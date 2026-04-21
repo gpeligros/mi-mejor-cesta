@@ -1,0 +1,56 @@
+- generic [ref=e7]:
+  - navigation [ref=e8]:
+    - generic [ref=e9]: 🛒 MI MEJOR CESTA
+    - button "Entrar gratis →" [ref=e10] [cursor=pointer]
+  - generic [ref=e12]:
+    - generic [ref=e13]: 🛒
+    - heading "Compara precios en Aldi y ahorra" [level=1] [ref=e60]:
+      - text: Compara precios en
+      - generic [ref=e15]: Aldi
+      - text: y ahorra
+    - paragraph [ref=e16]:
+      - text: Descubre dónde te sale más barato cada producto.
+      - text: Crea tu cesta ideal y ahorra hasta
+      - strong [ref=e17]: 100€ al mes
+      - text: .
+    - button "Empezar gratis — sin registro" [ref=e18] [cursor=pointer]
+    - paragraph [ref=e19]: Gratis para siempre · Sin tarjeta · Sin registro
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]: "+4.000"
+      - generic [ref=e23]: productos comparados
+    - generic [ref=e24]:
+      - generic [ref=e25]: "6"
+      - generic [ref=e26]: supermercados
+    - generic [ref=e27]:
+      - generic [ref=e28]: 100€
+      - generic [ref=e29]: ahorro medio/mes
+  - generic [ref=e30]:
+    - heading "¿Por qué usar Mi Mejor Cesta?" [level=2] [ref=e31]
+    - generic [ref=e32]:
+      - generic [ref=e33]:
+        - generic [ref=e34]: 💰
+        - heading "Ahorra hasta 100€/mes" [level=3] [ref=e35]
+        - paragraph [ref=e36]: Compara precios en tiempo real y elige siempre el más barato.
+      - generic [ref=e37]:
+        - generic [ref=e38]: 🛒
+        - heading "Tu cesta inteligente" [level=3] [ref=e39]
+        - paragraph [ref=e40]: Añade productos y ve al instante dónde te sale más barato todo.
+      - generic [ref=e41]:
+        - generic [ref=e42]: 📸
+        - heading "Escanea tu lista" [level=3] [ref=e43]
+        - paragraph [ref=e44]: Fotografía tu lista de papel y la importamos automáticamente.
+  - generic [ref=e45]:
+    - paragraph [ref=e46]: SUPERMERCADOS DISPONIBLES
+    - generic [ref=e47]:
+      - generic [ref=e48]: Mercadona
+      - generic [ref=e49]: DIA
+      - generic [ref=e50]: Carrefour
+      - generic [ref=e51]: Lidl
+      - generic [ref=e52]: Aldi
+      - generic [ref=e53]: Alcampo
+  - generic [ref=e54]:
+    - heading "Empieza a ahorrar hoy" [level=2] [ref=e55]
+    - paragraph [ref=e56]: Gratis, sin registro, sin tarjeta. Listo en segundos.
+    - button "Ir a la app →" [ref=e57] [cursor=pointer]
+  - contentinfo [ref=e58]: © 2026 Mi Mejor Cesta · Comparador de precios de supermercados en España
