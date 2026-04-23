@@ -1,27 +1,49 @@
-import logoMercadona from '../assets/mercadona.png';
-import logoCarrefour from '../assets/carrefour.svg';
-import logoLidl from '../assets/lidl.svg';
-import logoAldi from '../assets/aldi.svg';
-import logoAlcampo from '../assets/alcampo.png';
-import logoHipercor from '../assets/hipercor.svg';
-import logoDIA from '../assets/DIA.svg';
-import logoLadespensa from '../assets/LaDespensa.jpeg';
-import logoAhorraMas from '../assets/AhorraMas.png';
-import logoBM from '../assets/BMSupermercados.png';
+/**
+ * LogosSuper.js — Configuración de supermercados
+ * Actualizado: Carrefour integrado (7.241 productos)
+ */
 
-// visible: true  → aparece en el selector
-// visible: false → oculto (próximamente) — cambiar a true cuando tenga datos
 const listaSupers = [
-  { id: "Mercadona",        logo: logoMercadona,   visible: true  },
-  { id: "DIA",              logo: logoDIA,          visible: true  },
-  { id: "Alcampo",          logo: logoAlcampo,      visible: true  },
-  { id: "Carrefour",        logo: logoCarrefour,    visible: true  },
-  { id: "Lidl",             logo: logoLidl,         visible: true  },
-  { id: "Hipercor",         logo: logoHipercor,     visible: true  },
-  { id: "Aldi",             logo: logoAldi,         visible: true  },
-  { id: "La Despensa",      logo: logoLadespensa,   visible: true  },
-  { id: "AhorraMas",        logo: logoAhorraMas,    visible: true  },
-  { id: "BM Supermercados", logo: logoBM,           visible: false },
+  {
+    id: "Mercadona",
+    nombre: "Mercadona",
+    logo: "https://www.mercadona.es/favicon.ico",
+    color: "#037623",
+    background: "#f4faf6",
+    visible: true,
+  },
+  {
+    id: "DIA",
+    nombre: "DIA",
+    logo: "https://www.dia.es/favicon.ico",
+    color: "#FFC000",
+    background: "#fffbf0",
+    visible: true,
+  },
+  {
+    id: "Alcampo",
+    nombre: "Alcampo",
+    logo: "https://www.alcampo.es/favicon.ico",
+    color: "#FF6B35",
+    background: "#fff3f0",
+    visible: true,
+  },
+  {
+    id: "AhorraMas",
+    nombre: "AhorraMas",
+    logo: "https://www.ahorramas.com/favicon.ico",
+    color: "#0066CC",
+    background: "#f0f5ff",
+    visible: true,
+  },
+  {
+    id: "Carrefour",
+    nombre: "Carrefour",
+    logo: "https://www.carrefour.es/favicon.ico",
+    color: "#003D82",
+    background: "#f0f3f8",
+    visible: true,
+  },
 ];
 
 export default listaSupers;

@@ -38,9 +38,9 @@ const App = () => {
   });
   const [comprados, setComprados] = useState([]);
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
-  const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo"]);
+  const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo", "Carrefour"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
-  const { plan, cargando: planCargando, limiteSupers, limiteProductos, limiteMenusGuardados } = usePlan(session);
+  const { plan, cargando: planCargando, limiteSupers, limiteProductos } = usePlan(session);
 
   // Recortar cesta si supera el límite del plan al cargar
   useEffect(() => {
@@ -145,6 +145,13 @@ const App = () => {
 
         if (errAhorramas) console.error('❌ Error precios Ahorramas:', errAhorramas);
 
+        const { data: preciosCarrefour, error: errCarrefour } = await supabase
+          .from('precios_carrefour')
+          .select('id, precio, precio_unidad, nombre_comercial')
+          .range(0, 10000);
+
+        if (errCarrefour) console.error('❌ Error precios Carrefour:', errCarrefour);
+
         if (catalogo && matches) {
           // ── Índices de precios por ID ──────────────────────────────────
           const idxMerc = {};
@@ -199,6 +206,19 @@ const App = () => {
             }
           });
 
+          const idxCarrefour = {};
+          const nombresCarrefour = {};
+          const idxCarrefourRef = {};
+          (preciosCarrefour || []).forEach(p => {
+            if (p.precio) {
+              idxCarrefour[p.id] = parseFloat(p.precio);
+              nombresCarrefour[p.id] = p.nombre_comercial || null;
+            }
+            if (p.precio_unidad) {
+              idxCarrefourRef[p.id] = p.precio_unidad;
+            }
+          });
+
           // ── Índice match por id_catalogo ───────────────────────────────
           const idxMatch = {};
           matches.forEach(m => { idxMatch[m.id_catalogo] = m; });
@@ -249,6 +269,10 @@ const App = () => {
               precios_prod['AhorraMas'] = idxAhorramas[m.id_ahorramas];
               nombres_prod['AhorraMas'] = nombresAhorramas[m.id_ahorramas];
             }
+            if (m.id_carrefour && idxCarrefour[m.id_carrefour]) {
+              precios_prod['Carrefour'] = idxCarrefour[m.id_carrefour];
+              nombres_prod['Carrefour'] = nombresCarrefour[m.id_carrefour];
+            }
             if (Object.keys(precios_prod).length > 0) {
               mapa[String(p.id)] = precios_prod;
               mapaNombres[String(p.id)] = nombres_prod;
@@ -275,6 +299,9 @@ const App = () => {
             }
             if (m.id_ahorramas && idxAhorramasRef[m.id_ahorramas]) {
               refs['AhorraMas'] = idxAhorramasRef[m.id_ahorramas];
+            }
+            if (m.id_carrefour && idxCarrefourRef[m.id_carrefour]) {
+              refs['Carrefour'] = idxCarrefourRef[m.id_carrefour];
             }
             if (Object.keys(refs).length > 0) {
               mapaRef[String(p.id)] = refs;
@@ -954,9 +981,6 @@ const App = () => {
           seleccionados={seleccionados}
           getProdFull={getProdFull}
           modoInicial={modoMenuSemanal}
-          session={session}
-          plan={plan}
-          limiteMenusGuardados={limiteMenusGuardados}
         />
       )}
 

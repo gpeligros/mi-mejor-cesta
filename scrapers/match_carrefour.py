@@ -17,6 +17,7 @@ Uso:
 """
 
 import argparse
+import csv
 import logging
 import os
 import re
@@ -122,7 +123,7 @@ def calcular_score(nombre_cat: str, nombre_cf: str, marca_cf: str = "") -> float
         return 0.0
 
     palabras_cat = set(w for w in norm_cat.split() if len(w) > 4)
-    palabras_cf  = set(w for w in norm_cf.split() if len(w) > 4)
+    palabras_cf  = set(w for w in norm_cf.split()  if len(w) > 4)
 
     # REQUISITO: al menos una palabra clave debe coincidir
     if palabras_cat and palabras_cf:
@@ -138,6 +139,13 @@ def calcular_score(nombre_cat: str, nombre_cf: str, marca_cf: str = "") -> float
         no_ambiguas_cf  = {p for p in palabras_cf_todas  if p not in AMBIGUAS and len(p) > 3}
         if no_ambiguas_cat and not (no_ambiguas_cat & no_ambiguas_cf):
             return 0.0
+
+    # PENALIZACIÓN: diferencia de longitud >2.5x evita falsos positivos por subconjunto
+    # (token_set_ratio da 1.0 cuando una string corta es subconjunto de la larga)
+    n_cat = len(norm_cat.split())
+    n_cf  = len(norm_cf.split())
+    if min(n_cat, n_cf) / max(n_cat, n_cf) < 0.45:
+        return 0.0
 
     score_set  = fuzz.token_set_ratio(norm_cat, norm_cf) / 100
     score_sort = fuzz.token_sort_ratio(norm_cat, norm_cf) / 100
@@ -187,7 +195,7 @@ def cargar_datos(client):
         if len(res.data) < 1000: break
         offset += 1000
     ya_matched_cat = {m["id_catalogo"] for m in matches if m.get("id_carrefour")}
-    ya_matched_cf  = {m["id_carrefour"] for m in matches if m.get("id_carrefour")}
+    ya_matched_cf  = {m["id_carrefour"]  for m in matches if m.get("id_carrefour")}
     log.info(f"  {len(ya_matched_cat)} productos ya tienen match con Carrefour")
 
     return catalogo, carrefour, ya_matched_cat, ya_matched_cf
@@ -195,15 +203,15 @@ def cargar_datos(client):
 
 def hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf):
     """Matching 1-a-1: primero todos los scores, luego asigna sin duplicados."""
-    pendientes          = [p for p in catalogo  if str(p["id"]) not in ya_matched_cat]
-    carrefour_disponible = [c for c in carrefour if c["id"] not in ya_matched_cf]
+    pendientes    = [p for p in catalogo  if str(p["id"]) not in ya_matched_cat]
+    cf_disponible = [a for a in carrefour if a["id"]      not in ya_matched_cf]
 
-    log.info(f"\nCalculando scores: {len(pendientes)} catálogo vs {len(carrefour_disponible)} CF-...")
+    log.info(f"\nCalculando scores: {len(pendientes)} catálogo vs {len(cf_disponible)} Carrefour...")
 
     todos_scores = []
     for i, prod in enumerate(pendientes, 1):
         nombre_cat = prod.get("nombre_generico", "") or ""
-        for cf in carrefour_disponible:
+        for cf in cf_disponible:
             s = calcular_score(nombre_cat, cf.get("nombre_comercial", ""), cf.get("marca", ""))
             if s >= SCORE_MIN / 100:
                 todos_scores.append({
@@ -231,14 +239,16 @@ def hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf):
         usados_cat.add(par["id_catalogo"])
         usados_cf.add(par["id_carrefour"])
 
-    auto    = sum(1 for r in resultados if r["auto"])
-    revisar = len(resultados) - auto
-    log.info(f"\n✅ Matches únicos: {len(resultados)}")
-    log.info(f"  Auto (≥{SCORE_AUTO}):         {auto}")
-    log.info(f"  Revisar ({SCORE_MIN}-{SCORE_AUTO}): {revisar}")
-    log.info(f"  Sin match:             {len(pendientes) - len(resultados)}")
+    auto      = sum(1 for r in resultados if r["auto"])
+    revisar   = len(resultados) - auto
+    sin_match = len(pendientes) - len(resultados)
 
-    return resultados
+    log.info(f"\n✅ CF- Matches únicos: {len(resultados)}")
+    log.info(f"  Auto (≥{SCORE_AUTO}):              {auto}")
+    log.info(f"  Dudosos ({SCORE_MIN}-{SCORE_AUTO}): {revisar}")
+    log.info(f"  Sin match:                         {sin_match}")
+
+    return resultados, pendientes
 
 
 def guardar_matches(client, resultados, solo_auto=False):
@@ -247,7 +257,8 @@ def guardar_matches(client, resultados, solo_auto=False):
     guardados = 0
     for i in range(0, len(a_guardar), BATCH_SIZE):
         batch = a_guardar[i:i + BATCH_SIZE]
-        updates = [{"id_catalogo": r["id_catalogo"], "id_carrefour": r["id_carrefour"]} for r in batch]
+        updates = [{"id_catalogo": r["id_catalogo"], "id_carrefour": r["id_carrefour"],
+                    "id_carrefour_score": r["score"]} for r in batch]
         try:
             client.table("productos_match").upsert(updates, on_conflict="id_catalogo").execute()
             guardados += len(batch)
@@ -257,33 +268,66 @@ def guardar_matches(client, resultados, solo_auto=False):
     return guardados
 
 
+def exportar_dudosos_csv(resultados):
+    dudosos = [r for r in resultados if not r["auto"]]
+    if not dudosos:
+        return
+    path = "carrefour_dudosos.csv"
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            "score", "id_catalogo", "nombre_catalogo",
+            "id_carrefour", "nombre_carrefour", "marca_carrefour"
+        ])
+        writer.writeheader()
+        for r in sorted(dudosos, key=lambda x: -x["score"]):
+            writer.writerow({
+                "score":            r["score"],
+                "id_catalogo":      r["id_catalogo"],
+                "nombre_catalogo":  r["nombre_catalogo"],
+                "id_carrefour":     r["id_carrefour"],
+                "nombre_carrefour": r["nombre_carrefour"],
+                "marca_carrefour":  r["marca_carrefour"],
+            })
+    log.info(f"📄 Dudosos exportados → {path} ({len(dudosos)} filas)")
+
+
 def main(dry_run=False):
     log.info("━" * 55)
-    log.info("  MATCHING CARREFOUR v1 → productos_match")
+    log.info("  MATCHING CARREFOUR v3 → productos_match")
     log.info("━" * 55)
 
     client = get_supabase()
     catalogo, carrefour, ya_matched_cat, ya_matched_cf = cargar_datos(client)
-    resultados = hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf)
+    resultados, pendientes = hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf)
 
-    log.info("\n📋 Top 30 mejores matches:")
-    for r in sorted(resultados, key=lambda x: -x["score"])[:30]:
-        tag = "✅ AUTO " if r["auto"] else "⚠️  REVISAR"
-        log.info(f"  {tag} [{r['score']:.2f}] {r['nombre_catalogo'][:35]:<35} → {r['nombre_carrefour'][:45]}")
+    auto_res   = [r for r in resultados if r["auto"]]
+    dudoso_res = [r for r in resultados if not r["auto"]]
+    matched_ids = {r["id_catalogo"] for r in resultados}
+    sin_match   = [p for p in pendientes if str(p["id"]) not in matched_ids]
 
-    log.info("\n📋 Matches con score más bajo (últimos 20):")
-    for r in sorted(resultados, key=lambda x: x["score"])[:20]:
+    log.info("\n📋 5 ejemplos AUTO (score ≥90):")
+    for r in sorted(auto_res, key=lambda x: -x["score"])[:5]:
+        log.info(f"  ✅ [{r['score']:.2f}] {r['nombre_catalogo'][:35]:<35} → {r['nombre_carrefour'][:45]}")
+
+    log.info(f"\n📋 5 ejemplos DUDOSOS (score {SCORE_MIN}-{SCORE_AUTO}):")
+    for r in sorted(dudoso_res, key=lambda x: -x["score"])[:5]:
         log.info(f"  ⚠️  [{r['score']:.2f}] {r['nombre_catalogo'][:35]:<35} → {r['nombre_carrefour'][:45]}")
 
+    log.info(f"\n📋 5 ejemplos SIN MATCH:")
+    for p in sin_match[:5]:
+        log.info(f"  ❌  {p.get('nombre_generico', '')[:60]}")
+
     if dry_run:
-        log.info("\n[dry-run] No se guarda nada.")
+        log.info("\n[dry-run] No se guarda nada en BBDD.")
         return
 
-    auto_count = len([r for r in resultados if r["auto"]])
+    exportar_dudosos_csv(resultados)
+
+    auto_count = len(auto_res)
     resp = input(f"\n¿Guardar {auto_count} matches automáticos (score ≥{SCORE_AUTO})? (s/n): ")
     if resp.lower() == "s":
         guardar_matches(client, resultados, solo_auto=True)
-        log.info(f"\n💡 {len(resultados) - auto_count} matches de score medio pendientes de revisión.")
+        log.info(f"\n💡 {len(dudoso_res)} matches dudosos pendientes → carrefour_dudosos.csv")
     log.info("━" * 55)
 
 
