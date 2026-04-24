@@ -11,6 +11,9 @@ Mejoras v3:
 - Penalización por palabras ambiguas sin contexto adicional
 - Score mínimo 85 para evitar falsos positivos
 
+FIX v4:
+- Reemplaza .upsert() defectuoso con urllib.request PATCH (como match_mercadona.py)
+
 Uso:
   python match_carrefour.py --dry-run   # ver matches sin guardar
   python match_carrefour.py             # guardar matches en Supabase
@@ -18,10 +21,12 @@ Uso:
 
 import argparse
 import csv
+import json
 import logging
 import os
 import re
 import unicodedata
+import urllib.request
 from dotenv import load_dotenv
 from rapidfuzz import fuzz
 
@@ -35,6 +40,13 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
 SCORE_MIN  = 85   # umbral mínimo
 SCORE_AUTO = 90   # match seguro
 BATCH_SIZE = 50
+
+HEADERS = {
+    "apikey": SUPABASE_KEY,
+    "Authorization": f"Bearer {SUPABASE_KEY}",
+    "Content-Type": "application/json",
+    "Prefer": "return=minimal",
+}
 
 PALABRAS_ELIMINAR = {
     "producto", "carrefour", "seleccion", "selección", "especial",
@@ -154,46 +166,36 @@ def calcular_score(nombre_cat: str, nombre_cf: str, marca_cf: str = "") -> float
     return round(max(score_set, score_sort, score_part), 3)
 
 
-def get_supabase():
-    from supabase import create_client
-    return create_client(SUPABASE_URL, SUPABASE_KEY)
-
-
-def cargar_datos(client):
-    log.info("Cargando catálogo...")
-    catalogo, offset = [], 0
+def fetch_all(tabla, columnas):
+    """Fetch all rows from Supabase using urllib (like match_mercadona.py)"""
+    rows, offset = [], 0
     while True:
-        res = client.table("vista_productos") \
-            .select("id, nombre_generico, categoria, subcategoria") \
-            .range(offset, offset + 999).execute()
-        if not res.data: break
-        catalogo.extend(res.data)
-        if len(res.data) < 1000: break
-        offset += 1000
+        url = f"{SUPABASE_URL}/rest/v1/{tabla}?select={columnas}&offset={offset}&limit=1000"
+        req = urllib.request.Request(url, headers=HEADERS)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                lote = json.loads(resp.read())
+                rows.extend(lote)
+                if len(lote) < 1000:
+                    break
+                offset += 1000
+        except Exception as e:
+            log.error(f"Error fetching {tabla}: {e}")
+            break
+    return rows
+
+
+def cargar_datos():
+    log.info("Cargando catálogo...")
+    catalogo = fetch_all("vista_productos", "id,nombre_generico,categoria,subcategoria")
     log.info(f"  {len(catalogo)} productos en catálogo")
 
     log.info("Cargando precios_carrefour...")
-    carrefour, offset = [], 0
-    while True:
-        res = client.table("precios_carrefour") \
-            .select("id, nombre_comercial, marca") \
-            .range(offset, offset + 999).execute()
-        if not res.data: break
-        carrefour.extend(res.data)
-        if len(res.data) < 1000: break
-        offset += 1000
+    carrefour = fetch_all("precios_carrefour", "id,nombre_comercial,marca")
     log.info(f"  {len(carrefour)} productos en precios_carrefour")
 
     log.info("Cargando matches existentes...")
-    matches, offset = [], 0
-    while True:
-        res = client.table("productos_match") \
-            .select("id_catalogo, id_carrefour") \
-            .range(offset, offset + 999).execute()
-        if not res.data: break
-        matches.extend(res.data)
-        if len(res.data) < 1000: break
-        offset += 1000
+    matches = fetch_all("productos_match", "id_catalogo,id_carrefour")
     ya_matched_cat = {m["id_catalogo"] for m in matches if m.get("id_carrefour")}
     ya_matched_cf  = {m["id_carrefour"]  for m in matches if m.get("id_carrefour")}
     log.info(f"  {len(ya_matched_cat)} productos ya tienen match con Carrefour")
@@ -251,19 +253,29 @@ def hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf):
     return resultados, pendientes
 
 
-def guardar_matches(client, resultados, solo_auto=False):
+def guardar_matches(resultados, solo_auto=False):
+    """Guardar matches usando urllib.request PATCH (FIX v4)"""
     a_guardar = [r for r in resultados if not solo_auto or r["auto"]]
     log.info(f"\nGuardando {len(a_guardar)} matches...")
+    
     guardados = 0
-    for i in range(0, len(a_guardar), BATCH_SIZE):
-        batch = a_guardar[i:i + BATCH_SIZE]
-        updates = [{"id_catalogo": r["id_catalogo"], "id_carrefour": r["id_carrefour"],
-                    "id_carrefour_score": r["score"]} for r in batch]
+    for i, r in enumerate(a_guardar, 1):
+        url = f"{SUPABASE_URL}/rest/v1/productos_match?id_catalogo=eq.{r['id_catalogo']}"
+        data = json.dumps({
+            "id_carrefour": r["id_carrefour"],
+            "id_carrefour_score": r["score"]
+        }).encode()
+        req = urllib.request.Request(url, data=data, headers=HEADERS, method="PATCH")
+        
         try:
-            client.table("productos_match").upsert(updates, on_conflict="id_catalogo").execute()
-            guardados += len(batch)
+            with urllib.request.urlopen(req, timeout=15):
+                guardados += 1
         except Exception as e:
-            log.error(f"Error: {e}")
+            log.error(f"Error guardando {r['id_catalogo']}: {e}")
+        
+        if i % 500 == 0:
+            log.info(f"  {i}/{len(a_guardar)} procesados...")
+    
     log.info(f"✅ {guardados} matches guardados")
     return guardados
 
@@ -293,11 +305,10 @@ def exportar_dudosos_csv(resultados):
 
 def main(dry_run=False):
     log.info("━" * 55)
-    log.info("  MATCHING CARREFOUR v3 → productos_match")
+    log.info("  MATCHING CARREFOUR v4 (FIX) → productos_match")
     log.info("━" * 55)
 
-    client = get_supabase()
-    catalogo, carrefour, ya_matched_cat, ya_matched_cf = cargar_datos(client)
+    catalogo, carrefour, ya_matched_cat, ya_matched_cf = cargar_datos()
     resultados, pendientes = hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf)
 
     auto_res   = [r for r in resultados if r["auto"]]
@@ -326,7 +337,7 @@ def main(dry_run=False):
     auto_count = len(auto_res)
     resp = input(f"\n¿Guardar {auto_count} matches automáticos (score ≥{SCORE_AUTO})? (s/n): ")
     if resp.lower() == "s":
-        guardar_matches(client, resultados, solo_auto=True)
+        guardar_matches(resultados, solo_auto=True)
         log.info(f"\n💡 {len(dudoso_res)} matches dudosos pendientes → carrefour_dudosos.csv")
     log.info("━" * 55)
 
