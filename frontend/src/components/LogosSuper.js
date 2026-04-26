@@ -1,13 +1,14 @@
 /**
  * LogosSuper.js — Configuración de supermercados
  * Actualizado: Carrefour integrado (7.241 productos)
+ * FIX: Logos emoji para evitar 404 de favicons externos
  */
 
 const listaSupers = [
   {
     id: "Mercadona",
     nombre: "Mercadona",
-    logo: "https://www.mercadona.es/favicon.ico",
+    logo: "🛒",
     color: "#037623",
     background: "#f4faf6",
     visible: true,
@@ -15,7 +16,7 @@ const listaSupers = [
   {
     id: "DIA",
     nombre: "DIA",
-    logo: "https://www.dia.es/favicon.ico",
+    logo: "🏪",
     color: "#FFC000",
     background: "#fffbf0",
     visible: true,
@@ -23,7 +24,7 @@ const listaSupers = [
   {
     id: "Alcampo",
     nombre: "Alcampo",
-    logo: "https://www.alcampo.es/favicon.ico",
+    logo: "🏬",
     color: "#FF6B35",
     background: "#fff3f0",
     visible: true,
@@ -31,7 +32,7 @@ const listaSupers = [
   {
     id: "AhorraMas",
     nombre: "AhorraMas",
-    logo: "https://www.ahorramas.com/favicon.ico",
+    logo: "🛍️",
     color: "#0066CC",
     background: "#f0f5ff",
     visible: true,
@@ -39,7 +40,7 @@ const listaSupers = [
   {
     id: "Carrefour",
     nombre: "Carrefour",
-    logo: "https://www.carrefour.es/favicon.ico",
+    logo: "🛒",
     color: "#003D82",
     background: "#f0f3f8",
     visible: true,

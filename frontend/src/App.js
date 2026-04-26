@@ -91,66 +91,61 @@ const App = () => {
       setSession(session);
     });
     
+    // ✅ HELPER: Paginar TODAS las filas (Supabase tiene límite de 1000 por query)
+    const cargarTodo = async (tabla, columnas) => {
+      const PAGE = 1000;
+      let todos = [];
+      let offset = 0;
+      let seguir = true;
+      while (seguir) {
+        const { data, error } = await supabase
+          .from(tabla)
+          .select(columnas)
+          .range(offset, offset + PAGE - 1);
+        if (error) {
+          console.error(`❌ Error cargando ${tabla} (offset ${offset}):`, error);
+          break;
+        }
+        if (!data || data.length === 0) {
+          seguir = false;
+        } else {
+          todos = todos.concat(data);
+          if (data.length < PAGE) seguir = false;
+          else offset += PAGE;
+        }
+      }
+      return todos;
+    };
+
     const cargarDatos = async () => {
       try {
         // ── Cargar catálogo para el SIDEBAR ───────────────────────────────
-        const { data: catalogo, error: errCat } = await supabase
-          .from('vista_productos')
-          .select('id, nombre_generico, categoria, subcategoria')
-          .range(0, 10000);
-
-        if (errCat) console.error('❌ Error catálogo:', errCat);
+        const catalogo = await cargarTodo('vista_productos', 'id, nombre_generico, categoria, subcategoria');
 
         // ── Cargar tipo de productos_catalogo (marca_fabricante / marca_blanca) ──
-        const { data: tiposCat } = await supabase
-          .from('productos_catalogo')
-          .select('id, tipo')
-          .range(0, 10000);
+        const tiposCat = await cargarTodo('productos_catalogo', 'id, tipo');
         const idxTipo = {};
         (tiposCat || []).forEach(p => { if (p.tipo) idxTipo[p.id] = p.tipo; });
 
         // ── Cargar matches + precios Mercadona ────────────────────────────
-        const { data: matches, error: errMatch } = await supabase
-          .from('productos_match')
-          .select('id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas')
-          .range(0, 10000);
+        const matches = await cargarTodo('productos_match', 'id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas, id_carrefour');
 
-        if (errMatch) console.error('❌ Error matches:', errMatch);
+        const preciosMerc = await cargarTodo('precios_mercadona', 'id, precio, precio_unidad, nombre_comercial, reference_price, reference_format');
 
-        const { data: preciosMerc, error: errMerc } = await supabase
-          .from('precios_mercadona')
-          .select('id, precio, precio_unidad, nombre_comercial, reference_price, reference_format')
-          .range(0, 10000);
+        const preciosDia = await cargarTodo('precios_dia', 'id, precio, precio_unidad, nombre_comercial');
 
-        if (errMerc) console.error('❌ Error precios Mercadona:', errMerc);
+        const preciosAlcampo = await cargarTodo('precios_alcampo', 'id, precio, precio_unidad, nombre_comercial');
 
-        const { data: preciosDia, error: errDia } = await supabase
-          .from('precios_dia')
-          .select('id, precio, precio_unidad, nombre_comercial')
-          .range(0, 10000);
+        const preciosAhorramas = await cargarTodo('precios_ahorramas', 'id, precio, precio_unidad, nombre_comercial');
 
-        if (errDia) console.error('❌ Error precios DIA:', errDia);
+        const preciosCarrefour = await cargarTodo('precios_carrefour', 'id, precio, precio_unidad, nombre_comercial');
 
-        const { data: preciosAlcampo, error: errAlcampo } = await supabase
-          .from('precios_alcampo')
-          .select('id, precio, precio_unidad, nombre_comercial')
-          .range(0, 10000);
-
-        if (errAlcampo) console.error('❌ Error precios Alcampo:', errAlcampo);
-
-        const { data: preciosAhorramas, error: errAhorramas } = await supabase
-          .from('precios_ahorramas')
-          .select('id, precio, precio_unidad, nombre_comercial')
-          .range(0, 10000);
-
-        if (errAhorramas) console.error('❌ Error precios Ahorramas:', errAhorramas);
-
-        const { data: preciosCarrefour, error: errCarrefour } = await supabase
-          .from('precios_carrefour')
-          .select('id, precio, precio_unidad, nombre_comercial')
-          .range(0, 10000);
-
-        if (errCarrefour) console.error('❌ Error precios Carrefour:', errCarrefour);
+        console.log('✅ Datos cargados:', {
+          catalogo: catalogo.length,
+          matches: matches.length,
+          mercadona: preciosMerc.length,
+          carrefour: preciosCarrefour.length,
+        });
 
         if (catalogo && matches) {
           // ── Índices de precios por ID ──────────────────────────────────
