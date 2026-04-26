@@ -56,6 +56,14 @@ UNIT_MAP = {
     "CENTILITRO": "cl", "CENTILITROS": "cl",
     "UNIDAD": "ud", "UNIDADES": "ud",
     "METRO": "m", "METROS": "m",
+    "PIEZA": "ud", "PIEZAS": "ud",
+    "DOCENA": "ud",
+    "ROLLO": "ud", "ROLLOS": "ud",
+    "TABLETA": "ud", "TABLETAS": "ud",
+    "SOBRE": "ud", "SOBRES": "ud",
+    "BOTELLA": "ud", "BOTELLAS": "ud",
+    "LATA": "ud", "LATAS": "ud",
+    "BRIK": "ud", "BRIKS": "ud",
 }
 
 HEADERS = {
@@ -177,6 +185,11 @@ def parse_api_product(item):
         return None
 
 # ─── SCRAPLING (fallback) ────────────────────────────────────────────────────
+
+def _scroll_and_wait(page):
+    """Scroll to bottom and wait for content to load."""
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    page.wait_for_timeout(1000)
 
 _stealthy_session = None
 
@@ -331,7 +344,7 @@ def scrape_first_page(cat_id, cat_slug, retries=2, debug=False):
     for attempt in range(retries):
         try:
             session = get_stealthy_session()
-            page    = session.fetch(url, timeout=60000)
+            page    = session.fetch(url, page_action=_scroll_and_wait, timeout=60000)
             if page and page.status == 200:
                 html  = page.html_content
                 total = extract_total_from_html(html)
