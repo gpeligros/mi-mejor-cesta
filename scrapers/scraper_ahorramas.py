@@ -8,7 +8,7 @@ Estrategia híbrida (patrón Carrefour):
 IDs: AH-XXXX secuencial (mantiene IDs existentes en productos_match).
 Tabla destino: precios_ahorramas
 """
-import argparse, json, logging, os, re, time
+import argparse, logging, os, re, time
 from curl_cffi import requests as curl_requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -384,6 +384,7 @@ def main(dry_run=False, only_cat=None, force_stealth=False, debug=False):
         nuevos = 0
         for p in page_products:
             if p["id_api"] and p["id_api"] not in all_products:
+                p["categoria_ahorramas"] = cat_name
                 all_products[p["id_api"]] = p
                 nuevos += 1
         log.info(f"    +{nuevos} nuevos | total acumulado: {len(all_products)}")
