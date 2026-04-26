@@ -1,432 +1,528 @@
 """
-scraper_alcampo.py  —  Scraper Alcampo → Supabase
+scraper_alcampo.py — Alcampo España → Supabase
+Estrategia híbrida (patrón Carrefour):
+  1) API JSON con curl_cffi
+  2) Fallback: Scrapling StealthyFetcher (SPA React)
+  3) Paginación con curl_cffi para páginas 2+
 
-Estrategia:
-  1. HTML de categoría → JSON-LD → lista de URLs de producto (slug + ID)
-  2. HTML de cada producto → precio, marca, imagen, formato
-  3. Upsert en Supabase tabla precios_alcampo
+Sin visitas individuales por producto — todo desde el listado de categoría.
+IDs: AL-{pid} directo (compatible con Carrefour).
+Tabla destino: precios_alcampo
 """
-
-import argparse
-import json
-import logging
-import math
-import os
-import re
-import time
-from itertools import islice
-from typing import Generator
-
-import requests
+import argparse, json, logging, os, re, time
+from curl_cffi import requests as curl_requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-
 load_dotenv()
 
-# ── Config ────────────────────────────────────────────────────────────────────
-
-BASE_URL   = "https://www.compraonline.alcampo.es"
-TABLE_NAME = "precios_alcampo"
-
-PRODUCTS_PER_PAGE = 50    # productos por página de categoría (vimos 50 en el log)
-MAX_PAGES         = 100   # tope de seguridad
-DELAY_CAT         = 1.0   # pausa entre páginas de categoría
-DELAY_PROD        = 0.4   # pausa entre páginas de producto
+# ─── CONFIG ──────────────────────────────────────────────────────────────────
+BASE_URL     = "https://www.compraonline.alcampo.es"
+API_CAT_URL  = f"{BASE_URL}/api/v2/page/category"
+TABLE_NAME   = "precios_alcampo"
+PAGE_SIZE    = 50
+DELAY        = 1.0
+PAGINATION_DELAY = 0.5
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
 
-# {cat_id: (nombre, slug)}
-# Slug = path de la URL de Alcampo después de /categories/
-CATEGORIES = {
-    # Alimentación
-    "OC10":       ("Desayuno y merienda",         "desayuno-y-merienda"),
-    "OC16":       ("Lácteos y bebidas vegetales", "leche-huevos-lacteos-yogures-y-bebidas-vegetales"),
-    "OC2112":     ("Frescos",                     "frescos"),
-    "OC20022018": ("Comida preparada",            "comida-preparada"),
-    "OC1102":     ("Zumos",                       "bebidas/zumos-de-frutas"),
-    "OC1101":     ("Agua y refrescos",            "bebidas/agua-y-refrescos"),
-    "OC1701":     ("Fruta fresca",                "frutas-y-verduras/fruta-fresca"),
-    "OC1401":     ("Pescado fresco",              "pescado-y-marisco/pescado-fresco"),
-    "OC100302":   ("Frutos secos",                "alimentacion/frutos-secos-y-snacks"),
-    "OC1001":     ("Leche",                       "leche-huevos-lacteos-yogures-y-bebidas-vegetales/leche"),
-    "OCSINGSINL": ("Sin gluten / Sin lactosa",    "sin-gluten-sin-lactosa-nutricion-deportiva-y-funcional"),
-    # Droguería, perfumería y bebé
-    "OCC14":      ("Droguería",                   "drogueria"),
-    "OC70":       ("Perfumería",                  "perfumeria"),
-    "OCC13":      ("Bebé",                        "bebe"),
-    "OC69":       ("Parafarmacia",                "parafarmacia"),
-    "OC062":      ("Mascotas",                    "mascotas"),
-}
+# ~30 categorías cubriendo todo el catálogo de Alcampo
+CATEGORIES = [
+    ("OC10",       "desayuno-y-merienda",                              "Desayuno y merienda"),
+    ("OC16",       "leche-huevos-lacteos-yogures-y-bebidas-vegetales", "Lácteos y huevos"),
+    ("OC1001",     "leche-huevos-lacteos-yogures-y-bebidas-vegetales/leche", "Leche"),
+    ("OC2112",     "frescos",                                          "Frescos"),
+    ("OC20022018", "comida-preparada",                                 "Comida preparada"),
+    ("OC1101",     "bebidas/agua-y-refrescos",                        "Agua y refrescos"),
+    ("OC1102",     "bebidas/zumos-de-frutas",                         "Zumos"),
+    ("OC1103",     "bebidas/bebidas-energeticas-e-isotonica",         "Bebidas energéticas"),
+    ("OC1701",     "frutas-y-verduras/fruta-fresca",                  "Fruta fresca"),
+    ("OC1702",     "frutas-y-verduras/verdura-y-hortaliza-fresca",    "Verdura fresca"),
+    ("OC1401",     "pescado-y-marisco/pescado-fresco",                "Pescado fresco"),
+    ("OC100302",   "alimentacion/frutos-secos-y-snacks",              "Frutos secos y snacks"),
+    ("OC1002",     "alimentacion/arroz-legumbres-y-cereales",         "Arroz y legumbres"),
+    ("OC1003",     "alimentacion/aceites-y-vinagres",                 "Aceites y vinagres"),
+    ("OC1004",     "alimentacion/conservas-y-platos-preparados",      "Conservas"),
+    ("OC1005",     "alimentacion/pasta-y-pizza",                      "Pasta y pizza"),
+    ("OC1006",     "alimentacion/salsas-especias-y-condimentos",      "Salsas y condimentos"),
+    ("OC1007",     "alimentacion/galletas-y-bolleria",                "Galletas y bollería"),
+    ("OC1008",     "alimentacion/cafe-e-infusiones",                  "Café e infusiones"),
+    ("OC1009",     "alimentacion/azucar-y-edulcorantes",              "Azúcar y edulcorantes"),
+    ("OC1010",     "bebidas/vinos-y-cavas",                           "Vinos y cavas"),
+    ("OC1011",     "bebidas/cervezas",                                "Cervezas"),
+    ("OCSINGSINL", "sin-gluten-sin-lactosa-nutricion-deportiva-y-funcional", "Sin gluten / Sin lactosa"),
+    ("OCC14",      "drogueria",                                       "Droguería"),
+    ("OC70",       "perfumeria",                                      "Perfumería"),
+    ("OCC13",      "bebe",                                            "Bebé"),
+    ("OC069",      "parafarmacia",                                    "Parafarmacia"),
+    ("OC062",      "mascotas",                                        "Mascotas"),
+    ("OC063",      "mascotas/perros",                                 "Mascotas - Perros"),
+    ("OC064",      "mascotas/gatos",                                  "Mascotas - Gatos"),
+]
 
 HEADERS = {
     "User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                        "AppleWebKit/537.36 (KHTML, like Gecko) "
                        "Chrome/124.0.0.0 Safari/537.36",
-    "Accept":          "text/html,application/xhtml+xml,*/*;q=0.8",
+    "Accept":          "application/json, text/html, */*;q=0.8",
     "Accept-Language": "es-ES,es;q=0.9",
     "Referer":         BASE_URL + "/",
 }
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(message)s", datefmt="%H:%M:%S")
+logging.basicConfig(level=logging.INFO,
+                    format="%(asctime)s  %(message)s",
+                    datefmt="%H:%M:%S")
 log = logging.getLogger("alcampo")
 
+_http_session = curl_requests.Session(impersonate="chrome124")
 
-# ── HTTP ──────────────────────────────────────────────────────────────────────
+# ─── API (curl_cffi) ─────────────────────────────────────────────────────────
 
-def get_html(url: str, retries: int = 3) -> str | None:
+def try_api(cat_id, page=0, retries=2):
+    """Intenta el endpoint REST de Alcampo. Devuelve lista de productos o None."""
+    params = {"categoryId": cat_id, "currentPage": page, "pageSize": PAGE_SIZE}
     for attempt in range(retries):
         try:
-            r = requests.get(url, headers=HEADERS, timeout=20)
+            r = _http_session.get(API_CAT_URL, params=params,
+                                  headers=HEADERS, timeout=15)
             if r.status_code == 200:
-                return r.text
-            log.warning(f"HTTP {r.status_code}: {url}")
+                data  = r.json()
+                prods = (data.get("products") or data.get("items")
+                         or data.get("data", {}).get("products") or [])
+                return prods if prods else None
+            log.debug(f"  API HTTP {r.status_code}")
         except Exception as e:
-            log.warning(f"Error ({attempt+1}/{retries}): {e}")
-        time.sleep(1.5 * (attempt + 1))
+            log.debug(f"  API error: {e}")
+        time.sleep(DELAY * (attempt + 1))
     return None
 
+# ─── PARSEO ───────────────────────────────────────────────────────────────────
 
-# ── Parseo de página de categoría → URLs de producto ─────────────────────────
+def parse_api_product(item):
+    """Normaliza un producto de la API de Alcampo al schema unificado."""
+    try:
+        pid = str(item.get("id") or item.get("productId") or item.get("code") or "").strip()
+        if not pid:
+            return None
+        nombre = (item.get("name") or item.get("displayName") or "").strip()
+        if not nombre:
+            return None
 
-def get_product_urls_from_category(html: str) -> tuple[list[tuple[str,str]], int | None]:
-    """
-    Extrae lista de (slug_completo, id) desde el JSON-LD de la página de categoría.
-    También devuelve el total de productos si está disponible.
-    Formato URL: /products/nombre-del-producto/12345
-    """
-    soup  = BeautifulSoup(html, "html.parser")
-    items: list[tuple[str, str]] = []
+        # precio
+        price_info = item.get("price") or {}
+        if isinstance(price_info, (int, float)):
+            precio = float(price_info)
+            precio_unidad = ""
+        else:
+            precio = float(price_info.get("value") or price_info.get("amount") or 0)
+            ref    = str(price_info.get("referencePrice") or price_info.get("pricePerUnit") or "")
+            precio_unidad = ref.strip()
 
-    # Total de productos para calcular páginas
-    total: int | None = None
+        # marca
+        brand = item.get("brand") or {}
+        if isinstance(brand, dict):
+            marca = (brand.get("name") or "").strip()
+        else:
+            marca = str(brand).strip()
+
+        # ean
+        ean = str(item.get("ean") or item.get("gtin") or item.get("barcode") or "").strip()
+
+        # imagen
+        imagen = ""
+        imgs   = item.get("images") or item.get("imageGallery") or []
+        if isinstance(imgs, list) and imgs:
+            imagen = imgs[0].get("url", "") if isinstance(imgs[0], dict) else str(imgs[0])
+        elif isinstance(imgs, str):
+            imagen = imgs
+        if not imagen:
+            imagen = item.get("image") or item.get("imageUrl") or ""
+
+        # url
+        slug = item.get("slug") or item.get("url") or ""
+        url  = f"{BASE_URL}/products/{slug}/{pid}" if slug else f"{BASE_URL}/products/{pid}"
+
+        # disponible
+        avail      = item.get("availability") or item.get("stock") or ""
+        disponible = str(avail).lower() not in ("outofstock", "out_of_stock", "false", "0")
+
+        # formato
+        fmt_m  = re.search(
+            r'(\d+(?:[.,]\d+)?\s*(?:ml|l|g|kg|cl|ud|uds|pack)[\w\s]*)',
+            nombre, re.IGNORECASE)
+        formato = fmt_m.group(1).strip() if fmt_m else ""
+
+        return {
+            "id":               f"AL-{pid}",
+            "id_api":           pid,
+            "nombre_comercial": nombre,
+            "precio":           round(precio, 2) if precio else None,
+            "precio_unidad":    precio_unidad,
+            "marca":            marca,
+            "ean":              ean,
+            "url":              url,
+            "imagen":           imagen,
+            "disponible":       disponible,
+            "formato":          formato,
+        }
+    except Exception:
+        return None
+
+# ─── SCRAPLING (fallback) ────────────────────────────────────────────────────
+
+_stealthy_session = None
+
+def get_stealthy_session():
+    global _stealthy_session
+    if _stealthy_session is None:
+        from scrapling.fetchers import StealthySession
+        log.info("    Abriendo navegador stealth (~5s)...")
+        _stealthy_session = StealthySession(
+            headless=True,
+            solve_cloudflare=True,
+            network_idle=True,
+            block_webrtc=True,
+            disable_resources=False,
+        ).__enter__()
+        log.info("    Navegador listo")
+    return _stealthy_session
+
+def close_stealthy_session():
+    global _stealthy_session
+    if _stealthy_session is not None:
+        try:
+            _stealthy_session.__exit__(None, None, None)
+        except Exception:
+            pass
+        _stealthy_session = None
+
+def _scroll_and_wait(page):
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    page.wait_for_timeout(1000)
+
+def extract_total_from_html(html):
     for pat in [r'"totalResults"\s*:\s*(\d+)', r'"total"\s*:\s*(\d+)',
-                r'"totalProducts"\s*:\s*(\d+)', r'"numberOfResults"\s*:\s*(\d+)']:
-        m = re.search(pat, html)
+                r'"totalProducts"\s*:\s*(\d+)', r'"count"\s*:\s*(\d+)',
+                r'(\d+)\s+productos']:
+        m = re.search(pat, html, re.IGNORECASE)
         if m:
-            total = int(m.group(1))
-            break
+            return int(m.group(1))
+    return 0
 
-    # JSON-LD con el listado de productos
-    for script in soup.find_all("script", type="application/ld+json"):
-        try:
-            data = json.loads(script.string or "")
-        except Exception:
-            continue
-
-        if data.get("@type") != "ItemList":
-            continue
-
-        for item in data.get("itemListElement", []):
-            url = item.get("url", "")
-            # Formato: .../products/slug-del-producto/12345
-            m = re.search(r"/products/([^/]+)/(\d+)$", url)
-            if m:
-                slug, pid = m.group(1), m.group(2)
-                items.append((slug, pid))
-
-    return items, total
-
-
-def slug_to_name(slug: str) -> str:
-    """Convierte 'don-simon-zumo-de-naranja-100-1-l' → 'Don Simon Zumo De Naranja 100 1 L'"""
-    return " ".join(w.capitalize() for w in slug.replace("-", " ").split())
-
-
-def get_subcategories(cat_id: str, slug: str) -> list[tuple[str, str]]:
-    """
-    Descubre subcategorías desde la página de una categoría.
-    Devuelve lista de (subcat_id, subcat_slug).
-    Si la categoría tiene productos directos, devuelve la propia categoría.
-    """
-    url  = f"{BASE_URL}/categories/{slug}/{cat_id}"
-    html = get_html(url)
+def extract_products_from_html(html):
+    """Extrae productos del HTML renderizado de Alcampo."""
     if not html:
-        return [(cat_id, slug)]
-
-    # Ver si tiene productos directos (JSON-LD ItemList con productos)
-    items, _ = get_product_urls_from_category(html)
-    if items:
-        return [(cat_id, slug)]  # tiene productos propios, no necesita subcategorías
-
-    # Buscar links a subcategorías en el HTML
-    # Formato: /categories/slug-padre/slug-hijo/OCXXXX
-    soup = BeautifulSoup(html, "html.parser")
-    subcats: list[tuple[str, str]] = []
-    seen: set[str] = set()
-
-    cat_re = re.compile(r"^/categories/(.+)/(OC[^/?#]+|OCSINGSINL)$")
-    for a in soup.find_all("a", href=True):
-        href = a["href"].rstrip("/").split("?")[0]
-        m    = cat_re.match(href)
-        if m:
-            subslug, subid = m.group(1), m.group(2)
-            if subid not in seen and subid != cat_id:
-                seen.add(subid)
-                subcats.append((subid, subslug))
-
-    if subcats:
-        log.info(f"    → {len(subcats)} subcategorías encontradas en {cat_id}")
-        return subcats
-
-    # Sin subcategorías ni productos — devolver la propia por si acaso
-    return [(cat_id, slug)]
-
-
-# ── Parseo de página de producto → precio, marca, etc. ───────────────────────
-
-def parse_product_page(html: str, pid: str, slug: str, cat_id: str) -> dict:
-    """
-    Extrae precio, marca, imagen y formato de la página individual del producto.
-    """
-    # Nombre desde el slug como base (se sobreescribe si hay mejor fuente)
-    name = slug_to_name(slug)
-
-    price    = 0.0
-    brand    = ""
-    imagen   = ""
-    formato  = ""
-    disponible = True
-
-    # ── Precio ────────────────────────────────────────────────────────────────
-    # Buscar en JSON embebido primero (más fiable)
-    price_patterns = [
-        r'"amount"\s*:\s*"?([\d]+[.,][\d]{1,2})"?',
-        r'"price"\s*:\s*"?([\d]+[.,][\d]{1,2})"?',
-        r'"currentPrice"\s*:\s*"?([\d]+[.,][\d]{1,2})"?',
-        r'([\d]+[.,][\d]{2})\s*€',
-    ]
-    for pat in price_patterns:
-        m = re.search(pat, html)
-        if m:
-            try:
-                price = float(m.group(1).replace(",", "."))
-                if price > 0:
-                    break
-            except Exception:
-                pass
-
-    # ── Marca ─────────────────────────────────────────────────────────────────
-    brand_patterns = [
-        r'"brand"\s*:\s*["{](?:"name"\s*:\s*)?"([^"]+)"',
-        r'"manufacturer"\s*:\s*"([^"]+)"',
-        r'"brand"\s*:\s*\{\s*"name"\s*:\s*"([^"]+)"',
-    ]
-    for pat in brand_patterns:
-        m = re.search(pat, html)
-        if m:
-            brand = m.group(1).strip()
-            break
-
-    # ── Nombre más preciso desde JSON-LD de producto ──────────────────────────
-    soup = BeautifulSoup(html, "html.parser")
-    for script in soup.find_all("script", type="application/ld+json"):
-        try:
-            data = json.loads(script.string or "")
-        except Exception:
-            continue
-        if data.get("@type") in ("Product", "IndividualProduct"):
-            name    = data.get("name", name)
-            raw_brand = data.get("brand") or {}
-            if isinstance(raw_brand, dict):
-                brand = raw_brand.get("name", brand) or brand
-            elif isinstance(raw_brand, str):
-                brand = raw_brand or brand
-            imagen  = data.get("image", imagen)
-            # Precio desde offers
-            offers  = data.get("offers") or {}
-            if isinstance(offers, list):
-                offers = offers[0] if offers else {}
-            p = offers.get("price") or offers.get("lowPrice")
-            if p:
-                try:
-                    price = float(str(p).replace(",", "."))
-                except Exception:
-                    pass
-            disponible = offers.get("availability", "").endswith("InStock") if offers else True
-            break
-
-    # ── Imagen ────────────────────────────────────────────────────────────────
-    if not imagen:
-        m = re.search(r'"image"\s*:\s*"(https?://[^"]+)"', html)
-        if m:
-            imagen = m.group(1)
-
-    # ── Formato ───────────────────────────────────────────────────────────────
-    # Extraer de la última parte del nombre: "1 L", "400 g", "6 x 200 ml", etc.
-    fmt_m = re.search(r'(\d+[\s,.]?\d*\s*(?:ml|l|g|kg|cl|ud|uds|x\s*\d+)[\w\s]*?)(?:\s*[/,]|$)',
-                      name, re.IGNORECASE)
-    if fmt_m:
-        formato = fmt_m.group(1).strip()
-
-    return {
-        "id":               f"AL-{pid}",
-        "id_api":           pid,
-        "nombre_comercial": name.strip(),
-        "precio":           price,
-        "marca":            brand.strip(),
-        "url":              f"{BASE_URL}/products/{slug}/{pid}",
-        "imagen":           imagen,
-        "disponible":       disponible,
-        "categoria":        cat_id,
-        "formato":          formato,
-    }
-
-
-# ── Scraping de categoría ─────────────────────────────────────────────────────
-
-def scrape_category(cat_id: str, cat_name: str, slug: str) -> list[dict]:
-    # Descubrir subcategorías automáticamente si la categoría es top-level
-    subcats = get_subcategories(cat_id, slug)
-
-    # Paso 1: recopilar todas las URLs de producto de todas las subcategorías
-    all_items: dict[str, str] = {}  # {pid: slug_producto}
-
-    for subcat_id, subcat_slug in subcats:
-        max_pages = MAX_PAGES
-
-        for page in range(max_pages):
-            url  = f"{BASE_URL}/categories/{subcat_slug}/{subcat_id}?currentPage={page}"
-            html = get_html(url)
-            if not html:
-                break
-
-            items, total = get_product_urls_from_category(html)
-
-            if page == 0:
-                if not items:
-                    break
-                if total:
-                    max_pages = min(math.ceil(total / PRODUCTS_PER_PAGE), MAX_PAGES)
-                    if len(subcats) == 1:
-                        log.info(f"    {total} productos → {max_pages} páginas")
-                    else:
-                        log.info(f"    [{subcat_id}] {total} productos → {max_pages} páginas")
-
-            new_items = {pid: s for s, pid in items if pid not in all_items}
-            if not new_items:
-                break
-
-            all_items.update(new_items)
-            time.sleep(DELAY_CAT)
-
-    log.info(f"    {len(all_items)} productos únicos encontrados")
-
-    if not all_items:
         return []
 
-    # Paso 2: scraping de cada página de producto para obtener precio y marca
-    log.info(f"    Scrapeando {len(all_items)} páginas de producto...")
-    products: list[dict] = []
-    total_items = len(all_items)
+    # Intento 1: JSON embebido en window.__INITIAL_STATE__ o similar
+    for pat in [
+        r'window\.__INITIAL_STATE__\s*=\s*(\{.*?\});',
+        r'window\.__data__\s*=\s*(\{.*?\});',
+        r'"productList"\s*:\s*(\[.*?\])\s*[,}]',
+        r'"products"\s*:\s*(\[.*?\])\s*[,}]',
+    ]:
+        m = re.search(pat, html, re.DOTALL)
+        if m:
+            try:
+                blob = json.loads(m.group(1))
+                prods_raw = _find_products_in_blob(blob)
+                if prods_raw:
+                    parsed = [parse_api_product(it) for it in prods_raw]
+                    parsed = [p for p in parsed if p]
+                    if parsed:
+                        log.debug(f"    JSON embebido: {len(parsed)} productos")
+                        return parsed
+            except Exception as e:
+                log.debug(f"    JSON blob error: {e}")
 
-    for i, (pid, prod_slug) in enumerate(all_items.items(), 1):
-        prod_url  = f"{BASE_URL}/products/{prod_slug}/{pid}"
-        prod_html = get_html(prod_url)
+    # Intento 2: JSON-LD ItemList
+    soup  = BeautifulSoup(html, "html.parser")
+    prods = []
+    for script in soup.find_all("script", type="application/ld+json"):
+        try:
+            data = json.loads(script.string or "")
+        except Exception:
+            continue
+        if data.get("@type") != "ItemList":
+            continue
+        for it in data.get("itemListElement", []):
+            p = _parse_jsonld_alcampo(it)
+            if p:
+                prods.append(p)
+    if prods:
+        return prods
 
-        if prod_html:
-            p = parse_product_page(prod_html, pid, prod_slug, cat_id)
-            products.append(p)
-            if i % 10 == 0 or i == total_items:
-                log.info(f"    {i}/{total_items} productos procesados")
-        else:
-            # Sin HTML: guardamos con nombre del slug al menos
-            products.append({
-                "id":               f"AL-{pid}",
-                "id_api":           pid,
-                "nombre_comercial": slug_to_name(prod_slug),
-                "precio":           0.0,
-                "marca":            "",
-                "url":              f"{BASE_URL}/products/{prod_slug}/{pid}",
-                "imagen":           "",
-                "disponible":       True,
-                "categoria":        cat_id,
-                "formato":          "",
-            })
+    # Intento 3: tarjetas HTML
+    for sel in [
+        '[data-testid="product-card"]',
+        '.product-card',
+        '[class*="ProductCard"]',
+        '[class*="product-card"]',
+        '[data-pid]',
+    ]:
+        cards = soup.select(sel)
+        if cards:
+            for card in cards:
+                p = _parse_html_card_alcampo(card)
+                if p:
+                    prods.append(p)
+            break
+    return prods
 
-        time.sleep(DELAY_PROD)
+def _find_products_in_blob(blob):
+    """Busca recursivamente una lista de productos en un JSON blob."""
+    if isinstance(blob, list) and blob and isinstance(blob[0], dict):
+        if any(k in blob[0] for k in ("id", "name", "price", "productId")):
+            return blob
+    if isinstance(blob, dict):
+        for key in ("products", "items", "productList", "data"):
+            val = blob.get(key)
+            if val:
+                result = _find_products_in_blob(val)
+                if result:
+                    return result
+    return []
 
-    return products
+def _parse_jsonld_alcampo(it):
+    try:
+        url = it.get("url", "")
+        m   = re.search(r"/products/([^/]+)/(\d+)$", url)
+        if not m:
+            return None
+        slug, pid = m.group(1), m.group(2)
+        item   = it.get("item", it)
+        offers = item.get("offers") or {}
+        if isinstance(offers, list):
+            offers = offers[0] if offers else {}
+        price  = offers.get("price") or offers.get("lowPrice") or 0
+        try:
+            price = float(str(price).replace(",", "."))
+        except Exception:
+            price = 0.0
+        brand  = item.get("brand") or {}
+        brand  = brand.get("name", "") if isinstance(brand, dict) else str(brand)
+        disponible = "InStock" in str(offers.get("availability", "InStock"))
+        return {
+            "id":               f"AL-{pid}",
+            "id_api":           pid,
+            "nombre_comercial": (item.get("name") or "").strip(),
+            "precio":           round(price, 2) if price else None,
+            "precio_unidad":    "",
+            "marca":            brand.strip(),
+            "ean":              str(item.get("gtin13") or item.get("gtin") or "").strip(),
+            "url":              url if url.startswith("http") else BASE_URL + url,
+            "imagen":           item.get("image", ""),
+            "disponible":       disponible,
+            "formato":          "",
+        }
+    except Exception:
+        return None
 
+def _parse_html_card_alcampo(card):
+    try:
+        pid = card.get("data-pid") or card.get("data-product-id") or ""
+        if not pid:
+            link = card.find("a", href=True)
+            if link:
+                m   = re.search(r"/products/[^/]+/(\d+)", link["href"])
+                pid = m.group(1) if m else ""
+        if not pid:
+            return None
+        name_el = card.select_one('h2, h3, [class*="title"], [class*="name"]')
+        name    = name_el.get_text(strip=True) if name_el else ""
+        price   = 0.0
+        for sel in ['[class*="price"]', '[itemprop="price"]', '[data-price]']:
+            el = card.select_one(sel)
+            if el:
+                txt = el.get("content") or el.get_text(strip=True)
+                m   = re.search(r"(\d+[.,]\d{2})", txt)
+                if m:
+                    try:
+                        price = float(m.group(1).replace(",", "."))
+                        break
+                    except Exception:
+                        pass
+        unit_el = card.select_one('[class*="unit"], [class*="per-unit"], [class*="reference"]')
+        precio_unidad = unit_el.get_text(strip=True) if unit_el else ""
+        img_el = card.find("img")
+        imagen = img_el.get("src") or img_el.get("data-src", "") if img_el else ""
+        link   = card.find("a", href=True)
+        slug   = ""
+        if link:
+            m = re.search(r"/products/([^/]+)/\d+", link["href"])
+            slug = m.group(1) if m else ""
+        return {
+            "id":               f"AL-{pid}",
+            "id_api":           pid,
+            "nombre_comercial": name,
+            "precio":           price,
+            "precio_unidad":    precio_unidad,
+            "marca":            "",
+            "ean":              "",
+            "url":              f"{BASE_URL}/products/{slug}/{pid}",
+            "imagen":           imagen,
+            "disponible":       price > 0,
+            "formato":          "",
+        }
+    except Exception:
+        return None
 
-# ── Supabase ──────────────────────────────────────────────────────────────────
+def scrape_first_page(cat_id, slug, retries=2, debug=False):
+    """Renderiza la primera página de categoría con Scrapling."""
+    url = f"{BASE_URL}/categories/{slug}/{cat_id}"
+    for attempt in range(retries):
+        try:
+            session = get_stealthy_session()
+            page    = session.fetch(url, page_action=_scroll_and_wait, timeout=60000)
+            if page and page.status == 200:
+                html  = page.html_content
+                total = extract_total_from_html(html)
+                if debug:
+                    with open(f"debug_alcampo_{cat_id}.html", "w", encoding="utf-8") as f:
+                        f.write(html)
+                return html, total
+            log.warning(f"    Stealthy HTTP {page.status if page else 'None'} (intento {attempt+1})")
+        except Exception as e:
+            log.warning(f"    Stealthy error: {e} (intento {attempt+1})")
+        time.sleep(DELAY * 2)
+    return None, 0
+
+def fetch_pagination_pages(cat_id, slug, total):
+    """Obtiene páginas 2..N con curl_cffi."""
+    all_products = []
+    seen         = set()
+    pages        = min(total // PAGE_SIZE + 1, 200)
+    for page in range(1, pages):
+        url = f"{BASE_URL}/categories/{slug}/{cat_id}?currentPage={page}"
+        try:
+            r = _http_session.get(url, headers=HEADERS, timeout=20)
+            if r.status_code in (502, 503, 429):
+                time.sleep(5)
+                r = _http_session.get(url, headers=HEADERS, timeout=20)
+            if r.status_code != 200:
+                log.warning(f"    página {page}: HTTP {r.status_code} -> parando")
+                break
+            prods = extract_products_from_html(r.text)
+            new   = [p for p in prods if p["id_api"] not in seen]
+            seen.update(p["id_api"] for p in new)
+            all_products.extend(new)
+            if not new:
+                break
+        except Exception as e:
+            log.warning(f"    página {page}: {e} -> parando")
+            break
+        time.sleep(PAGINATION_DELAY)
+    log.info(f"    Paginación: {len(all_products)} productos adicionales")
+    return all_products
+
+# ─── SUPABASE ────────────────────────────────────────────────────────────────
 
 def get_supabase():
-    if not SUPABASE_URL or not SUPABASE_KEY:
-        raise ValueError("Faltan SUPABASE_URL o SUPABASE_KEY en el .env")
     from supabase import create_client
     return create_client(SUPABASE_URL, SUPABASE_KEY)
 
-
-def upsert(client, products: list[dict]) -> int:
+def upsert(client, products):
     import datetime
     now = datetime.datetime.utcnow().isoformat()
     for p in products:
         p["actualizado"] = now
+    if not products:
+        return 0
     res = client.table(TABLE_NAME).upsert(products, on_conflict="id_api").execute()
     return len(res.data) if res.data else len(products)
 
+# ─── MAIN ────────────────────────────────────────────────────────────────────
 
-# ── Main ──────────────────────────────────────────────────────────────────────
-
-def main(dry_run: bool = False, only_cat: str | None = None):
-    log.info("━" * 55)
-    log.info("  SCRAPER ALCAMPO")
-    log.info("━" * 55)
+def main(dry_run=False, only_cat=None, force_stealth=False, debug=False):
+    log.info("=" * 55)
+    log.info("  SCRAPER ALCAMPO (hibrido API + Scrapling)")
+    log.info("=" * 55)
 
     db = None
     if not dry_run:
         try:
             db = get_supabase()
-            log.info("✅ Supabase conectado")
+            log.info("Supabase conectado")
         except Exception as e:
-            log.warning(f"⚠️  Supabase no disponible ({e}) → dry_run activado")
+            log.warning(f"Supabase no disponible ({e}) -> dry_run activado")
             dry_run = True
 
-    categories = CATEGORIES
-    if only_cat:
-        categories = {only_cat: CATEGORIES.get(only_cat, (only_cat, ""))}
+    cats = [(cid, sl, nm) for cid, sl, nm in CATEGORIES
+            if not only_cat or only_cat in cid or only_cat in sl]
+    log.info(f"{len(cats)} categorias\n")
 
-    log.info(f"📋 {len(categories)} categorías\n")
+    total_p = total_u = 0
+    seen_global = set()
 
-    total_productos = 0
-    total_upserted  = 0
+    for cat_id, slug, cat_name in cats:
+        log.info(f"  {cat_name}  [{cat_id}]")
+        products_raw = []
 
-    for cat_id, (cat_name, slug) in categories.items():
-        log.info(f"📦  {cat_name}  [{cat_id}]")
+        # FASE 1: API
+        if not force_stealth:
+            log.info("    Intentando API Alcampo...")
+            page = 0
+            while page < 200:
+                items = try_api(cat_id, page=page)
+                if items is None:
+                    break
+                products_raw.extend(items)
+                if len(items) < PAGE_SIZE:
+                    break
+                page += 1
+                time.sleep(DELAY)
+            if products_raw:
+                log.info(f"    API: {len(products_raw)} items")
 
-        if not slug:
-            log.warning(f"    Sin slug — añádelo en CATEGORIES")
-            continue
-
-        products = scrape_category(cat_id, cat_name, slug)
-
-        if not products:
-            log.info("    Sin productos.\n")
-            continue
-
-        log.info(f"    {len(products)} productos listos")
-        total_productos += len(products)
-
-        if not dry_run and db:
-            n = upsert(db, products)
-            total_upserted += n
-            log.info(f"    ✅ {n} filas upserted\n")
+        # FASE 2: Scrapling si la API falló
+        if not products_raw:
+            log.info("    Fallback -> Scrapling")
+            html, total = scrape_first_page(cat_id, slug, debug=debug)
+            page_prods  = extract_products_from_html(html)
+            if not page_prods:
+                log.info("    Sin productos\n")
+                continue
+            log.info(f"    Pag. 1: {len(page_prods)} (total anunciado: {total})")
+            if total > PAGE_SIZE:
+                extra       = fetch_pagination_pages(cat_id, slug, total)
+                page_prods += extra
+            parsed = page_prods
         else:
-            log.info(f"    [dry-run] muestra:")
-            for p in products[:5]:
-                log.info(f"      {p['id']} | {p['nombre_comercial'][:45]} | {p['precio']}€ | {p['marca']}")
-            log.info("")
+            parsed = [parse_api_product(it) for it in products_raw]
+            parsed = [p for p in parsed if p]
 
-    log.info("━" * 55)
-    log.info(f"  Total productos : {total_productos}")
-    log.info(f"  Total upserted  : {total_upserted}")
-    log.info("━" * 55)
+        new_prods = [p for p in parsed if p["id_api"] not in seen_global]
+        seen_global.update(p["id_api"] for p in new_prods)
+        total_p += len(new_prods)
+        log.info(f"    +{len(new_prods)} nuevos | total acumulado: {total_p}")
+
+        if not dry_run and db and new_prods:
+            n = upsert(db, new_prods)
+            total_u += n
+            log.info(f"    {n} upserted")
+        elif dry_run:
+            for p in new_prods[:3]:
+                log.info(f"      {p['id']} | {p['nombre_comercial'][:45]} | "
+                         f"{p.get('precio')}€ | {p.get('precio_unidad')}")
+        log.info("")
+        time.sleep(DELAY)
+
+    close_stealthy_session()
+    log.info("=" * 55)
+    log.info(f"  Total productos : {total_p}")
+    log.info(f"  Total upserted  : {total_u}")
+    log.info("=" * 55)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--cat", help="Ej: OC1102")
-    args = parser.parse_args()
-    main(dry_run=args.dry_run, only_cat=args.cat)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dry-run",  action="store_true", help="No escribe en Supabase")
+    ap.add_argument("--cat",      help="Filtrar por ID o slug de categoría")
+    ap.add_argument("--stealth",  action="store_true", help="Forzar Scrapling desde el inicio")
+    ap.add_argument("--debug",    action="store_true", help="Guarda HTML de cada categoría")
+    args = ap.parse_args()
+    try:
+        main(dry_run=args.dry_run, only_cat=args.cat,
+             force_stealth=args.stealth, debug=args.debug)
+    finally:
+        close_stealthy_session()
