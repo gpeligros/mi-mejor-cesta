@@ -101,13 +101,15 @@ const ListaColaborativa = ({ session, seleccionados, setSeleccionados, comprados
   };
 
   const compartirWhatsApp = () => {
-    const texto = `🛒 Únete a mi lista de compra "${nombreLista}" en Mi Mejor Cesta.\n\nCódigo: *${codigo}*\n\nEntra en: https://mi-mejor-cesta-fcapc5aa9-david-gonzalez-peligros-projects.vercel.app`;
+    const url = window.location.origin;
+    const texto = `🛒 Únete a mi lista de compra "${nombreLista}" en Mi Mejor Cesta.\n\nCódigo: *${codigo}*\n\nEntra en: ${url}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
   };
 
   const compartirEmail = () => {
+    const url = window.location.origin;
     const asunto = `Lista de compra compartida: ${nombreLista}`;
-    const cuerpo = `Hola!\n\nTe comparto mi lista de compra "${nombreLista}" en Mi Mejor Cesta.\n\nCódigo de acceso: ${codigo}\n\nEntra en: https://mi-mejor-cesta-fcapc5aa9-david-gonzalez-peligros-projects.vercel.app y usa el código para unirte.\n\n¡Hasta luego!`;
+    const cuerpo = `Hola!\n\nTe comparto mi lista de compra "${nombreLista}" en Mi Mejor Cesta.\n\nCódigo de acceso: ${codigo}\n\nEntra en: ${url} y usa el código para unirte.\n\n¡Hasta luego!`;
     window.open(`mailto:?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`);
   };
 

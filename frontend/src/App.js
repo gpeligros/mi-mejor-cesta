@@ -40,7 +40,7 @@ const App = () => {
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
   const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo", "Carrefour"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
-  const { plan, cargando: planCargando, limiteSupers, limiteProductos } = usePlan(session);
+  const { plan, cargando: planCargando, limiteSupers, limiteProductos, limiteMenusGuardados } = usePlan(session);
 
   // Recortar cesta si supera el límite del plan al cargar
   useEffect(() => {
@@ -89,6 +89,7 @@ const App = () => {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      if (!session) setModoTienda(null);
     });
     
     // ✅ HELPER: Paginar TODAS las filas (Supabase tiene límite de 1000 por query)
@@ -140,12 +141,9 @@ const App = () => {
 
         const preciosCarrefour = await cargarTodo('precios_carrefour', 'id, precio, precio_unidad, nombre_comercial');
 
-        console.log('✅ Datos cargados:', {
-          catalogo: catalogo.length,
-          matches: matches.length,
-          mercadona: preciosMerc.length,
-          carrefour: preciosCarrefour.length,
-        });
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Datos cargados:', { catalogo: catalogo.length, matches: matches.length, mercadona: preciosMerc.length, carrefour: preciosCarrefour.length });
+        }
 
         if (catalogo && matches) {
           // ── Índices de precios por ID ──────────────────────────────────
@@ -976,6 +974,9 @@ const App = () => {
           seleccionados={seleccionados}
           getProdFull={getProdFull}
           modoInicial={modoMenuSemanal}
+          session={session}
+          plan={plan}
+          limiteMenusGuardados={limiteMenusGuardados}
         />
       )}
 

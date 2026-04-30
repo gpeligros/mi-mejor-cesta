@@ -81,9 +81,11 @@ const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActiv
               <div style={{ fontSize: '14px', fontWeight: '700', color: '#102215' }}>
                 {(getNombreReal && getNombreReal(id, sId)) || producto.nombre}
               </div>
-              <div style={{ fontSize: '10px', color: '#999', marginTop: '2px' }}>
-                {producto.formato}
-              </div>
+              {producto.subcategoria && (
+                <div style={{ fontSize: '10px', color: '#999', marginTop: '2px' }}>
+                  {producto.subcategoria}
+                </div>
+              )}
             </div>
 
             {/* Precio + referencia */}
