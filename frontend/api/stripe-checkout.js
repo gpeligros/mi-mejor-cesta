@@ -1,7 +1,15 @@
 // frontend/api/stripe-checkout.js
 // Crea una Stripe Checkout Session y devuelve la URL de pago
 
+import { setCorsHeaders, handlePreflight } from './cors_helper.js';
+
 export default async function handler(req, res) {
+  // Preflight CORS (OPTIONS)
+  if (handlePreflight(req, res)) return;
+
+  // Aplicar cabeceras CORS al POST
+  setCorsHeaders(req, res);
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }

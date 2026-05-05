@@ -2,7 +2,15 @@
 // Vercel Serverless Function — proxy seguro para la API de Anthropic
 // La ANTHROPIC_API_KEY vive aquí en el servidor, nunca en el frontend
 
+import { setCorsHeaders, handlePreflight } from './cors_helper.js';
+
 export default async function handler(req, res) {
+  // Preflight CORS (OPTIONS) — el navegador lo envía antes del POST real
+  if (handlePreflight(req, res)) return;
+
+  // Aplicar cabeceras CORS al POST
+  setCorsHeaders(req, res);
+
   // Solo POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });

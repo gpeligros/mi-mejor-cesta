@@ -60,11 +60,11 @@ PWA de comparación de precios de supermercados españoles.
 
 | Super | Tabla | Productos | Matches | Estado |
 |---|---|---|---|---|
-| Mercadona | precios_mercadona | ~8.327 | 4.173 (100%) | ✅ En producción |
-| DIA | precios_dia | ~4.786 | 608 | ✅ En producción |
-| Alcampo | precios_alcampo | 727 | 121 | ✅ En producción |
-| **Carrefour** | precios_carrefour | **~7.241** | **7.241** | ✅ Matching completo, **integración frontend pendiente** |
-| **AhorraMas** | precios_ahorramas | **~1.529** | **331** | ⚠️ Matching parcial (21%), pendiente mejorar |
+| Mercadona | precios_mercadona | ~8.327 | ~10.064 (99%) | ✅ En producción |
+| DIA | precios_dia | ~5.076 | ~10.064 (99%) | ✅ En producción |
+| Alcampo | precios_alcampo | 2.264 | 0 | ⚠️ Se resetó, pendiente re-matching |
+| Carrefour | precios_carrefour | ~7.241 | ~7.241 | ✅ En producción |
+| AhorraMas | precios_ahorramas | ~1.529 | ~331 | ⚠️ Matching parcial (22%) |
 | Lidl | precios_lidl | 0 | 0 | ❌ Pendiente (Scrapling DynamicFetcher) |
 | Eroski | precios_eroski | 0 | 0 | ❌ Pendiente |
 | Hipercor | precios_hipercor | 0 | 0 | ❌ API pública disponible |
