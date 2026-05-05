@@ -1,19 +1,25 @@
 """
-match_dia.py  —  Mi Mejor Cesta
-=================================
-Vincula productos_catalogo (CAT-xxxx) con precios_dia (DI-xxxx)
-usando similitud de nombres (rapidfuzz).
+match_dia.py  —  Mi Mejor Cesta (v4)
+=====================================
+Vincula productos_catalogo con precios_dia.
 
-Resultado: rellena productos_match.id_dia
+Algoritmo idéntico a match_alcampo.py v4:
+- Pre-normaliza todos los nombres en un índice
+- Usa process.extract (rapidfuzz ~100x más rápido que bucle manual)
+- Matching 1-a-1 greedy por score descendente
+- Filtro variantes: zero/sin alcohol/0,0/light/desnatado
+- Filtro pares incompatibles: jamon/lomo, carne/atun, ajo/clavo...
+- Requisito palabra clave: al menos una >4 letras en común
 
 Uso:
-  cd scrapers
-  python match_dia.py
+  python scrapers/match_dia.py --dry-run
+  python scrapers/match_dia.py
+  python scrapers/match_dia.py --umbral 83
 """
 
-import os, sys, json, urllib.request
+import os, re, csv, argparse, unicodedata
 from pathlib import Path
-from rapidfuzz import process, fuzz
+from datetime import datetime
 
 try:
     from dotenv import load_dotenv
@@ -21,123 +27,296 @@ try:
 except ImportError:
     pass
 
+from rapidfuzz import fuzz, process
+from supabase import create_client
+
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://scpuriaofisssalsbzqv.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
-SCORE_MIN    = 85
 
 if not SUPABASE_KEY:
-    print("❌ SUPABASE_KEY no encontrada en .env")
-    sys.exit(1)
+    print("ERROR: SUPABASE_KEY no encontrada en .env")
+    exit(1)
 
-HEADERS = {
-    "apikey":        SUPABASE_KEY,
-    "Authorization": f"Bearer {SUPABASE_KEY}",
-    "Content-Type":  "application/json",
-    "Prefer":        "return=minimal",
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+UMBRAL_AUTO   = 83
+UMBRAL_DUDOSO = 60
+
+MARCAS_DIA = {'dia', 'alipende', 'delicious', 'vegecampo', 'bocabit', 'bonpreu'}
+
+# ── Filtro 1: Variantes ───────────────────────────────────────────────────────
+
+def marcadores_variante(nombre):
+    t = nombre.lower()
+    tags = set()
+    if re.search(r'\b0[,.]0\b|\b00\b', t) or 'sin alcohol' in t:
+        tags.add('sin_alcohol')
+    if re.search(r'\bzero\b', t):
+        tags.add('zero')
+    if 'light' in t:
+        tags.add('light')
+    if re.search(r'\bdesnatad', t):
+        tags.add('desnatado')
+    if re.search(r'\bsemidesnatad', t):
+        tags.add('semidesnatado')
+    if 'sin lactosa' in t:
+        tags.add('sin_lactosa')
+    return tags
+
+
+def variantes_incompatibles(nombre_dia, nombre_cat):
+    tags_dia = marcadores_variante(nombre_dia)
+    tags_cat = marcadores_variante(nombre_cat)
+    if not tags_dia and not tags_cat:
+        return False
+    if bool(tags_dia) != bool(tags_cat):
+        return True
+    return tags_dia != tags_cat
+
+
+# ── Filtro 2: Pares incompatibles ─────────────────────────────────────────────
+
+PARES_INCOMPATIBLES = {
+    frozenset({'jamon',   'lomo'}),
+    frozenset({'jamon',   'chorizo'}),
+    frozenset({'jamon',   'panceta'}),
+    frozenset({'jamon',   'salchichon'}),
+    frozenset({'jamon',   'morcilla'}),
+    frozenset({'lomo',    'chorizo'}),
+    frozenset({'lomo',    'panceta'}),
+    frozenset({'chorizo', 'salchichon'}),
+    frozenset({'carne',   'atun'}),
+    frozenset({'carne',   'bonito'}),
+    frozenset({'carne',   'salmon'}),
+    frozenset({'carne',   'bacalao'}),
+    frozenset({'pollo',   'salmon'}),
+    frozenset({'pollo',   'atun'}),
+    frozenset({'pollo',   'ternera'}),
+    frozenset({'ternera', 'cerdo'}),
+    frozenset({'ricota',  'carne'}),
+    frozenset({'ajo',     'clavo'}),
+    frozenset({'ajo',     'canela'}),
+    frozenset({'ajo',     'comino'}),
+    frozenset({'naranja', 'limon'}),
+    frozenset({'naranja', 'manzana'}),
+    frozenset({'manzana', 'pera'}),
+    frozenset({'salmon',  'merluza'}),
+    frozenset({'salmon',  'bacalao'}),
+    frozenset({'atun',    'sardina'}),
+    frozenset({'atun',    'anchoa'}),
+    frozenset({'atun',    'mejillon'}),
 }
 
-def fetch_all(tabla, columnas):
+
+def tiene_par_incompatible(norm_dia, norm_cat):
+    palabras_dia = set(norm_dia.split())
+    palabras_cat = set(norm_cat.split())
+    for par in PARES_INCOMPATIBLES:
+        p1, p2 = tuple(par)
+        if (p1 in palabras_dia and p2 in palabras_cat) or \
+           (p2 in palabras_dia and p1 in palabras_cat):
+            return True
+    return False
+
+
+# ── Normalización ─────────────────────────────────────────────────────────────
+
+def normalizar(texto, es_dia=False):
+    if not texto:
+        return ""
+    t = texto.lower().strip()
+    t = unicodedata.normalize("NFD", t)
+    t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    t = re.sub(r'\d+[\.,]?\d*\s*(g|kg|ml|l|cl|ud|uds|unidades?)', '', t)
+    t = re.sub(r'\d+\s*x\s*\d+', '', t)
+    t = re.sub(r'\b\d+\b', '', t)
+    if es_dia:
+        for marca in MARCAS_DIA:
+            t = re.sub(rf'\b{marca}\b', '', t)
+    t = re.sub(r'[^a-z\s]', ' ', t)
+    t = re.sub(r'\s+', ' ', t).strip()
+    return t
+
+
+# ── Supabase ──────────────────────────────────────────────────────────────────
+
+def fetch_all(tabla, columnas="*"):
     rows, offset = [], 0
     while True:
-        url = f"{SUPABASE_URL}/rest/v1/{tabla}?select={columnas}&offset={offset}&limit=1000"
-        req = urllib.request.Request(url, headers=HEADERS)
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            lote = json.loads(resp.read())
-            rows.extend(lote)
-            if len(lote) < 1000:
-                break
-            offset += 1000
-    print(f"  {tabla}: {len(rows)} filas")
+        res = supabase.table(tabla).select(columnas).range(offset, offset + 999).execute()
+        rows.extend(res.data)
+        if len(res.data) < 1000:
+            break
+        offset += 1000
     return rows
 
-def hacer_matching(catalogo, dia):
-    """
-    WRatio detecta si el nombre corto (catálogo) aparece dentro
-    del nombre largo (DIA añade marca + volumen al final).
-    Ej: 'Mayonesa Hellmanns' ↔ 'Mayonesa Hellmanns 430ml'
-    """
-    dia_index = {p["nombre_comercial"].lower(): p["id"] for p in dia}
-    dia_lista = list(dia_index.keys())
-    matches, sin_match = [], 0
 
-    for prod in catalogo:
-        resultado = process.extractOne(
-            prod["nombre_generico"].lower(),
-            dia_lista,
-            scorer=fuzz.WRatio,
-            score_cutoff=SCORE_MIN
-        )
-        if resultado:
-            dia_nombre, score, _ = resultado
-            matches.append({
-                "cat_id":     prod["id"],
-                "dia_id":     dia_index[dia_nombre],
-                "score":      score,
-                "cat_nombre": prod["nombre_generico"],
-                "dia_nombre": dia_nombre,
+# ── Main ──────────────────────────────────────────────────────────────────────
+
+def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
+    print("=" * 60)
+    print("  MATCHING DIA v4 -- Mi Mejor Cesta")
+    print(f"  Umbral auto: {umbral_auto}%  |  Dudosos: {UMBRAL_DUDOSO}%")
+    print(f"  Modo: {'DRY-RUN' if dry_run else 'PRODUCCION'}")
+    print("=" * 60)
+
+    print("\nCargando datos...")
+    dia      = fetch_all("precios_dia", "id, nombre_comercial, marca")
+    print(f"  DIA:      {len(dia)} productos")
+    catalogo = fetch_all("productos_catalogo", "id, nombre_generico, tipo")
+    print(f"  Catalogo: {len(catalogo)} productos")
+    matches_ex = fetch_all("productos_match", "id_catalogo, id_dia")
+    ya_dia = {m['id_dia']      for m in matches_ex if m.get('id_dia')}
+    ya_cat = {m['id_catalogo'] for m in matches_ex if m.get('id_dia')}
+    print(f"  Matches DIA existentes: {len(ya_dia)}")
+
+    print("\nPreparando índice...")
+    idx = []
+    for c in catalogo:
+        norm = normalizar(c['nombre_generico'])
+        if norm:
+            idx.append({
+                'id':     c['id'],
+                'nombre': c['nombre_generico'],
+                'norm':   norm,
+                'tipo':   c.get('tipo') or '',
             })
-        else:
-            sin_match += 1
+    nombres_norm = [c['norm'] for c in idx]
+    print(f"  {len(nombres_norm)} entradas en índice")
 
-    return matches, sin_match
+    pendientes = [p for p in dia if p['id'] not in ya_dia]
+    print(f"\n{len(pendientes)} productos DIA a procesar...")
 
-def subir_matches(matches):
-    ok = err = 0
-    for i, m in enumerate(matches):
-        url = f"{SUPABASE_URL}/rest/v1/productos_match?id_catalogo=eq.{m['cat_id']}"
-        req = urllib.request.Request(
-            url,
-            data=json.dumps({"id_dia": m["dia_id"]}).encode(),
-            headers=HEADERS, method="PATCH"
+    todos = []
+    filtrados_variante = 0
+    filtrados_tipo     = 0
+
+    for i, prod in enumerate(pendientes):
+        nombre_dia = prod.get('nombre_comercial', '') or ''
+        es_marca_blanca = any(m in nombre_dia.lower() for m in MARCAS_DIA)
+        norm_dia = normalizar(nombre_dia, es_dia=True)
+        if not norm_dia or len(norm_dia) < 3:
+            continue
+
+        kw_dia = {w for w in norm_dia.split() if len(w) > 4}
+
+        resultados = process.extract(
+            norm_dia,
+            nombres_norm,
+            scorer=fuzz.token_sort_ratio,
+            limit=10,
+            score_cutoff=UMBRAL_DUDOSO,
         )
-        try:
-            with urllib.request.urlopen(req, timeout=15): ok += 1
-        except: err += 1
+
+        for _, score_int, idx_cat in resultados:
+            cat = idx[idx_cat]
+            if es_marca_blanca and cat['tipo'] == 'marca_fabricante':
+                continue
+            if variantes_incompatibles(nombre_dia, cat['nombre']):
+                filtrados_variante += 1
+                continue
+            if tiene_par_incompatible(norm_dia, cat['norm']):
+                filtrados_tipo += 1
+                continue
+            kw_cat = {w for w in cat['norm'].split() if len(w) > 4}
+            if kw_dia and kw_cat and not (kw_dia & kw_cat):
+                continue
+            todos.append((score_int, prod['id'], cat['id'], nombre_dia, cat['nombre']))
+
         if (i + 1) % 500 == 0:
-            print(f"  {i+1}/{len(matches)} procesados...")
-    return ok, err
+            print(f"  {i+1}/{len(pendientes)} procesados...")
 
-def main():
-    print("=" * 55)
-    print("  🔗 MATCH DIA — Mi Mejor Cesta")
-    print("=" * 55)
+    print(f"  {len(todos)} pares candidatos")
+    print(f"  (filtrados: {filtrados_variante} por variante, {filtrados_tipo} por tipo)")
 
-    print("\n📥 Descargando tablas...")
-    catalogo = fetch_all("productos_catalogo", "id,nombre_generico")
-    dia      = fetch_all("precios_dia",        "id,nombre_comercial")
+    todos.sort(key=lambda x: -x[0])
+    usados_dia = set(ya_dia)
+    usados_cat = set(ya_cat)
+    automaticos, dudosos_list = [], []
 
-    print(f"\n🔍 Matching (umbral: {SCORE_MIN})...")
-    matches, sin_match = hacer_matching(catalogo, dia)
-    print(f"  ✅ Matches encontrados: {len(matches)}")
-    print(f"  ❌ Sin match:           {sin_match}")
+    for score_int, id_dia, id_cat, nombre_dia, nombre_cat in todos:
+        if id_dia in usados_dia or id_cat in usados_cat:
+            continue
+        entry = {
+            'id_dia':      id_dia,
+            'id_catalogo': id_cat,
+            'score':       score_int,
+            'nombre_dia':  nombre_dia,
+            'nombre_cat':  nombre_cat,
+        }
+        if score_int >= umbral_auto:
+            automaticos.append(entry)
+        else:
+            dudosos_list.append(entry)
+        usados_dia.add(id_dia)
+        usados_cat.add(id_cat)
 
-    if not matches:
-        print("\nNada que subir."); return
+    sin_match = len(pendientes) - len(automaticos) - len(dudosos_list)
 
-    print("\n📋 Top 20 mejores matches:")
-    for m in sorted(matches, key=lambda x: x["score"], reverse=True)[:20]:
-        print(f"  [{m['score']:5.1f}] {m['cat_id']} | {m['cat_nombre'][:40]:<40} → {m['dia_nombre'][:40]}")
+    print(f"\n{'='*60}")
+    print(f"  Automáticos (>={umbral_auto}%): {len(automaticos)}")
+    print(f"  Dudosos ({UMBRAL_DUDOSO}-{umbral_auto-1}%):    {len(dudosos_list)}")
+    print(f"  Sin match (<{UMBRAL_DUDOSO}%):      {sin_match}")
+    print(f"  Total procesados:        {len(pendientes)}")
 
-    bajos = [m for m in matches if m["score"] < 80]
-    if bajos:
-        print(f"\n⚠️  20 matches con score más bajo ({SCORE_MIN}-80):")
-        for m in sorted(bajos, key=lambda x: x["score"])[:20]:
-            print(f"  [{m['score']:5.1f}] {m['cat_id']} | {m['cat_nombre'][:40]:<40} → {m['dia_nombre'][:40]}")
+    print("\nMuestra automáticos (primeros 20):")
+    for m in sorted(automaticos, key=lambda x: -x['score'])[:20]:
+        print(f"  [{int(m['score']):3d}%] {m['nombre_dia'][:45]:<45} -> {m['nombre_cat'][:35]}")
 
-    print(f"\n¿Subir {len(matches)} matches a productos_match.id_dia? (s/n): ", end="")
-    if input().strip().lower() != "s":
-        print("Cancelado."); return
+    if dudosos_list:
+        print(f"\nMuestra dudosos (primeros 5):")
+        for m in sorted(dudosos_list, key=lambda x: -x['score'])[:5]:
+            print(f"  [{int(m['score']):3d}%] {m['nombre_dia'][:45]:<45} -> {m['nombre_cat'][:35]}")
 
-    print(f"\n📤 Subiendo matches...")
-    ok, err = subir_matches(matches)
-    print(f"  ✅ OK: {ok} | ❌ Errores: {err}")
+    if dry_run:
+        print("\n[dry-run] No se guarda nada.")
+        return
 
-    print("\n📊 Verificación final:")
-    rows = fetch_all("productos_match", "id_catalogo,id_dia")
-    con  = sum(1 for r in rows if r.get("id_dia"))
-    print(f"  Con DIA: {con} ({con/len(rows)*100:.1f}%)")
-    print(f"  Sin DIA: {len(rows)-con}")
-    print("\n✅ Completado.")
+    csv_path = None
+    if dudosos_list:
+        fecha = datetime.now().strftime('%Y%m%d_%H%M')
+        csv_path = f"dia_dudosos_{fecha}.csv"
+        with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+            campos = ['score', 'id_dia', 'nombre_dia', 'id_catalogo', 'nombre_cat']
+            w = csv.DictWriter(f, fieldnames=campos)
+            w.writeheader()
+            for d in sorted(dudosos_list, key=lambda x: -x['score']):
+                w.writerow({k: d[k] for k in campos})
+        print(f"\nDudosos -> {csv_path} ({len(dudosos_list)} filas)")
+
+    if not automaticos:
+        print("\nNo hay matches automáticos.")
+        return
+
+    print(f"\nAplicar {len(automaticos)} matches automáticos (>={umbral_auto}%)? (s/n): ", end="")
+    if input().strip().lower() != 's':
+        print("Cancelado.")
+        return
+
+    print("\nAplicando matches...")
+    ok = err = 0
+    for m in automaticos:
+        try:
+            supabase.table("productos_match").update(
+                {"id_dia": m['id_dia']}
+            ).eq("id_catalogo", m['id_catalogo']).execute()
+            ok += 1
+        except Exception as e:
+            err += 1
+            if err <= 3:
+                print(f"  Error: {e}")
+        if ok % 100 == 0 and ok > 0:
+            print(f"  {ok}/{len(automaticos)} aplicados...")
+
+    print(f"\nAplicados: {ok} | Errores: {err}")
+    if csv_path:
+        print(f"Dudosos: {csv_path}")
+    print("Matching completado.")
+
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--umbral", type=int, default=UMBRAL_AUTO)
+    args = ap.parse_args()
+    main(dry_run=args.dry_run, umbral_auto=args.umbral)
