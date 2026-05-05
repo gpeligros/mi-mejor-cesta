@@ -1,349 +1,326 @@
 """
-match_carrefour.py  —  Mi Mejor Cesta
-=================================
-Vincula productos_catalogo (CAT-xxxx) con precios_carrefour (CF-xxxx)
-usando similitud de nombres con normalización agresiva (rapidfuzz).
+match_carrefour.py  —  Mi Mejor Cesta (v5)
+==========================================
+Vincula productos_catalogo con precios_carrefour.
 
-Mejoras v3:
-- Matching 1-a-1: cada producto Carrefour solo puede asignarse una vez
-- Normalización agresiva: elimina marca, gramaje, descriptores
-- Requiere coincidencia de al menos una palabra clave (>4 letras)
-- Penalización por palabras ambiguas sin contexto adicional
-- Score mínimo 85 para evitar falsos positivos
+Algoritmo idéntico a match_alcampo.py v4 / match_dia.py v4:
+- process.extract con token_sort_ratio ÚNICAMENTE (sin partial_ratio ni token_set_ratio)
+- Filtro variantes: zero/sin alcohol/0,0/light/desnatado
+- Filtro pares incompatibles: jamon/lomo, carne/atun, ajo/clavo...
+- Requisito palabra clave: al menos una >4 letras en común
+- 1-a-1 greedy por score descendente
 
-FIX v4:
-- Reemplaza .upsert() defectuoso con urllib.request PATCH (como match_mercadona.py)
+v5 sobre v4:
+- Elimina partial_ratio y token_set_ratio (causaban matches falsos)
+- Elimina penalización por longitud relativa (incompatible con process.extract)
+- Normalización simplificada: solo elimina marcas Carrefour propias, no terceros
 
 Uso:
-  python match_carrefour.py --dry-run   # ver matches sin guardar
-  python match_carrefour.py             # guardar matches en Supabase
+  python scrapers/match_carrefour.py --dry-run
+  python scrapers/match_carrefour.py
+  python scrapers/match_carrefour.py --umbral 83
 """
 
-import argparse
-import csv
-import json
-import logging
-import os
-import re
-import unicodedata
-import urllib.request
-from dotenv import load_dotenv
-from rapidfuzz import fuzz
+import os, re, csv, argparse, unicodedata
+from pathlib import Path
+from datetime import datetime
 
-load_dotenv()
-logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(message)s", datefmt="%H:%M:%S")
-log = logging.getLogger("matching")
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[1] / '.env')
+except ImportError:
+    pass
 
-SUPABASE_URL = os.getenv("SUPABASE_URL", "")
+from rapidfuzz import fuzz, process
+from supabase import create_client
+
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://scpuriaofisssalsbzqv.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
 
-SCORE_MIN  = 85   # umbral mínimo
-SCORE_AUTO = 90   # match seguro
-BATCH_SIZE = 50
+if not SUPABASE_KEY:
+    print("ERROR: SUPABASE_KEY no encontrada en .env")
+    exit(1)
 
-HEADERS = {
-    "apikey": SUPABASE_KEY,
-    "Authorization": f"Bearer {SUPABASE_KEY}",
-    "Content-Type": "application/json",
-    "Prefer": "return=minimal",
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+UMBRAL_AUTO   = 83
+UMBRAL_DUDOSO = 60
+
+MARCAS_CARREFOUR = {'carrefour', 'carrefour bio', 'reflets de france', 'tex', 'simpl', 'mmm'}
+
+# ── Filtro 1: Variantes ───────────────────────────────────────────────────────
+
+def marcadores_variante(nombre):
+    t = nombre.lower()
+    tags = set()
+    if re.search(r'\b0[,.]0\b|\b00\b', t) or 'sin alcohol' in t:
+        tags.add('sin_alcohol')
+    if re.search(r'\bzero\b', t):
+        tags.add('zero')
+    if 'light' in t:
+        tags.add('light')
+    if re.search(r'\bdesnatad', t):
+        tags.add('desnatado')
+    if re.search(r'\bsemidesnatad', t):
+        tags.add('semidesnatado')
+    if 'sin lactosa' in t:
+        tags.add('sin_lactosa')
+    return tags
+
+
+def variantes_incompatibles(nombre_cr, nombre_cat):
+    tags_cr  = marcadores_variante(nombre_cr)
+    tags_cat = marcadores_variante(nombre_cat)
+    if not tags_cr and not tags_cat:
+        return False
+    if bool(tags_cr) != bool(tags_cat):
+        return True
+    return tags_cr != tags_cat
+
+
+# ── Filtro 2: Pares incompatibles ─────────────────────────────────────────────
+
+PARES_INCOMPATIBLES = {
+    frozenset({'jamon',   'lomo'}),
+    frozenset({'jamon',   'chorizo'}),
+    frozenset({'jamon',   'panceta'}),
+    frozenset({'jamon',   'salchichon'}),
+    frozenset({'jamon',   'morcilla'}),
+    frozenset({'lomo',    'chorizo'}),
+    frozenset({'lomo',    'panceta'}),
+    frozenset({'chorizo', 'salchichon'}),
+    frozenset({'carne',   'atun'}),
+    frozenset({'carne',   'bonito'}),
+    frozenset({'carne',   'salmon'}),
+    frozenset({'carne',   'bacalao'}),
+    frozenset({'pollo',   'salmon'}),
+    frozenset({'pollo',   'atun'}),
+    frozenset({'pollo',   'ternera'}),
+    frozenset({'ternera', 'cerdo'}),
+    frozenset({'ricota',  'carne'}),
+    frozenset({'ajo',     'clavo'}),
+    frozenset({'ajo',     'canela'}),
+    frozenset({'ajo',     'comino'}),
+    frozenset({'naranja', 'limon'}),
+    frozenset({'naranja', 'manzana'}),
+    frozenset({'manzana', 'pera'}),
+    frozenset({'salmon',  'merluza'}),
+    frozenset({'salmon',  'bacalao'}),
+    frozenset({'atun',    'sardina'}),
+    frozenset({'atun',    'anchoa'}),
+    frozenset({'atun',    'mejillon'}),
 }
 
-PALABRAS_ELIMINAR = {
-    "producto", "carrefour", "seleccion", "selección", "especial",
-    "clasico", "clásico", "premium", "original", "nuevo", "nueva",
-    "pack", "formato", "familiar", "ahorro", "oferta",
-    "uds", "unidades", "unidad", "bolsa", "bote", "tarro", "lata",
-    "caja", "sobre", "botella", "frasco", "tubo", "brik", "brick",
-    "envase", "bandeja", "paquete", "sachet", "dosis",
-    "con", "sin", "para", "del", "los", "las", "una", "unos",
-    "este", "esta", "tipo", "sabor", "estilo",
-}
 
-MARCAS_CONOCIDAS = {
-    "pompadour", "nestle", "nestlé", "danone", "activia", "actimel",
-    "pascual", "puleva", "president", "président", "flora", "tulipan",
-    "nutella", "nocilla", "cola cao", "nescafe", "lavazza",
-    "bimbo", "buitoni", "barilla", "gallo", "hero", "knorr", "maggi",
-    "heinz", "hellmanns", "calvé", "calve", "carbonell", "borges",
-    "coca cola", "pepsi", "fanta", "sprite", "aquarius", "powerade",
-    "font vella", "fontvella", "bezoya", "lanjaron", "evian",
-    "mahou", "estrella", "cruzcampo", "moritz",
-    "pringles", "lays", "doritos", "cheetos",
-    "chips ahoy", "oreo", "principe", "fontaneda", "cuetara", "gullon",
-    "colgate", "oral-b", "sensodyne", "listerine",
-    "pantene", "garnier", "loreal", "nivea", "dove", "rexona", "sanex",
-    "dodot", "pampers", "huggies",
-    "ariel", "persil", "skip", "wipp", "fairy", "vim", "ajax", "domestos",
-    "scottex", "kleenex", "renova",
-    "almiron", "almirón", "nutriben",
-    "grefusa", "chovi", "solis",
-    "dani", "calvo", "isabel", "ortiz",
-    "campofrio", "oscar mayer", "argal", "navidul",
-    "palacios", "tarradellas", "findus", "pescanova",
-    "waterwipes", "kandoo", "johnson", "nenuco", "denenes", "mustela",
-    "hansaplast", "compeed", "santiveri", "bicentury",
-    "mimosin", "lenor", "comfort", "lindt", "marbu", "fortaleza",
-}
-
-# Palabras ambiguas: si solo coincide esta palabra, no es match suficiente
-AMBIGUAS = {
-    "lomo", "filete", "agua", "leche", "yogur", "queso", "pan",
-    "aceite", "zumo", "cerveza", "vino", "cafe", "chocolate",
-    "galleta", "cereal", "pasta", "arroz", "atun", "salmon",
-}
+def tiene_par_incompatible(norm_cr, norm_cat):
+    palabras_cr  = set(norm_cr.split())
+    palabras_cat = set(norm_cat.split())
+    for par in PARES_INCOMPATIBLES:
+        p1, p2 = tuple(par)
+        if (p1 in palabras_cr and p2 in palabras_cat) or \
+           (p2 in palabras_cr and p1 in palabras_cat):
+            return True
+    return False
 
 
-def quitar_acentos(texto: str) -> str:
-    t = unicodedata.normalize("NFD", texto)
-    return "".join(c for c in t if unicodedata.category(c) != "Mn")
+# ── Normalización ─────────────────────────────────────────────────────────────
 
-
-def normalizar(texto: str, es_carrefour: bool = False, marca: str = "") -> str:
+def normalizar(texto, es_carrefour=False):
     if not texto:
         return ""
-    t = texto.lower()
-    t = quitar_acentos(t)
-
+    t = texto.lower().strip()
+    t = unicodedata.normalize("NFD", t)
+    t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    t = re.sub(r'\d+[\.,]?\d*\s*(g|kg|ml|l|cl|ud|uds|unidades?)', '', t)
+    t = re.sub(r'\d+\s*x\s*\d+', '', t)
+    t = re.sub(r'\b\d+\b', '', t)
     if es_carrefour:
-        if marca:
-            marca_norm = quitar_acentos(marca.lower())
-            if t.startswith(marca_norm):
-                t = t[len(marca_norm):].strip()
-            t = t.replace(marca_norm, " ")
-        for m in MARCAS_CONOCIDAS:
-            t = re.sub(r'\b' + re.escape(m) + r'\b', ' ', t)
-
-    # Eliminar gramajes
-    t = re.sub(r"\b\d+\s*[xX×]\s*\d+[\.,]?\d*\s*(g|kg|ml|l|cl|ud|uds|unidades?)\b", "", t)
-    t = re.sub(r"\b\d+[\.,]?\d*\s*(g|kg|ml|l|cl|ud|uds|unidades?)\b", "", t)
-    t = re.sub(r"\b\d+\s*[xX×]\s*\d+\b", "", t)
-    t = re.sub(r"\b\d+\b", "", t)
-
-    palabras = t.split()
-    palabras = [p for p in palabras if p not in PALABRAS_ELIMINAR and len(p) > 2]
-    t = " ".join(palabras)
-    t = re.sub(r"[^a-z\s]", " ", t)
-    t = re.sub(r"\s+", " ", t).strip()
+        for marca in MARCAS_CARREFOUR:
+            t = re.sub(rf'\b{re.escape(marca)}\b', '', t)
+    t = re.sub(r'[^a-z\s]', ' ', t)
+    t = re.sub(r'\s+', ' ', t).strip()
     return t
 
 
-def calcular_score(nombre_cat: str, nombre_cf: str, marca_cf: str = "") -> float:
-    norm_cat = normalizar(nombre_cat)
-    norm_cf  = normalizar(nombre_cf, es_carrefour=True, marca=marca_cf)
+# ── Supabase ──────────────────────────────────────────────────────────────────
 
-    if not norm_cat or not norm_cf:
-        return 0.0
-
-    palabras_cat = set(w for w in norm_cat.split() if len(w) > 4)
-    palabras_cf  = set(w for w in norm_cf.split()  if len(w) > 4)
-
-    # REQUISITO: al menos una palabra clave debe coincidir
-    if palabras_cat and palabras_cf:
-        if not (palabras_cat & palabras_cf):
-            return 0.0
-
-    # PENALIZACIÓN: palabras ambiguas sin contexto adicional
-    palabras_cat_todas = set(norm_cat.split())
-    palabras_cf_todas  = set(norm_cf.split())
-    ambiguas_cat = palabras_cat_todas & AMBIGUAS
-    if ambiguas_cat:
-        no_ambiguas_cat = {p for p in palabras_cat_todas if p not in AMBIGUAS and len(p) > 3}
-        no_ambiguas_cf  = {p for p in palabras_cf_todas  if p not in AMBIGUAS and len(p) > 3}
-        if no_ambiguas_cat and not (no_ambiguas_cat & no_ambiguas_cf):
-            return 0.0
-
-    # PENALIZACIÓN: diferencia de longitud >2.5x evita falsos positivos por subconjunto
-    # (token_set_ratio da 1.0 cuando una string corta es subconjunto de la larga)
-    n_cat = len(norm_cat.split())
-    n_cf  = len(norm_cf.split())
-    if min(n_cat, n_cf) / max(n_cat, n_cf) < 0.45:
-        return 0.0
-
-    score_set  = fuzz.token_set_ratio(norm_cat, norm_cf) / 100
-    score_sort = fuzz.token_sort_ratio(norm_cat, norm_cf) / 100
-    score_part = fuzz.partial_ratio(norm_cat, norm_cf) / 100
-
-    return round(max(score_set, score_sort, score_part), 3)
-
-
-def fetch_all(tabla, columnas):
-    """Fetch all rows from Supabase using urllib (like match_mercadona.py)"""
+def fetch_all(tabla, columnas="*"):
     rows, offset = [], 0
     while True:
-        url = f"{SUPABASE_URL}/rest/v1/{tabla}?select={columnas}&offset={offset}&limit=1000"
-        req = urllib.request.Request(url, headers=HEADERS)
-        try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                lote = json.loads(resp.read())
-                rows.extend(lote)
-                if len(lote) < 1000:
-                    break
-                offset += 1000
-        except Exception as e:
-            log.error(f"Error fetching {tabla}: {e}")
+        res = supabase.table(tabla).select(columnas).range(offset, offset + 999).execute()
+        rows.extend(res.data)
+        if len(res.data) < 1000:
             break
+        offset += 1000
     return rows
 
 
-def cargar_datos():
-    log.info("Cargando catálogo...")
-    catalogo = fetch_all("vista_productos", "id,nombre_generico,categoria,subcategoria")
-    log.info(f"  {len(catalogo)} productos en catálogo")
+# ── Main ──────────────────────────────────────────────────────────────────────
 
-    log.info("Cargando precios_carrefour...")
-    carrefour = fetch_all("precios_carrefour", "id,nombre_comercial,marca")
-    log.info(f"  {len(carrefour)} productos en precios_carrefour")
+def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
+    print("=" * 60)
+    print("  MATCHING CARREFOUR v5 -- Mi Mejor Cesta")
+    print(f"  Umbral auto: {umbral_auto}%  |  Dudosos: {UMBRAL_DUDOSO}%")
+    print(f"  Modo: {'DRY-RUN' if dry_run else 'PRODUCCION'}")
+    print("=" * 60)
 
-    log.info("Cargando matches existentes...")
-    matches = fetch_all("productos_match", "id_catalogo,id_carrefour")
-    ya_matched_cat = {m["id_catalogo"] for m in matches if m.get("id_carrefour")}
-    ya_matched_cf  = {m["id_carrefour"]  for m in matches if m.get("id_carrefour")}
-    log.info(f"  {len(ya_matched_cat)} productos ya tienen match con Carrefour")
+    print("\nCargando datos...")
+    carrefour = fetch_all("precios_carrefour", "id, nombre_comercial, marca")
+    print(f"  Carrefour: {len(carrefour)} productos")
+    catalogo  = fetch_all("productos_catalogo", "id, nombre_generico, tipo")
+    print(f"  Catalogo:  {len(catalogo)} productos")
+    matches_ex = fetch_all("productos_match", "id_catalogo, id_carrefour")
+    ya_cr  = {m['id_carrefour']  for m in matches_ex if m.get('id_carrefour')}
+    ya_cat = {m['id_catalogo']   for m in matches_ex if m.get('id_carrefour')}
+    print(f"  Matches Carrefour existentes: {len(ya_cr)}")
 
-    return catalogo, carrefour, ya_matched_cat, ya_matched_cf
-
-
-def hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf):
-    """Matching 1-a-1: primero todos los scores, luego asigna sin duplicados."""
-    pendientes    = [p for p in catalogo  if str(p["id"]) not in ya_matched_cat]
-    cf_disponible = [a for a in carrefour if a["id"]      not in ya_matched_cf]
-
-    log.info(f"\nCalculando scores: {len(pendientes)} catálogo vs {len(cf_disponible)} Carrefour...")
-
-    todos_scores = []
-    for i, prod in enumerate(pendientes, 1):
-        nombre_cat = prod.get("nombre_generico", "") or ""
-        for cf in cf_disponible:
-            s = calcular_score(nombre_cat, cf.get("nombre_comercial", ""), cf.get("marca", ""))
-            if s >= SCORE_MIN / 100:
-                todos_scores.append({
-                    "id_catalogo":      str(prod["id"]),
-                    "id_carrefour":     cf["id"],
-                    "score":            s,
-                    "nombre_catalogo":  nombre_cat,
-                    "nombre_carrefour": cf.get("nombre_comercial", ""),
-                    "marca_carrefour":  cf.get("marca", ""),
-                })
-        if i % 200 == 0:
-            log.info(f"  {i}/{len(pendientes)} procesados...")
-
-    log.info(f"  {len(todos_scores)} pares candidatos")
-
-    # Ordenar por score y asignar 1-a-1
-    todos_scores.sort(key=lambda x: -x["score"])
-    usados_cat, usados_cf = set(), set()
-    resultados = []
-
-    for par in todos_scores:
-        if par["id_catalogo"] in usados_cat or par["id_carrefour"] in usados_cf:
-            continue
-        resultados.append({**par, "auto": par["score"] >= SCORE_AUTO / 100})
-        usados_cat.add(par["id_catalogo"])
-        usados_cf.add(par["id_carrefour"])
-
-    auto      = sum(1 for r in resultados if r["auto"])
-    revisar   = len(resultados) - auto
-    sin_match = len(pendientes) - len(resultados)
-
-    log.info(f"\n✅ CF- Matches únicos: {len(resultados)}")
-    log.info(f"  Auto (≥{SCORE_AUTO}):              {auto}")
-    log.info(f"  Dudosos ({SCORE_MIN}-{SCORE_AUTO}): {revisar}")
-    log.info(f"  Sin match:                         {sin_match}")
-
-    return resultados, pendientes
-
-
-def guardar_matches(resultados, solo_auto=False):
-    """Guardar matches usando urllib.request PATCH (FIX v4)"""
-    a_guardar = [r for r in resultados if not solo_auto or r["auto"]]
-    log.info(f"\nGuardando {len(a_guardar)} matches...")
-    
-    guardados = 0
-    for i, r in enumerate(a_guardar, 1):
-        url = f"{SUPABASE_URL}/rest/v1/productos_match?id_catalogo=eq.{r['id_catalogo']}"
-        data = json.dumps({
-            "id_carrefour": r["id_carrefour"],
-            "id_carrefour_score": r["score"]
-        }).encode()
-        req = urllib.request.Request(url, data=data, headers=HEADERS, method="PATCH")
-        
-        try:
-            with urllib.request.urlopen(req, timeout=15):
-                guardados += 1
-        except Exception as e:
-            log.error(f"Error guardando {r['id_catalogo']}: {e}")
-        
-        if i % 500 == 0:
-            log.info(f"  {i}/{len(a_guardar)} procesados...")
-    
-    log.info(f"✅ {guardados} matches guardados")
-    return guardados
-
-
-def exportar_dudosos_csv(resultados):
-    dudosos = [r for r in resultados if not r["auto"]]
-    if not dudosos:
-        return
-    path = "carrefour_dudosos.csv"
-    with open(path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=[
-            "score", "id_catalogo", "nombre_catalogo",
-            "id_carrefour", "nombre_carrefour", "marca_carrefour"
-        ])
-        writer.writeheader()
-        for r in sorted(dudosos, key=lambda x: -x["score"]):
-            writer.writerow({
-                "score":            r["score"],
-                "id_catalogo":      r["id_catalogo"],
-                "nombre_catalogo":  r["nombre_catalogo"],
-                "id_carrefour":     r["id_carrefour"],
-                "nombre_carrefour": r["nombre_carrefour"],
-                "marca_carrefour":  r["marca_carrefour"],
+    print("\nPreparando índice...")
+    idx = []
+    for c in catalogo:
+        norm = normalizar(c['nombre_generico'])
+        if norm:
+            idx.append({
+                'id':     c['id'],
+                'nombre': c['nombre_generico'],
+                'norm':   norm,
+                'tipo':   c.get('tipo') or '',
             })
-    log.info(f"📄 Dudosos exportados → {path} ({len(dudosos)} filas)")
+    nombres_norm = [c['norm'] for c in idx]
+    print(f"  {len(nombres_norm)} entradas en índice")
 
+    pendientes = [p for p in carrefour if p['id'] not in ya_cr]
+    print(f"\n{len(pendientes)} productos Carrefour a procesar...")
 
-def main(dry_run=False):
-    log.info("━" * 55)
-    log.info("  MATCHING CARREFOUR v4 (FIX) → productos_match")
-    log.info("━" * 55)
+    todos = []
+    filtrados_variante = 0
+    filtrados_tipo     = 0
 
-    catalogo, carrefour, ya_matched_cat, ya_matched_cf = cargar_datos()
-    resultados, pendientes = hacer_matching(catalogo, carrefour, ya_matched_cat, ya_matched_cf)
+    for i, prod in enumerate(pendientes):
+        nombre_cr = prod.get('nombre_comercial', '') or ''
+        es_marca_blanca = any(m in nombre_cr.lower() for m in MARCAS_CARREFOUR)
+        norm_cr = normalizar(nombre_cr, es_carrefour=True)
+        if not norm_cr or len(norm_cr) < 3:
+            continue
 
-    auto_res   = [r for r in resultados if r["auto"]]
-    dudoso_res = [r for r in resultados if not r["auto"]]
-    matched_ids = {r["id_catalogo"] for r in resultados}
-    sin_match   = [p for p in pendientes if str(p["id"]) not in matched_ids]
+        kw_cr = {w for w in norm_cr.split() if len(w) > 4}
 
-    log.info("\n📋 5 ejemplos AUTO (score ≥90):")
-    for r in sorted(auto_res, key=lambda x: -x["score"])[:5]:
-        log.info(f"  ✅ [{r['score']:.2f}] {r['nombre_catalogo'][:35]:<35} → {r['nombre_carrefour'][:45]}")
+        resultados = process.extract(
+            norm_cr,
+            nombres_norm,
+            scorer=fuzz.token_sort_ratio,
+            limit=10,
+            score_cutoff=UMBRAL_DUDOSO,
+        )
 
-    log.info(f"\n📋 5 ejemplos DUDOSOS (score {SCORE_MIN}-{SCORE_AUTO}):")
-    for r in sorted(dudoso_res, key=lambda x: -x["score"])[:5]:
-        log.info(f"  ⚠️  [{r['score']:.2f}] {r['nombre_catalogo'][:35]:<35} → {r['nombre_carrefour'][:45]}")
+        for _, score_int, idx_cat in resultados:
+            cat = idx[idx_cat]
+            if es_marca_blanca and cat['tipo'] == 'marca_fabricante':
+                continue
+            if variantes_incompatibles(nombre_cr, cat['nombre']):
+                filtrados_variante += 1
+                continue
+            if tiene_par_incompatible(norm_cr, cat['norm']):
+                filtrados_tipo += 1
+                continue
+            kw_cat = {w for w in cat['norm'].split() if len(w) > 4}
+            if kw_cr and kw_cat and not (kw_cr & kw_cat):
+                continue
+            todos.append((score_int, prod['id'], cat['id'], nombre_cr, cat['nombre']))
 
-    log.info(f"\n📋 5 ejemplos SIN MATCH:")
-    for p in sin_match[:5]:
-        log.info(f"  ❌  {p.get('nombre_generico', '')[:60]}")
+        if (i + 1) % 500 == 0:
+            print(f"  {i+1}/{len(pendientes)} procesados...")
+
+    print(f"  {len(todos)} pares candidatos")
+    print(f"  (filtrados: {filtrados_variante} por variante, {filtrados_tipo} por tipo)")
+
+    todos.sort(key=lambda x: -x[0])
+    usados_cr  = set(ya_cr)
+    usados_cat = set(ya_cat)
+    automaticos, dudosos_list = [], []
+
+    for score_int, id_cr, id_cat, nombre_cr, nombre_cat in todos:
+        if id_cr in usados_cr or id_cat in usados_cat:
+            continue
+        entry = {
+            'id_carrefour': id_cr,
+            'id_catalogo':  id_cat,
+            'score':        score_int,
+            'nombre_cr':    nombre_cr,
+            'nombre_cat':   nombre_cat,
+        }
+        if score_int >= umbral_auto:
+            automaticos.append(entry)
+        else:
+            dudosos_list.append(entry)
+        usados_cr.add(id_cr)
+        usados_cat.add(id_cat)
+
+    sin_match = len(pendientes) - len(automaticos) - len(dudosos_list)
+
+    print(f"\n{'='*60}")
+    print(f"  Automáticos (>={umbral_auto}%): {len(automaticos)}")
+    print(f"  Dudosos ({UMBRAL_DUDOSO}-{umbral_auto-1}%):    {len(dudosos_list)}")
+    print(f"  Sin match (<{UMBRAL_DUDOSO}%):      {sin_match}")
+    print(f"  Total procesados:        {len(pendientes)}")
+
+    print("\nMuestra automáticos (primeros 20):")
+    for m in sorted(automaticos, key=lambda x: -x['score'])[:20]:
+        print(f"  [{int(m['score']):3d}%] {m['nombre_cr'][:45]:<45} -> {m['nombre_cat'][:35]}")
+
+    if dudosos_list:
+        print(f"\nMuestra dudosos (primeros 5):")
+        for m in sorted(dudosos_list, key=lambda x: -x['score'])[:5]:
+            print(f"  [{int(m['score']):3d}%] {m['nombre_cr'][:45]:<45} -> {m['nombre_cat'][:35]}")
 
     if dry_run:
-        log.info("\n[dry-run] No se guarda nada en BBDD.")
+        print("\n[dry-run] No se guarda nada.")
         return
 
-    exportar_dudosos_csv(resultados)
+    csv_path = None
+    if dudosos_list:
+        fecha = datetime.now().strftime('%Y%m%d_%H%M')
+        csv_path = f"carrefour_dudosos_{fecha}.csv"
+        with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+            campos = ['score', 'id_carrefour', 'nombre_cr', 'id_catalogo', 'nombre_cat']
+            w = csv.DictWriter(f, fieldnames=campos)
+            w.writeheader()
+            for d in sorted(dudosos_list, key=lambda x: -x['score']):
+                w.writerow({k: d[k] for k in campos})
+        print(f"\nDudosos -> {csv_path} ({len(dudosos_list)} filas)")
 
-    auto_count = len(auto_res)
-    resp = input(f"\n¿Guardar {auto_count} matches automáticos (score ≥{SCORE_AUTO})? (s/n): ")
-    if resp.lower() == "s":
-        guardar_matches(resultados, solo_auto=True)
-        log.info(f"\n💡 {len(dudoso_res)} matches dudosos pendientes → carrefour_dudosos.csv")
-    log.info("━" * 55)
+    if not automaticos:
+        print("\nNo hay matches automáticos.")
+        return
+
+    print(f"\nAplicar {len(automaticos)} matches automáticos (>={umbral_auto}%)? (s/n): ", end="")
+    if input().strip().lower() != 's':
+        print("Cancelado.")
+        return
+
+    print("\nAplicando matches...")
+    ok = err = 0
+    for m in automaticos:
+        try:
+            supabase.table("productos_match").update(
+                {"id_carrefour": m['id_carrefour']}
+            ).eq("id_catalogo", m['id_catalogo']).execute()
+            ok += 1
+        except Exception as e:
+            err += 1
+            if err <= 3:
+                print(f"  Error: {e}")
+        if ok % 200 == 0 and ok > 0:
+            print(f"  {ok}/{len(automaticos)} aplicados...")
+
+    print(f"\nAplicados: {ok} | Errores: {err}")
+    if csv_path:
+        print(f"Dudosos: {csv_path}")
+    print("Matching completado.")
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--umbral", type=int, default=UMBRAL_AUTO)
     args = ap.parse_args()
-    main(dry_run=args.dry_run)
+    main(dry_run=args.dry_run, umbral_auto=args.umbral)

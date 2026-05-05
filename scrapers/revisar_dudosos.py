@@ -35,15 +35,17 @@ BATCH_SIZE = 20
 SLEEP_S    = 1.0
 
 COLUMNA_ID = {
-    "dia":      "id_dia",
-    "alcampo":  "id_alcampo",
-    "ahorramas":"id_ahorramas",
+    "dia":       "id_dia",
+    "alcampo":   "id_alcampo",
+    "ahorramas": "id_ahorramas",
+    "carrefour": "id_carrefour",
 }
 
 COLUMNA_CSV = {
-    "dia":       ("id_dia",      "nombre_dia"),
-    "alcampo":   ("id_alcampo",  "nombre_alc"),
-    "ahorramas": ("id_ahorramas","nombre_ah"),
+    "dia":       ("id_dia",       "nombre_dia"),
+    "alcampo":   ("id_alcampo",   "nombre_alc"),
+    "ahorramas": ("id_ahorramas", "nombre_ah"),
+    "carrefour": ("id_carrefour", "nombre_cr"),
 }
 
 SYSTEM_PROMPT = """\
@@ -114,7 +116,7 @@ def aplicar_matches(sb, matches_ok, col_db):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("csv", help="Fichero CSV de dudosos")
-    ap.add_argument("--super", required=True, choices=["dia", "alcampo", "ahorramas"])
+    ap.add_argument("--super", required=True, choices=["dia", "alcampo", "ahorramas", "carrefour"])
     ap.add_argument("--min-score", type=float, default=70.0,
                     help="Solo procesar filas con fuzzy score >= N (default: 70)")
     ap.add_argument("--umbral-ia", type=int, default=7,

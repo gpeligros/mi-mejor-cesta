@@ -60,11 +60,11 @@ PWA de comparación de precios de supermercados españoles.
 
 | Super | Tabla | Productos | Matches | Estado |
 |---|---|---|---|---|
-| Mercadona | precios_mercadona | ~8.327 | ~10.064 (99%) | ✅ En producción |
-| DIA | precios_dia | ~5.076 | ~10.064 (99%) | ✅ En producción |
-| Alcampo | precios_alcampo | 2.264 | 0 | ⚠️ Se resetó, pendiente re-matching |
-| Carrefour | precios_carrefour | ~7.241 | ~7.241 | ✅ En producción |
-| AhorraMas | precios_ahorramas | ~1.529 | ~331 | ⚠️ Matching parcial (22%) |
+| Mercadona | precios_mercadona | ~8.327 | ~3.800 (46%) | ✅ En producción |
+| DIA | precios_dia | ~5.076 | ~3.800 (75%) | ✅ En producción |
+| Alcampo | precios_alcampo | 2.264 | ~201 (9%) | ⚠️ Re-matching en curso |
+| Carrefour | precios_carrefour | ~7.241 | ~4.691 (65%) | ✅ En producción (matches limpios v5) |
+| AhorraMas | precios_ahorramas | ~1.529 | ~648 (42%) | ✅ En producción (añadida a supersActivos) |
 | Lidl | precios_lidl | 0 | 0 | ❌ Pendiente (Scrapling DynamicFetcher) |
 | Eroski | precios_eroski | 0 | 0 | ❌ Pendiente |
 | Hipercor | precios_hipercor | 0 | 0 | ❌ API pública disponible |
@@ -97,18 +97,19 @@ Props session, plan y limiteMenusGuardados añadidas a MenuSemanal.
 Matching 7.241/7.241. App.js ya carga precios_carrefour, índices y supersActivos incluyen Carrefour.
 
 ## Prioridades actuales (en orden)
-1. **Re-matching AhorraMas** → matches a 0 tras rebuild catálogo
-2. **Aplicar Cambio 1 en App.js** (MenuSemanal props)
-3. **Mejorar matches DIA** (608 → 2.000+) y Alcampo (121 → 500+)
-4. Pasar Stripe a producción (LO ÚLTIMO)
+1. **Mejorar matches Alcampo** (~201 → objetivo 500+) — re-matching en curso
+2. **Mejorar matches DIA** — corrupción anterior limpiada, counts reales ~3.800
+3. Pasar Stripe a producción (LO ÚLTIMO)
 
 ## Lecciones aprendidas
 - `SUPERS_CONFIG` DEBE definirse FUERA del componente `Precios` en AdminPanel
 - Definiciones de funciones DEBEN preceder a sus `useEffect`
 - Bug core supersActivos: `StoreSelector` llamaba `setSupersActivos` directamente, bypaseando `setSupersActivosConLimite`
-- Matching rapidfuzz al 85% produce cross-matches de marca (Coca-Cola ↔ Hola Cola) — deprioritizado
+- Matching rapidfuzz con partial_ratio+token_set_ratio produce matches falsos masivos — usar SOLO token_sort_ratio
+- `process.extractOne` sin 1-a-1 greedy asigna mismo id_super a miles de CAT → corrupción masiva
 - Marca blanca → nombre genérico en sidebar; marca fabricante → solo si 2+ supermercados
 - Formatos distintos (33cl vs 50cl) = entradas separadas en catálogo
+- revisar_dudosos.py: herramienta genérica con IA para validar dudosos de cualquier super
 
 ## Comandos frecuentes
 ```bash
