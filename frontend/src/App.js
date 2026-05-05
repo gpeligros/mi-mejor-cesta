@@ -38,7 +38,7 @@ const App = () => {
   });
   const [comprados, setComprados] = useState([]);
   const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
-  const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo", "Carrefour"]);
+  const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo", "Carrefour", "AhorraMas"]);
   const [modalUpgrade, setModalUpgrade] = useState(null);
   const { plan, cargando: planCargando, limiteSupers, limiteProductos, limiteMenusGuardados } = usePlan(session);
 
