@@ -531,8 +531,23 @@ const App = () => {
   // Helper: nombre real del super para un producto
   const getNombreReal = (id, super_) => nombresReales[id]?.[super_] || null;
 
-  // Cálculos
+  // ═══════════════════════════════════════════════════════════════════
+  // Cálculos de stats — versión robusta
+  //
+  // Bug anterior: el ahorro se calculaba como (super_más_caro − multi).
+  // Si un super solo tenía precio para 3 de 8 productos, su total era
+  // bajo artificialmente y el ahorro salía NEGATIVO.
+  //
+  // Ahora se calcula producto-a-producto:
+  //   multiTotal = suma de min(precio en supers que lo tienen) por producto
+  //   maxTotal   = suma de max(precio en supers que lo tienen) por producto
+  //   ahorro     = max(0, maxTotal − multiTotal)
+  //
+  // Además guardamos cobertura por super (cuántos productos tiene precio)
+  // para mostrar al usuario "Carrefour: 3 de 8 productos" cuando proceda.
+  // ═══════════════════════════════════════════════════════════════════
   const stats = (() => {
+    // Total por super (suma de productos que ese super sí tiene)
     const totalesPorSuper = supersActivos.map(s => {
       const total = seleccionados.reduce((acc, id) => {
         const precio = precios[id]?.[s] || 0;
@@ -544,7 +559,11 @@ const App = () => {
       return { id: s, t: total, productosDisponibles };
     }).sort((a, b) => a.t - b.t);
 
+    // Multi: suma del MÍNIMO precio por producto entre los supers activos.
+    // MaxPorProducto: suma del MÁXIMO precio por producto. Esto da el
+    // "peor caso si compras todo de cualquier super donde esté disponible".
     let multiTotal = 0;
+    let maxTotal = 0;
     let productosSinPrecio = 0;
     seleccionados.forEach(id => {
       const preciosValidos = supersActivos
@@ -552,14 +571,14 @@ const App = () => {
         .filter(p => p > 0);
       if (preciosValidos.length > 0) {
         multiTotal += Math.min(...preciosValidos);
+        maxTotal   += Math.max(...preciosValidos);
       } else {
         productosSinPrecio++;
       }
     });
 
-    const ahorro = totalesPorSuper.length > 0 && totalesPorSuper[totalesPorSuper.length - 1].t > 0
-      ? totalesPorSuper[totalesPorSuper.length - 1].t - multiTotal
-      : 0;
+    // El ahorro nunca debe ser negativo (defensivo)
+    const ahorro = Math.max(0, maxTotal - multiTotal);
     
     return { 
       totalesPorSuper, 
@@ -965,7 +984,7 @@ const App = () => {
           </main>
         </div>
       </div>
-      
+
       <Footer setSeccionActual={setSeccionActual} />
 
       {modalUpgrade && (
