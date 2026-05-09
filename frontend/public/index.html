@@ -1,53 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '384710725');
-  </script>
   <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
 
-      <meta charset="utf-8" />
-      <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      
-      <!-- SEO BÁSICO -->
-      <title>Mi Mejor Cesta - Compara Precios de Supermercados y Ahorra</title>
-      <meta name="description" content="Compara precios de Mercadona, Lidl y Carrefour en tiempo real. Ahorra hasta 100€ al mes en tu compra. Crea listas inteligentes y descubre el supermercado más barato." />
-      <meta name="keywords" content="comparador precios supermercados, mercadona precios, lidl ofertas, carrefour precios, ahorrar compra, comparar supermercados españa" />
-      <meta name="author" content="Mi Mejor Cesta" />
-      
-      <!-- PWA -->
-      <meta name="theme-color" content="#037623" />
-      <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-      <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-      
-      <!-- OPEN GRAPH (Redes Sociales) -->
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content="Mi Mejor Cesta - Compara Precios de Supermercados" />
-      <meta property="og:description" content="Ahorra hasta 100€ al mes comparando precios de Mercadona, Lidl y Carrefour. Crea tu lista de compra inteligente." />
-      <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
-      
-      <!-- TWITTER CARD -->
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Mi Mejor Cesta - Comparador de Supermercados" />
-      <meta name="twitter:description" content="Compara precios y ahorra en tu compra diaria" />
-      <meta name="twitter:image" content="%PUBLIC_URL%/logo512.png" />
+    <!-- SEO BÁSICO -->
+    <title>Mi Mejor Cesta - Compara Precios de Supermercados y Ahorra</title>
+    <meta name="description" content="Compara precios de Mercadona, DIA, Alcampo, Carrefour y más en tiempo real. Ahorra hasta 100€ al mes en tu compra. Crea listas inteligentes y descubre el supermercado más barato." />
+    <meta name="keywords" content="comparador precios supermercados, mercadona precios, dia ofertas, alcampo precios, ahorrar compra, comparar supermercados españa" />
+    <meta name="author" content="Mi Mejor Cesta" />
 
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-2WJFBS3PW6"></script>
+    <!-- PWA -->
+    <meta name="theme-color" content="#037623" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
+    <!-- OPEN GRAPH (Redes Sociales) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mi Mejor Cesta - Compara Precios de Supermercados" />
+    <meta property="og:description" content="Ahorra hasta 100€ al mes comparando precios de Mercadona, DIA, Alcampo y Carrefour. Crea tu lista de compra inteligente." />
+    <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mi Mejor Cesta - Comparador de Supermercados" />
+    <meta name="twitter:description" content="Compara precios y ahorra en tu compra diaria" />
+    <meta name="twitter:image" content="%PUBLIC_URL%/logo512.png" />
+
+    <!--
+      ───────────────────────────────────────────────────────────────────
+      Google Analytics 4 — carga condicionada al consentimiento (RGPD/AEPD)
+      No se carga ningún script de GA hasta que el usuario acepta cookies
+      analíticas en el banner. El componente <CookieBanner/> dispara el
+      evento 'cookies:consent-changed' al guardar la elección.
+      ───────────────────────────────────────────────────────────────────
+    -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-2WJFBS3PW6');
+      (function () {
+        var GA_ID = 'G-2WJFBS3PW6';
+        var cargado = false;
+
+        function leerConsent() {
+          try {
+            var raw = localStorage.getItem('cookies_consent_v2');
+            if (!raw) return null;
+            var p = JSON.parse(raw);
+            return p && p.analiticas === true;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function cargarGA() {
+          if (cargado) return;
+          cargado = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ window.dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID, {
+            anonymize_ip: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false,
+          });
+        }
+
+        if (leerConsent() === true) {
+          cargarGA();
+        }
+        window.addEventListener('cookies:consent-changed', function (e) {
+          if (e && e.detail && e.detail.analiticas === true) cargarGA();
+        });
+      })();
     </script>
   </head>
   <body>
     <noscript>Necesitas activar JavaScript para ver esta web.</noscript>
-    
     <div id="root"></div>
-    
   </body>
 </html>

@@ -74,6 +74,9 @@ const Footer = ({ setSeccionActual }) => {
         <span onClick={() => setSeccionActual('cookies')} style={{ cursor: 'pointer', whiteSpace: 'nowrap' }}>
           COOKIES
         </span>
+        <span onClick={() => setSeccionActual('aviso-legal')} style={{ cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          AVISO LEGAL
+        </span>
         <span style={{ whiteSpace: 'nowrap' }}>© 2026</span>
       </div>
     </footer>

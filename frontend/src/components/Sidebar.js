@@ -399,14 +399,17 @@ const Sidebar = ({
         )}
       </div>
 
-      {/* ESCÁNER */}
-      <div style={{ background: 'linear-gradient(135deg, #102215 0%, #037623 100%)', color: 'white', padding: '20px', borderRadius: '20px', marginBottom: '20px' }}>
-        <h4 style={{ margin: '0 0 10px 0', fontSize: '13px', fontWeight: '900' }}>📸 ESCANEAR LISTA</h4>
-        <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFoto} style={{ display: 'none' }} />
-        <button onClick={() => fileInputRef?.current?.click()} disabled={escaneando} style={{ width: '100%', background: escaneando ? '#999' : '#13ec49', color: OSCURO, border: 'none', padding: '10px', borderRadius: '10px', fontWeight: '900', cursor: escaneando ? 'not-allowed' : 'pointer' }}>
-          {escaneando ? "PROCESANDO..." : "SUBIR FOTO"}
-        </button>
-      </div>
+      {/* ESCÁNER — oculto hasta tener OCR funcional (Tesseract.js o Cloud Vision).
+           Para reactivarlo cuando esté implementado, poner OCR_HABILITADO = true. */}
+      {false && (
+        <div style={{ background: 'linear-gradient(135deg, #102215 0%, #037623 100%)', color: 'white', padding: '20px', borderRadius: '20px', marginBottom: '20px' }}>
+          <h4 style={{ margin: '0 0 10px 0', fontSize: '13px', fontWeight: '900' }}>📸 ESCANEAR LISTA</h4>
+          <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFoto} style={{ display: 'none' }} />
+          <button onClick={() => fileInputRef?.current?.click()} disabled={escaneando} style={{ width: '100%', background: escaneando ? '#999' : '#13ec49', color: OSCURO, border: 'none', padding: '10px', borderRadius: '10px', fontWeight: '900', cursor: escaneando ? 'not-allowed' : 'pointer' }}>
+            {escaneando ? "PROCESANDO..." : "SUBIR FOTO"}
+          </button>
+        </div>
+      )}
 
       {/* BUSCADOR Y LISTADO */}
       <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '25px', border: '1px solid #e0e6e1' }}>

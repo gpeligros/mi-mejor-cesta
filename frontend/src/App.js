@@ -17,28 +17,54 @@ import Cestita from './components/Cestita';
 import ModalUpgrade from './components/ModalUpgrade';
 import ToolBar from './components/ToolBar';
 import MenuSemanal from './components/MenuSemanal';
+import CookieBanner from './components/CookieBanner';
+import AvisoLegal from './components/AvisoLegal';
 import { usePlan } from './hooks/usePlan';
+
+// ──────────────────────────────────────────────────────────────────
+// localStorage seguro (no peta en navegación privada / iOS Safari)
+// ──────────────────────────────────────────────────────────────────
+const safeGet = (key, fallback = null) => {
+  try { return localStorage.getItem(key); } catch { return fallback; }
+};
+const safeSet = (key, value) => {
+  try { localStorage.setItem(key, value); } catch { /* ignore */ }
+};
+const safeRemove = (key) => {
+  try { localStorage.removeItem(key); } catch { /* ignore */ }
+};
+const safeJSON = (raw, fallback) => {
+  if (raw === null || raw === undefined) return fallback;
+  try { return JSON.parse(raw); } catch { return fallback; }
+};
+
+const SUPERS_VALIDOS = ['Mercadona', 'DIA', 'Alcampo', 'AhorraMas', 'Carrefour'];
 
 const App = () => {
   // Estados
   const [session, setSession] = useState(null);
-  const [syncActiva, setSyncActiva] = useState(() => JSON.parse(localStorage.getItem('sync_pref')) ?? true);
+  const [syncActiva, setSyncActiva] = useState(() => safeJSON(safeGet('sync_pref'), true));
   const [db, setDb] = useState({});
   const [precios, setPrecios] = useState({});
   const [nombresReales, setNombresReales] = useState({});
   const [seleccionados, setSeleccionados] = useState(() => {
-    const saved = localStorage.getItem('miCesta_v7');
-    if (!saved) return [];
-    try {
-      const parsed = JSON.parse(saved);
-      return Array.isArray(parsed) ? parsed.filter(id => id && typeof id === 'string' && id.trim() !== '') : [];
-    } catch (e) {
-      return [];
-    }
+    const parsed = safeJSON(safeGet('miCesta_v7'), []);
+    return Array.isArray(parsed)
+      ? parsed.filter(id => id && typeof id === 'string' && id.trim() !== '')
+      : [];
   });
   const [comprados, setComprados] = useState([]);
-  const [cestasGuardadas, setCestasGuardadas] = useState(() => JSON.parse(localStorage.getItem('misCestas_v7')) || {});
-  const [supersActivos, setSupersActivos] = useState(["Mercadona", "DIA", "Alcampo", "Carrefour", "AhorraMas"]);
+  const [cestasGuardadas, setCestasGuardadas] = useState(
+    () => safeJSON(safeGet('misCestas_v7'), {}) || {}
+  );
+  const [supersActivos, setSupersActivos] = useState(() => {
+    const guardados = safeJSON(safeGet('supersActivos_v1'), null);
+    if (Array.isArray(guardados) && guardados.length > 0) {
+      const filtrados = guardados.filter(s => SUPERS_VALIDOS.includes(s));
+      if (filtrados.length > 0) return filtrados;
+    }
+    return ['Mercadona', 'DIA', 'Alcampo', 'Carrefour', 'AhorraMas'];
+  });
   const [modalUpgrade, setModalUpgrade] = useState(null);
   const { plan, cargando: planCargando, limiteSupers, limiteProductos, limiteMenusGuardados } = usePlan(session);
 
@@ -69,8 +95,7 @@ const App = () => {
   const [estadoSync, setEstadoSync] = useState('idle');
   const [seccionActual, setSeccionActual] = useState('comparador');
   const [modoAdmin, setModoAdmin] = useState(false);
-  const [mostrarCookies, setMostrarCookies] = useState(() => !localStorage.getItem('cookies_aceptadas'));
-  const [mostrarLanding, setMostrarLanding] = useState(() => !localStorage.getItem('landing_vista'));
+  const [mostrarLanding, setMostrarLanding] = useState(() => !safeGet('landing_vista'));
   const [mostrarColaborativa, setMostrarColaborativa] = useState(false);
   const [mostrarMenuSemanal, setMostrarMenuSemanal] = useState(false);
   const [modoMenuSemanal, setModoMenuSemanal] = useState('menu');
@@ -327,12 +352,17 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Guardar en localStorage
+  // Guardar en localStorage (con try/catch — Safari iOS / privado pueden bloquear)
   useEffect(() => {
-    localStorage.setItem('miCesta_v7', JSON.stringify(seleccionados));
-    localStorage.setItem('misCestas_v7', JSON.stringify(cestasGuardadas));
-    localStorage.setItem('sync_pref', JSON.stringify(syncActiva));
+    safeSet('miCesta_v7', JSON.stringify(seleccionados));
+    safeSet('misCestas_v7', JSON.stringify(cestasGuardadas));
+    safeSet('sync_pref', JSON.stringify(syncActiva));
   }, [seleccionados, cestasGuardadas, syncActiva]);
+
+  // Persistir supermercados activos del usuario
+  useEffect(() => {
+    safeSet('supersActivos_v1', JSON.stringify(supersActivos));
+  }, [supersActivos]);
 
   // Funciones
   const sincronizarNube = async (prods, comps) => {
@@ -427,7 +457,7 @@ const App = () => {
       const filas = seleccionados.map(id => {
         const prod = getProdFull(id);
         if (!prod) return '';
-        const nombre = (getNombreReal && getNombreReal(id, s)) || prod.nombre;
+        const nombre = getNombreReal(id, s) || prod.nombre;
         const precio = precios[id]?.[s] || 0;
         // Marca precio mínimo en verde
         const preciosValidos = supersActivos.map(x => precios[id]?.[x] || 0).filter(p => p > 0);
@@ -741,6 +771,7 @@ const App = () => {
   const RenderPrivacidad = () => <Privacidad />;
   const RenderTerminos = () => <Terminos />;
   const RenderCookies = () => <Cookies />;
+  const RenderAvisoLegal = () => <AvisoLegal />;
 
   if (cargando) {
     return (
@@ -756,7 +787,7 @@ const App = () => {
   if (mostrarLanding) {
     return (
       <Landing onEntrar={() => {
-        localStorage.setItem('landing_vista', '1');
+        safeSet('landing_vista', '1');
         setMostrarLanding(false);
       }} />
     );
@@ -913,6 +944,7 @@ const App = () => {
                 {seccionActual === 'privacidad' && <RenderPrivacidad />}
                 {seccionActual === 'terminos' && <RenderTerminos />}
                 {seccionActual === 'cookies' && <RenderCookies />}
+                {seccionActual === 'aviso-legal' && <RenderAvisoLegal />}
                 {seccionActual === 'favoritos' && (
                   <div style={{gridColumn:'1/-1', textAlign:'center', padding:'50px'}}>
                     <h2>⭐ MIS LISTAS GUARDADAS</h2>
@@ -980,65 +1012,9 @@ const App = () => {
         />
       )}
 
-      {mostrarCookies && (
-        <div style={{
-          position: 'fixed',
-          bottom: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '90%',
-          maxWidth: '500px',
-          backgroundColor: '#102215',
-          color: 'white',
-          padding: '20px',
-          borderRadius: '20px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          zIndex: 9999,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '15px',
-          border: '1px solid #037623'
-        }}>
-          <div style={{ fontSize: '14px', lineHeight: '1.4' }}>
-            <strong>🍪 ¿Unas cookies para ahorrar?</strong><br/>
-            Utilizamos cookies propias para guardar tu cesta y tus preferencias de supermercado.
-          </div>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <button
-              onClick={() => {
-                localStorage.setItem('cookies_aceptadas', 'true');
-                setMostrarCookies(false);
-              }}
-              style={{
-                flex: 1,
-                padding: '10px',
-                borderRadius: '10px',
-                border: 'none',
-                backgroundColor: '#037623',
-                color: 'white',
-                fontWeight: '800',
-                cursor: 'pointer'
-              }}
-            >
-              ACEPTAR TODO
-            </button>
-            <button
-              onClick={() => setSeccionActual('cookies')}
-              style={{
-                padding: '10px',
-                borderRadius: '10px',
-                border: '1px solid #555',
-                backgroundColor: 'transparent',
-                color: 'white',
-                fontSize: '12px',
-                cursor: 'pointer'
-              }}
-            >
-              INFO
-            </button>
-          </div>
-        </div>
-      )}
+      <CookieBanner
+        onIrAPolitica={() => setSeccionActual('cookies')}
+      />
     </div>
   );
 };
