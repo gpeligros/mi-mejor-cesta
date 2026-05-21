@@ -14,6 +14,7 @@ Arrancar:
 
 import os, subprocess, threading, time, csv, io
 from flask import Flask, jsonify, request, render_template, Response, send_file
+from flask_cors import CORS
 from datetime import datetime
 
 # ── Cargar .env desde la raíz del proyecto ─────────────────────────────────
@@ -38,6 +39,45 @@ if not SUPABASE_KEY:
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 app = Flask(__name__)
+
+# ── CORS ────────────────────────────────────────────────────────────────────
+# El panel admin corre en localhost:5000 y es de uso exclusivo interno.
+# Se permiten peticiones desde el frontend React (local y producción).
+CORS(app, origins=[
+    "http://localhost:3000",            # React dev server
+    "https://mi-mejor-cesta.vercel.app", # producción
+], supports_credentials=True)
+
+# ── Security Headers ─────────────────────────────────────────────────────────
+# Se aplican a todas las respuestas del panel admin.
+# flask-cors gestiona los Access-Control-* por separado; aquí no los tocamos.
+@app.after_request
+def set_security_headers(response):
+    # Evita que el navegador infiera el MIME type
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    # Impide que el panel admin sea embebido en iframes externos
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    # Protección XSS legacy (navegadores antiguos)
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    # Solo HTTPS (2 años, sin preload porque es localhost en desarrollo)
+    response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
+    # No filtrar el referrer al navegar a otros dominios
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    # Deshabilitar funcionalidades de navegador no necesarias
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    # CSP restrictiva para el panel admin (solo HTML propio y llamadas a Supabase)
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline'; "   # inline JS del panel HTML admin
+        "style-src 'self' 'unsafe-inline'; "    # estilos inline del panel
+        "img-src 'self' data:; "
+        "font-src 'self' data:; "
+        "connect-src 'self' https://scpuriaofisssalsbzqv.supabase.co; "
+        "object-src 'none'; "
+        "base-uri 'self'; "
+        "frame-ancestors 'self'"
+    )
+    return response
 
 # ── Buffer de logs para scrapers ───────────────────────────────────────────
 scraper_logs    = {}
