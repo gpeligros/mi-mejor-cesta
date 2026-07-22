@@ -1,4 +1,4 @@
-# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 01/05/2026)
+# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 22/07/2026)
 
 ## ⚠️ INSTRUCCIONES PARA CLAUDE
 Lee este fichero COMPLETO antes de responder nada.
@@ -9,7 +9,15 @@ NUNCA empieces a escribir código sin entender primero el estado real.
 SIEMPRE pide los ficheros actuales antes de modificarlos.
 NUNCA uses sed en PowerShell — usar python3 para manipular ficheros.
 PowerShell NO soporta && — ejecutar comandos por separado.
-Schema changes require manual SQL execution in Supabase — NUNCA asumir estado del schema sin confirmación.
+NUNCA combines varios cambios en un solo paso — ir de uno en uno y confirmar.
+SIEMPRE usar --dry-run antes de cualquier script que escriba en Supabase.
+
+> 📌 NOTA DE ESTA ACTUALIZACIÓN (22/07/2026): el código real en GitHub iba
+> MUY por delante de lo que decía el CONTEXTO anterior. Este fichero se ha
+> reescrito contra el estado verificado del repo (`main`) y de la BBDD.
+> Cambios grandes respecto a versiones previas: React 18 → 19, Carrefour y
+> AhorraMas YA integrados en el frontend, matches reales muy distintos a los
+> documentados, y un problema CONFIRMADO de calidad en los matches de Carrefour.
 
 ---
 
@@ -21,16 +29,23 @@ Repositorio: https://github.com/gpeligros/mi-mejor-cesta
 ---
 
 ## 2. Stack tecnológico
-- Frontend: React 18 + Tailwind CSS — Vercel
+- Frontend: **React 19.2** + Tailwind CSS — Vercel  ⚠️ (antes React 18; migrado)
 - Base de datos: Supabase (PostgreSQL) — scpuriaofisssalsbzqv.supabase.co
 - Autenticación: Supabase Auth (email + Google OAuth)
 - Backend admin: Flask (Python) — local / localhost:5000
 - Scrapers: Python 3 — carpeta /scrapers
-- Scraping avanzado: Scrapling (StealthyFetcher para Cloudflare, DynamicFetcher para SPAs)
-- IA (CESTITA): Anthropic Claude API — Vercel Serverless Function /api/cestita
+- IA (CESTITA): Anthropic Claude API (`claude-haiku-4-5-20251001`) — Vercel Serverless Function /api/cestita
 - Pagos: Stripe (checkout + webhook) — /api/stripe-checkout y /api/stripe-webhook
+- Monitorización errores: @sentry/react INSTALADO pero DESACTIVADO (comentado en index.js) ⚠️
+- Analítica: Google Analytics GA4 real (G-2WJFBS3PW6) ✅
 - Deploy: Vercel — git push a main despliega automáticamente
 - DISABLE_ESLINT_PLUGIN=true en variables de entorno de Vercel
+
+### Dependencias a revisar (deuda)
+- `@google/generative-ai` está en package.json del frontend pero NO se usa en el bundle
+  (el trabajo con Gemini está en scrapers Python). → Candidata a eliminar.
+- `tesseract.js` instalado pero el escaneo OCR (handleFoto) sigue sin implementar
+  (muestra un alert "pendiente de implementar"). → Implementar o eliminar.
 
 ---
 
@@ -40,47 +55,58 @@ mi-mejor-cesta/
   frontend/
     api/
       cestita.js                      ← Serverless Function proxy Anthropic API ✅
+      cors_helper.js                  ← helper CORS para las serverless ✅
       stripe-checkout.js              ← Serverless Function Stripe checkout ✅
       stripe-webhook.js               ← Serverless Function Stripe webhook ✅
     src/
-      App.js                          ← componente principal (⚠️ CAMBIOS PENDIENTES — ver sección 13)
+      App.js                          ← componente principal (5 supers cableados)
+      supabaseClient.js               ← cliente Supabase (solo anon key, protegida por RLS) ✅
+      index.js                        ← root React 19 + ErrorBoundary + Service Worker (Sentry comentado)
       components/
+        AdminPanel.js
+        AuthModal.js
+        AvisoLegal.js
         Cestita.js                    ← asistente IA (backend ✅, manipula cesta ✅)
-        MenuSemanal.js                ← modal menú semanal + recetas + nutricional + biblioteca ✅
+        CookieBanner.js / Cookies.js  ← ⚠️ posible duplicidad, revisar
+        ErrorBoundary.js              ← captura de errores de render ✅
+        Footer.js, Landing.js, Navbar.js, Privacidad.js, Terminos.js
+        ListaColaborativa.js          ← listas compartidas en tiempo real
+        MenuSemanal.js                ← modal menú semanal + recetas + nutricional ✅
         ModalUpgrade.js               ← modal de planes con pago Stripe real ✅
         Sidebar.js                    ← sidebar con historial + estadísticas ✅
-        SuperCard.js                  ← tarjeta por supermercado con reference_price
         StoreSelector.js              ← selector supermercados compacto con visible flag
+        SuperCard.js                  ← tarjeta por supermercado con reference_price
+        SyncHeader.js                 ← cabecera de sincronización nube
         ToolBar.js                    ← barra herramientas: menú/recetas/nutricional ✅
         LogosSuper.js                 ← lista de supers con visible: true/false
-        Navbar.js, Footer.js...
       hooks/
-        usePlan.js                    ← hook de planes (funcionando, incluye limiteMenusGuardados)
+        usePlan.js                    ← hook de planes (PLANES + FUNCIONALIDADES + límites)
   backend/admin/                      ← panel admin Flask (localhost:5000)
-  scrapers/                           ← scripts Python
+  scrapers/                           ← scripts Python (ver Sección 6)
+  scripts/                            ← utilidades varias ⚠️ contiene supabase.exe (93 MB, sacar de git)
+  old/                               ← código antiguo (16 MB) — limpiar
   docs/
     CONTEXTO.md                       ← este fichero
+  vercel.json                         ← cabeceras de seguridad (CSP, HSTS, etc.) ✅
 ```
 
 ---
 
 ## 4. Variables de entorno
-### Vercel (producción — actualmente en TEST hasta ir a live)
+### Vercel (producción — confirmar si Stripe sigue en TEST o ya en LIVE)
 - REACT_APP_SUPABASE_URL
 - REACT_APP_SUPABASE_ANON_KEY
 - ANTHROPIC_API_KEY (sin prefijo REACT_APP — es para serverless)
-- STRIPE_SECRET_KEY (sk_test_... hasta pasar a producción)
-- STRIPE_WEBHOOK_SECRET (whsec_... del webhook de Stripe)
-- STRIPE_PRICE_BASIC (price_test_... del plan básico)
-- STRIPE_PRICE_PREMIUM (price_test_... del plan premium)
-- STRIPE_SECRET_KEY_PROD (sk_live_... guardada para cuando se active producción)
-- STRIPE_PRICE_BASIC_PRO (price_live_... guardada para producción)
-- STRIPE_PRICE_PREMIUM_PRO (price_live_... guardada para producción)
-- SUPABASE_SERVICE_KEY (service_role key — solo para serverless webhook)
+- STRIPE_SECRET_KEY (sk_test_... / sk_live_... según modo)
+- STRIPE_WEBHOOK_SECRET (whsec_... del webhook — OJO: cambia entre test y live)
+- STRIPE_PRICE_BASIC / STRIPE_PRICE_PREMIUM
+- STRIPE_SECRET_KEY_PROD / STRIPE_PRICE_BASIC_PRO / STRIPE_PRICE_PREMIUM_PRO (guardadas para live)
+- SUPABASE_SERVICE_KEY (service_role key — solo serverless webhook)
 - APP_URL (https://mi-mejor-cesta.vercel.app)
 - DISABLE_ESLINT_PLUGIN=true
+- REACT_APP_SENTRY_DSN → pendiente de añadir si se activa Sentry
 
-### Local (.env en raíz)
+### Local (.env en raíz — está en .gitignore ✅)
 - SUPABASE_URL, SUPABASE_KEY (service role)
 - ANTHROPIC_API_KEY
 - REACT_APP_SUPABASE_URL, REACT_APP_SUPABASE_ANON_KEY
@@ -89,44 +115,57 @@ mi-mejor-cesta/
 
 ## 5. Arquitectura de BBDD — INAMOVIBLE
 
-### Tablas principales
+### Tablas principales (filas VERIFICADAS 22/07/2026)
 | Tabla | Descripción | Filas |
 |-------|-------------|-------|
-| `productos_catalogo` | Catálogo genérico. Solo admin escribe. | ~4.173 |
+| `productos_catalogo` | Catálogo genérico. Solo admin escribe. | ≈ 9.999 (creció desde 4.173) |
 | `categorias_maestras` | 87 categorías fijas. NUNCA modificar. | 87 |
-| `productos_match` | Tabla puente CAT↔supermercados. Columnas: id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas, id_carrefour. | ~4.173 |
+| `productos_match` | Tabla puente CAT↔supermercados. | ≈ 9.999 filas |
 | `precios_mercadona` | IDs ME-xxxx. | ~8.327 |
 | `precios_dia` | IDs DI-xxxx. | ~4.786 |
 | `precios_alcampo` | IDs AL-xxxx. | 727 |
-| `precios_carrefour` | IDs CR-xxxx. Scraper completado. | ~7.241 |
-| `precios_ahorramas` | IDs AH-xxxx. | ~1.427 |
+| `precios_carrefour` | IDs CF-xxxx. | ~7.241 |
+| `precios_ahorramas` | IDs AH-xxxx. | poblada |
 | `vista_productos` | VIEW que une catálogo + categorías. | — |
-| `profiles` | Plan de suscripción por usuario. PK = id (no user_id). | trigger creado |
-| `cestas_online` | Cestas guardadas en la nube. | creada |
-| `compras` | Historial de compras por usuario. | activa |
-| `compras_detalle` | Detalle de productos por compra. | activa |
-| `menus_guardados` | Menús semanales guardados por usuario (premium). | creada |
+| `profiles` | Plan de suscripción por usuario. PK = id (no user_id) | activa |
+| `cestas_online` | Cestas guardadas en la nube. | activa |
+| `compras` / `compras_detalle` | Historial de compras por usuario. | activas |
 | `listas_colaborativas` | Listas compartidas en tiempo real. | — |
+
+### ⚠️ El catálogo creció → Mercadona YA NO cubre el 100%
+Al incorporar productos desde Carrefour (`construir_catalogo_desde_carrefour.py`,
+`agregar_carrefour_faltantes.py`) el catálogo pasó de 4.173 a ≈ 9.999. Por tanto
+la vieja afirmación "Mercadona 100%" es FALSA: ningún super cubre ya todo el catálogo.
+
+### Matches reales por supermercado (VERIFICADO — COUNT sobre productos_match)
+| Supermercado | Matches (id_* no nulo) | Marcados revisado=true |
+|---|---|---|
+| Carrefour | 4.691 | 0 |
+| Mercadona | 3.991 | 0 |
+| DIA | 1.140 | 0 |
+| AhorraMas | 568 | 0 |
+| Alcampo | 201 | 0 |
+| Hipercor | columna existe, sin datos | 0 |
+
+> 🔴 IMPORTANTE: el flag `revisado` está a 0 en TODAS las filas y la puntuación
+> (`id_carrefour_score`, `id_alcampo_score`) está sin poblar (NULL). Los matches
+> se insertaron en bloque sin revisión. Ver problema CONFIRMADO en Sección 11.
+
+### Columnas productos_match (VERIFICADO 22/07/2026)
+- id, id_catalogo, created_at, revisado
+- id_mercadona, id_dia, id_alcampo, id_ahorramas, id_carrefour, id_hipercor, id_lidl, id_aldi
+- id_alcampo_score, id_carrefour_score  ← el ALTER TABLE de score YA está hecho
+- (id_lidl, id_aldi, id_hipercor existen como columnas pero el frontend NO las consulta)
 
 ### Columnas profiles (VERIFICADO)
 - id (UUID, PK — igual que auth.users.id)
-- plan (text) → 'free' | 'basic' | 'premium'
-- stripe_id (text) — customer ID de Stripe
-- plan_desde (timestamptz)
-- plan_hasta (timestamptz)
+- plan (text) → 'free' | 'free_reg' | 'basic' | 'premium'
+- stripe_id (text), plan_desde (timestamptz), plan_hasta (timestamptz)
 - created_at, updated_at
-
-### Columnas menus_guardados
-- id (UUID, PK)
-- user_id (UUID, FK → auth.users.id)
-- nombre (text) — título del menú
-- config (jsonb) — días, personas, restricciones usadas para generar
-- menu_data (jsonb) — el menú completo en JSON estructurado
-- created_at (timestamptz)
 
 ### Query estándar para ver usuarios con email
 ```sql
-SELECT p.id, p.plan, p.stripe_id, u.email 
+SELECT p.id, p.plan, p.stripe_id, u.email
 FROM profiles p
 JOIN auth.users u ON p.id = u.id;
 ```
@@ -137,51 +176,61 @@ UPDATE profiles SET plan = 'basic' WHERE id = 'UUID_DEL_USUARIO';
 UPDATE profiles SET plan = 'free', stripe_id = null WHERE id = 'UUID_DEL_USUARIO';
 ```
 
-### Verificar matches de un supermercado
-```sql
--- Ejemplo Carrefour:
-SELECT COUNT(*) AS matches_carrefour FROM productos_match WHERE id_carrefour IS NOT NULL;
-```
-
 ### Reglas de oro
 - NUNCA scrapers escriben en productos_catalogo ni categorias_maestras
 - NUNCA borrar CAT-xxxx, solo desactivar con activo=false
 - NUNCA subir .env a Git
-- Antes de cualquier TRUNCATE verificar backup _old
-- Supabase joins con FK syntax (ej. `categorias_maestras(...)`) fallan silenciosamente sin FK definida — usar queries separadas
-- Recursive RLS policies en `profiles` causan 500 errors — usar simple `auth.uid() = id`
-- `AdminPanel.js` DEBE importar de `../supabaseClient`, NUNCA crear su propio `createClient`
-- `rpc()` calls a funciones Supabase que no existen devuelven 404 silenciosamente
-- Supabase Auth redirige a URL de producción salvo que localhost esté en Redirect URLs
+- Antes de cualquier TRUNCATE verificar backup _old (Supabase free NO tiene backups automáticos)
+- RLS: usar siempre auth.uid() = id (NO políticas recursivas sobre profiles — causan error 500)
+- Service role key requerida para escrituras de scrapers; puede ser necesario deshabilitar
+  RLS en productos_match antes de ejecutar scripts de matching
+- El frontend SOLO expone la anon key (protegida por RLS). NUNCA meter service_role en el frontend.
+
+### ⚠️ REGLA SUPABASE — GRANT obligatorio en tablas nuevas (desde oct 2026)
+A partir del **30/10/2026**, cualquier tabla nueva en el esquema `public` NO será accesible
+vía Data API (supabase-js / PostgREST) sin un GRANT explícito.
+**Aplicar siempre este bloque al crear cualquier tabla nueva:**
+
+```sql
+-- 1. Permisos explícitos (OBLIGATORIO desde oct 2026)
+GRANT SELECT ON public.nueva_tabla TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.nueva_tabla TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.nueva_tabla TO service_role;
+
+-- 2. RLS (como siempre)
+ALTER TABLE public.nueva_tabla ENABLE ROW LEVEL SECURITY;
+
+-- 3. Políticas necesarias
+CREATE POLICY "..." ON public.nueva_tabla FOR SELECT TO authenticated USING (...);
+```
+
+Las tablas EXISTENTES NO se ven afectadas. Revisar Security Advisor antes de octubre.
+Referencia: https://github.com/orgs/supabase/discussions/45329
 
 ---
 
-## 6. Estado de supermercados
+## 6. Estado de supermercados (22/07/2026)
 
-### ✅ En producción con datos limpios
-| Supermercado | Tabla | Productos | Matches válidos |
-|---|---|---|---|
-| Mercadona | precios_mercadona | ~8.327 | 4.173 (100%) |
-| DIA | precios_dia | ~4.786 | 608 (limpiados con IA) |
-| Alcampo | precios_alcampo | 727 | 121 (limpiados con IA) |
+### ✅ Integrados en el frontend y con matches
+Los 5 están cableados en App.js y con `visible: true` en LogosSuper.js:
+Mercadona, DIA, Alcampo, AhorraMas, Carrefour.
 
-### ⚠️ Scraper completado, matching pendiente
-| Supermercado | Tabla | Productos | Matches válidos |
-|---|---|---|---|
-| Carrefour | precios_carrefour | ~7.241 | **0** (matching NO ejecutado) |
-| AhorraMas | precios_ahorramas | ~1.427 | 0 (matching pendiente re-ejecutar tras rebuild catálogo) |
-
-### ❌ Tablas creadas sin datos
-precios_aldi, precios_despensa, precios_eroski, precios_hipercor, precios_lidl
-
-### ❌ Pendientes de scraper
-| Supermercado | Bloqueador | Solución propuesta |
+| Supermercado | Matches | Estado calidad |
 |---|---|---|
-| Lidl | SPA | Scrapling DynamicFetcher |
-| Eroski | SPA con JS | Scrapling DynamicFetcher |
-| Hipercor | API pública disponible | Pendiente scraper |
-| Aldi | Sin tienda online en España | — |
-| La Despensa | Sin scraper | — |
+| Mercadona | 3.991 | Base fiable (histórico) |
+| DIA | 1.140 | Limpiado con IA en su día; revisar |
+| Alcampo | 201 | Limpiado con IA en su día; revisar |
+| AhorraMas | 568 | ⚠️ Sin verificar (revisado=0) |
+| Carrefour | 4.691 | 🔴 CON EMPAREJAMIENTOS MALOS CONFIRMADOS (ver Sección 11) |
+
+### ❌ Sin datos / columna preparada sin poblar
+| Supermercado | Estado |
+|---|---|
+| Hipercor | scraper_hipercor.py falla con HTTP 520 — columna id_hipercor vacía |
+| Lidl | columna id_lidl existe, sin datos (SPA dinámica) |
+| Eroski | scraper_eroski.py + match_eroski.py existen; sin datos en prod |
+| Aldi | columna id_aldi existe; sin tienda online en España |
+| La Despensa | scraper_despensa.py existe; sin datos en prod |
 
 ---
 
@@ -192,18 +241,29 @@ precios_aldi, precios_despensa, precios_eroski, precios_hipercor, precios_lidl
 - SQL de setup: `{supermercado}_setup.sql`
 - Scripts de enriquecimiento: `enriquecer_{tabla}.py`
 - Scripts de revisión: `revisar_matches_{supermercado}.py`
-- Catálogo desde base: `construir_catalogo.py` o `construir_catalogo_desde_{super}.py`
+
+### Scrapers y scripts de matching presentes en /scrapers
+scraper_mercadona.py, scraper_dia.py, scraper_alcampo.py, scraper_carrefour.py,
+scraper_ahorramas.py, scraper_hipercor.py, scraper_eroski.py, scraper_despensa.py,
+scraper_openprices.py, scraper_carrefour_gemini.py, scraper_mercadona_gemini.py,
+match_mercadona.py, match_dia.py, match_alcampo.py, match_alcampo_ia.py,
+match_carrefour.py, match_ahorramas.py, match_hipercor.py, match_eroski.py, match_ean.py,
+revisar_matches_dia.py, revisar_matches_alcampo.py,
+construir_catalogo_desde_carrefour.py, agregar_carrefour_faltantes.py, carrefour_setup.sql
 
 ---
 
-## 8. Planes de suscripción
+## 8. Planes de suscripción (según usePlan.js — VERIFICADO)
 
-| Plan | Precio | Límites | Estado |
-|---|---|---|---|
-| Gratuito sin registro | 0€ | 2 supers, 20 productos | ✅ funcionando |
-| Gratuito con registro | 0€ | 2 supers, 20 productos | ✅ funcionando |
-| Básico | 2,99€/mes | Todo ilimitado + CESTITA + historial + estadísticas | ✅ Stripe test |
-| Premium | 6,99€/mes | + menú semanal IA + nutricional + recetas IA + biblioteca menús | ✅ Stripe test |
+| Plan | Precio | Límites |
+|---|---|---|
+| free (sin registro) | 0€ | 2 supers, 20 productos |
+| free_reg (con registro) | 0€ | 2 supers, 20 productos + guardar/compartir listas |
+| basic | 2,99€/mes | ilimitado + CESTITA full + historial (3m) + estadísticas basic + escaneo |
+| premium | 6,99€/mes | + menú semanal + recetas IA + nutricional + estadísticas full + 30 menús guardados |
+
+### Menús guardados (MAX_MENUS_GUARDADOS)
+- free/free_reg/basic = 0 · premium = 30
 
 ### IDs Stripe
 - prod_UHT4B2MREHH2nE → Plan Básico
@@ -211,93 +271,88 @@ precios_aldi, precios_despensa, precios_eroski, precios_hipercor, precios_lidl
 - price_1TIu8THqX5envLqIAn8ZDQh0 → Precio Básico (live)
 - price_1TIuBcHqX5envLqIBIpWBKTQ → Precio Premium (live)
 
-### Funcionalidades por plan (usePlan.js)
-- maxSupers: free=2, basic/premium=999
-- maxProductos: free=20, basic/premium=999
-- limiteMenusGuardados: free=0, basic=0, premium=10
-- CESTITA básico: todos los planes
-- CESTITA avanzado (manipula cesta): todos los planes autenticados
-- guardarCompras: basic+
-- historialCompras: basic+ (3 meses), premium (ilimitado)
-- estadísticas: basic+
-- menuSemanal: premium
-- recetasIA: premium
-- nutricional: premium
+### ⚠️ Bug latente en usePlan.js
+Las claves de FUNCIONALIDADES para CESTITA están mal escritas: `cestivaBasic` /
+`cestivaFull` (falta la "t", debería ser *cestita*). Ahora es inocuo porque ningún
+componente llama a esas claves, pero si se cablea el gating de CESTITA esperando
+`cestitaBasic`, fallará en silencio. Corregir cuando se toque el fichero.
 
 ---
 
 ## 9. Funcionalidades implementadas ✅
 
 ### Frontend
-- Comparador con ~4.173 productos (Mercadona 100%, DIA y Alcampo parciales)
-- Sidebar con 87 categorías en acordeón
-- Buscador en tiempo real
-- Filtro marca blanca (oculta productos marca_blanca del catálogo)
-- Filtro categoría General (productos sin categoría no aparecen)
+- Comparador con 5 supermercados cableados (Mercadona, DIA, Alcampo, AhorraMas, Carrefour)
+- Sidebar con 87 categorías en acordeón, buscador en tiempo real
+- Filtro marca blanca y filtro categoría General
 - Auth completa (email + Google OAuth)
-- Lista colaborativa en tiempo real
-- Exportar PDF
-- PWA instalable (con screenshots en manifest)
-- CESTITA — asistente IA vía Vercel Serverless (/api/cestita) ✅
-- CESTITA — manipula cesta real (añadir/quitar/vaciar) ✅
-- ModalUpgrade — modal de planes con pago Stripe real ✅
-- usePlan — límites de plan funcionando (incluye limiteMenusGuardados)
-- StoreSelector compacto con logos y flag visible
+- Lista colaborativa en tiempo real, Exportar PDF, PWA instalable
+- CESTITA — asistente IA vía serverless (/api/cestita), manipula cesta real ✅
+- ModalUpgrade con pago Stripe real ✅, usePlan con límites ✅
 - SuperCard con reference_price (€/L, €/kg)
-- Guardar compras realizadas con detalle
-- Historial de compras en sidebar (🧾 MIS COMPRAS)
-- Estadísticas de gasto en sidebar (📊 MIS ESTADÍSTICAS) — basic+
+- Guardar compras + historial + estadísticas en sidebar
 - cestas_online sincronización en nube
-- ToolBar con 3 botones: Menú semanal / Sugerir recetas / Nutricional
-- MenuSemanal — 4 pestañas: Menú semanal / Recetas / Nutricional / Guardados ✅
-- MenuSemanal — generación JSON estructurada con cards visuales (no markdown) ✅
-- MenuSemanal — biblioteca de menús guardados en Supabase (menus_guardados) ✅
-- Stripe checkout + webhook → actualiza profiles en Supabase ✅
-- AdminPanel — Dashboard, Usuarios, Catálogo, Matches, Precios, Estadísticas ✅
+- ToolBar: Menú semanal / Sugerir recetas / Nutricional (premium)
+- ErrorBoundary + Service Worker (PWA) + cabeceras de seguridad en vercel.json
+- Carga de datos paginada (helper cargarTodo) en App.js
 
 ### Backend/Scrapers
 - scraper_mercadona.py — con reference_price y reference_format
-- scraper_carrefour.py — completado, 7.241 productos en BBDD ✅
-- scraper_ahorramas.py — completado, ~1.427 productos en BBDD ✅
-- enriquecer_catalogo.py — tipo, formato, nombre_normalizado, marca
-- revisar_matches_dia.py — revisión con IA
-- revisar_matches_alcampo.py — revisión con IA
-- match_alcampo.py v3 — fuzzy matching mejorado
-- construir_catalogo.py — construye catálogo desde Mercadona (base actual)
-- construir_catalogo_desde_carrefour.py — alternativa con Carrefour como base (generado, NO ejecutado)
-
-### RLS (Row Level Security)
-- Script SQL generado para todas las tablas (catálogo: lectura pública, datos usuario: auth.uid())
-- ⚠️ Verificar si está aplicado en Supabase
+- scraper_carrefour.py — StealthyFetcher + solve_cloudflare=True ✅ (~7.241 productos)
+- Amplio arsenal de scrapers/matching (ver Sección 7)
 
 ---
 
-## 10. Problemas conocidos / Deuda técnica
+## 10. Estado de "cambios pendientes" antiguos — YA RESUELTOS
+- ✅ Cambio 1 (props de MenuSemanal): `limiteMenusGuardados` YA está en el destructuring
+  de usePlan (App.js ~L69) y se pasa a `<MenuSemanal>` (~L1030). HECHO.
+- ✅ Cambio 2 (integrar Carrefour en frontend): HECHO. App.js carga precios_carrefour
+  y precios_ahorramas, incluye id_carrefour/id_ahorramas en la query de matches, los
+  indexa y los pinta. HECHO (aunque los datos de Carrefour están mal — ver Sección 11).
+- ✅ ALTER TABLE id_carrefour_score: la columna YA existe.
 
-### 🔴 Críticos
-- Stripe en modo TEST — pendiente pasar a producción (cambiar keys live)
+---
+
+## 11. Problemas conocidos / Deuda técnica
+
+### 🔴 Críticos (bloquean lanzamiento limpio)
+1. **Carrefour muestra precios ERRÓNEOS al usuario.** 4.691 matches con muchos
+   emparejamientos cruzados CONFIRMADOS. Ejemplos reales de la BBDD:
+   - "Cerveza San Miguel" ↔ "Pan de molde Bimbo"
+   - "Jamón cocido lonchas" ↔ "Coca Cola Zero Cereza"
+   - "Pañales Dodot talla 4" ↔ "Batido Cola Cao"
+   - "Toallitas bebé" ↔ "Hogaza masa madre"
+   Puntuación NULL, revisado=0. Como Carrefour está `visible: true`, esto es visible en producción.
+   **ACCIÓN:** poner Carrefour en `visible: false` en LogosSuper.js hasta re-ejecutar
+   `match_carrefour.py --dry-run` con filtrado por categoría. Aplicar la misma cautela
+   a AhorraMas (568 matches sin verificar).
+2. **Stripe:** confirmar si sigue en modo TEST. Pasar a producción (keys/price/webhook live)
+   es la puerta final de monetización.
 
 ### 🟡 Importantes
-- **Carrefour sin matches**: scraper OK (7.241 productos), pero `match_carrefour.py` NO ejecutado → 0 matches → no aparece en la app
-- **AhorraMas sin matches**: scraper OK (~1.427 productos), matching pendiente re-ejecutar tras rebuild del catálogo
-- EAN no capturado — API Mercadona no lo expone en endpoint de categorías
-- Matches DIA al 24% del catálogo (608/4173)
-- Matches Alcampo al 3% del catálogo (121/4173)
-- CESTITA no puede buscar productos que no están en el catálogo exactamente
-- Google OAuth abre ventana pequeña al volver del login (comportamiento Chrome, sin solución limpia)
+- Ningún super cubre el 100% del catálogo tras su crecimiento a ≈9.999.
+- Sentry instalado pero DESACTIVADO → sin monitorización de errores en producción.
+- `@google/generative-ai` dependencia muerta en el bundle → eliminar.
+- `tesseract.js` instalado pero OCR sin implementar → implementar o eliminar.
+- EAN no capturado por la API de Mercadona en el endpoint de categorías.
+- Hipercor: scraper falla con HTTP 520.
+- CESTITA no encuentra productos que no estén exactamente en el catálogo.
+- Posible duplicidad CookieBanner.js / Cookies.js → revisar.
 
-### 🟡 Pendiente implementar
-- CESTITA: sistema de acciones estructuradas mejorado (busca por palabras clave, no solo nombre exacto)
-- Alertas de precio (requiere tabla historial_precios — no existe aún)
-- Datos nutricionales en BBDD (ahora son estimaciones IA en tiempo real)
+### 🟢 Menores / Higiene de repo
+- `scripts/supabase.exe` (93 MB) commiteado a git → sacar del repo y del historial.
+- `frontend/build/` está trackeada en git (26 ficheros) → dejar de trackear + .gitignore.
+- Carpeta `old/` (16 MB) → limpiar.
+- 8 console.log en frontend/src (no rompe build por DISABLE_ESLINT_PLUGIN).
 
-### 🟢 Menores
-- Warning icono manifest PWA
-- Google Analytics configurado pero ID de GA4 es placeholder en index.html
+### 🔵 Infraestructura — Supabase breaking change
+- Fecha límite: 30/10/2026 — tablas nuevas sin GRANT explícito dejan de ser accesibles.
+- Tablas existentes: NO afectadas. Aplicar bloque GRANT al crear tablas nuevas (Sección 5).
+- Revisar Security Advisor en el dashboard antes de octubre.
 
 ---
 
-## 11. Comandos útiles
+## 12. Comandos útiles
 ```bash
 # Local (PowerShell — NO usar &&, ejecutar por separado)
 cd frontend
@@ -312,111 +367,41 @@ git push origin main
 cd backend/admin
 python app.py
 
-# Scrapers
+# Scrapers / matching (SIEMPRE --dry-run primero)
 python scrapers/scraper_mercadona.py
 python scrapers/scraper_carrefour.py
-python scrapers/enriquecer_catalogo.py --dry-run
+python scrapers/match_carrefour.py --dry-run    ← RE-EJECUTAR con filtro por categoría
+python scrapers/match_ahorramas.py --dry-run    ← revisar calidad
 python scrapers/revisar_matches_dia.py --dry-run
 python scrapers/revisar_matches_alcampo.py --dry-run
-python scrapers/match_alcampo.py --dry-run
-python scrapers/match_carrefour.py --dry-run
-
-# Verificar matches en Supabase
-# SELECT COUNT(*) FROM productos_match WHERE id_carrefour IS NOT NULL;
 ```
 
 ---
 
-## 12. Pendientes por orden de prioridad hacia el 100%
+## 13. Pendientes por orden de prioridad hacia el 100%
 
 ### FASE A — Estabilización ✅ COMPLETADA
-1. ✅ Limpiar console.logs de debug
-2. ✅ Mover CESTITA al backend
-3. ✅ Screenshots PWA manifest
-
-### FASE B — Monetización ✅ COMPLETADA (en test)
-4. ✅ Stripe checkout + webhook
-5. ✅ Webhook Stripe → actualizar profiles en Supabase
-6. ⏳ Pasar Stripe a producción (cambiar keys test → live) — LO ÚLTIMO
-
-### FASE C — Más supermercados (EN PROGRESO)
-7. ✅ Scraper Carrefour (7.241 productos en BBDD)
-8. ⏳ **Matching Carrefour** → crear y ejecutar `match_carrefour.py` → objetivo 3.000+ matches
-9. ⏳ **Integrar Carrefour en App.js** → solo después de que haya matches > 0
-10. ⏳ Re-ejecutar matching AhorraMas (matches a 0 tras rebuild catálogo)
-11. Scraper Hipercor (API pública El Corte Inglés)
-12. Intentar Lidl/Eroski con Scrapling (DynamicFetcher/StealthyFetcher)
-
+### FASE B — Monetización (Stripe checkout+webhook ✅; pasar a LIVE ⏳ pendiente)
 ### FASE D — Funcionalidades Premium ✅ COMPLETADA
-13. ✅ Generador de menú semanal con IA (rediseñado con 4 pestañas + JSON + biblioteca)
-14. ✅ Estadísticas de gasto del usuario
-15. ✅ Datos nutricionales de la cesta (estimaciones IA)
-16. ✅ CESTITA manipula la cesta real
-17. ⏳ Alertas de subida/bajada de precio (requiere historial_precios)
 
-### FASE E — Calidad de datos
-18. Revisar errores e inconsistencias en catálogo de productos
-19. Mejorar matches DIA (608 → objetivo 2.000+)
-20. Mejorar matches Alcampo (121 → objetivo 500+)
-21. EAN vía endpoint individual Mercadona (opcional, costoso)
+### FASE C — Calidad de datos de supers visibles (PRIORIDAD ACTUAL)
+1. ⏳ Ocultar Carrefour (visible:false) hasta arreglar sus matches.
+2. ⏳ Re-ejecutar match_carrefour.py --dry-run con filtrado por categoría (objetivo: matches limpios).
+3. ⏳ Revisar calidad de AhorraMas (568 matches sin verificar); ocultar si hace falta.
+4. ⏳ Volver a poner visible:true cuando estén limpios.
 
----
+### FASE F — Puerta de lanzamiento
+5. ⏳ Confirmar estado de Stripe y pasar a producción (keys/price/webhook live + transacción real de prueba).
 
-## 13. ⚠️ CAMBIOS PENDIENTES EN App.js (NO APLICADOS AÚN)
+### FASE G — Endurecimiento para producción
+6. ⏳ Activar Sentry (env var REACT_APP_SENTRY_DSN + descomentar index.js).
+7. ⏳ Eliminar dependencia @google/generative-ai; decidir sobre tesseract.js.
+8. ⏳ Verificar que GA4 registra eventos en producción.
 
-El App.js en producción tiene DOS bloques de cambios pendientes. Aplicar en orden:
+### FASE H — Higiene de repo (no bloquea lanzamiento)
+9. ⏳ Sacar supabase.exe del historial de git; dejar de trackear build/; limpiar old/.
 
-### CAMBIO 1 — Props MenuSemanal (requisito: tabla menus_guardados creada en Supabase)
-Dos toques mínimos para que la biblioteca de menús guardados funcione:
-
-**Línea 43** — Añadir `limiteMenusGuardados` al destructuring de usePlan:
-```javascript
-// ANTES:
-const { plan, cargando: planCargando, limiteSupers, limiteProductos } = usePlan(session);
-// DESPUÉS:
-const { plan, cargando: planCargando, limiteSupers, limiteProductos, limiteMenusGuardados } = usePlan(session);
-```
-
-**Líneas 949-957** — Añadir 3 props al componente MenuSemanal:
-```jsx
-// ANTES:
-<MenuSemanal
-  onClose={() => setMostrarMenuSemanal(false)}
-  supersActivos={supersActivos}
-  precios={precios}
-  seleccionados={seleccionados}
-  getProdFull={getProdFull}
-  modoInicial={modoMenuSemanal}
-/>
-// DESPUÉS:
-<MenuSemanal
-  onClose={() => setMostrarMenuSemanal(false)}
-  supersActivos={supersActivos}
-  precios={precios}
-  seleccionados={seleccionados}
-  getProdFull={getProdFull}
-  modoInicial={modoMenuSemanal}
-  session={session}
-  plan={plan}
-  limiteMenusGuardados={limiteMenusGuardados}
-/>
-```
-
-### CAMBIO 2 — Integrar Carrefour (requisito: matches Carrefour > 0 en productos_match)
-NO aplicar hasta que `match_carrefour.py` se haya ejecutado y haya matches. Cambios necesarios:
-- Añadir carga de `precios_carrefour` (select id, precio, precio_unidad, nombre_comercial)
-- Crear índices `idxCarrefour`, `nombresCarrefour`, `idxCarrefourRef`
-- Añadir Carrefour al mapeo de precios y referencias en el bucle `catalogo.forEach`
-- Leer `m.id_carrefour` de productos_match
-- Añadir "Carrefour" a supersActivos por defecto
-
----
-
-## 14. Lecciones aprendidas (bugs recurrentes)
-
-- `SUPERS_CONFIG` array DEBE definirse FUERA del componente `Precios` en AdminPanel — si está dentro, es undefined cuando `cargar()` ejecuta
-- Las definiciones de funciones DEBEN preceder a sus `useEffect` calls
-- El bug core de supersActivos: `StoreSelector` llamaba a `setSupersActivos` directamente, bypaseando `setSupersActivosConLimite`
-- Matching con `rapidfuzz.token_sort_ratio` al 85% produce cross-matches de marca (Coca-Cola ↔ Hola Cola) — deprioritizado pero documentado
-- Marca blanca (Hacendado, Alipende, etc.) → nombre genérico en sidebar; marca fabricante (Coca-Cola, Carbonell) → solo si aparece en 2+ supermercados
-- Diferentes formatos de producto (33cl vs 50cl) son entradas separadas en el catálogo
+### FASE E — Calidad de datos (mejora continua)
+10. Revisar inconsistencias del catálogo.
+11. Mejorar matches DIA (1.140) y Alcampo (201).
+12. EAN vía endpoint individual Mercadona (opcional, costoso) / vía OpenPrices.
