@@ -1,5 +1,5 @@
 """
-match_carrefour.py  —  Mi Mejor Cesta (v5)
+match_carrefour.py  —  Mi Mejor Cesta (v6)
 ==========================================
 Vincula productos_catalogo con precios_carrefour.
 
@@ -14,6 +14,14 @@ v5 sobre v4:
 - Elimina partial_ratio y token_set_ratio (causaban matches falsos)
 - Elimina penalización por longitud relativa (incompatible con process.extract)
 - Normalización simplificada: solo elimina marcas Carrefour propias, no terceros
+
+v6 sobre v5:
+- Nuevo filtro de FORMATO: descarta pares cuyo tamaño/cantidad no coincide
+  (p.ej. "Donuts 4 Ud" vs "Donuts 6 Ud"). Compara masa/volumen/unidades tras
+  normalizar a una base común (g, ml, ud) y teniendo en cuenta packs.
+  Solo bloquea cuando AMBOS nombres tienen una cantidad clara de la misma
+  familia y difieren >5%. Si uno no tiene cantidad, no bloquea (conserva el
+  comportamiento anterior para nombres de catálogo sin unidad).
 
 Uso:
   python scrapers/match_carrefour.py --dry-run
@@ -142,6 +150,63 @@ def normalizar(texto, es_carrefour=False):
     return t
 
 
+# ── Filtro 3: Formato / cantidad ──────────────────────────────────────────────
+
+_UNID_BASE = {'kg': 1000, 'gr': 1, 'g': 1, 'l': 1000, 'cl': 10, 'ml': 1}
+
+def extraer_formato(texto):
+    """Devuelve (familia, valor_en_base) o None si el nombre no tiene una
+    cantidad clara. Familias: 'masa' (base g), 'vol' (base ml), 'cant' (base ud).
+    Tiene en cuenta packs: 'pack de 6', '6 x 200 ml' -> multiplica."""
+    if not texto:
+        return None
+    t = unicodedata.normalize("NFD", texto.lower())
+    t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    t = t.replace(",", ".")
+
+    # multiplicador de pack: "6 x ...", "pack de 6", "pack 6"
+    mult = 1
+    mp = re.search(r'(\d+)\s*x\b', t) or re.search(r'pack\s*(?:de\s*)?(\d+)', t)
+    if mp:
+        try:
+            mult = int(mp.group(1))
+        except (TypeError, ValueError):
+            mult = 1
+
+    # medida principal: masa o volumen
+    mm = re.search(r'(\d+(?:\.\d+)?)\s*(kg|gr|g|l|cl|ml)\b', t)
+    if mm:
+        val = float(mm.group(1)) * _UNID_BASE[mm.group(2)] * mult
+        familia = 'masa' if mm.group(2) in ('kg', 'gr', 'g') else 'vol'
+        return (familia, val)
+
+    # medida por unidades sueltas: "6 ud", "12 uds", "4 unidades"
+    mc = re.search(r'(\d+)\s*(?:uds?|unidad|unidades|u)\b', t)
+    if mc:
+        return ('cant', float(mc.group(1)))
+
+    # pack sin medida por unidad -> contamos el pack como unidades
+    if mult > 1:
+        return ('cant', float(mult))
+
+    return None
+
+
+def formatos_compatibles(nombre_cr, nombre_cat):
+    """True si los formatos son compatibles o no se pueden comparar.
+    False solo si ambos tienen cantidad de la MISMA familia y difieren >5%."""
+    fa = extraer_formato(nombre_cr)
+    fb = extraer_formato(nombre_cat)
+    if fa is None or fb is None:
+        return True            # sin dato comparable -> no bloquear
+    if fa[0] != fb[0]:
+        return True            # familias distintas -> ambiguo -> no bloquear
+    a, b = fa[1], fb[1]
+    if a <= 0 or b <= 0:
+        return True
+    return max(a, b) / min(a, b) <= 1.05
+
+
 # ── Supabase ──────────────────────────────────────────────────────────────────
 
 def fetch_all(tabla, columnas="*"):
@@ -159,7 +224,7 @@ def fetch_all(tabla, columnas="*"):
 
 def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
     print("=" * 60)
-    print("  MATCHING CARREFOUR v5 -- Mi Mejor Cesta")
+    print("  MATCHING CARREFOUR v6 -- Mi Mejor Cesta")
     print(f"  Umbral auto: {umbral_auto}%  |  Dudosos: {UMBRAL_DUDOSO}%")
     print(f"  Modo: {'DRY-RUN' if dry_run else 'PRODUCCION'}")
     print("=" * 60)
@@ -194,6 +259,7 @@ def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
     todos = []
     filtrados_variante = 0
     filtrados_tipo     = 0
+    filtrados_formato  = 0
 
     for i, prod in enumerate(pendientes):
         nombre_cr = prod.get('nombre_comercial', '') or ''
@@ -222,6 +288,9 @@ def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
             if tiene_par_incompatible(norm_cr, cat['norm']):
                 filtrados_tipo += 1
                 continue
+            if not formatos_compatibles(nombre_cr, cat['nombre']):
+                filtrados_formato += 1
+                continue
             kw_cat = {w for w in cat['norm'].split() if len(w) > 4}
             if kw_cr and kw_cat and not (kw_cr & kw_cat):
                 continue
@@ -231,7 +300,7 @@ def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
             print(f"  {i+1}/{len(pendientes)} procesados...")
 
     print(f"  {len(todos)} pares candidatos")
-    print(f"  (filtrados: {filtrados_variante} por variante, {filtrados_tipo} por tipo)")
+    print(f"  (filtrados: {filtrados_variante} por variante, {filtrados_tipo} por tipo, {filtrados_formato} por formato)")
 
     todos.sort(key=lambda x: -x[0])
     usados_cr  = set(ya_cr)

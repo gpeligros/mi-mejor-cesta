@@ -1,5 +1,5 @@
 """
-match_ahorramas.py  —  Mi Mejor Cesta (v3)
+match_ahorramas.py  —  Mi Mejor Cesta (v4)
 ==========================================
 Vincula precios_ahorramas con productos_catalogo.
 
@@ -8,6 +8,15 @@ Mejoras v3 sobre v2:
   tiene y el otro no, se rechaza el match
 - Filtro tipo de producto: pares de palabras incompatibles (jamon/lomo,
   carne/atun, ajo/clavo…) detectan productos distintos del mismo formato
+
+Mejoras v4 sobre v3:
+- Filtro de FORMATO (idéntico a match_carrefour.py v6): descarta pares cuyo
+  tamaño/cantidad no coincide (p.ej. "Donuts 4 Ud" vs "Donuts 6 Ud"). Compara
+  masa/volumen/unidades en base común (g, ml, ud) y tiene en cuenta packs.
+  Solo bloquea si AMBOS nombres tienen cantidad clara de la misma familia y
+  difieren >5%; si uno no la tiene, no bloquea.
+- El dry-run muestra también los 20 automáticos MÁS FLOJOS (banda 83-85%),
+  para revisar la zona de riesgo antes de aplicar.
 
 Estrategia:
   - Score >= 83 -> match automatico  (umbral por defecto)
@@ -155,6 +164,63 @@ def normalizar(texto, es_ahorramas=False):
     return t
 
 
+# ── Filtro 3: Formato / cantidad ──────────────────────────────────────────────
+
+_UNID_BASE = {'kg': 1000, 'gr': 1, 'g': 1, 'l': 1000, 'cl': 10, 'ml': 1}
+
+def extraer_formato(texto):
+    """Devuelve (familia, valor_en_base) o None si el nombre no tiene una
+    cantidad clara. Familias: 'masa' (base g), 'vol' (base ml), 'cant' (base ud).
+    Tiene en cuenta packs: 'pack de 6', '6 x 200 ml' -> multiplica."""
+    if not texto:
+        return None
+    t = unicodedata.normalize("NFD", texto.lower())
+    t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    t = t.replace(",", ".")
+
+    # multiplicador de pack: "6 x ...", "pack de 6", "pack 6"
+    mult = 1
+    mp = re.search(r'(\d+)\s*x\b', t) or re.search(r'pack\s*(?:de\s*)?(\d+)', t)
+    if mp:
+        try:
+            mult = int(mp.group(1))
+        except (TypeError, ValueError):
+            mult = 1
+
+    # medida principal: masa o volumen
+    mm = re.search(r'(\d+(?:\.\d+)?)\s*(kg|gr|g|l|cl|ml)\b', t)
+    if mm:
+        val = float(mm.group(1)) * _UNID_BASE[mm.group(2)] * mult
+        familia = 'masa' if mm.group(2) in ('kg', 'gr', 'g') else 'vol'
+        return (familia, val)
+
+    # medida por unidades sueltas: "6 ud", "12 uds", "4 unidades"
+    mc = re.search(r'(\d+)\s*(?:uds?|unidad|unidades|u)\b', t)
+    if mc:
+        return ('cant', float(mc.group(1)))
+
+    # pack sin medida por unidad -> contamos el pack como unidades
+    if mult > 1:
+        return ('cant', float(mult))
+
+    return None
+
+
+def formatos_compatibles(nombre_a, nombre_b):
+    """True si los formatos son compatibles o no se pueden comparar.
+    False solo si ambos tienen cantidad de la MISMA familia y difieren >5%."""
+    fa = extraer_formato(nombre_a)
+    fb = extraer_formato(nombre_b)
+    if fa is None or fb is None:
+        return True            # sin dato comparable -> no bloquear
+    if fa[0] != fb[0]:
+        return True            # familias distintas -> ambiguo -> no bloquear
+    a, b = fa[1], fb[1]
+    if a <= 0 or b <= 0:
+        return True
+    return max(a, b) / min(a, b) <= 1.05
+
+
 # ── Supabase ──────────────────────────────────────────────────────────────────
 
 def fetch_all(tabla, columnas="*"):
@@ -172,7 +238,7 @@ def fetch_all(tabla, columnas="*"):
 
 def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
     print("=" * 60)
-    print("  MATCHING AHORRAMAS v3 -- Mi Mejor Cesta")
+    print("  MATCHING AHORRAMAS v4 -- Mi Mejor Cesta")
     print(f"  Umbral auto: {umbral_auto}%  |  Dudosos: {UMBRAL_DUDOSO}%")
     print(f"  Modo: {'DRY-RUN' if dry_run else 'PRODUCCION'}")
     print("=" * 60)
@@ -210,6 +276,7 @@ def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
     todos = []  # (score_int, id_ah, id_cat, nombre_ah, nombre_cat)
     filtrados_variante = 0
     filtrados_tipo     = 0
+    filtrados_formato  = 0
 
     for i, prod in enumerate(pendientes):
         nombre_ah = prod.get('nombre_comercial', '') or ''
@@ -245,6 +312,11 @@ def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
                 filtrados_tipo += 1
                 continue
 
+            # Filtro 3: formato/cantidad incompatible (4 Ud vs 6 Ud, packs…)
+            if not formatos_compatibles(nombre_ah, cat['nombre']):
+                filtrados_formato += 1
+                continue
+
             # Requisito de palabra clave: al menos una >4 letras en comun
             kw_cat = {w for w in cat['norm'].split() if len(w) > 4}
             if kw_ah and kw_cat and not (kw_ah & kw_cat):
@@ -256,7 +328,7 @@ def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
             print(f"  {i+1}/{len(pendientes)} procesados...")
 
     print(f"  {len(todos)} pares candidatos")
-    print(f"  (filtrados: {filtrados_variante} por variante, {filtrados_tipo} por tipo)")
+    print(f"  (filtrados: {filtrados_variante} por variante, {filtrados_tipo} por tipo, {filtrados_formato} por formato)")
 
     # Asignacion 1-a-1 (greedy por score desc)
     todos.sort(key=lambda x: -x[0])
@@ -292,6 +364,12 @@ def main(dry_run=False, umbral_auto=UMBRAL_AUTO):
     print("\nMuestra automaticos (primeros 20):")
     for m in sorted(automaticos, key=lambda x: -x['score'])[:20]:
         print(f"  [{int(m['score']):3d}%] {m['nombre_ah'][:45]:<45} -> {m['nombre_cat'][:35]}")
+
+    # v4: los 20 automaticos MAS FLOJOS (banda de riesgo 83-85%) para revisar antes de aplicar
+    if len(automaticos) > 20:
+        print("\nMuestra automaticos MAS FLOJOS (ultimos 20 -- banda de riesgo):")
+        for m in sorted(automaticos, key=lambda x: x['score'])[:20]:
+            print(f"  [{int(m['score']):3d}%] {m['nombre_ah'][:45]:<45} -> {m['nombre_cat'][:35]}")
 
     if dudosos_list:
         print(f"\nMuestra dudosos (primeros 5):")
