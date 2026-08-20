@@ -1,4 +1,5 @@
 import React from 'react';
+import { UtensilsCrossed, Lightbulb, Salad } from 'lucide-react';
 
 const OSCURO = '#102215';
 
@@ -34,7 +35,7 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
   const botones = [
     {
       id: 'menu',
-      emoji: '🍽️',
+      Icon: UtensilsCrossed,
       label: 'Menú semanal',
       sublabel: 'IA genera tu semana',
       onClick: handleMenuSemanal,
@@ -45,7 +46,7 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
     },
     {
       id: 'recetas',
-      emoji: '💡',
+      Icon: Lightbulb,
       label: 'Sugerir recetas',
       sublabel: seleccionados?.length > 0 ? `Con tus ${seleccionados.length} productos` : 'Basado en tu cesta',
       onClick: handleSugerirRecetas,
@@ -56,7 +57,7 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
     },
     {
       id: 'nutricional',
-      emoji: '🥗',
+      Icon: Salad,
       label: 'Nutricional',
       sublabel: seleccionados?.length > 0 ? `${seleccionados.length} productos` : 'Análisis de tu cesta',
       onClick: handleNutricional,
@@ -78,59 +79,62 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
         paddingTop: '14px',
       }}
     >
-      {botones.map(b => (
-        <button
-          key={b.id}
-          onClick={b.onClick || undefined}
-          style={{
-            minWidth: '100px',
-            background: b.activo ? b.tinte : '#fafafa',
-            border: `1.5px solid ${b.activo ? 'transparent' : '#eee'}`,
-            borderRadius: '16px',
-            padding: '14px 12px',
-            cursor: 'pointer',
-            textAlign: 'center',
-            transition: 'all 0.2s ease',
-            position: 'relative',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.08)';
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = 'none';
-          }}
-        >
-          {b.badge && (
-            <span style={{
-              position: 'absolute', top: '-8px', right: '10px',
-              background: OSCURO, color: 'white', fontSize: '8px', fontWeight: '900',
-              padding: '3px 7px', borderRadius: '6px', letterSpacing: '0.4px',
+      {botones.map(b => {
+        const IconComp = b.Icon;
+        return (
+          <button
+            key={b.id}
+            onClick={b.onClick || undefined}
+            style={{
+              minWidth: '100px',
+              background: b.activo ? b.tinte : '#fafafa',
+              border: `1.5px solid ${b.activo ? 'transparent' : '#eee'}`,
+              borderRadius: '16px',
+              padding: '14px 12px',
+              cursor: 'pointer',
+              textAlign: 'center',
+              transition: 'all 0.2s ease',
+              position: 'relative',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.08)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            {b.badge && (
+              <span style={{
+                position: 'absolute', top: '-8px', right: '10px',
+                background: OSCURO, color: 'white', fontSize: '8px', fontWeight: '900',
+                padding: '3px 7px', borderRadius: '6px', letterSpacing: '0.4px',
+              }}>
+                {b.badge}
+              </span>
+            )}
+            <div style={{
+              width: '38px', height: '38px', borderRadius: '50%',
+              background: b.activo ? 'white' : '#eee',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 8px',
+              boxShadow: b.activo ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
             }}>
-              {b.badge}
-            </span>
-          )}
-          <div style={{
-            width: '38px', height: '38px', borderRadius: '50%',
-            background: b.activo ? 'white' : '#eee',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 8px', fontSize: '18px',
-            boxShadow: b.activo ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
-          }}>
-            {b.emoji}
-          </div>
-          <div style={{
-            fontSize: '11px', fontWeight: '900',
-            color: b.activo ? OSCURO : '#999', lineHeight: 1.2,
-          }}>
-            {b.label}
-          </div>
-          <div style={{ fontSize: '9px', color: '#999', marginTop: '2px', fontWeight: '600' }}>
-            {b.sublabel}
-          </div>
-        </button>
-      ))}
+              <IconComp size={18} color={b.activo ? b.color : '#aaa'} strokeWidth={1.8} />
+            </div>
+            <div style={{
+              fontSize: '11px', fontWeight: '900',
+              color: b.activo ? OSCURO : '#999', lineHeight: 1.2,
+            }}>
+              {b.label}
+            </div>
+            <div style={{ fontSize: '9px', color: '#999', marginTop: '2px', fontWeight: '600' }}>
+              {b.sublabel}
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 };

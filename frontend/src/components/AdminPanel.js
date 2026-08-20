@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabaseClient';
+import {
+  LayoutDashboard, Users, Package, Link2, Tag, Store, TrendingUp,
+  ShoppingCart, CreditCard, Boxes, CheckCircle2, Inbox, Search,
+  AlertTriangle, X, Check, Pencil, Lock,
+} from 'lucide-react';
 
 const VERDE = '#037623';
 const OSCURO = '#102215';
@@ -7,13 +12,18 @@ const GRIS = '#f4f7f5';
 
 // ── Mini componentes ──────────────────────────────────────────────────────────
 
-const StatCard = ({ emoji, label, value, sub, color }) => (
+const StatCard = ({ icon: Icon, label, value, sub, color, tinte }) => (
   <div style={{
-    background: 'white', borderRadius: 16, padding: '20px 24px',
+    background: tinte || 'white', borderRadius: 16, padding: '20px 24px',
     boxShadow: '0 2px 12px rgba(0,0,0,0.06)', borderLeft: `4px solid ${color || VERDE}`,
   }}>
-    <div style={{ fontSize: 28, marginBottom: 6 }}>{emoji}</div>
-    <div style={{ fontSize: 28, fontWeight: 900, color: OSCURO }}>{value}</div>
+    <div style={{
+      width: 34, height: 34, borderRadius: 10, marginBottom: 10,
+      background: (color || VERDE) + '18', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      {Icon && <Icon size={18} color={color || VERDE} strokeWidth={2} />}
+    </div>
+    <div style={{ fontSize: 26, fontWeight: 900, color: OSCURO }}>{value}</div>
     <div style={{ fontSize: 13, fontWeight: 700, color: '#666', marginTop: 2 }}>{label}</div>
     {sub && <div style={{ fontSize: 11, color: '#aaa', marginTop: 4 }}>{sub}</div>}
   </div>
@@ -50,7 +60,9 @@ const Dashboard = ({ stats, supers }) => {
   const pct = (n) => (n && stats.catalogo ? Math.round(n / stats.catalogo * 100) : 0);
   return (
     <div>
-      <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 900, color: OSCURO }}>📊 Dashboard</h2>
+      <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 900, color: OSCURO, display: 'flex', alignItems: 'center', gap: 10 }}>
+        <LayoutDashboard size={22} /> Dashboard
+      </h2>
 
       {/* La métrica que de verdad importa: cuántos productos comparan precio de verdad */}
       <div style={{
@@ -58,7 +70,7 @@ const Dashboard = ({ stats, supers }) => {
         marginBottom: 24, color: 'white', boxShadow: '0 4px 20px rgba(3,118,35,0.25)',
       }}>
         <div style={{ fontSize: 13, fontWeight: 700, opacity: 0.85, marginBottom: 6 }}>
-          🎯 NÚCLEO DE LA APP — Productos que comparan precio de verdad (≥2 supermercados)
+          NÚCLEO DE LA APP — Productos que comparan precio de verdad (≥2 supermercados)
         </div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
           <div style={{ fontSize: 42, fontWeight: 900 }}>{stats.comparando?.toLocaleString()}</div>
@@ -102,72 +114,70 @@ const Dashboard = ({ stats, supers }) => {
         )}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16, marginBottom: 32 }}>
-        <StatCard emoji="👥" label="Usuarios registrados" value={stats.usuarios} color={VERDE} />
-        <StatCard emoji="💳" label="Suscriptores de pago" value={stats.pagos} sub={`${stats.basic} basic · ${stats.premium} premium`} color="#6200ea" />
-        <StatCard emoji="🛒" label="Productos catálogo" value={stats.catalogo?.toLocaleString()} color="#0288d1" />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 16, marginBottom: 32 }}>
+        <StatCard icon={Users} label="Usuarios registrados" value={stats.usuarios} color={VERDE} tinte="#f3fbf5" />
+        <StatCard icon={CreditCard} label="Suscriptores de pago" value={stats.pagos} sub={`${stats.basic} basic · ${stats.premium} premium`} color="#6200ea" tinte="#f8f3ff" />
+        <StatCard icon={ShoppingCart} label="Productos catálogo" value={stats.catalogo?.toLocaleString()} color="#0288d1" tinte="#f0f9ff" />
         {supers.map(s => (
-          <StatCard key={s.id} emoji="🔗" label={`Matches ${s.nombre}`}
+          <StatCard key={s.id} icon={Link2} label={`Matches ${s.nombre}`}
             value={stats.matchesPorSuper?.[s.id]?.toLocaleString()}
-            sub={`${pct(stats.matchesPorSuper?.[s.id])}% del catálogo`} color={s.color} />
+            sub={`${pct(stats.matchesPorSuper?.[s.id])}% del catálogo`} color={s.color} tinte={s.color + '0c'} />
         ))}
-        <StatCard emoji="📦" label="Compras guardadas" value={stats.compras?.toLocaleString()} color="#00796b" />
+        <StatCard icon={Package} label="Compras guardadas" value={stats.compras?.toLocaleString()} color="#00796b" tinte="#f0faf8" />
       </div>
 
-      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>📦 Precios en BBDD</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16, marginBottom: 32 }}>
-        {supers.map(s => (
-          <StatCard key={s.id} emoji={s.emoji} label={s.nombre}
-            value={stats.preciosPorSuper?.[s.id]?.toLocaleString()} color={s.color} />
-        ))}
-      </div>
-
-      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>
-        🔍 Calidad de datos por supermercado
+      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Boxes size={18} /> Precios en BBDD
       </h3>
-      <div style={{
-        background: 'white', borderRadius: 16, padding: '20px 24px',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.06)', marginBottom: 32,
-      }}>
-        <div style={{ fontSize: 12, color: '#888', marginBottom: 18 }}>
-          % de productos con nombre correcto vs. filas rotas (scraper sin capturar el nombre)
-        </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 16, marginBottom: 32 }}>
+        {supers.map(s => (
+          <StatCard key={s.id} icon={Store} label={s.nombre}
+            value={stats.preciosPorSuper?.[s.id]?.toLocaleString()} color={s.color} tinte={s.color + '0c'} />
+        ))}
+      </div>
+
+      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Search size={18} /> Calidad de datos por supermercado
+      </h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 16, marginBottom: 32 }}>
         {supers.map(s => {
           const total = stats.preciosPorSuper?.[s.id] || 0;
           const vacios = stats.vaciosPorSuper?.[s.id] || 0;
           const pctVacio = total ? Math.round(vacios / total * 100) : 0;
           const pctOk = 100 - pctVacio;
+          const bien = pctOk >= 90;
+          const colorEstado = bien ? VERDE : '#d32f2f';
           return (
-            <div key={s.id} style={{ marginBottom: 14 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontSize: 12, fontWeight: 800, color: OSCURO }}>{s.emoji} {s.nombre}</span>
-                <span style={{ fontSize: 11, fontWeight: 700, color: pctVacio > 10 ? '#d32f2f' : '#888' }}>
-                  {pctOk}% OK{pctVacio > 0 && ` · ${vacios.toLocaleString()} filas rotas (${pctVacio}%)`}
-                </span>
+            <div key={s.id} style={{
+              background: bien ? '#f3fbf5' : '#fdecea', borderRadius: 16, padding: '18px 20px',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.05)', borderLeft: `4px solid ${colorEstado}`,
+            }}>
+              <div style={{
+                width: 34, height: 34, borderRadius: 10, marginBottom: 10,
+                background: colorEstado + '18', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                {bien ? <CheckCircle2 size={18} color={colorEstado} /> : <AlertTriangle size={18} color={colorEstado} />}
               </div>
-              <div style={{ height: 10, borderRadius: 6, background: '#f0f0f0', overflow: 'hidden', display: 'flex' }}>
-                <div style={{
-                  width: `${pctOk}%`, background: s.color, transition: 'width 0.6s ease',
-                }} />
-                {pctVacio > 0 && (
-                  <div style={{
-                    width: `${pctVacio}%`,
-                    background: 'repeating-linear-gradient(45deg, #d32f2f, #d32f2f 4px, #ff6659 4px, #ff6659 8px)',
-                    transition: 'width 0.6s ease',
-                  }} />
-                )}
-              </div>
+              <div style={{ fontSize: 30, fontWeight: 900, color: colorEstado }}>{pctOk}%</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#666', marginTop: 2 }}>{s.nombre}</div>
+              {pctVacio > 0 && (
+                <div style={{ fontSize: 11, color: colorEstado, marginTop: 4, fontWeight: 700 }}>
+                  {vacios.toLocaleString()} filas rotas ({pctVacio}%)
+                </div>
+              )}
             </div>
           );
         })}
       </div>
 
-      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>🏷️ Calidad de categorización</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16 }}>
-        <StatCard emoji="✅" label="Categorizados" value={stats.categorizados?.toLocaleString()}
-          sub={`${pct(stats.categorizados)}% del catálogo`} color={VERDE} />
-        <StatCard emoji="📥" label="Bazar y Varios (sin categoría clara)" value={stats.bazarVarios?.toLocaleString()}
-          sub={`${pct(stats.bazarVarios)}% del catálogo`} color="#888" />
+      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Tag size={18} /> Calidad de categorización
+      </h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 16 }}>
+        <StatCard icon={CheckCircle2} label="Categorizados" value={stats.categorizados?.toLocaleString()}
+          sub={`${pct(stats.categorizados)}% del catálogo`} color={VERDE} tinte="#f3fbf5" />
+        <StatCard icon={Inbox} label="Bazar y Varios (sin categoría clara)" value={stats.bazarVarios?.toLocaleString()}
+          sub={`${pct(stats.bazarVarios)}% del catálogo`} color="#888" tinte="#fafafa" />
       </div>
     </div>
   );
@@ -217,7 +227,7 @@ const Usuarios = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>👥 Usuarios</h2>
+        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO, display: "flex", alignItems: "center", gap: 10 }}><Users size={22} /> Usuarios</h2>
         <input
           placeholder="Buscar por ID o plan..."
           value={busqueda}
@@ -356,7 +366,7 @@ const Catalogo = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>📦 Catálogo</h2>
+        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO, display: "flex", alignItems: "center", gap: 10 }}><Package size={22} /> Catálogo</h2>
         <div style={{ display: 'flex', gap: 10 }}>
           <input
             placeholder="Buscar producto..."
@@ -502,7 +512,7 @@ const Matches = ({ supers }) => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>🔗 Matches</h2>
+        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO, display: "flex", alignItems: "center", gap: 10 }}><Link2 size={22} /> Matches</h2>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button onClick={() => { setFiltro('todos'); setPagina(1); }}
             style={{
@@ -640,7 +650,7 @@ const Precios = ({ supers }) => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
-        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>💰 Precios</h2>
+        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO, display: "flex", alignItems: "center", gap: 10 }}><Tag size={22} /> Precios</h2>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', gap: 6 }}>
             {supers.map(s => (
@@ -773,11 +783,11 @@ const Estadisticas = () => {
 
   return (
     <div>
-      <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 900, color: OSCURO }}>📈 Estadísticas</h2>
+      <h2 style={{ margin: "0 0 24px", fontSize: 22, fontWeight: 900, color: OSCURO, display: "flex", alignItems: "center", gap: 10 }}><TrendingUp size={22} /> Estadísticas</h2>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
-        <StatCard emoji="📋" label="Compras guardadas (últimas 100)" value={datos.comprasTotales} color={VERDE} />
-        <StatCard emoji="💳" label="Suscriptores activos" value={datos.porPlan.basic + datos.porPlan.premium}
+        <StatCard icon={Package} label="Compras guardadas (últimas 100)" value={datos.comprasTotales} color={VERDE} tinte="#f3fbf5" />
+        <StatCard icon={CreditCard} label="Suscriptores activos" value={datos.porPlan.basic + datos.porPlan.premium}
           sub={`${datos.porPlan.basic} basic · ${datos.porPlan.premium} premium`} color="#6200ea" />
       </div>
 
@@ -836,7 +846,7 @@ const Supermercados = ({ supers, onCambio }) => {
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
-        <h2 style={{ margin: '0 0 8px', fontSize: 22, fontWeight: 900, color: OSCURO }}>🏪 Supermercados</h2>
+        <h2 style={{ margin: "0 0 8px", fontSize: 22, fontWeight: 900, color: OSCURO, display: "flex", alignItems: "center", gap: 10 }}><Store size={22} /> Supermercados</h2>
         <p style={{ margin: 0, fontSize: 13, color: '#888', maxWidth: 640 }}>
           Aquí puedes renombrar, cambiar de color, reordenar o activar/desactivar
           (ocultar del comparador) los supermercados ya integrados, sin tocar código.
@@ -1029,7 +1039,9 @@ const AdminPanel = ({ session, onSalir }) => {
 
   if (!esAdmin) return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: GRIS, flexDirection: 'column', gap: 16 }}>
-      <div style={{ fontSize: 40 }}>🔒</div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Lock size={40} color="#999" />
+      </div>
       <div style={{ fontSize: 20, fontWeight: 900, color: OSCURO }}>Acceso denegado</div>
       <div style={{ fontSize: 14, color: '#888' }}>No tienes permisos de administrador.</div>
       <Btn onClick={onSalir} variant="secondary">← Volver a la app</Btn>
@@ -1037,13 +1049,13 @@ const AdminPanel = ({ session, onSalir }) => {
   );
 
   const MENU = [
-    { id: 'dashboard', emoji: '📊', label: 'Dashboard' },
-    { id: 'usuarios', emoji: '👥', label: 'Usuarios' },
-    { id: 'catalogo', emoji: '📦', label: 'Catálogo' },
-    { id: 'matches', emoji: '🔗', label: 'Matches' },
-    { id: 'precios', emoji: '💰', label: 'Precios' },
-    { id: 'supermercados', emoji: '🏪', label: 'Supermercados' },
-    { id: 'estadisticas', emoji: '📈', label: 'Estadísticas' },
+    { id: 'dashboard', Icon: LayoutDashboard, label: 'Dashboard' },
+    { id: 'usuarios', Icon: Users, label: 'Usuarios' },
+    { id: 'catalogo', Icon: Package, label: 'Catálogo' },
+    { id: 'matches', Icon: Link2, label: 'Matches' },
+    { id: 'precios', Icon: Tag, label: 'Precios' },
+    { id: 'supermercados', Icon: Store, label: 'Supermercados' },
+    { id: 'estadisticas', Icon: TrendingUp, label: 'Estadísticas' },
   ];
 
   const isMobile = window.innerWidth < 768;
@@ -1074,42 +1086,56 @@ const AdminPanel = ({ session, onSalir }) => {
           display: 'flex', overflowX: 'auto', padding: '6px 8px', gap: 4,
           position: 'sticky', top: 52, zIndex: 99,
         }}>
-          {MENU.map(item => (
-            <button key={item.id} onClick={() => setSeccion(item.id)}
-              style={{
-                padding: '7px 12px', borderRadius: 20, border: 'none', whiteSpace: 'nowrap',
-                background: seccion === item.id ? VERDE : GRIS,
-                color: seccion === item.id ? 'white' : OSCURO,
-                fontSize: 12, fontWeight: 700, cursor: 'pointer', flexShrink: 0,
-              }}>
-              {item.emoji} {item.label}
-            </button>
-          ))}
+          {MENU.map(item => {
+            const activo = seccion === item.id;
+            const IconComp = item.Icon;
+            return (
+              <button key={item.id} onClick={() => setSeccion(item.id)}
+                style={{
+                  padding: '7px 14px', borderRadius: 20, border: 'none', whiteSpace: 'nowrap',
+                  background: activo ? VERDE : GRIS,
+                  color: activo ? 'white' : OSCURO,
+                  fontSize: 12, fontWeight: 700, cursor: 'pointer', flexShrink: 0,
+                  display: 'flex', alignItems: 'center', gap: 6,
+                }}>
+                <IconComp size={14} />
+                {item.label}
+              </button>
+            );
+          })}
         </div>
       )}
 
       <div style={{ display: 'flex' }}>
-        {/* Sidebar — solo desktop */}
+        {/* Sidebar — solo desktop, patrón de barra activa lateral */}
         {!isMobile && (
           <div style={{
-            width: 200, background: 'white', minHeight: 'calc(100vh - 52px)',
-            padding: '20px 10px', boxShadow: '2px 0 12px rgba(0,0,0,0.04)',
+            width: 208, background: 'white', minHeight: 'calc(100vh - 52px)',
+            padding: '20px 0', boxShadow: '2px 0 12px rgba(0,0,0,0.04)',
             position: 'sticky', top: 52, alignSelf: 'flex-start', flexShrink: 0,
           }}>
-            {MENU.map(item => (
-              <button key={item.id} onClick={() => setSeccion(item.id)}
-                style={{
-                  width: '100%', padding: '9px 12px', borderRadius: 10, border: 'none',
-                  background: seccion === item.id ? VERDE : 'transparent',
-                  color: seccion === item.id ? 'white' : OSCURO,
-                  fontSize: 13, fontWeight: 700, cursor: 'pointer', textAlign: 'left',
-                  marginBottom: 3, display: 'flex', alignItems: 'center', gap: 8,
-                  transition: 'all 0.15s',
-                }}>
-                <span>{item.emoji}</span>
-                <span>{item.label}</span>
-              </button>
-            ))}
+            {MENU.map(item => {
+              const activo = seccion === item.id;
+              const IconComp = item.Icon;
+              return (
+                <button key={item.id} onClick={() => setSeccion(item.id)}
+                  style={{
+                    width: '100%', padding: '10px 20px 10px 17px', border: 'none',
+                    borderLeft: `3px solid ${activo ? VERDE : 'transparent'}`,
+                    background: activo ? '#f3fbf5' : 'transparent',
+                    color: activo ? VERDE : '#556056',
+                    fontSize: 13, fontWeight: activo ? 800 : 600, cursor: 'pointer', textAlign: 'left',
+                    marginBottom: 2, display: 'flex', alignItems: 'center', gap: 11,
+                    transition: 'all 0.15s',
+                  }}
+                  onMouseEnter={e => { if (!activo) e.currentTarget.style.background = '#fafbfa'; }}
+                  onMouseLeave={e => { if (!activo) e.currentTarget.style.background = 'transparent'; }}
+                >
+                  <IconComp size={17} strokeWidth={activo ? 2.3 : 1.8} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
           </div>
         )}
 

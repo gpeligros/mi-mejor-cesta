@@ -45,7 +45,7 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
             fontSize: '11px', fontWeight: '900', color: VERDE, letterSpacing: '1.5px',
             textTransform: 'uppercase',
           }}>
-            🧺 Mis tiendas
+            Mis tiendas
           </span>
           <span style={{ fontSize: '11px', fontWeight: '700', color: '#aaa' }}>
             {supersActivos.length} de {supersVisibles.length} activas
@@ -63,12 +63,17 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
         )}
       </div>
 
+      {/* Tarjetas de ANCHO FLEXIBLE — cada logo ocupa lo que necesita a una
+          altura fija de 40px. Los logos reales tienen proporciones muy
+          distintas (Mercadona 5.87:1, DIA 1.8:1) y forzarlos a una tarjeta
+          cuadrada aplastaba los más anchos. Así cada uno se ve a tamaño
+          consistente, como hacen los comparadores reales (Idealo, Google
+          Shopping) cuando mezclan logos de marcas con formatos distintos. */}
       {(!isMobile || abierto) && (
         <div style={{
-          display: isMobile ? 'grid' : 'flex',
-          gridTemplateColumns: isMobile ? 'repeat(auto-fill, minmax(90px, 1fr))' : undefined,
-          gap: isMobile ? '10px' : '12px',
+          display: 'flex',
           flexWrap: 'wrap',
+          gap: isMobile ? '10px' : '12px',
           marginTop: isMobile ? '14px' : 0,
         }}>
           {supersVisibles.map(s => {
@@ -80,8 +85,7 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
                 aria-pressed={activo}
                 style={{
                   position: 'relative',
-                  width: isMobile ? '100%' : '108px',
-                  height: isMobile ? '76px' : '68px',
+                  height: isMobile ? '52px' : '56px',
                   borderRadius: '14px',
                   border: activo ? `2px solid ${VERDE}` : '2px solid #ecefec',
                   background: activo ? 'white' : '#fafbfa',
@@ -89,7 +93,7 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '8px',
+                  padding: '0 20px',
                   transition: 'all 0.22s cubic-bezier(0.34, 1.3, 0.64, 1)',
                   boxShadow: activo
                     ? '0 6px 16px rgba(3, 118, 35, 0.16)'
@@ -114,8 +118,8 @@ const StoreSelector = ({ listaSupers, supersActivos, setSupersActivos }) => {
                   alt={s.id}
                   title={s.id}
                   style={{
-                    maxHeight: isMobile ? '34px' : '38px',
-                    maxWidth: '86%',
+                    height: isMobile ? '30px' : '32px',
+                    width: 'auto',
                     objectFit: 'contain',
                     filter: activo ? 'none' : 'grayscale(85%) opacity(0.55)',
                     transition: 'filter 0.22s ease',
