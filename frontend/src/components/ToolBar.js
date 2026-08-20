@@ -1,7 +1,5 @@
 import React from 'react';
 
-const VERDE = '#037623';
-const VERDE_CLARO = '#13ec49';
 const OSCURO = '#102215';
 
 const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, onNutricional, seleccionados }) => {
@@ -42,7 +40,8 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
       onClick: handleMenuSemanal,
       activo: esPremium && !!session,
       badge: !esPremium ? 'PREMIUM' : null,
-      gradiente: 'linear-gradient(135deg, #037623, #059c33)',
+      color: '#037623',
+      tinte: '#e8fdf0',
     },
     {
       id: 'recetas',
@@ -52,7 +51,8 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
       onClick: handleSugerirRecetas,
       activo: esPremium && !!session,
       badge: !esPremium ? 'PREMIUM' : null,
-      gradiente: 'linear-gradient(135deg, #f57c00, #ffa726)',
+      color: '#c26a00',
+      tinte: '#fff4e5',
     },
     {
       id: 'nutricional',
@@ -62,7 +62,8 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
       onClick: handleNutricional,
       activo: esPremium && !!session,
       badge: !esPremium ? 'PREMIUM' : null,
-      gradiente: 'linear-gradient(135deg, #1565c0, #42a5f5)',
+      color: '#1565c0',
+      tinte: '#e8f2fd',
     },
   ];
 
@@ -82,75 +83,50 @@ const ToolBar = ({ plan, onUpgrade, session, onMenuSemanal, onSugerirRecetas, on
           key={b.id}
           onClick={b.onClick || undefined}
           style={{
-            flex: '1',
             minWidth: '100px',
-            background: 'white',
-            border: `1.5px solid ${b.activo ? '#e0f2e6' : '#e5e5e5'}`,
+            background: b.activo ? b.tinte : '#fafafa',
+            border: `1.5px solid ${b.activo ? 'transparent' : '#eee'}`,
             borderRadius: '16px',
             padding: '14px 12px',
             cursor: 'pointer',
             textAlign: 'center',
-            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'all 0.2s ease',
             position: 'relative',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.transform = 'translateY(-3px)';
-            e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.10)';
-            e.currentTarget.style.borderColor = b.activo ? VERDE : '#ccc';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.08)';
           }}
           onMouseLeave={e => {
             e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
-            e.currentTarget.style.borderColor = b.activo ? '#e0f2e6' : '#e5e5e5';
+            e.currentTarget.style.boxShadow = 'none';
           }}
         >
           {b.badge && (
             <span style={{
-              position: 'absolute',
-              top: '-9px',
-              right: '10px',
-              background: 'linear-gradient(135deg, #7b2ff7, #9b4dff)',
-              color: 'white',
-              fontSize: '8px',
-              fontWeight: '900',
-              padding: '3px 7px',
-              borderRadius: '6px',
-              letterSpacing: '0.4px',
-              boxShadow: '0 2px 6px rgba(123,47,247,0.35)',
+              position: 'absolute', top: '-8px', right: '10px',
+              background: OSCURO, color: 'white', fontSize: '8px', fontWeight: '900',
+              padding: '3px 7px', borderRadius: '6px', letterSpacing: '0.4px',
             }}>
-              ✨ {b.badge}
+              {b.badge}
             </span>
           )}
           <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '50%',
-            background: b.activo ? b.gradiente : '#f0f0f0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0 auto 8px',
-            fontSize: '19px',
-            boxShadow: b.activo ? '0 4px 10px rgba(0,0,0,0.15)' : 'none',
-            transition: 'all 0.25s ease',
+            width: '38px', height: '38px', borderRadius: '50%',
+            background: b.activo ? 'white' : '#eee',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            margin: '0 auto 8px', fontSize: '18px',
+            boxShadow: b.activo ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
           }}>
             {b.emoji}
           </div>
           <div style={{
-            fontSize: '11px',
-            fontWeight: '900',
-            color: b.activo ? OSCURO : '#999',
-            lineHeight: 1.2,
+            fontSize: '11px', fontWeight: '900',
+            color: b.activo ? OSCURO : '#999', lineHeight: 1.2,
           }}>
             {b.label}
           </div>
-          <div style={{
-            fontSize: '9px',
-            color: '#aaa',
-            marginTop: '2px',
-            fontWeight: '600',
-          }}>
+          <div style={{ fontSize: '9px', color: '#999', marginTop: '2px', fontWeight: '600' }}>
             {b.sublabel}
           </div>
         </button>

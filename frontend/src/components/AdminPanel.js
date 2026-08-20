@@ -72,26 +72,34 @@ const Dashboard = ({ stats, supers }) => {
           )}
         </div>
 
-        {/* Desglose visual: cuántos productos en 1, 2, 3, 4, 5 supers */}
+        {/* Desglose claro: cuántos productos en 1, 2, 3, 4, 5 supers — chips
+            con color, no una barra confusa que no sumaba el 100% */}
         {stats.distribucionSupers && (
-          <div style={{ display: 'flex', gap: 6, marginTop: 16, height: 8, borderRadius: 4, overflow: 'hidden' }}>
-            {[1, 2, 3, 4, 5].map(n => {
+          <div style={{ display: 'flex', gap: 8, marginTop: 18, flexWrap: 'wrap' }}>
+            {[
+              { n: 1, color: 'rgba(255,255,255,0.18)', destacar: false },
+              { n: 2, color: '#ffd54f', destacar: true },
+              { n: 3, color: '#ffca28', destacar: true },
+              { n: 4, color: '#ffb300', destacar: true },
+              { n: 5, color: '#ff8f00', destacar: true },
+            ].map(({ n, color, destacar }) => {
               const cantidad = stats.distribucionSupers[n] || 0;
-              const anchoPct = stats.catalogo ? (cantidad / stats.catalogo * 100) : 0;
-              if (anchoPct < 0.3) return null;
-              const opacidad = 0.35 + (n - 1) * 0.16;
               return (
-                <div key={n} title={`${cantidad.toLocaleString()} productos en ${n} super${n > 1 ? 's' : ''}`}
-                  style={{ width: `${anchoPct}%`, background: `rgba(255,255,255,${opacidad})`, minWidth: 2 }} />
+                <div key={n} style={{
+                  background: color, borderRadius: 10, padding: '7px 12px',
+                  display: 'flex', flexDirection: 'column', minWidth: 78,
+                }}>
+                  <span style={{ fontSize: 16, fontWeight: 900, color: destacar ? OSCURO : 'white' }}>
+                    {cantidad.toLocaleString()}
+                  </span>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: destacar ? '#5d4400' : 'rgba(255,255,255,0.8)' }}>
+                    {n === 1 ? '1 super (no compara)' : `${n} supers`}
+                  </span>
+                </div>
               );
             })}
           </div>
         )}
-        <div style={{ display: 'flex', gap: 14, marginTop: 8, flexWrap: 'wrap', fontSize: 10, opacity: 0.75 }}>
-          {[1, 2, 3, 4, 5].map(n => (
-            <span key={n}>{n} super{n > 1 ? 's' : ''}: {(stats.distribucionSupers?.[n] || 0).toLocaleString()}</span>
-          ))}
-        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16, marginBottom: 32 }}>
@@ -438,6 +446,7 @@ const Matches = ({ supers }) => {
   const [cargando, setCargando] = useState(true);
   const [filtro, setFiltro] = useState('todos');
   const [pagina, setPagina] = useState(1);
+  const [errorMsg, setErrorMsg] = useState('');
   const POR_PAGINA = 40;
 
   const columnas = supers.map(s => s.columna_match);
@@ -445,15 +454,39 @@ const Matches = ({ supers }) => {
   const cargar = async () => {
     if (!supers.length) return;
     setCargando(true);
-    let q = supabase.from('productos_match')
-      .select(`id_catalogo, ${columnas.join(', ')}, productos_catalogo(nombre_generico, id_categoria)`, { count: 'exact' });
+    setErrorMsg('');
+    // Sin join embebido: no depende de que exista una relación FK
+    // registrada en el schema cache de Supabase (falló en silencio con
+    // reconstrucciones vía INSERT directo — bug detectado 20/08/2026).
+    let q = supabase.from('productos_match').select(`id_catalogo, ${columnas.join(', ')}`);
     if (filtro !== 'todos') {
       const col = filtro.replace('sin_', '');
       const superObj = supers.find(s => s.id === col);
       if (superObj) q = q.is(superObj.columna_match, null);
     }
-    const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1);
-    setMatches(data || []);
+    const { data, error } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1);
+
+    if (error) {
+      setErrorMsg(error.message);
+      setMatches([]);
+      setCargando(false);
+      return;
+    }
+
+    const filas = data || [];
+    if (filas.length > 0) {
+      const ids = filas.map(m => m.id_catalogo);
+      const { data: productosData, error: errorProductos } = await supabase
+        .from('productos_catalogo')
+        .select('id, nombre_generico, id_categoria')
+        .in('id', ids);
+      if (errorProductos) setErrorMsg(errorProductos.message);
+      const mapaProductos = {};
+      (productosData || []).forEach(p => { mapaProductos[p.id] = p; });
+      filas.forEach(m => { m.producto = mapaProductos[m.id_catalogo] || null; });
+    }
+
+    setMatches(filas);
     setCargando(false);
   };
 
@@ -488,6 +521,15 @@ const Matches = ({ supers }) => {
         </div>
       </div>
 
+      {errorMsg && (
+        <div style={{
+          background: '#fdecea', border: '1.5px solid #d32f2f', borderRadius: 12,
+          padding: '10px 16px', marginBottom: 16, color: '#d32f2f', fontSize: 12, fontWeight: 700,
+        }}>
+          ⚠️ Error al cargar: {errorMsg}
+        </div>
+      )}
+
       {cargando ? (
         <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>Cargando matches...</div>
       ) : (
@@ -505,7 +547,7 @@ const Matches = ({ supers }) => {
                 <tr key={m.id_catalogo} style={{ background: i % 2 === 0 ? 'white' : GRIS, borderBottom: '1px solid #f0f0f0' }}>
                   <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontSize: 11, color: '#888' }}>{m.id_catalogo}</td>
                   <td style={{ padding: '10px 16px', fontWeight: 600, color: OSCURO, maxWidth: 200 }}>
-                    <div style={{ fontSize: 13 }}>{m.productos_catalogo?.nombre_generico}</div>
+                    <div style={{ fontSize: 13 }}>{m.producto?.nombre_generico || <span style={{ color: '#d32f2f' }}>producto no encontrado</span>}</div>
                     <div style={{ fontSize: 10, color: '#aaa' }}>CAT {m.id_catalogo}</div>
                   </td>
                   {supers.map(s => (
@@ -892,17 +934,36 @@ const AdminPanel = ({ session, onSalir }) => {
     await cargarStats(listaSupers);
   };
 
+  // Supabase limita a ~1000-10000 filas un .select() sin paginar — con
+  // 16.727 productos hacía falta esto, si no las estadísticas salían mal
+  // (detectado 20/08/2026: 1+2+3+4+5 supers sumaba exactamente 10.000,
+  // sospechosamente redondo, muy por debajo del catálogo real)
+  const fetchTodo = async (tabla, columnas) => {
+    let filas = [];
+    let desde = 0;
+    const TAMANO_PAGINA = 1000;
+    while (true) {
+      const { data, error } = await supabase.from(tabla).select(columnas)
+        .range(desde, desde + TAMANO_PAGINA - 1);
+      if (error) { console.error(`Error paginando ${tabla}:`, error); break; }
+      filas = filas.concat(data || []);
+      if (!data || data.length < TAMANO_PAGINA) break;
+      desde += TAMANO_PAGINA;
+    }
+    return filas;
+  };
+
   const cargarStats = async (listaSupers) => {
     if (!listaSupers.length) return;
 
     const columnasMatch = listaSupers.map(s => s.columna_match);
-    const [cat, comprasRes, perfilesRes, bazarRes, matchRes, ...restoRes] = await Promise.all([
+    const [cat, comprasRes, perfilesRes, bazarRes, matchesData, ...restoRes] = await Promise.all([
       supabase.from('productos_catalogo').select('id', { count: 'exact' }).limit(1),
       supabase.from('compras').select('id', { count: 'exact' }).limit(1),
       supabase.from('profiles').select('plan'),
       // "Bazar y Varios" = id_categoria 89 en categorias_maestras (ver docs/CONTEXTO.md sección 6)
       supabase.from('productos_catalogo').select('id', { count: 'exact' }).eq('id_categoria', 89).limit(1),
-      supabase.from('productos_match').select(`id_catalogo, ${columnasMatch.join(', ')}`),
+      fetchTodo('productos_match', `id_catalogo, ${columnasMatch.join(', ')}`),
       ...listaSupers.map(s => supabase.from(s.tabla_precios).select('id', { count: 'exact' }).limit(1)),
       // Filas con nombre_comercial vacío/nulo por super — calidad de datos real,
       // detectado con Alcampo (ver docs/CONTEXTO.md) pero se comprueba en todos
@@ -913,7 +974,7 @@ const AdminPanel = ({ session, onSalir }) => {
     const preciosRes = restoRes.slice(0, listaSupers.length);
     const vaciosRes = restoRes.slice(listaSupers.length);
 
-    const matches = matchRes.data || [];
+    const matches = matchesData || [];
     const perfiles = perfilesRes.data || [];
     const pagos = perfiles.filter(p => p.plan !== 'free').length;
     const basic = perfiles.filter(p => p.plan === 'basic').length;
