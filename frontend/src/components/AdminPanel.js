@@ -47,26 +47,59 @@ const Btn = ({ children, onClick, variant = 'primary', size = 'md', disabled }) 
 
 const Dashboard = ({ stats }) => {
   if (!stats) return <div style={{ padding: 40, textAlign: 'center', color: '#aaa' }}>Cargando...</div>;
+  const pct = (n) => (n && stats.catalogo ? Math.round(n / stats.catalogo * 100) : 0);
   return (
     <div>
       <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 900, color: OSCURO }}>📊 Dashboard</h2>
+
+      {/* La métrica que de verdad importa: cuántos productos comparan precio de verdad */}
+      <div style={{
+        background: `linear-gradient(135deg, ${VERDE}, #025c1c)`, borderRadius: 16, padding: '24px 28px',
+        marginBottom: 24, color: 'white', boxShadow: '0 4px 20px rgba(3,118,35,0.25)',
+      }}>
+        <div style={{ fontSize: 13, fontWeight: 700, opacity: 0.85, marginBottom: 6 }}>
+          🎯 NÚCLEO DE LA APP — Productos que comparan precio de verdad (≥2 supermercados)
+        </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
+          <div style={{ fontSize: 42, fontWeight: 900 }}>{stats.comparando?.toLocaleString()}</div>
+          <div style={{ fontSize: 16, opacity: 0.85 }}>
+            de {stats.catalogo?.toLocaleString()} ({pct(stats.comparando)}%)
+          </div>
+          {stats.comparando3mas > 0 && (
+            <div style={{ fontSize: 12, opacity: 0.75, marginLeft: 'auto' }}>
+              {stats.comparando3mas?.toLocaleString()} en 3+ supers
+            </div>
+          )}
+        </div>
+      </div>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16, marginBottom: 32 }}>
         <StatCard emoji="👥" label="Usuarios registrados" value={stats.usuarios} color={VERDE} />
         <StatCard emoji="💳" label="Suscriptores de pago" value={stats.pagos} sub={`${stats.basic} basic · ${stats.premium} premium`} color="#6200ea" />
         <StatCard emoji="🛒" label="Productos catálogo" value={stats.catalogo?.toLocaleString()} color="#0288d1" />
-        <StatCard emoji="🔗" label="Matches Mercadona" value={stats.con_mercadona?.toLocaleString()} sub="100% del catálogo" color={VERDE} />
-        <StatCard emoji="🔗" label="Matches DIA" value={stats.con_dia?.toLocaleString()} sub={`${stats.con_dia && stats.catalogo ? Math.round(stats.con_dia/stats.catalogo*100) : 0}% del catálogo`} color="#e53935" />
-        <StatCard emoji="🔗" label="Matches Alcampo" value={stats.con_alcampo?.toLocaleString()} sub={`${stats.con_alcampo && stats.catalogo ? Math.round(stats.con_alcampo/stats.catalogo*100) : 0}% del catálogo`} color="#f57c00" />
-        <StatCard emoji="🔗" label="Matches Ahorramas" value={stats.con_ahorramas?.toLocaleString()} sub={`${stats.con_ahorramas && stats.catalogo ? Math.round(stats.con_ahorramas/stats.catalogo*100) : 0}% del catálogo`} color="#c62828" />
+        <StatCard emoji="🔗" label="Matches Mercadona" value={stats.con_mercadona?.toLocaleString()} sub={`${pct(stats.con_mercadona)}% del catálogo`} color={VERDE} />
+        <StatCard emoji="🔗" label="Matches DIA" value={stats.con_dia?.toLocaleString()} sub={`${pct(stats.con_dia)}% del catálogo`} color="#e53935" />
+        <StatCard emoji="🔗" label="Matches Carrefour" value={stats.con_carrefour?.toLocaleString()} sub={`${pct(stats.con_carrefour)}% del catálogo`} color="#1565c0" />
+        <StatCard emoji="🔗" label="Matches Alcampo" value={stats.con_alcampo?.toLocaleString()} sub={`${pct(stats.con_alcampo)}% del catálogo`} color="#f57c00" />
+        <StatCard emoji="🔗" label="Matches Ahorramas" value={stats.con_ahorramas?.toLocaleString()} sub={`${pct(stats.con_ahorramas)}% del catálogo`} color="#c62828" />
         <StatCard emoji="📦" label="Compras guardadas" value={stats.compras?.toLocaleString()} color="#00796b" />
       </div>
 
       <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>📦 Precios en BBDD</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16, marginBottom: 32 }}>
         <StatCard emoji="🟢" label="Mercadona" value={stats.mercadona?.toLocaleString()} color={VERDE} />
         <StatCard emoji="🔴" label="DIA" value={stats.dia?.toLocaleString()} color="#e53935" />
+        <StatCard emoji="🔵" label="Carrefour" value={stats.carrefour?.toLocaleString()} color="#1565c0" />
         <StatCard emoji="🟠" label="Alcampo" value={stats.alcampo?.toLocaleString()} color="#f57c00" />
         <StatCard emoji="🟥" label="Ahorramas" value={stats.ahorramas?.toLocaleString()} color="#c62828" />
+      </div>
+
+      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>🏷️ Calidad de categorización</h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16 }}>
+        <StatCard emoji="✅" label="Categorizados" value={stats.categorizados?.toLocaleString()}
+          sub={`${pct(stats.categorizados)}% del catálogo`} color={VERDE} />
+        <StatCard emoji="📥" label="Bazar y Varios (sin categoría clara)" value={stats.bazarVarios?.toLocaleString()}
+          sub={`${pct(stats.bazarVarios)}% del catálogo`} color="#888" />
       </div>
     </div>
   );
@@ -350,8 +383,9 @@ const Matches = () => {
   const cargar = async () => {
     setCargando(true);
     let q = supabase.from('productos_match')
-      .select('id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas, productos_catalogo(nombre_generico, id_categoria)', { count: 'exact' });
+      .select('id_catalogo, id_mercadona, id_dia, id_carrefour, id_alcampo, id_ahorramas, productos_catalogo(nombre_generico, id_categoria)', { count: 'exact' });
     if (filtro === 'sin_dia') q = q.is('id_dia', null);
+    else if (filtro === 'sin_carrefour') q = q.is('id_carrefour', null);
     else if (filtro === 'sin_alcampo') q = q.is('id_alcampo', null);
     else if (filtro === 'sin_ahorramas') q = q.is('id_ahorramas', null);
     const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1);
@@ -373,7 +407,7 @@ const Matches = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>🔗 Matches</h2>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {['todos', 'sin_dia', 'sin_alcampo', 'sin_ahorramas'].map(f => (
+          {['todos', 'sin_dia', 'sin_carrefour', 'sin_alcampo', 'sin_ahorramas'].map(f => (
             <button key={f} onClick={() => { setFiltro(f); setPagina(1); }}
               style={{
                 padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, cursor: 'pointer',
@@ -381,7 +415,7 @@ const Matches = () => {
                 color: filtro === f ? 'white' : OSCURO,
                 border: `1.5px solid ${filtro === f ? OSCURO : '#ddd'}`,
               }}>
-              {f === 'todos' ? 'Todos' : f === 'sin_dia' ? 'Sin DIA' : f === 'sin_alcampo' ? 'Sin Alcampo' : 'Sin Ahorramas'}
+              {f === 'todos' ? 'Todos' : f === 'sin_dia' ? 'Sin DIA' : f === 'sin_carrefour' ? 'Sin Carrefour' : f === 'sin_alcampo' ? 'Sin Alcampo' : 'Sin Ahorramas'}
             </button>
           ))}
         </div>
@@ -394,7 +428,7 @@ const Matches = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: OSCURO, color: 'white' }}>
-                {['CAT', 'Producto', 'Mercadona', 'DIA', 'Alcampo', 'Ahorramas', 'Acciones'].map(h => (
+                {['CAT', 'Producto', 'Mercadona', 'DIA', 'Carrefour', 'Alcampo', 'Ahorramas', 'Acciones'].map(h => (
                   <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 800, fontSize: 11 }}>{h}</th>
                 ))}
               </tr>
@@ -409,11 +443,13 @@ const Matches = () => {
                   </td>
                   <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_mercadona)}</td>
                   <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_dia)}</td>
+                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_carrefour)}</td>
                   <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_alcampo)}</td>
                   <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_ahorramas)}</td>
                   <td style={{ padding: '10px 16px' }}>
                     <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
                       {m.id_dia && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_dia')}>✗ DIA</Btn>}
+                      {m.id_carrefour && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_carrefour')}>✗ CAR</Btn>}
                       {m.id_alcampo && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_alcampo')}>✗ ALC</Btn>}
                       {m.id_ahorramas && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_ahorramas')}>✗ AHO</Btn>}
                     </div>
@@ -438,6 +474,7 @@ const Matches = () => {
 const SUPERS_CONFIG = [
   { id: 'mercadona', tabla: 'precios_mercadona', label: 'Mercadona' },
   { id: 'dia', tabla: 'precios_dia', label: 'DIA' },
+  { id: 'carrefour', tabla: 'precios_carrefour', label: 'Carrefour' },
   { id: 'alcampo', tabla: 'precios_alcampo', label: 'Alcampo' },
   { id: 'ahorramas', tabla: 'precios_ahorramas', label: 'Ahorramas' },
 ];
@@ -604,15 +641,18 @@ const AdminPanel = ({ session, onSalir }) => {
   };
 
   const cargarStats = async () => {
-    const [cat, merc, dia, alc, ah, matchRes, comprasRes, perfilesRes] = await Promise.all([
+    const [cat, merc, dia, carr, alc, ah, matchRes, comprasRes, perfilesRes, bazarRes] = await Promise.all([
       supabase.from('productos_catalogo').select('id', { count: 'exact' }).limit(1),
       supabase.from('precios_mercadona').select('id', { count: 'exact' }).limit(1),
       supabase.from('precios_dia').select('id', { count: 'exact' }).limit(1),
+      supabase.from('precios_carrefour').select('id', { count: 'exact' }).limit(1),
       supabase.from('precios_alcampo').select('id', { count: 'exact' }).limit(1),
       supabase.from('precios_ahorramas').select('id', { count: 'exact' }).limit(1),
-      supabase.from('productos_match').select('id_catalogo, id_mercadona, id_dia, id_alcampo, id_ahorramas'),
+      supabase.from('productos_match').select('id_catalogo, id_mercadona, id_dia, id_carrefour, id_alcampo, id_ahorramas'),
       supabase.from('compras').select('id', { count: 'exact' }).limit(1),
       supabase.from('profiles').select('plan'),
+      // "Bazar y Varios" = id_categoria 89 en categorias_maestras (ver docs/CONTEXTO.md sección 6)
+      supabase.from('productos_catalogo').select('id', { count: 'exact' }).eq('id_categoria', 89).limit(1),
     ]);
 
     const matches = matchRes.data || [];
@@ -621,16 +661,32 @@ const AdminPanel = ({ session, onSalir }) => {
     const basic = perfiles.filter(p => p.plan === 'basic').length;
     const premium = perfiles.filter(p => p.plan === 'premium').length;
 
+    // Cuántos supers distintos tiene cada match (el núcleo real de la app:
+    // solo si hay >=2 se puede comparar precio de verdad)
+    const contarSupers = (m) => [m.id_mercadona, m.id_dia, m.id_carrefour, m.id_alcampo, m.id_ahorramas]
+      .filter(Boolean).length;
+    const comparando = matches.filter(m => contarSupers(m) >= 2).length;
+    const comparando3mas = matches.filter(m => contarSupers(m) >= 3).length;
+
+    const catalogoTotal = cat.count || 0;
+    const bazar = bazarRes.count || 0;
+
     setStats({
-      catalogo: cat.count,
+      catalogo: catalogoTotal,
       mercadona: merc.count,
       dia: dia.count,
+      carrefour: carr.count,
       alcampo: alc.count,
       ahorramas: ah.count,
       con_mercadona: matches.filter(m => m.id_mercadona).length,
       con_dia: matches.filter(m => m.id_dia).length,
+      con_carrefour: matches.filter(m => m.id_carrefour).length,
       con_alcampo: matches.filter(m => m.id_alcampo).length,
       con_ahorramas: matches.filter(m => m.id_ahorramas).length,
+      comparando,
+      comparando3mas,
+      bazarVarios: bazar,
+      categorizados: catalogoTotal - bazar,
       compras: comprasRes.count,
       usuarios: perfiles.length,
       pagos, basic, premium,
