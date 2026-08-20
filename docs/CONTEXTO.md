@@ -60,6 +60,7 @@ Repositorio: https://github.com/gpeligros/mi-mejor-cesta
 | `precios_alcampo` | IDs AL-xxxx. Campo `categoria` = código interno (ej. `OC1701`), decodificable vía `MAPPING_ALCAMPO` en `clasificar_categoria.py`. ⚠️ 61,7% de filas con `nombre_comercial` vacío (bug de scraper pendiente). | 2.264 |
 | `precios_carrefour` | IDs CF-xxxx. Sin categoría propia. **Scraper roto** (ver sección 5). | 7.241 (datos de antes de que la web cambiase — desactualizados) |
 | `precios_ahorramas` | IDs AH-xxxx. Campo `categoria_ahorramas` (genérico, 98% poblado, útil solo como pista amplia). | 1.529 |
+| `supermercados` | **Nueva, 20/08/2026.** Config de supermercados para el panel admin (nombre, color, orden, activo, tabla_precios, columna_match). El frontend/admin ya la usa dinámicamente. Ver sección 10. | 5 |
 
 ### Reglas de oro
 - NUNCA scrapers escriben en productos_catalogo ni categorias_maestras
@@ -209,9 +210,29 @@ python scrapers/clasificar_categoria.py
 
 ## 10. Pendientes por orden de prioridad
 
-1. Diseñar e implementar funcionalidad tipo **Yuka** (escaneo/puntuación nutricional vía Open Food Facts + EAN) — solicitado por David 20/08/2026, investigado (metodología: Nutri-Score + aditivos + ecológico, 0-100 con semáforo) pero NO implementado todavía. La mayoría de scrapers ya capturan EAN.
-2. Mejorar menús y funcionalidad nutricional existente (CESTITA/MenuSemanal) — solicitado por David 20/08/2026, sin concretar todavía qué mejoras exactas quiere.
-3. Reescribir `scraper_carrefour.py` (mismo método que se usó para DIA: DevTools → capturar API real → reconstruir)
-4. Arreglar bug de `nombre_comercial` vacío en `scraper_alcampo.py` (61,7% de filas afectadas)
-5. Pasar Stripe a producción
-6. (Opcional, bajo impacto) Mitigar el caso tipo "Café Climent" — marcas reales nunca etiquetadas en ningún scraper coladas en matching de marca blanca
+### 🔴 Alto impacto / bloqueantes
+1. Reescribir `scraper_carrefour.py` (mismo método que se usó para DIA: DevTools → capturar API real → reconstruir; ver sección 5)
+2. Arreglar bug de `nombre_comercial` vacío en `scraper_alcampo.py` (61,7% de filas afectadas — visible ahora en el panel de admin, pestaña Precios, filtro "solo vacíos", y en el Dashboard con barra de calidad de datos)
+3. Pasar Stripe a producción (test → live)
+
+### 🟡 Funcionalidades nuevas solicitadas (20/08/2026, sin empezar)
+4. **Funcionalidad tipo Yuka** (escaneo/puntuación nutricional 0-100 con semáforo, vía Open Food Facts API + EAN). Investigado: metodología = Nutri-Score + aditivos + ecológico. La mayoría de scrapers ya capturan EAN. Pendiente: diseñar esquema de datos, integrar API externa, UI del semáforo.
+5. Mejorar menús semanales y funcionalidad nutricional existente (CESTITA/MenuSemanal) — sin concretar todavía qué mejoras exactas.
+
+### 🟢 Panel de administración — hecho el 20/08/2026, revisar próxima sesión
+- Carrefour integrado en Dashboard/Matches/Precios (antes ausente)
+- Tabla `supermercados` en Supabase + pestaña de gestión (activar/desactivar, renombrar, color, orden) — **límite conocido**: añadir un supermercado nuevo de verdad sigue necesitando scraper + columna en `productos_match`, esta tabla no lo evita
+- Métrica núcleo destacada en Dashboard: productos que comparan precio en ≥2 supers, con desglose visual 1-5 supers
+- Sección "Calidad de datos por supermercado": barra de progreso % nombre correcto vs. filas rotas por super (responde directamente a por qué Alcampo tiene huecos)
+- Sección "Calidad de categorización": categorizados vs. Bazar y Varios
+- Precios ahora editable (nombre, precio, marca, disponible) + filtro "solo filas vacías"
+- Pendiente de verificar por David: que los números cuadren tras desplegar, y decidir si hace falta ir más allá (gráficos más elaborados, exportar datos, log de cambios/auditoría — no implementado)
+
+### 🟢 Diseño visual — hecho el 20/08/2026, pendiente de ver desplegado
+- `StoreSelector.js` y `ToolBar.js` (zona superior de la app, "Mis tiendas" + botones Menú/Recetas/Nutricional) rediseñados con gradientes, sombras, transiciones — sin tocar logos. Pendiente confirmar que se ve bien en producción.
+- El resto de la app (SuperCard, Sidebar, etc.) no se ha tocado — si "un poco pobre" se refería a más partes, especificar cuáles en la próxima sesión.
+
+### 🔵 Bajo impacto / opcional
+- Mitigar el caso tipo "Café Climent" — marcas reales nunca etiquetadas en ningún scraper coladas en matching de marca blanca (~0,3% medido, ver sección 6)
+- Re-ejecutar matching completo si se quiere seguir exprimiendo la cobertura de comparación tras los arreglos de hoy
+

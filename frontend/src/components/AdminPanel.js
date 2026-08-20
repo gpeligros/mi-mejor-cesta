@@ -71,6 +71,27 @@ const Dashboard = ({ stats, supers }) => {
             </div>
           )}
         </div>
+
+        {/* Desglose visual: cuántos productos en 1, 2, 3, 4, 5 supers */}
+        {stats.distribucionSupers && (
+          <div style={{ display: 'flex', gap: 6, marginTop: 16, height: 8, borderRadius: 4, overflow: 'hidden' }}>
+            {[1, 2, 3, 4, 5].map(n => {
+              const cantidad = stats.distribucionSupers[n] || 0;
+              const anchoPct = stats.catalogo ? (cantidad / stats.catalogo * 100) : 0;
+              if (anchoPct < 0.3) return null;
+              const opacidad = 0.35 + (n - 1) * 0.16;
+              return (
+                <div key={n} title={`${cantidad.toLocaleString()} productos en ${n} super${n > 1 ? 's' : ''}`}
+                  style={{ width: `${anchoPct}%`, background: `rgba(255,255,255,${opacidad})`, minWidth: 2 }} />
+              );
+            })}
+          </div>
+        )}
+        <div style={{ display: 'flex', gap: 14, marginTop: 8, flexWrap: 'wrap', fontSize: 10, opacity: 0.75 }}>
+          {[1, 2, 3, 4, 5].map(n => (
+            <span key={n}>{n} super{n > 1 ? 's' : ''}: {(stats.distribucionSupers?.[n] || 0).toLocaleString()}</span>
+          ))}
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16, marginBottom: 32 }}>
@@ -91,6 +112,46 @@ const Dashboard = ({ stats, supers }) => {
           <StatCard key={s.id} emoji={s.emoji} label={s.nombre}
             value={stats.preciosPorSuper?.[s.id]?.toLocaleString()} color={s.color} />
         ))}
+      </div>
+
+      <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>
+        🔍 Calidad de datos por supermercado
+      </h3>
+      <div style={{
+        background: 'white', borderRadius: 16, padding: '20px 24px',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.06)', marginBottom: 32,
+      }}>
+        <div style={{ fontSize: 12, color: '#888', marginBottom: 18 }}>
+          % de productos con nombre correcto vs. filas rotas (scraper sin capturar el nombre)
+        </div>
+        {supers.map(s => {
+          const total = stats.preciosPorSuper?.[s.id] || 0;
+          const vacios = stats.vaciosPorSuper?.[s.id] || 0;
+          const pctVacio = total ? Math.round(vacios / total * 100) : 0;
+          const pctOk = 100 - pctVacio;
+          return (
+            <div key={s.id} style={{ marginBottom: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                <span style={{ fontSize: 12, fontWeight: 800, color: OSCURO }}>{s.emoji} {s.nombre}</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: pctVacio > 10 ? '#d32f2f' : '#888' }}>
+                  {pctOk}% OK{pctVacio > 0 && ` · ${vacios.toLocaleString()} filas rotas (${pctVacio}%)`}
+                </span>
+              </div>
+              <div style={{ height: 10, borderRadius: 6, background: '#f0f0f0', overflow: 'hidden', display: 'flex' }}>
+                <div style={{
+                  width: `${pctOk}%`, background: s.color, transition: 'width 0.6s ease',
+                }} />
+                {pctVacio > 0 && (
+                  <div style={{
+                    width: `${pctVacio}%`,
+                    background: 'repeating-linear-gradient(45deg, #d32f2f, #d32f2f 4px, #ff6659 4px, #ff6659 8px)',
+                    transition: 'width 0.6s ease',
+                  }} />
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>🏷️ Calidad de categorización</h3>
@@ -482,7 +543,11 @@ const Precios = ({ supers }) => {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [busqueda, setBusqueda] = useState('');
+  const [soloVacios, setSoloVacios] = useState(false);
   const [pagina, setPagina] = useState(1);
+  const [editando, setEditando] = useState(null);
+  const [edit, setEdit] = useState({});
+  const [guardando, setGuardando] = useState(false);
   const POR_PAGINA = 50;
 
   useEffect(() => {
@@ -496,21 +561,48 @@ const Precios = ({ supers }) => {
     if (!config) { setCargando(false); return; }
     let q = supabase.from(config.tabla_precios).select('id, nombre_comercial, precio, precio_unidad, marca, disponible');
     if (busqueda) q = q.ilike('nombre_comercial', `%${busqueda}%`);
+    if (soloVacios) q = q.or('nombre_comercial.is.null,nombre_comercial.eq.');
     const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
     setProductos(data || []);
     setCargando(false);
   };
 
-  useEffect(() => { cargar(); }, [super_, busqueda, pagina]); // eslint-disable-line
+  useEffect(() => { cargar(); }, [super_, busqueda, soloVacios, pagina]); // eslint-disable-line
+
+  const empezarEdicion = (p) => {
+    setEditando(p.id);
+    setEdit({
+      nombre_comercial: p.nombre_comercial || '',
+      precio: p.precio ?? '',
+      marca: p.marca || '',
+      disponible: !!p.disponible,
+    });
+  };
+
+  const guardar = async (id) => {
+    setGuardando(true);
+    const config = supers.find(s => s.id === super_);
+    await supabase.from(config.tabla_precios).update({
+      nombre_comercial: edit.nombre_comercial,
+      precio: edit.precio === '' ? null : parseFloat(edit.precio),
+      marca: edit.marca,
+      disponible: edit.disponible,
+    }).eq('id', id);
+    setEditando(null);
+    setGuardando(false);
+    cargar();
+  };
+
+  const superActual = supers.find(s => s.id === super_);
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>💰 Precios</h2>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', gap: 6 }}>
             {supers.map(s => (
-              <button key={s.id} onClick={() => { setSuper(s.id); setPagina(1); }}
+              <button key={s.id} onClick={() => { setSuper(s.id); setPagina(1); setSoloVacios(false); }}
                 style={{
                   padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, cursor: 'pointer',
                   background: super_ === s.id ? VERDE : 'white', color: super_ === s.id ? 'white' : OSCURO,
@@ -524,6 +616,17 @@ const Precios = ({ supers }) => {
         </div>
       </div>
 
+      <label style={{
+        display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 16, cursor: 'pointer',
+        fontSize: 12, fontWeight: 700, color: soloVacios ? '#d32f2f' : '#888',
+        background: soloVacios ? '#fdecea' : 'transparent', padding: '6px 12px', borderRadius: 10,
+        border: `1.5px solid ${soloVacios ? '#d32f2f' : '#ddd'}`,
+      }}>
+        <input type="checkbox" checked={soloVacios}
+          onChange={e => { setSoloVacios(e.target.checked); setPagina(1); }} />
+        ⚠️ Ver solo filas con nombre vacío (datos rotos del scraper)
+      </label>
+
       {cargando ? (
         <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>Cargando precios...</div>
       ) : (
@@ -531,26 +634,61 @@ const Precios = ({ supers }) => {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: OSCURO, color: 'white' }}>
-                {['ID', 'Nombre comercial', 'Precio', '€/unidad', 'Marca', 'Disp.'].map(h => (
+                {['ID', 'Nombre comercial', 'Precio', '€/unidad', 'Marca', 'Disp.', 'Acciones'].map(h => (
                   <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 800, fontSize: 11 }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {productos.map((p, i) => (
-                <tr key={p.id} style={{ background: i % 2 === 0 ? 'white' : GRIS, borderBottom: '1px solid #f0f0f0' }}>
+                <tr key={p.id} style={{
+                  background: !p.nombre_comercial ? '#fff8f0' : (i % 2 === 0 ? 'white' : GRIS),
+                  borderBottom: '1px solid #f0f0f0',
+                }}>
                   <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontSize: 10, color: '#888' }}>{p.id}</td>
-                  <td style={{ padding: '10px 16px', fontWeight: 600, color: OSCURO }}>{p.nombre_comercial}</td>
-                  <td style={{ padding: '10px 16px', fontWeight: 800, color: VERDE }}>{p.precio ? `${parseFloat(p.precio).toFixed(2)}€` : '—'}</td>
+                  <td style={{ padding: '10px 16px', fontWeight: 600, color: OSCURO, minWidth: 200 }}>
+                    {editando === p.id ? (
+                      <input value={edit.nombre_comercial} onChange={e => setEdit({ ...edit, nombre_comercial: e.target.value })}
+                        style={{ width: '100%', padding: '4px 8px', borderRadius: 8, border: '1.5px solid ' + VERDE, fontSize: 13 }} />
+                    ) : (p.nombre_comercial || <span style={{ color: '#d32f2f', fontWeight: 700 }}>— sin nombre —</span>)}
+                  </td>
+                  <td style={{ padding: '10px 16px', fontWeight: 800, color: VERDE, minWidth: 90 }}>
+                    {editando === p.id ? (
+                      <input type="number" step="0.01" value={edit.precio} onChange={e => setEdit({ ...edit, precio: e.target.value })}
+                        style={{ width: 80, padding: '4px 8px', borderRadius: 8, border: '1.5px solid ' + VERDE, fontSize: 13 }} />
+                    ) : (p.precio ? `${parseFloat(p.precio).toFixed(2)}€` : '—')}
+                  </td>
                   <td style={{ padding: '10px 16px', fontSize: 11, color: '#888' }}>{p.precio_unidad || '—'}</td>
-                  <td style={{ padding: '10px 16px', fontSize: 11, color: '#666' }}>{p.marca || '—'}</td>
-                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>{p.disponible ? '✅' : '❌'}</td>
+                  <td style={{ padding: '10px 16px', fontSize: 11, color: '#666', minWidth: 120 }}>
+                    {editando === p.id ? (
+                      <input value={edit.marca} onChange={e => setEdit({ ...edit, marca: e.target.value })}
+                        style={{ width: '100%', padding: '4px 8px', borderRadius: 8, border: '1.5px solid #ddd', fontSize: 12 }} />
+                    ) : (p.marca || '—')}
+                  </td>
+                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>
+                    {editando === p.id ? (
+                      <input type="checkbox" checked={edit.disponible}
+                        onChange={e => setEdit({ ...edit, disponible: e.target.checked })} />
+                    ) : (p.disponible ? '✅' : '❌')}
+                  </td>
+                  <td style={{ padding: '10px 16px' }}>
+                    {editando === p.id ? (
+                      <div style={{ display: 'flex', gap: 6 }}>
+                        <Btn size="sm" onClick={() => guardar(p.id)} disabled={guardando}>✓</Btn>
+                        <Btn size="sm" variant="ghost" onClick={() => setEditando(null)}>✗</Btn>
+                      </div>
+                    ) : (
+                      <Btn size="sm" variant="secondary" onClick={() => empezarEdicion(p)}>Editar</Btn>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
           <div style={{ padding: '12px 16px', background: GRIS, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: 12, color: '#888', fontWeight: 700 }}>Página {pagina} · {productos.length} productos</span>
+            <span style={{ fontSize: 12, color: '#888', fontWeight: 700 }}>
+              {superActual?.nombre} · Página {pagina} · {productos.length} productos
+            </span>
             <div style={{ display: 'flex', gap: 8 }}>
               <Btn size="sm" variant="ghost" disabled={pagina === 1} onClick={() => setPagina(p => p - 1)}>← Anterior</Btn>
               <Btn size="sm" variant="ghost" disabled={productos.length < POR_PAGINA} onClick={() => setPagina(p => p + 1)}>Siguiente →</Btn>
@@ -758,7 +896,7 @@ const AdminPanel = ({ session, onSalir }) => {
     if (!listaSupers.length) return;
 
     const columnasMatch = listaSupers.map(s => s.columna_match);
-    const [cat, comprasRes, perfilesRes, bazarRes, matchRes, ...preciosRes] = await Promise.all([
+    const [cat, comprasRes, perfilesRes, bazarRes, matchRes, ...restoRes] = await Promise.all([
       supabase.from('productos_catalogo').select('id', { count: 'exact' }).limit(1),
       supabase.from('compras').select('id', { count: 'exact' }).limit(1),
       supabase.from('profiles').select('plan'),
@@ -766,7 +904,14 @@ const AdminPanel = ({ session, onSalir }) => {
       supabase.from('productos_catalogo').select('id', { count: 'exact' }).eq('id_categoria', 89).limit(1),
       supabase.from('productos_match').select(`id_catalogo, ${columnasMatch.join(', ')}`),
       ...listaSupers.map(s => supabase.from(s.tabla_precios).select('id', { count: 'exact' }).limit(1)),
+      // Filas con nombre_comercial vacío/nulo por super — calidad de datos real,
+      // detectado con Alcampo (ver docs/CONTEXTO.md) pero se comprueba en todos
+      ...listaSupers.map(s => supabase.from(s.tabla_precios).select('id', { count: 'exact' })
+        .or('nombre_comercial.is.null,nombre_comercial.eq.').limit(1)),
     ]);
+
+    const preciosRes = restoRes.slice(0, listaSupers.length);
+    const vaciosRes = restoRes.slice(listaSupers.length);
 
     const matches = matchRes.data || [];
     const perfiles = perfilesRes.data || [];
@@ -780,11 +925,20 @@ const AdminPanel = ({ session, onSalir }) => {
     const comparando = matches.filter(m => contarSupers(m) >= 2).length;
     const comparando3mas = matches.filter(m => contarSupers(m) >= 3).length;
 
+    // Desglose exacto: cuántos productos tienen 1, 2, 3, 4 o 5 supers
+    const distribucionSupers = {};
+    matches.forEach(m => {
+      const n = contarSupers(m);
+      distribucionSupers[n] = (distribucionSupers[n] || 0) + 1;
+    });
+
     const matchesPorSuper = {};
     const preciosPorSuper = {};
+    const vaciosPorSuper = {};
     listaSupers.forEach((s, i) => {
       matchesPorSuper[s.id] = matches.filter(m => m[s.columna_match]).length;
       preciosPorSuper[s.id] = preciosRes[i]?.count || 0;
+      vaciosPorSuper[s.id] = vaciosRes[i]?.count || 0;
     });
 
     const catalogoTotal = cat.count || 0;
@@ -794,8 +948,10 @@ const AdminPanel = ({ session, onSalir }) => {
       catalogo: catalogoTotal,
       matchesPorSuper,
       preciosPorSuper,
+      vaciosPorSuper,
       comparando,
       comparando3mas,
+      distribucionSupers,
       bazarVarios: bazar,
       categorizados: catalogoTotal - bazar,
       compras: comprasRes.count,
