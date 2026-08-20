@@ -45,7 +45,7 @@ const Btn = ({ children, onClick, variant = 'primary', size = 'md', disabled }) 
 
 // ── Secciones ────────────────────────────────────────────────────────────────
 
-const Dashboard = ({ stats }) => {
+const Dashboard = ({ stats, supers }) => {
   if (!stats) return <div style={{ padding: 40, textAlign: 'center', color: '#aaa' }}>Cargando...</div>;
   const pct = (n) => (n && stats.catalogo ? Math.round(n / stats.catalogo * 100) : 0);
   return (
@@ -77,21 +77,20 @@ const Dashboard = ({ stats }) => {
         <StatCard emoji="👥" label="Usuarios registrados" value={stats.usuarios} color={VERDE} />
         <StatCard emoji="💳" label="Suscriptores de pago" value={stats.pagos} sub={`${stats.basic} basic · ${stats.premium} premium`} color="#6200ea" />
         <StatCard emoji="🛒" label="Productos catálogo" value={stats.catalogo?.toLocaleString()} color="#0288d1" />
-        <StatCard emoji="🔗" label="Matches Mercadona" value={stats.con_mercadona?.toLocaleString()} sub={`${pct(stats.con_mercadona)}% del catálogo`} color={VERDE} />
-        <StatCard emoji="🔗" label="Matches DIA" value={stats.con_dia?.toLocaleString()} sub={`${pct(stats.con_dia)}% del catálogo`} color="#e53935" />
-        <StatCard emoji="🔗" label="Matches Carrefour" value={stats.con_carrefour?.toLocaleString()} sub={`${pct(stats.con_carrefour)}% del catálogo`} color="#1565c0" />
-        <StatCard emoji="🔗" label="Matches Alcampo" value={stats.con_alcampo?.toLocaleString()} sub={`${pct(stats.con_alcampo)}% del catálogo`} color="#f57c00" />
-        <StatCard emoji="🔗" label="Matches Ahorramas" value={stats.con_ahorramas?.toLocaleString()} sub={`${pct(stats.con_ahorramas)}% del catálogo`} color="#c62828" />
+        {supers.map(s => (
+          <StatCard key={s.id} emoji="🔗" label={`Matches ${s.nombre}`}
+            value={stats.matchesPorSuper?.[s.id]?.toLocaleString()}
+            sub={`${pct(stats.matchesPorSuper?.[s.id])}% del catálogo`} color={s.color} />
+        ))}
         <StatCard emoji="📦" label="Compras guardadas" value={stats.compras?.toLocaleString()} color="#00796b" />
       </div>
 
       <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>📦 Precios en BBDD</h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16, marginBottom: 32 }}>
-        <StatCard emoji="🟢" label="Mercadona" value={stats.mercadona?.toLocaleString()} color={VERDE} />
-        <StatCard emoji="🔴" label="DIA" value={stats.dia?.toLocaleString()} color="#e53935" />
-        <StatCard emoji="🔵" label="Carrefour" value={stats.carrefour?.toLocaleString()} color="#1565c0" />
-        <StatCard emoji="🟠" label="Alcampo" value={stats.alcampo?.toLocaleString()} color="#f57c00" />
-        <StatCard emoji="🟥" label="Ahorramas" value={stats.ahorramas?.toLocaleString()} color="#c62828" />
+        {supers.map(s => (
+          <StatCard key={s.id} emoji={s.emoji} label={s.nombre}
+            value={stats.preciosPorSuper?.[s.id]?.toLocaleString()} color={s.color} />
+        ))}
       </div>
 
       <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 900, color: OSCURO }}>🏷️ Calidad de categorización</h3>
@@ -373,27 +372,31 @@ const Catalogo = () => {
   );
 };
 
-const Matches = () => {
+const Matches = ({ supers }) => {
   const [matches, setMatches] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [filtro, setFiltro] = useState('todos');
   const [pagina, setPagina] = useState(1);
   const POR_PAGINA = 40;
 
+  const columnas = supers.map(s => s.columna_match);
+
   const cargar = async () => {
+    if (!supers.length) return;
     setCargando(true);
     let q = supabase.from('productos_match')
-      .select('id_catalogo, id_mercadona, id_dia, id_carrefour, id_alcampo, id_ahorramas, productos_catalogo(nombre_generico, id_categoria)', { count: 'exact' });
-    if (filtro === 'sin_dia') q = q.is('id_dia', null);
-    else if (filtro === 'sin_carrefour') q = q.is('id_carrefour', null);
-    else if (filtro === 'sin_alcampo') q = q.is('id_alcampo', null);
-    else if (filtro === 'sin_ahorramas') q = q.is('id_ahorramas', null);
+      .select(`id_catalogo, ${columnas.join(', ')}, productos_catalogo(nombre_generico, id_categoria)`, { count: 'exact' });
+    if (filtro !== 'todos') {
+      const col = filtro.replace('sin_', '');
+      const superObj = supers.find(s => s.id === col);
+      if (superObj) q = q.is(superObj.columna_match, null);
+    }
     const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1);
     setMatches(data || []);
     setCargando(false);
   };
 
-  useEffect(() => { cargar(); }, [filtro, pagina]); // eslint-disable-line
+  useEffect(() => { cargar(); }, [filtro, pagina, supers]); // eslint-disable-line
 
   const limpiarMatch = async (idCatalogo, campo) => {
     await supabase.from('productos_match').update({ [campo]: null }).eq('id_catalogo', idCatalogo);
@@ -407,16 +410,19 @@ const Matches = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>🔗 Matches</h2>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {['todos', 'sin_dia', 'sin_carrefour', 'sin_alcampo', 'sin_ahorramas'].map(f => (
-            <button key={f} onClick={() => { setFiltro(f); setPagina(1); }}
+          <button onClick={() => { setFiltro('todos'); setPagina(1); }}
+            style={{
+              padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, cursor: 'pointer',
+              background: filtro === 'todos' ? OSCURO : 'white', color: filtro === 'todos' ? 'white' : OSCURO,
+              border: `1.5px solid ${filtro === 'todos' ? OSCURO : '#ddd'}`,
+            }}>Todos</button>
+          {supers.filter(s => s.id !== 'mercadona').map(s => (
+            <button key={s.id} onClick={() => { setFiltro(`sin_${s.id}`); setPagina(1); }}
               style={{
                 padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                background: filtro === f ? OSCURO : 'white',
-                color: filtro === f ? 'white' : OSCURO,
-                border: `1.5px solid ${filtro === f ? OSCURO : '#ddd'}`,
-              }}>
-              {f === 'todos' ? 'Todos' : f === 'sin_dia' ? 'Sin DIA' : f === 'sin_carrefour' ? 'Sin Carrefour' : f === 'sin_alcampo' ? 'Sin Alcampo' : 'Sin Ahorramas'}
-            </button>
+                background: filtro === `sin_${s.id}` ? OSCURO : 'white', color: filtro === `sin_${s.id}` ? 'white' : OSCURO,
+                border: `1.5px solid ${filtro === `sin_${s.id}` ? OSCURO : '#ddd'}`,
+              }}>Sin {s.nombre}</button>
           ))}
         </div>
       </div>
@@ -428,7 +434,7 @@ const Matches = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: OSCURO, color: 'white' }}>
-                {['CAT', 'Producto', 'Mercadona', 'DIA', 'Carrefour', 'Alcampo', 'Ahorramas', 'Acciones'].map(h => (
+                {['CAT', 'Producto', ...supers.map(s => s.nombre), 'Acciones'].map(h => (
                   <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 800, fontSize: 11 }}>{h}</th>
                 ))}
               </tr>
@@ -441,17 +447,17 @@ const Matches = () => {
                     <div style={{ fontSize: 13 }}>{m.productos_catalogo?.nombre_generico}</div>
                     <div style={{ fontSize: 10, color: '#aaa' }}>CAT {m.id_catalogo}</div>
                   </td>
-                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_mercadona)}</td>
-                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_dia)}</td>
-                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_carrefour)}</td>
-                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_alcampo)}</td>
-                  <td style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m.id_ahorramas)}</td>
+                  {supers.map(s => (
+                    <td key={s.id} style={{ padding: '10px 16px', textAlign: 'center' }}>{check(m[s.columna_match])}</td>
+                  ))}
                   <td style={{ padding: '10px 16px' }}>
                     <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                      {m.id_dia && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_dia')}>✗ DIA</Btn>}
-                      {m.id_carrefour && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_carrefour')}>✗ CAR</Btn>}
-                      {m.id_alcampo && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_alcampo')}>✗ ALC</Btn>}
-                      {m.id_ahorramas && <Btn size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, 'id_ahorramas')}>✗ AHO</Btn>}
+                      {supers.filter(s => s.id !== 'mercadona').map(s => (
+                        m[s.columna_match] &&
+                        <Btn key={s.id} size="sm" variant="danger" onClick={() => limpiarMatch(m.id_catalogo, s.columna_match)}>
+                          ✗ {s.nombre.slice(0, 3).toUpperCase()}
+                        </Btn>
+                      ))}
                     </div>
                   </td>
                 </tr>
@@ -471,26 +477,24 @@ const Matches = () => {
   );
 };
 
-const SUPERS_CONFIG = [
-  { id: 'mercadona', tabla: 'precios_mercadona', label: 'Mercadona' },
-  { id: 'dia', tabla: 'precios_dia', label: 'DIA' },
-  { id: 'carrefour', tabla: 'precios_carrefour', label: 'Carrefour' },
-  { id: 'alcampo', tabla: 'precios_alcampo', label: 'Alcampo' },
-  { id: 'ahorramas', tabla: 'precios_ahorramas', label: 'Ahorramas' },
-];
-
-const Precios = () => {
-  const [super_, setSuper] = useState('mercadona');
+const Precios = ({ supers }) => {
+  const [super_, setSuper] = useState(supers[0]?.id || '');
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [busqueda, setBusqueda] = useState('');
   const [pagina, setPagina] = useState(1);
   const POR_PAGINA = 50;
 
+  useEffect(() => {
+    if (!super_ && supers[0]) setSuper(supers[0].id);
+  }, [supers]); // eslint-disable-line
+
   const cargar = async () => {
+    if (!super_) return;
     setCargando(true);
-    const config = SUPERS_CONFIG.find(s => s.id === super_);
-    let q = supabase.from(config.tabla).select('id, nombre_comercial, precio, precio_unidad, marca, disponible');
+    const config = supers.find(s => s.id === super_);
+    if (!config) { setCargando(false); return; }
+    let q = supabase.from(config.tabla_precios).select('id, nombre_comercial, precio, precio_unidad, marca, disponible');
     if (busqueda) q = q.ilike('nombre_comercial', `%${busqueda}%`);
     const { data } = await q.range((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA - 1).order('id');
     setProductos(data || []);
@@ -505,13 +509,13 @@ const Precios = () => {
         <h2 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: OSCURO }}>💰 Precios</h2>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', gap: 6 }}>
-            {SUPERS_CONFIG.map(s => (
+            {supers.map(s => (
               <button key={s.id} onClick={() => { setSuper(s.id); setPagina(1); }}
                 style={{
                   padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700, cursor: 'pointer',
                   background: super_ === s.id ? VERDE : 'white', color: super_ === s.id ? 'white' : OSCURO,
                   border: `1.5px solid ${super_ === s.id ? VERDE : '#ddd'}`,
-                }}>{s.label}</button>
+                }}>{s.nombre}</button>
             ))}
           </div>
           <input placeholder="Buscar..." value={busqueda}
@@ -622,16 +626,119 @@ const Estadisticas = () => {
   );
 };
 
+const Supermercados = ({ supers, onCambio }) => {
+  const [editando, setEditando] = useState(null);
+  const [edit, setEdit] = useState({});
+  const [guardando, setGuardando] = useState(false);
+
+  const empezarEdicion = (s) => {
+    setEditando(s.id);
+    setEdit({ nombre: s.nombre, color: s.color, orden: s.orden });
+  };
+
+  const guardar = async (id) => {
+    setGuardando(true);
+    await supabase.from('supermercados').update({
+      nombre: edit.nombre,
+      color: edit.color,
+      orden: parseInt(edit.orden) || 0,
+    }).eq('id', id);
+    setEditando(null);
+    setGuardando(false);
+    onCambio();
+  };
+
+  const toggleActivo = async (s) => {
+    await supabase.from('supermercados').update({ activo: !s.activo }).eq('id', s.id);
+    onCambio();
+  };
+
+  return (
+    <div>
+      <div style={{ marginBottom: 24 }}>
+        <h2 style={{ margin: '0 0 8px', fontSize: 22, fontWeight: 900, color: OSCURO }}>🏪 Supermercados</h2>
+        <p style={{ margin: 0, fontSize: 13, color: '#888', maxWidth: 640 }}>
+          Aquí puedes renombrar, cambiar de color, reordenar o activar/desactivar
+          (ocultar del comparador) los supermercados ya integrados, sin tocar código.
+          <br />
+          <strong>Añadir un supermercado nuevo de verdad (ej. Lidl) sigue necesitando un
+          scraper y una columna nueva en <code>productos_match</code></strong> — eso
+          requiere desarrollo, pídeselo a Claude cuando llegue el momento.
+        </p>
+      </div>
+
+      <div style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <thead>
+            <tr style={{ background: OSCURO, color: 'white' }}>
+              {['', 'Nombre', 'Tabla precios', 'Columna match', 'Color', 'Orden', 'Activo', 'Acciones'].map(h => (
+                <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 800, fontSize: 11 }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {supers.map((s, i) => (
+              <tr key={s.id} style={{ background: i % 2 === 0 ? 'white' : GRIS, borderBottom: '1px solid #f0f0f0', opacity: s.activo ? 1 : 0.5 }}>
+                <td style={{ padding: '10px 16px', fontSize: 20 }}>{s.emoji}</td>
+                <td style={{ padding: '10px 16px', fontWeight: 700, color: OSCURO }}>
+                  {editando === s.id ? (
+                    <input value={edit.nombre} onChange={e => setEdit({ ...edit, nombre: e.target.value })}
+                      style={{ width: 140, padding: '4px 8px', borderRadius: 8, border: '1.5px solid ' + VERDE, fontSize: 13 }} />
+                  ) : s.nombre}
+                </td>
+                <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontSize: 11, color: '#888' }}>{s.tabla_precios}</td>
+                <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontSize: 11, color: '#888' }}>{s.columna_match}</td>
+                <td style={{ padding: '10px 16px' }}>
+                  {editando === s.id ? (
+                    <input type="color" value={edit.color} onChange={e => setEdit({ ...edit, color: e.target.value })}
+                      style={{ width: 40, height: 28, border: 'none', borderRadius: 6, cursor: 'pointer' }} />
+                  ) : (
+                    <span style={{ display: 'inline-block', width: 20, height: 20, borderRadius: 6, background: s.color }} />
+                  )}
+                </td>
+                <td style={{ padding: '10px 16px' }}>
+                  {editando === s.id ? (
+                    <input type="number" value={edit.orden} onChange={e => setEdit({ ...edit, orden: e.target.value })}
+                      style={{ width: 50, padding: '4px 8px', borderRadius: 8, border: '1.5px solid #ddd', fontSize: 13 }} />
+                  ) : s.orden}
+                </td>
+                <td style={{ padding: '10px 16px' }}>
+                  <button onClick={() => toggleActivo(s)} style={{
+                    border: 'none', background: 'none', cursor: 'pointer', fontSize: 22,
+                  }} title={s.activo ? 'Desactivar (ocultar del comparador)' : 'Activar'}>
+                    {s.activo ? '✅' : '⬜'}
+                  </button>
+                </td>
+                <td style={{ padding: '10px 16px' }}>
+                  {editando === s.id ? (
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <Btn size="sm" onClick={() => guardar(s.id)} disabled={guardando}>✓ Guardar</Btn>
+                      <Btn size="sm" variant="ghost" onClick={() => setEditando(null)}>✗</Btn>
+                    </div>
+                  ) : (
+                    <Btn size="sm" variant="secondary" onClick={() => empezarEdicion(s)}>Editar</Btn>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
 // ── Panel principal ───────────────────────────────────────────────────────────
 
 const AdminPanel = ({ session, onSalir }) => {
   const [seccion, setSeccion] = useState('dashboard');
   const [stats, setStats] = useState(null);
   const [esAdmin, setEsAdmin] = useState(null);
+  const [supers, setSupers] = useState([]);
 
   useEffect(() => {
     verificarAdmin();
-    cargarStats();
+    cargarSupersYStats();
   }, []); // eslint-disable-line
 
   const verificarAdmin = async () => {
@@ -640,19 +747,25 @@ const AdminPanel = ({ session, onSalir }) => {
     setEsAdmin(data?.rol === 'admin');
   };
 
-  const cargarStats = async () => {
-    const [cat, merc, dia, carr, alc, ah, matchRes, comprasRes, perfilesRes, bazarRes] = await Promise.all([
+  const cargarSupersYStats = async () => {
+    const { data: supersData } = await supabase.from('supermercados').select('*').order('orden');
+    const listaSupers = supersData || [];
+    setSupers(listaSupers);
+    await cargarStats(listaSupers);
+  };
+
+  const cargarStats = async (listaSupers) => {
+    if (!listaSupers.length) return;
+
+    const columnasMatch = listaSupers.map(s => s.columna_match);
+    const [cat, comprasRes, perfilesRes, bazarRes, matchRes, ...preciosRes] = await Promise.all([
       supabase.from('productos_catalogo').select('id', { count: 'exact' }).limit(1),
-      supabase.from('precios_mercadona').select('id', { count: 'exact' }).limit(1),
-      supabase.from('precios_dia').select('id', { count: 'exact' }).limit(1),
-      supabase.from('precios_carrefour').select('id', { count: 'exact' }).limit(1),
-      supabase.from('precios_alcampo').select('id', { count: 'exact' }).limit(1),
-      supabase.from('precios_ahorramas').select('id', { count: 'exact' }).limit(1),
-      supabase.from('productos_match').select('id_catalogo, id_mercadona, id_dia, id_carrefour, id_alcampo, id_ahorramas'),
       supabase.from('compras').select('id', { count: 'exact' }).limit(1),
       supabase.from('profiles').select('plan'),
       // "Bazar y Varios" = id_categoria 89 en categorias_maestras (ver docs/CONTEXTO.md sección 6)
       supabase.from('productos_catalogo').select('id', { count: 'exact' }).eq('id_categoria', 89).limit(1),
+      supabase.from('productos_match').select(`id_catalogo, ${columnasMatch.join(', ')}`),
+      ...listaSupers.map(s => supabase.from(s.tabla_precios).select('id', { count: 'exact' }).limit(1)),
     ]);
 
     const matches = matchRes.data || [];
@@ -663,26 +776,24 @@ const AdminPanel = ({ session, onSalir }) => {
 
     // Cuántos supers distintos tiene cada match (el núcleo real de la app:
     // solo si hay >=2 se puede comparar precio de verdad)
-    const contarSupers = (m) => [m.id_mercadona, m.id_dia, m.id_carrefour, m.id_alcampo, m.id_ahorramas]
-      .filter(Boolean).length;
+    const contarSupers = (m) => columnasMatch.filter(col => m[col]).length;
     const comparando = matches.filter(m => contarSupers(m) >= 2).length;
     const comparando3mas = matches.filter(m => contarSupers(m) >= 3).length;
+
+    const matchesPorSuper = {};
+    const preciosPorSuper = {};
+    listaSupers.forEach((s, i) => {
+      matchesPorSuper[s.id] = matches.filter(m => m[s.columna_match]).length;
+      preciosPorSuper[s.id] = preciosRes[i]?.count || 0;
+    });
 
     const catalogoTotal = cat.count || 0;
     const bazar = bazarRes.count || 0;
 
     setStats({
       catalogo: catalogoTotal,
-      mercadona: merc.count,
-      dia: dia.count,
-      carrefour: carr.count,
-      alcampo: alc.count,
-      ahorramas: ah.count,
-      con_mercadona: matches.filter(m => m.id_mercadona).length,
-      con_dia: matches.filter(m => m.id_dia).length,
-      con_carrefour: matches.filter(m => m.id_carrefour).length,
-      con_alcampo: matches.filter(m => m.id_alcampo).length,
-      con_ahorramas: matches.filter(m => m.id_ahorramas).length,
+      matchesPorSuper,
+      preciosPorSuper,
       comparando,
       comparando3mas,
       bazarVarios: bazar,
@@ -714,6 +825,7 @@ const AdminPanel = ({ session, onSalir }) => {
     { id: 'catalogo', emoji: '📦', label: 'Catálogo' },
     { id: 'matches', emoji: '🔗', label: 'Matches' },
     { id: 'precios', emoji: '💰', label: 'Precios' },
+    { id: 'supermercados', emoji: '🏪', label: 'Supermercados' },
     { id: 'estadisticas', emoji: '📈', label: 'Estadísticas' },
   ];
 
@@ -786,11 +898,12 @@ const AdminPanel = ({ session, onSalir }) => {
 
         {/* Contenido */}
         <div style={{ flex: 1, padding: isMobile ? 16 : 28, maxWidth: 1200, minWidth: 0, overflowX: 'hidden' }}>
-          {seccion === 'dashboard' && <Dashboard stats={stats} />}
+          {seccion === 'dashboard' && <Dashboard stats={stats} supers={supers} />}
           {seccion === 'usuarios' && <Usuarios />}
           {seccion === 'catalogo' && <Catalogo />}
-          {seccion === 'matches' && <Matches />}
-          {seccion === 'precios' && <Precios />}
+          {seccion === 'matches' && <Matches supers={supers} />}
+          {seccion === 'precios' && <Precios supers={supers} />}
+          {seccion === 'supermercados' && <Supermercados supers={supers} onCambio={cargarSupersYStats} />}
           {seccion === 'estadisticas' && <Estadisticas />}
         </div>
       </div>
