@@ -1,0 +1,187 @@
+{
+  "leche entera": [
+    {
+      "nombre": "Leche entera Hacendado",
+      "precio": 5.82,
+      "raw_text": "Leche entera Hacendado\n6 bricks x 1 L\n\n5,82 €\n\n/pack\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 1
+    },
+    {
+      "nombre": "Leche entera Hacendado",
+      "precio": 0.97,
+      "raw_text": "Leche entera Hacendado\nBrick 1 L\n\n0,97 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 2
+    },
+    {
+      "nombre": "Leche entera Asturiana",
+      "precio": 7.74,
+      "raw_text": "Leche entera Asturiana\n6 bricks x 1 L\n\n7,74 €\n\n/pack\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 3
+    },
+    {
+      "nombre": "Leche entera Hacendado",
+      "precio": 1.71,
+      "raw_text": "Leche entera Hacendado\n6 mini bricks x 200 ml\n\n1,71 €\n\n/pack\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 4
+    },
+    {
+      "nombre": "Leche entera Asturiana",
+      "precio": 11.94,
+      "raw_text": "Leche entera Asturiana\n6 botellas x 1,5 L\n\n11,94 €\n\n/pack\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 5
+    }
+  ],
+  "aceite oliva": [
+    {
+      "nombre": "Aceite de oliva virgen extra Hacendado",
+      "precio": 4.95,
+      "raw_text": "Aceite de oliva virgen extra Hacendado\nBotella 1 L\n\n4,95 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 1
+    },
+    {
+      "nombre": "Aceite de oliva virgen extra Hacendado",
+      "precio": 14.55,
+      "raw_text": "Aceite de oliva virgen extra Hacendado\nGarrafa 3 L\n\n14,55 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 2
+    },
+    {
+      "nombre": "Aceite de oliva 0,4º Hacendado",
+      "precio": 4.1,
+      "raw_text": "Aceite de oliva 0,4º Hacendado\nBotella 1 L\n\n4,10 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 3
+    },
+    {
+      "nombre": "Aceite de oliva 0,4º Hacendado",
+      "precio": 19.75,
+      "raw_text": "Aceite de oliva 0,4º Hacendado\nGarrafa 5 L\n\n19,75 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 4
+    },
+    {
+      "nombre": "Aceite de oliva virgen Hacendado",
+      "precio": 12.85,
+      "raw_text": "Aceite de oliva virgen Hacendado\nGarrafa 3 L\n\n12,85 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 5
+    }
+  ],
+  "arroz": [
+    {
+      "nombre": "Arroz largo Hacendado",
+      "precio": 1.35,
+      "raw_text": "Arroz largo Hacendado\nPaquete 1 kg\n\n1,35 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 1
+    },
+    {
+      "nombre": "Arroz redondo Hacendado",
+      "precio": 1.3,
+      "raw_text": "Arroz redondo Hacendado\nPaquete 1 kg\n\n1,30 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 2
+    },
+    {
+      "nombre": "Arroz redondo SOS",
+      "precio": 1.88,
+      "raw_text": "Arroz redondo SOS\nPaquete 1 kg\n\n1,88 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 3
+    },
+    {
+      "nombre": "Arroz para microondas Hacendado ultracongelado",
+      "precio": 2.0,
+      "raw_text": "Arroz para microondas Hacendado ultracongelado\nPaquete 6 bolsitas (1 kg)\n\n2,00 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 4
+    },
+    {
+      "nombre": "Arroz cocido basmati Sabroz",
+      "precio": 1.15,
+      "raw_text": "Arroz cocido basmati Sabroz\n2 vasitos x 125 g\n\n1,15 €\n\n/pack\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 5
+    }
+  ],
+  "huevos": [
+    {
+      "nombre": "Huevos grandes L",
+      "precio": 3.3,
+      "raw_text": "Huevos grandes L\nPaquete 12 ud.\n\n3,30 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 1
+    },
+    {
+      "nombre": "Huevos",
+      "precio": 5.75,
+      "raw_text": "Huevos\nPaquete 24 ud.\n\n5,75 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 2
+    },
+    {
+      "nombre": "Huevos de gallinas camperas",
+      "precio": 3.7,
+      "raw_text": "Huevos de gallinas camperas\nPaquete 12 ud.\n\n3,70 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 3
+    },
+    {
+      "nombre": "Huevos grandes L",
+      "precio": 1.8,
+      "raw_text": "Huevos grandes L\nPaquete 6 ud.\n\n1,80 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 4
+    },
+    {
+      "nombre": "Huevos medianos M",
+      "precio": 3.1,
+      "raw_text": "Huevos medianos M\nPaquete 12 ud.\n\n3,10 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 5
+    }
+  ],
+  "pan de molde": [
+    {
+      "nombre": "Pan de molde blanco familiar Hacendado",
+      "precio": 1.18,
+      "raw_text": "Pan de molde blanco familiar Hacendado\nPaquete 26 rebanadas (820 g)\n\n1,18 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 1
+    },
+    {
+      "nombre": "Pan de molde blanco sin corteza Hacendado",
+      "precio": 1.13,
+      "raw_text": "Pan de molde blanco sin corteza Hacendado\nPaquete 16 rebanadas (450 g)\n\n1,13 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 2
+    },
+    {
+      "nombre": "Pan de molde 100% integral sin corteza Hacendado",
+      "precio": 1.23,
+      "raw_text": "Pan de molde 100% integral sin corteza Hacendado\nPaquete 16 rebanadas (450 g)\n\n1,23 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 3
+    },
+    {
+      "nombre": "Pan de molde 100% integral familiar Hacendado",
+      "precio": 1.18,
+      "raw_text": "Pan de molde 100% integral familiar Hacendado\nPaquete 26 rebanadas (820 g)\n\n1,18 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 4
+    },
+    {
+      "nombre": "Pan de molde blanco natural rústico Hacendado",
+      "precio": 1.51,
+      "raw_text": "Pan de molde blanco natural rústico Hacendado\nPaquete 14 rebanadas (550 g)\n\n1,51 €\n\n/ud.\n\nAñadir al carro",
+      "supermercado": "Mercadona",
+      "posicion": 5
+    }
+  ]
+}

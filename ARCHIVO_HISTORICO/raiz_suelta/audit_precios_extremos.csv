@@ -1,0 +1,12 @@
+id_catalogo,nombre_cat,categoria,super,id_super,nombre_super,precio,tipo
+CAT-8706,Gambon Crudo Carrefour Extra Congelado 2 Kg,Sin categoría,Mercadona,ME-1447,Alistado pequeño congelado,2227.5,muy_alto
+CAT-0978,Alistado pequeño congelado,Congelados,Mercadona,ME-1447,Alistado pequeño congelado,2227.5,muy_alto
+CAT-3157,Gambón congelado,Congelados,Mercadona,ME-1418,Gambón congelado,1282.05,muy_alto
+CAT-3172,Morralla,Pescadería,Mercadona,ME-3833,Morralla,787.05,muy_alto
+CAT-1111,Jamón de bellota ibérico 100% Covap,Carnicería y Charcutería,Mercadona,ME-2873,Jamón de bellota ibérico 100% Covap,504.0,muy_alto
+CAT-1128,Paleta de cebo ibérica La Hacienda del Ibérico,Carnicería y Charcutería,Mercadona,ME-5818,Paleta de cebo ibérica La Hacienda del Ibérico,75.0,muy_alto
+CAT-8462,Panales Dodot Activity T6 14 19 Kg 117 Ud,Bebes,Carrefour,CF-650625,Panales Dodot Activity T6 14 19 Kg 117 Ud,65.5,muy_alto
+CAT-2931,Jamón serrano Incarlopsa,Carnicería y Charcutería,Mercadona,ME-2872,Jamón serrano Incarlopsa,65.0,muy_alto
+CAT-6168,Bateria De Cocina Acero Inoxidable San Ignacio Lexia 9 Piezas,Sin categoría,Carrefour,CF-323800,Bateria De Cocina Acero Inoxidable San Ignacio Lexia 9 Piezas,59.9,muy_alto
+CAT-8463,Panales Dodot Sensitive T2 4 8 Kg 88 Unidades,Bebes,Carrefour,CF-604623,Panales Dodot Sensitive T2 4 8 Kg 174 Ud,55.5,muy_alto
+CAT-4684,Panales Dodot Sensitive T4 10 15 Kg 48 Ud,Bebes,Carrefour,CF-650637,Panales Dodot Sensitive T4 10 15 Kg 96 Ud,54.1,muy_alto

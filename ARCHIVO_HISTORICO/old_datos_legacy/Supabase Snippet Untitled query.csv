@@ -1,0 +1,101 @@
+id,nombre_generico,marca,imagen,orden,created_at,activo,id_categoria,tipo,formato,nombre_normalizado,ean
+CAT-0001,Helado nata,null,null,1,null,true,107,marca_blanca,null,null,null
+CAT-0002,Bebida láctea Omega 3 Puleva con leche desnatada,null,null,2,null,true,154,marca_fabricante,null,null,null
+CAT-0003,"Aceite de oliva 0,4º",null,null,3,null,true,133,marca_blanca,null,null,null
+CAT-0004,Aceite de oliva virgen extra Gran Selección,null,null,4,null,true,133,marca_blanca,null,null,null
+CAT-0005,Bebida láctea Omega 3 Puleva con nueces y leche desnatada,null,null,5,null,true,154,marca_fabricante,null,null,null
+CAT-0006,Aceite de oliva 1º,null,null,6,null,true,133,marca_blanca,null,null,null
+CAT-0007,Aceite de oliva virgen,null,null,7,null,true,133,marca_blanca,null,null,null
+CAT-0008,Hierbas provenzales,null,null,8,null,true,136,marca_blanca,null,null,null
+CAT-0009,Colorante alimentario,null,null,9,null,true,136,marca_blanca,null,null,null
+CAT-0010,Licor de hierbas Jägermeister,null,null,10,null,true,96,marca_fabricante,null,null,null
+CAT-0011,Batido de chocolate,null,null,11,null,true,154,marca_blanca,null,null,null
+CAT-0012,Batido de chocolate 90% leche,null,null,12,null,true,154,marca_blanca,null,null,null
+CAT-0013,Licor dulce Amaretto Del Patriarca,null,null,13,null,true,96,marca_fabricante,null,null,null
+CAT-0014,Batido de chocolate 90% leche Puleva,null,null,14,null,true,154,marca_fabricante,null,null,null
+CAT-0015,Batido de chocolate ColaCao Energy,null,null,15,null,true,154,marca_fabricante,null,null,null
+CAT-0016,Fruta + leche tropical Bifrutas,null,null,16,null,true,99,marca_fabricante,null,null,null
+CAT-0017,Fruta + leche caribe Don Simón sin azúcares añadidos y zero materia grasa,null,null,17,null,true,99,marca_fabricante,null,null,null
+CAT-0018,Aceite de oliva virgen extra,null,null,18,null,true,133,marca_blanca,null,null,null
+CAT-0019,Aceite de oliva virgen extra Picual Casa Juncal,null,null,19,null,true,133,marca_fabricante,null,null,null
+CAT-0020,Vinagre de vino blanco,null,null,20,null,true,133,marca_blanca,null,null,null
+CAT-0021,Vinagre de manzana,null,null,21,null,true,133,marca_blanca,null,null,null
+CAT-0022,Limón exprimido,null,null,22,null,true,133,marca_blanca,null,null,null
+CAT-0023,Crema de vinagre balsámico de Módena,null,null,23,null,true,133,marca_blanca,null,null,null
+CAT-0024,Vinagre de Jerez reserva,null,null,24,null,true,133,marca_blanca,null,null,null
+CAT-0025,Clavo en grano,null,null,25,null,true,136,marca_blanca,null,null,null
+CAT-0026,Sazonador Topping,null,null,26,null,true,136,marca_blanca,null,null,null
+CAT-0027,Leche semidesnatada,null,null,27,null,true,154,marca_blanca,null,null,null
+CAT-0028,Leche desnatada Asturiana,null,null,28,null,true,154,marca_fabricante,null,null,null
+CAT-0029,Leche en polvo desnatada,null,null,29,null,true,154,marca_fabricante,null,null,null
+CAT-0030,Masa filo,null,null,30,null,true,137,marca_fabricante,null,null,null
+CAT-0031,Reducción bálsamica de vinagre Pedro Ximénez,null,null,31,null,true,133,marca_blanca,null,null,null
+CAT-0032,Vinagre balsámico de Módena,null,null,32,null,true,133,marca_blanca,null,null,null
+CAT-0033,"Aceite de girasol refinado 0,2º",null,null,33,null,true,133,marca_blanca,null,null,null
+CAT-0034,Aceite de coco virgen,null,null,34,null,true,133,marca_blanca,null,null,null
+CAT-0035,Mayonesa,null,null,35,null,true,140,marca_blanca,null,null,null
+CAT-0036,Mayonesa en sobres individuales,null,null,36,null,true,140,marca_blanca,null,null,null
+CAT-0037,Ketchup,null,null,37,null,true,140,marca_blanca,null,null,null
+CAT-0038,Ketchup en sobres individuales,null,null,38,null,true,140,marca_blanca,null,null,null
+CAT-0039,Mostaza de Dijon,null,null,39,null,true,140,marca_blanca,null,null,null
+CAT-0040,Bebida láctea con cereales crecimiento y desarrollo Puleva Max,null,null,40,null,true,154,marca_fabricante,null,null,null
+CAT-0041,Leche +Proteínas desnatada,null,null,41,null,true,154,marca_blanca,null,null,null
+CAT-0042,Bebida láctea crecimiento y desarrollo Puleva Max,null,null,42,null,true,154,marca_fabricante,null,null,null
+CAT-0043,Sal fina,null,null,43,null,true,133,marca_blanca,null,null,null
+CAT-0044,Sal fina de mesa,null,null,44,null,true,133,marca_blanca,null,null,null
+CAT-0045,Sal yodada fina,null,null,45,null,true,133,marca_blanca,null,null,null
+CAT-0046,Ajo granulado,null,null,46,null,true,136,marca_blanca,null,null,null
+CAT-0047,Canela en rama,null,null,47,null,true,136,marca_blanca,null,null,null
+CAT-0048,Nuez moscada molida,null,null,48,null,true,136,marca_blanca,null,null,null
+CAT-0049,Café en grano descafeinado,null,null,49,null,true,125,marca_blanca,null,null,null
+CAT-0050,Cebolla en polvo,null,null,50,null,true,136,marca_blanca,null,null,null
+CAT-0051,Cayena guindillas,null,null,51,null,true,136,marca_blanca,null,null,null
+CAT-0052,Allioli Chovi,null,null,52,null,true,140,marca_fabricante,null,null,null
+CAT-0053,Leche entera fresca,null,null,53,null,true,154,marca_blanca,null,null,null
+CAT-0054,Café soluble classic en sobres,null,null,54,null,true,125,marca_blanca,null,null,null
+CAT-0055,Infusión Respir,null,null,55,null,true,132,marca_blanca,null,null,null
+CAT-0056,Infusión Jengibre,null,null,56,null,true,132,marca_blanca,null,null,null
+CAT-0057,Bebida láctea semidesnatada con fibra,null,null,57,null,true,154,marca_blanca,null,null,null
+CAT-0058,Leche semidesnatada fresca,null,null,58,null,true,154,marca_blanca,null,null,null
+CAT-0059,Bebida láctea desnatada omega,null,null,59,null,true,154,marca_blanca,null,null,null
+CAT-0060,Sal gruesa,null,null,60,null,true,133,marca_blanca,null,null,null
+CAT-0061,Bicarbonato de sódio,null,null,61,null,true,133,marca_blanca,null,null,null
+CAT-0062,Escamas de sal marina natural Polasal,null,null,62,null,true,133,marca_fabricante,null,null,null
+CAT-0063,Sal gruesa para hornear,null,null,63,null,true,133,marca_blanca,null,null,null
+CAT-0064,Allioli,null,null,64,null,true,140,marca_blanca,null,null,null
+CAT-0065,Tomate frito,null,null,65,null,true,140,marca_blanca,null,null,null
+CAT-0066,Té Chai,null,null,66,null,true,132,marca_blanca,null,null,null
+CAT-0067,Lomo asado La Carloteña lonchas,null,null,67,null,true,102,marca_fabricante,null,null,null
+CAT-0068,Snack Balls sabor queso,null,null,68,null,true,131,marca_blanca,null,null,null
+CAT-0069,Spaghetti sin gluten Felicia,null,null,69,null,true,134,marca_fabricante,null,null,null
+CAT-0070,Spaghetti Armando,null,null,70,null,true,134,marca_fabricante,null,null,null
+CAT-0071,Postre lácteo Carrot Cake con zanahoria,null,null,71,null,true,156,marca_blanca,null,null,null
+CAT-0072,Vino tinto tempranillo reserva Pata Negra DO Valdepeñas,null,null,72,null,true,98,marca_fabricante,null,null,null
+CAT-0073,Vino tinto tempranillo Cepas Viejas Señorío de los Llanos DO Valdepeñas,null,null,73,null,true,98,marca_fabricante,null,null,null
+CAT-0074,Cacao soluble instantáneo Nesquik,null,null,74,null,true,125,marca_fabricante,null,null,null
+CAT-0075,Salchichas cocidas de cerdo estilo parrillero,null,null,75,null,true,102,marca_blanca,null,null,null
+CAT-0076,Recambio ambientador eléctrico Matcha,null,null,76,null,true,145,marca_blanca,null,null,null
+CAT-0077,Vela de cumpleaños,null,null,77,null,true,89,marca_blanca,null,null,null
+CAT-0078,Carne de cerdo Pulled Pork sabor barbacoa,null,null,78,null,true,171,marca_blanca,null,null,null
+CAT-0079,Sal de ajo,null,null,79,null,true,133,marca_blanca,null,null,null
+CAT-0080,Sal de frutas sabor limón,null,null,80,null,true,133,marca_blanca,null,null,null
+CAT-0081,Salsa fresca Trufa,null,null,81,null,true,140,marca_blanca,null,null,null
+CAT-0082,Pañales bebé talla 1 de 2-5 kg Dodot,null,null,82,null,true,92,marca_fabricante,null,null,null
+CAT-0083,Salsa César,null,null,83,null,true,140,marca_blanca,null,null,null
+CAT-0084,Pepinillos en vinagre,null,null,84,null,true,140,marca_blanca,null,null,null
+CAT-0085,"Cerveza sin gluten 0,0% sin alcohol tostada Mahou",null,null,85,null,true,95,marca_fabricante,null,null,null
+CAT-0086,Wok de verduras ultracongelado,null,null,86,null,true,109,marca_blanca,null,null,null
+CAT-0087,Crema de lentejas,null,null,87,null,true,112,marca_blanca,null,null,null
+CAT-0088,Sérum Anticaída Fortificante,null,null,88,null,true,115,marca_blanca,null,null,null
+CAT-0089,Champú Anticaída Fortificante,null,null,89,null,true,115,marca_blanca,null,null,null
+CAT-0090,"Leche corporal nutritiva Nivea con ácido hialurónico, aceite de almendras y sérum de nutrición profunda",null,null,90,null,true,118,marca_fabricante,null,null,null
+CAT-0091,Sérum facial aceite Licopeno Anti Ox ilumina y unifica,null,null,91,null,true,114,marca_fabricante,null,null,null
+CAT-0092,Preservativos natural On,null,null,92,null,true,122,marca_fabricante,null,null,null
+CAT-0093,Sombra de ojos Long Lasting Multi-Stick 01 iluminador,null,null,93,null,true,120,marca_blanca,null,null,null
+CAT-0094,Preparado en polvo instantáneo para crepes,null,null,94,null,true,137,marca_blanca,null,null,null
+CAT-0095,Panes especiales sabor fuet,null,null,95,null,true,129,marca_blanca,null,null,null
+CAT-0096,Topping de chocolate avellana,null,null,96,null,true,89,marca_blanca,null,null,null
+CAT-0097,Tinto de verano Casón Histórico,null,null,97,null,true,98,marca_fabricante,null,null,null
+CAT-0098,Cacao en polvo a la taza,null,null,98,null,true,125,marca_blanca,null,null,null
+CAT-0099,Preservativos sensitive On,null,null,99,null,true,122,marca_fabricante,null,null,null
+CAT-0100,Sal 60% menos de sodio,null,null,100,null,true,133,marca_blanca,null,null,null

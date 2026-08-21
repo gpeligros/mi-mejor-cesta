@@ -1,0 +1,13 @@
+{
+  "source_file": "data\\mercadona_20260222_200053.json",
+  "query_tested": "leche entera",
+  "timestamp": "1771786853.119725",
+  "total_processed": 3,
+  "summary": {
+    "success": 0,
+    "review": 0,
+    "no_match": 3,
+    "errors": 0
+  },
+  "success_details": []
+}

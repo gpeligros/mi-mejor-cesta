@@ -1,0 +1,280 @@
+id_catalogo,id_ahorramas,score,motivo,nombre_ahorramas,nombre_catalogo,tipo,marca_catalogo,precio_ahorramas
+CAT-1005,AH-98614,0,"productos completamente distintos, bebida Vitamin Well vs cerveza Voll-Damm",Cerveza doble malta Voll-Damm 50cl,vitamin well reload sabor lima limon botella 50 cl,marca_fabricante,Vitamin-Well,1.47
+CAT-1003,AH-98611,0,categorías distintas: postre lácteo Yogolino vs cerveza Amstel,Cerveza con limón Amstel Radler pack 12 latas,postre lacteo fresa desde 8 meses nestle yogolino sin gluten pack de 8 unidades de 100 g,marca_fabricante,Yogolino,9.24
+CAT-1007,AH-98581,0,categorías distintas: snack para perros vs cerveza sin alcohol,"Cerveza sin alcohol San Miguel 0,0% lata 33cl",snack para perros sabor bufalo purina adventuros sticks 120 g,marca_fabricante,Adventuros,0.74
+CAT-1015,AH-98511,0,categorías distintas: crema de manos Neutrogena vs refresco naranja Fanta,Refresco naranja Fanta lata 33cl,crema de manos rapida absorcion neutrogena pack 2 unidades 75 ml,marca_fabricante,Neutrogena,0.75
+CAT-1016,AH-98392,0,categorías completamente distintas: suplemento nutricional vs refresco de naranja,Refresco de naranja Trina lata 33cl,triptofano con magnesio  vitamina b6 ana maria lajusticia sin gluten y sin lactosa 60 ud,marca_fabricante,Ana-Maria-Lajusticia,0.5
+CAT-2369,AH-98477,0,"marcas distintas (Martini vs Maestroni), vermouth rojo pero fabricante diferente",Vermouth rojo Maestroni 1l,Vermouth rojo Martini,marca_fabricante,,2.9
+CAT-2003,AH-98304,2,Productos muy distintos: chocolate Milka con galleta vs galletas Mikado,Galleta de chocolate con leche Mikado Lu 75g,Chocolate con leche Milka galleta,marca_fabricante,,2.3
+CAT-4568,AH-99508,2,mismo tipo pero diferente estado: crudo vs cocido. Son subtipos distintos del mismo producto base,Langostino cocido gordo,langostino gordo crudo 2030 ud 500 g,marca_fabricante,,10.99
+CAT-6250,AH-98375,2,vino blanco DO Rueda pero marcas distintas: Viña Espólón vs Protos. Son bodegas diferentes,Vino blanco DO Rueda Protos verdejo,vina blanco verdejo espolon do rueda 75 cl,marca_fabricante,Vina-Espolon,7.99
+CAT-4748,AH-98582,2,vino tinto DO La Mancha crianza pero marcas distintas: Viña Lobón vs El Vínculo. Bodegas diferentes,Vino tinto DO La Mancha El Vínculo crianza,vino tinto crianza vina lobon do la mancha 75 cl,marca_fabricante,Vina-Lobon,11.0
+CAT-9778,AH-98632,2,"vinos diferentes - Viña Lobón vs Yugo, distinta bodega y marca",Vino tinto DO La Mancha Yugo tempranillo,vino tinto tempranillo vina lobon do mancha 75 cl,marca_fabricante,Vina-Lobon,4.25
+CAT-6662,AH-98526,2,"vinos diferentes - Bardesano vs Berberana, distinta bodega y marca",Vino tinto crianza con D.O Rioja Berberana 75 cl,vino tinto crianza bardesano doca rioja 75 cl,marca_fabricante,Carrefour,4.99
+CAT-9745,AH-98636,2,"vinos diferentes - Carrizal reserva vs Ederra crianza, distinta bodega",Vino tinto DO Rioja Ederra crianza,vino tinto reserva carrizal doca rioja 75 cl,marca_fabricante,Carrefour,7.95
+CAT-7277,AH-98314,2,"Dots (bombón redondo) vs Donuts (forma diferente), productos distintos con palabra común",Donuts pack 4 bombón,pack dots bombon 4 ud,marca_fabricante,Carrefour,2.99
+CAT-6410,AH-98379,2,Ambas cervezas rubias lager especial 33cl pero marcas completamente distintas (1870 vs Adlerbrau). Productos diferentes.,Cerveza rubia Adlerbrau Especial lata 33cl,cerveza la rubia 1870 lager especial lata 33 cl,marca_fabricante,1870,0.35
+CAT-2557,AH-98540,2,"vinos tintos crianza diferentes, distintas bodegas (Abadía Mantrús vs Arzuaga)",Vino tinto DO Ribera del Duero Arzuaga crianza,Vino tinto crianza Abadía Mantrús DO Ribera del Duero,marca_fabricante,,23.99
+CAT-4687,AH-99541,2,"pañales Dodot pero talla y cantidad diferentes (T3 7-11kg 56ud vs T2 58ud), productos distintos",Pañal Dodot Sensitive 58 unidades talla 2,panales dodot sensitive t3 7 11 kg 56 ud,marca_fabricante,Dodot-Sensitive-Extra,20.95
+CAT-6769,AH-98365,2,cerveza sin alcohol tostada 33cl pero marcas completamente distintas (Saer Brau/Carrefour vs Amstel),"Cerveza sin alcohol Amstel Oro 0,0 Tostada lata 33cl",cerveza tostada saer brau 00 sin alcohol lata 33 cl,marca_fabricante,Carrefour,0.63
+CAT-9233,AH-98639,2,"vino tinto crianza Rioja pero marcas diferentes (Carrefour vs Muga), productos distintos",Vino tinto DO Rioja Muga crianza,vino tinto crianza doca rioja 1875 cl,marca_fabricante,Carrefour,19.25
+CAT-0544,AH-98629,2,vermouth blanco pero marcas distintas (Maronti vs Maestroni),Vermouth blanco Maestroni 1l,Vermouth blanco Maronti,marca_fabricante,,3.0
+CAT-3003,AH-99111,2,"helado diferente: tarta nata-chocolate vs tarrina menta-chocolate, sabores distintos",Helado tarrina Alipende menta y chocolate 500ml,Tarta helada nata y chocolate,marca_blanca,,3.15
+CAT-4684,AH-99450,4,"mismo producto pero talla diferente (T4 vs T1), marca coincide pero son tallas distintas",Pañal Dodot sensitive T1 58 unidades,panales dodot sensitive t4 10 15 kg 48 ud,marca_fabricante,Dodot-Sensitive-Extra,20.95
+CAT-4686,AH-99438,4,Misma marca y tipo (pañales Dodot Sensitive) pero talla diferente (T5 vs T3) y cantidad distinta (44 vs 56 ud). Las tallas son subtipo diferente.,Pañal Dodot sensitive 56 unidades Talla 3,panales dodot sensitive t5 12 17 kg 44 ud,marca_fabricante,Dodot-Sensitive-Extra,20.95
+CAT-2532,AH-98482,4,Mismo tipo de vino (tinto crianza DO Rioja) pero bodegas/productores diferentes (El Coto vs Luis Cañas). Son productos distintos.,Vino tinto DO Rioja Luis Cañas crianza,Vino tinto crianza El Coto DO Rioja,marca_fabricante,,12.35
+CAT-7870,AH-98647,4,"mismo tipo de vino pero diferentes bodegas: Mayor de Castilla vs Castillo Monje, ambos DO Ribera del Duero roble",Vino tinto DO Ribera del Duero Castillo Monje Roble 75cl,vino tinto roble mayor de castilla do ribera del duero 75 cl,marca_fabricante,Mayor-De-Castilla,4.5
+CAT-2074,AH-98223,4,"callos a la madrileña pero marca diferente (marca blanca vs Litoral), posible producto similar",Callos a la madrileña Litoral 370g,Callos a la madrileña,marca_blanca,,3.99
+CAT-1782,AH-99526,4,horchata de chufa pero marca diferente (marca blanca vs Chufi),Horchata Chufi 1l,Horchata de chufa,marca_blanca,,1.69
+CAT-3975,AH-99262,4,yogur griego ligero pero marca diferente (Margui vs no especificada en catálogo como marca blanca),Yogur griego ligero Margui 1 kg Natural,Yogur griego natural ligero 2% MG,marca_blanca,,2.3
+CAT-4337,AH-98548,6,"Mismo tipo de vino (tinto roble ribera duero) pero marcas diferentes (Protos vs Pruno). En marca_fabricante, marca distinta baja el score",Vino tinto DO Ribera del Duero Pruno roble,vino tinto roble protos do ribera del duero 75 cl,marca_fabricante,Protos,12.99
+CAT-9599,AH-99113,6,Mismo tipo de pizza Ristorante Dr Oetker prosciutto pero distinto atributo: una es normal (350g) y otra sin gluten (345g),Pizza sin gluten Ristorante Dr Oetker 345g prosciuto,pizza prosciutto funghi ristorante dr oetker 350 g,marca_fabricante,Ristorante,4.65
+CAT-1545,AH-98225,6,Mismo tipo (arroz integral largo) pero marca blanca vs marca fabricante (Sos). En marca blanca se compara solo tipo,Arroz integral Sos 1kg,Arroz integral largo,marca_blanca,,1.85
+CAT-8793,AH-99091,6,"mismo producto base pero sabor diferente (barbacoa vs bacon), misma marca Dr Oetker",Pannini Dr Oetker 250g bacon,pannini barbacoa dr oetker 250 g,marca_fabricante,Droetker,3.39
+CAT-5660,AH-98443,6,"mismo producto base Ambar pero tipo diferente (cerveza vs Radler), misma marca",Cerveza Radler Ambar 33cl Triple Zero,cerveza ambar triple zero lata 33 cl,marca_fabricante,Ambar,0.85
+CAT-0072,AH-98512,6,vino tinto DO Valdepeñas reserva pero marcas distintas: Pata Negra vs Pata Negra (¿el mismo?). Necesita confirmación de marca exacta,Vino tinto DO Valdepeñas Pata Negra reservado,Vino tinto tempranillo reserva Pata Negra DO Valdepeñas,marca_fabricante,,4.5
+CAT-0125,AH-99126,6,"corazones de alcachofa pero marcas distintas: marca blanca vs Findus. Son productos similares, distinta marca",Corazones de alcachofa Findus 300g,Corazones de alcachofa,marca_blanca,,4.99
+CAT-1217,AH-98250,6,"tortitas de maíz sabor jamón pero marca blanca vs Bicentury. Mismo subtipo, distinta marca",Tortitas de maíz Bicentury 123g sabor jamón,Tortitas de maíz con sabor a jamón,marca_blanca,,2.39
+CAT-5220,AH-98470,6,cerveza Mahou pero subtipo distinto: sin filtrar vs IPA. Son variantes diferentes del mismo fabricante,Cerveza IPA Mahou 5 Estrellas lata 33cl,cerveza sin filtrar mahou 5 estrellas lata 33 cl,marca_fabricante,Mahou,1.15
+CAT-6154,AH-99545,6,"mismo tipo suavizante Mimosín bergamota, pero diferente número de lavados (95 vs 50)",Suavizante Concentrado Bergamota Salvaje Mimosín Origins 50 lavados,suavizante concentrado bergamota salvaje origins mimosin 95 lavados,marca_fabricante,Mimosin,2.49
+CAT-3256,AH-99204,6,Mismo tipo de producto (leche desnatada con calcio) pero marca diferente: marca blanca vs Puleva. Son subtipo similar pero distinta marca.,Leche Puleva calcio 1l desnatada,Leche desnatada calcio,marca_blanca,,1.59
+CAT-0465,AM-70078,6,"mismo tipo de producto pero marca diferente: tomate frito con aceite de oliva, catálogo marca blanca vs Solís marca fabricante",Tomate frito con aceite de oliva Solis 360g,Tomate frito con aceite de oliva,marca_blanca,,1.69
+CAT-0018,AH-98120,6,mismo tipo de producto pero marca diferente: aceite oliva virgen extra (marca fabricante Coosur vs expectativa de marca blanca),Aceite de oliva virgen extra Coosur 3l,Aceite de oliva virgen extra,marca_blanca,,15.75
+CAT-1195,AH-99458,6,diferente subtipo: papilla 8 cereales con galleta María vs papilla 8 cereales con galleta (sabor/ingrediente distinto),Papilla Nestlé 8 cereales galleta desde 6meses 725g,Papilla 8 cereales con galleta María Nestlé +6 meses,marca_fabricante,,5.75
+CAT-6155,AH-99543,8,"Mismo producto: suavizante concentrado Mimosín azul vital, mismo tipo y marca aunque distinto número de lavados",Suavizante concentrado Mimosín 56 lavados azul vital,suavizante concentrado azul vital mimosin 105 lavados,marca_fabricante,Mimosin,3.79
+CAT-6058,AH-98404,8,"mismo producto Monster Energy juiced, misma marca, pequeña diferencia en especificación de sabor",Bebida energética Monster Energy 50cl juiced mango loco lata,monster energy juiced bebida energetica monarch lata 500 ml,marca_fabricante,Monster,1.79
+CAT-8692,AH-99122,8,mismo producto con diferencia: pizza Buitoni Forno di Pietra pero en AH falta mención a pesto,Pizza Forno di Pietra Buitoni 350g prosciutto,pizza prosciutto pesto forno di pietra buitoni 350 g,marca_fabricante,Buitoni,3.65
+CAT-9591,AM-78897,8,"Coca-Cola Zero azúcar sin cafeína, misma variante pero falta confirmación de cafeína en AhorraMas",Refresco cola Coca-Cola botella 2l pack 4 zero azúcar,coca cola zero azucar zero cafeina pack 4 botellas 2 l,marca_fabricante,Coca-Cola-Zero-Scaf,7.52
+CAT-1824,AH-98946,8,"Mismo producto: pechuga de pavo finas lonchas reducido en sal. Marca blanca, se compara solo tipo de producto. Pequeña diferencia en formato de presentación (pack 2).",Pechuga pavo finas lonchas reducido en sal ElPozo pack 2 de 200g,Pechuga de pavo reducido en sal finas lonchas,marca_blanca,,4.1
+CAT-9418,AH-98830,8,Mismo producto: pera conferencia DOP Rincón de Soto. Pequeña diferencia en presentación (4 uds vs bandeja 650g) pero mismo producto.,Pera conferencia DOP Rincón de Soto bandeja 650g,pera conferencia do rincon de soto 4 uds,marca_fabricante,,2.89
+CAT-1595,AH-99017,8,"Mismo tipo de producto: queso fresco de cabra. Marca blanca se compara por tipo, pequeña diferencia en marca específica (Albe) pero mismo producto.",Queso fresco Albe 1kg,Queso fresco de cabra,marca_blanca,,5.0
+CAT-8598,AH-98692,8,Mismo producto: jamón cocido extra Campofrío. Pequeña diferencia en subtipo específico (Naturarte vs genérico) pero misma marca y tipo.,Jamón cocido extra Campofrío,jamon cocido extra campofrio natur arte 120 g,marca_fabricante,Naturarte,10.9
+CAT-1053,AH-98534,8,Mismo producto: cerveza 1906 reserva especial. Pequeña diferencia en tamaño (no especificado vs 50cl) pero mismo producto.,Cerveza rubia lata reserva especial 1906 50cl,Cerveza extra 1906 reserva especial,marca_fabricante,,1.1
+CAT-8914,AH-98474,8,"mismo vino tinto crianza Mucho Más, sin especificar tamaño en AH pero estructura coincide",Vino tinto Mucho Más,vino tinto crianza mucho mas 75 cl,marca_fabricante,Mucho-Mas,6.35
+CAT-8717,AH-98435,8,mismo producto con mínima diferencia: tónica zero Schweppes lata 33cl (catálogo especifica 'pink' pero es la misma línea),Tónica zero Schweppes lata 33cl,tonica pink zero schweppes lata 33 cl,marca_fabricante,Schweppes,0.99
+CAT-8281,AM-75946,8,"mismo producto con diferencia mínima de tamaño: pizza Ristorante Dr Oetker Speciale (345g vs 330g, diferencia no relevante)",Pizza Ristorante Dr Oetker 330g speciale,pizza speciale ristorante dr oetker 345 g,marca_fabricante,Ristorante,3.95
+CAT-8840,AH-99157,8,"mismo producto con variante similar: helado Häagen-Dazs chocolate (catálogo brownie vs AhorraMas chocolate belga, misma línea)",Helado Häagen-Dazs bhocolate belga 4 uds,helado chocolate brownie haagen dazs 349 g,marca_fabricante,Haagen-Dazs,7.49
+CAT-2559,AH-98162,8,"mismo producto base mermelada melocotón, versión extra marca blanca",Mermelada extra Alipende 410g melocotón,Mermelada de melocotón,marca_blanca,,1.35
+CAT-4372,AH-98416,8,"vino blanco Marqués de Vizhoja, mismo productor pero posible variante albariño",Vino blanco Marqués de Vizhoja albariño,vino blanco marques de vizhoja 75 cl,marca_fabricante,Marques-De-Vizhoja,4.75
+CAT-4153,AM-66925,8,"croquetas cocido y jamón serrano La Cocinera, mismo producto con diferente descripción",Croquetas artesanas cocido y jamón serrano La Cocinera 500g,croquetas de cocido casero y jamon serrano la cocinera 500 g ,marca_fabricante,La-Cocinera,4.99
+CAT-1145,AH-98239,8,"café con leche Dolce Gusto (Nescafé), pequeña diferencia en especificación de cantidad de cápsulas",Café con leche Nescafé Dolce Gusto 30 cápsulas,Café con leche en cápsula Dolce Gusto,marca_fabricante,,8.55
+CAT-6156,AH-99549,8,"suavizante concentrado Mimosín pieles sensibles, pero diferente número de lavados (105 vs 56)",Suavizante concentrado Mimosín 56 lavados caricias pieles sensibles,suavizante concentrado caricias pieles sensibles mimosin 105 lavados,marca_fabricante,Mimosin,3.79
+CAT-0966,AH-99298,8,"bebida de almendras sin azúcar, marca distinta (Alpro vs marca blanca) pero mismo tipo de producto",Bebida de almendras Alpro 1l,Bebida de almendras 0% azúcar,marca_blanca,,2.09
+CAT-6079,AH-99546,8,mismo producto con variación de cantidad - Detergente Skip Limpieza Profunda (diferencia en número de lavados),Detergente líquido Skip Limpieza Profunda 35+18 lavados 50% GRATIS,detergente liquido limpieza profunda skip 45 lavados,marca_fabricante,Skip-Ultimate,7.99
+CAT-1983,AH-98298,8,producto muy similar pero marca diferente - Masa de hojaldre sin gluten (marca blanca vs Cerelia),Masa de hojaldre sin gluten Cerelia 280g,Masa de hojaldre sin gluten,marca_blanca,,2.8
+CAT-6599,AH-98252,8,"patatas fritas Santa Ana misma marca y tipo, pequeña diferencia en descripción (sin gluten no mencionado en AhorraMas)",Patatas fritas churrería Santa Ana 261g,patatas fritas churreria santa ana sin gluten 261 g,marca_fabricante,Santa-Ana,2.79
+CAT-0831,AH-98267,8,"snack de patata marca blanca, ligera diferencia nomenclatura (sticks vs snack) pero mismo producto",Snack de patata Alipende 125g,Sticks de patata,marca_blanca,,1.08
+CAT-0170,AH-98649,8,pechugas de pollo mismo producto pero presentación lote vs unitario,LOTE 2 kg de pechugas de pollo,Pechugas enteras de pollo,marca_fabricante,,6.99
+CAT-0611,AH-98255,8,"mismo producto: sazonador burritos, marca blanca vs Old Paso (marca fabricante diferente)",Sazonador Old Paso 40g burritos,Sazonador para burritos,marca_blanca,,1.0
+CAT-1982,AH-99194,8,"mismo tipo de helado mini bombón, variante muy similar (surtido vs super bombón)",Helado super bombón mini Alipende 8uds,Helado mini bombón surtido,marca_blanca,,2.5
+CAT-2876,AH-98891,8,"mismo producto: salchichón en lonchas marca blanca, variante pavo vs no especificado",Salchichón en lonchas Alipende pack 4 de 50g,Salchichón de pavo extra lonchas,marca_blanca,,1.71
+CAT-2807,AM-14061,8,"mismo producto: secreto de cerdo, variante Duroc (especificación de raza)",Secreto de cerdo duroc,Secreto de cerdo,marca_fabricante,,10.99
+CAT-2860,AH-98292,8,"mismo producto: galletas rellenas de chocolate marca blanca Alipende, muy similar",Galletas de chocolate min rellenas Alipende 220g,Galletas rebuenas rellenas de chocolate,marca_blanca,,0.95
+CAT-3227,AH-98979,8,"mismo producto: remolacha cocida pelada, sin marca especificada en catálogo",Remolacha cocida y pelada 500g,Remolacha cocida y pelada,marca_fabricante,,1.39
+CAT-5849,AH-98711,9,"Mismo producto exacto: mortadela ahumada Mrm, misma marca fabricante.",Mortadela ahumada Mrm,mortadela ahumada mrm 170 g aprox,marca_fabricante,Mrm,8.49
+CAT-3563,AH-99340,9,Mismo producto: margarina ligera marca blanca Alipende con oliva.,Margarina ligera Alipende 250g oliva,Margarina ligera,marca_blanca,,1.4
+CAT-6429,AH-99403,9,Mismo producto: snack Vitakraft Beef stick para perro.,Snack  stick perro Vitakraft Beef 12g,snack de buey para perro vitakraft beef stick,marca_fabricante,Vitakraft,0.65
+CAT-0485,AM-23796,10,Mismo producto exacto: cerveza sin alcohol Mahou 0.0% tostada,Cerveza sin alcohol Mahou 00 Tostada lata 33cl,"Cerveza 0,0% sin alcohol tostada Mahou",marca_fabricante,,0.7
+CAT-0607,AH-98907,10,Mismo producto marca blanca: maíz dulce,Maíz dulce 400gr,Maíz dulce,marca_blanca,,1.99
+CAT-0694,AH-98431,10,Mismo producto: agua mineral con gas Fonter,Agua mineral con gas Fonter 1l,Agua mineral con gas grande Fonter,marca_fabricante,,1.14
+CAT-0277,AH-98284,10,Mismo producto marca blanca: café molido descafeinado,Café molido descafeinado Alipende 250g mezcla 50/50,Café molido descafeinado,marca_blanca,,2.95
+CAT-5233,AH-99192,10,Mismo producto exacto: helado Haagen-Dazs 4 uds caramel collection,Helado Haagen-Dazs 4 uds caramel collection,surtido de helados caramel collection hagen dazs 4 uds,marca_fabricante,Haagen-Dazs,7.49
+CAT-8147,AH-98479,10,Mismo producto: Brandy Terry Centenario 70cl,Brandy Terry Centenario botella 700ml,brandy terry centenario 70 cl,marca_fabricante,Centenario,7.25
+CAT-0074,AH-98171,10,Mismo producto: cacao soluble instantáneo Nesquik,Cacao en polvo instantáneo Nesquik 390g,Cacao soluble instantáneo Nesquik,marca_fabricante,,3.7
+CAT-2011,AH-98144,10,Mismo producto marca blanca: caldo de cocido,Caldo de cocido Alipende 1l,Caldo de cocido,marca_blanca,,1.2
+CAT-6423,AH-99412,10,Mismo producto: comida periquito Vitakraft 500g,Comida periquito Vitakraft 500g,comida para periquitos vitakraft 500 g,marca_fabricante,Vitakraft,2.99
+CAT-1829,AH-98216,10,Mismo producto marca blanca: sardinas en aceite de oliva,Sardinas en aceite de oliva Alipende 2 unidades 85g,Sardinas en aceite de oliva,marca_blanca,,2.19
+CAT-0813,AH-98552,10,Mismo producto: bebida isotónica melocotón rojo Aquarius,Bebida isotónica de melocotón rojo Aquarius 33cl lata,Bebida isotónica melocotón rojo Aquarius,marca_fabricante,,0.99
+CAT-1915,AH-99097,10,Mismo producto: tinta de sepia Nortindal congelada,Tinta de sepia Nortindal pack 4x4g congelada,Tinta de sepia Nortindal congelada,marca_fabricante,,0.99
+CAT-9441,AH-99118,10,Mismo producto: pizza funghi Ristorante Dr Oetker 365g,Pizza Ristorante Dr Oetker 365g funghi,pizza funghi ristorante dr oetker 365 g,marca_fabricante,Ristorante,3.95
+CAT-7313,AH-99128,10,Mismo producto: nuggets pollo sin gluten Maheso 300g,Nuggets de pollo sin gluten Maheso 300g,nuggets de pollo maheso sin gluten 300 g,marca_fabricante,Maheso,4.49
+CAT-5409,AH-98402,10,Mismo producto: vino tinto crianza Beronia DOCA Rioja 75cl,Vino tinto DO Rioja Beronia crianza,vino tinto crianza beronia doca rioja 75 cl,marca_fabricante,Beronia,7.99
+CAT-9857,AH-98494,10,"mismo producto exacto, misma marca Castellana, mismo tipo anís dulce",Anís dulce Castellana 70cl,anis la castellana dulce 70 cl,marca_fabricante,Castellana,6.95
+CAT-8410,AH-98485,10,"mismo producto exacto, misma marca Blume, mismo tipo vino blanco verdejo DO Rueda",Vino blanco DO Rueda Blume verdejo,vino blanco joven verdejo blume do rueda 75 cl,marca_fabricante,Blume,5.6
+CAT-7001,AH-99112,10,"mismo producto exacto, misma marca La Cocinera, mismo tipo tiras de pollo americano",Tiras de pollo americano La Cocinera 360g,tiras de pollo estilo americano la cocinera 360 g,marca_fabricante,La-Cocinera,5.25
+CAT-7388,AM-77728,10,"mismo producto exacto, misma marca Fuente Primavera, mismo tipo agua mineral",Agua Fuente Primavera 5l,agua mineral fuente primavera 5 l,marca_fabricante,Carrefour,0.7
+CAT-6254,AM-38107,10,"mismo producto exacto, misma marca La Cocinera, misma lasaña barbacoa",Lasaña La Cocinera barbacoa 500g,lasana barbacoa la cocinera 500 g,marca_fabricante,La-Cocinera,3.99
+CAT-8280,AM-76572,10,"mismo producto exacto, misma marca Ristorante Dr Oetker, misma pizza prosciutto",Pizza Ristorante Dr Oetker 340g prosciutto,pizza prosciutto ristorante dr oetker 340 g,marca_fabricante,Ristorante,3.95
+CAT-0547,AH-98183,10,"mismo producto marca blanca, café molido mezcla Alipende",Café molido Alipende 250g mezcla 50/50,Café molido mezcla,marca_blanca,,2.65
+CAT-0504,AH-98271,10,"mismo producto marca blanca, miel de flores Alipende",Miel de flores Alipende 1kg,Miel de flores,marca_blanca,,4.9
+CAT-6713,AH-98390,10,"mismo producto exacto, misma marca Alhambra, misma cerveza reserva 1925",Cerveza reserva Alhambra 1925 lata 33cl,cerveza alhambra reserva 1925 lata 33 cl,marca_fabricante,Alhambra,1.0
+CAT-2041,AH-98519,10,"mismo producto exacto, misma marca El Coto, mismo vino blanco DO Rioja",Vino blanco DO Rioja El Coto 75cl,Vino blanco El Coto DO Rioja,marca_fabricante,,3.95
+CAT-2438,AH-98596,10,"mismo producto exacto, misma marca Jaume Serra, mismo cava brut nature",Cava brut nature Jaume Serra 75cl,Cava brut nature Jaume Serra,marca_fabricante,,3.95
+CAT-3255,AH-99247,10,"mismo producto marca blanca, leche desnatada sin lactosa Alipende",Leche sin lactosa Alipende 1l desnatada,Leche desnatada sin lactosa,marca_blanca,,0.91
+CAT-2089,AH-99248,10,"mismo producto marca blanca, leche semidesnatada sin lactosa Alipende",Leche sin lactosa Alipende 1l semidesnatada,Leche semidesnatada sin lactosa,marca_blanca,,0.94
+CAT-3185,AH-99514,10,"mismo producto marca blanca, judías verdes planas Alipende",Judías verdes Alipende 1kg planas,Judías verdes planas,marca_blanca,,1.75
+CAT-4187,AH-98446,10,"mismo producto exacto, misma marca Faustino, mismo vino tinto tempranillo DOCA Rioja",Vino tinto DO Rioja Faustino VII tempranillo,vino tinto tempranillo faustino vii doca rioja 75 cl,marca_fabricante,Faustino,3.49
+CAT-4136,AH-99124,10,mismo producto exacto: pannini Dr Oetker jamón y queso 250g,Pannini Dr Oetker 250g jamón y queso,pannini de jamon y queso dr oetker 250 g,marca_fabricante,Droetker,3.39
+CAT-0040,AH-99349,10,mismo producto: bebida láctea Puleva Max crecimiento y desarrollo con cereales,Bebida láctea Puleva max crecimiento desarrollo 1l cereales,Bebida láctea con cereales crecimiento y desarrollo Puleva Max,marca_fabricante,,1.89
+CAT-9315,AH-98387,10,mismo producto: Red Bull 25cl sabor albaricoque y fresa,Bebida energética Red Bull 25cl albaricoque fresa,red bull bebida energetica albaricoque y fresa lata 25 cl,marca_fabricante,Red-Bull,1.0
+CAT-0730,AH-98342,10,mismo producto: bebida isotónica Aquarius limón,Bebida isotónica Aquarius lata 33cl limón,Bebida isotónica limón Aquarius,marca_fabricante,,0.99
+CAT-5695,AH-98364,10,mismo producto: cerveza El Águila sin filtrar 33cl,Cerveza sin filtrar Aguila Bote 33cl,cerveza el aguila sin filtrar botella 33 cl,marca_fabricante,El-Aguila,0.75
+CAT-4334,AH-98170,10,mismo producto: tomate frito Orlando sin gluten 780g,Tomate frito sin gluten abre fácil Orlando 780g,tomate frito orlando sin gluten brik 780 g,marca_fabricante,Orlando,1.85
+CAT-4477,AH-99523,10,mismo producto: leche desnatada Lauki 1l,Leche Lauki 1l desnatada,leche desnatada lauki brik 1 l,marca_fabricante,Lauki,0.96
+CAT-1314,AH-98955,10,mismo producto marca blanca: queso de untar light de vaca,Queso de untar light Alipende 250g,Queso untar light de vaca,marca_blanca,,1.33
+CAT-9670,AH-99009,10,mismo producto: queso fresco de cabra Burgo de Arias pack 3 unidades,Queso fresco de cabra Burgo de Arias pack de 3 uds,queso fresco de cabra burgo de arias sin gluten pack de 3 unidades de 70 g,marca_fabricante,Burgo-De-Arias,4.59
+CAT-0321,AH-98531,10,mismo producto: cerveza El Águila sin filtrar 33cl,Cerveza sin filtrar Águila bot. 33cl,Cerveza El Águila sin filtrar,marca_fabricante,,0.89
+CAT-7151,AH-98476,10,mismo producto: cerveza Amstel sin alcohol radler limón 33cl lata,Cerveza tostada 00 radler Amstel lata 33cl,cerveza tostada amstel 00 radler con limon lata 33 cl,marca_fabricante,Amstel,0.79
+CAT-5964,AH-98204,10,mismo producto: masa de empanadillas La Napolitana 420g,Masa de empanadilla La Napolitana 420g,masa para empanadillas la napolitana 420 g,marca_fabricante,La-Napolitana,2.33
+CAT-9648,AH-99084,10,mismo producto exacto - gamba pelada Antonio y Ricardo 375g,Gamba pelada Antonio y Ricardo 375g 40/60 unidades,gamba pelada congelada 90110 antonio y ricardo 375 g,marca_fabricante,Antonio-Y-Ricardo,6.6
+CAT-9434,AH-99077,10,mismo producto exacto - bases de pizza La Cocinera pack 4,Bases de pizza La Cocinera pack 4,base de pizza la cocinera pack de 4 bases de 130 g,marca_fabricante,La-Cocinera,3.99
+CAT-1891,AH-98153,10,mismo tipo de producto marca blanca - edulcorante líquido stevia,Edulcorante líquido Alipende 200ml,Edulcorante líquido stevia,marca_blanca,,1.15
+CAT-4930,AH-98518,10,mismo vino - tinto crianza Viña Pomal DO Rioja 75cl,Vino tinto DO Rioja crianza Viña Pomal 75cl,vino tinto crianza tempranillo vina pomal doca rioja 75 cl,marca_fabricante,Vina-Pomal,7.99
+CAT-4147,AM-58716,10,mismo producto - anillos a la romana sin gluten Pescanova 400g,Anillos a la romana sin gluten Pescanova 400g,anillos a la romana receta clasica pescanova sin gluten 400 g ,marca_fabricante,Pescanova,3.99
+CAT-5510,AH-98172,10,mismo producto - salmorejo fresco García Millán 330ml,Salmorejo fresco García Millán 330ml,salmorejo fresco garcia millan 330 ml,marca_fabricante,Garcia-Millan,1.65
+CAT-1980,AH-98226,10,mismo producto - chocolate con leche Milka,Chocolate con leche Milka 125g,Chocolate con leche Milka,marca_fabricante,,1.59
+CAT-4319,AH-98495,10,mismo vino - rosado Gran Feudo DO Navarra 75cl,Vino rosado DO Navarra Gran Feudo,vino rosado gran feudo do navarra 75 cl,marca_fabricante,Gran-Feudo,3.95
+CAT-1101,AH-98513,10,mismo vino - tinto crianza Viña Albali DO Valdepeñas,Vino tinto DO Valdepeñas Viña Albali crianza,Vino tinto crianza Viña Albali DO Valdepeñas,marca_fabricante,,2.79
+CAT-3121,AH-99008,10,mismo tipo marca blanca - queso mezcla curado cortado en cuñas,Queso mezcla curado ya cortado Alipende cuñas 250g,Queso curado mezcla cortado en cuñitas,marca_blanca,,3.55
+CAT-1092,AH-98514,10,mismo vino - tinto reserva Coto de Imaz DO Rioja,Vino tinto DO Rioja Coto de Imaz reserva,Vino tinto reserva Coto de Imaz DO Rioja,marca_fabricante,,7.95
+CAT-4339,AH-98579,10,mismo whisky - DYC 8 años 70cl,Whisky DYC 8 años 70cl,whisky dyc 8 anos 70 cl,marca_fabricante,Dyc,14.4
+CAT-5905,AH-98593,10,mismo vino - blanco verdejo Cuatro Rayas DO Rueda 75cl,Vino blanco DO Rueda Cuatro Rayas verdejo,vino blanco verdejo cuatro rayas do rueda 75 cl,marca_fabricante,Cuatro-Rayas,5.75
+CAT-9429,AH-98971,10,mismo producto - bimi 200g,Bimi 200g,bimi 200 g,marca_fabricante,Marca-Nacional-Sin-Marca,2.49
+CAT-7180,AH-99110,10,mismo producto - pannini 4 quesos Dr Oetker 250g,Pannini Dr Oetker 250g 4 quesos,pannini 4 quesos dr oetker 250 g,marca_fabricante,Panini,3.39
+CAT-0028,AH-99208,10,mismo producto - leche desnatada Asturiana 1l,Leche Asturiana 1l desnatada,Leche desnatada Asturiana,marca_fabricante,,1.09
+CAT-0027,AH-99244,10,"mismo producto marca blanca, leche semidesnatada",Leche Alipende 1l semidesnatada,Leche semidesnatada,marca_blanca,,0.84
+CAT-3156,AH-99261,10,"mismo producto marca blanca, leche semidesnatada con calcio",Leche Alipende calcio 1l semidesnatada,Leche semidesnatada calcio,marca_blanca,,1.05
+CAT-8912,AH-99012,10,mismo producto jamón curado Navidul reducido sal en lonchas,Jamón curado en lonchas reducido en sal Navidul 45 gr,jamon curado reducido en sal en lonchas navidul 45 g,marca_fabricante,Navidul,1.0
+CAT-5487,AH-99414,10,mismo snack dental Frolic Smiley Sticks para perro,Snack dental para perro Frolic Smiley Sticks 175gr,snack dental para perro frolic smiley sticks 175 g,marca_fabricante,Frolic,2.15
+CAT-4480,AH-98372,10,mismo vino tinto Campo Viejo tempranillo Rioja,Vino tinto DO Rioja Campo Viejo tempranillo,vino tinto tempranillo campo viejo doca rioja  75 cl,marca_fabricante,Campo-Viejo,3.99
+CAT-4534,AH-98464,10,mismo vino tinto Ramon Bilbao crianza Rioja,Vino tinto DO Rioja Ramon Bilbao crianza,vino  tinto crianza ramon bilbao doca rioja 75 cl,marca_fabricante,Ramon-Bilbao,9.75
+CAT-1374,AH-99137,10,mismo helado marca blanca mini bombón almendrado,Helado bombón mini Alipende 8 uds almendrado,Helado mini bombón almendrado,marca_blanca,,3.0
+CAT-3088,AH-98220,10,mismas galletas digestive chocolate con leche marca blanca,Galletas de chocolate con leche digestive Alipende 300g,Galletas Digestive chocolate con leche,marca_blanca,,1.4
+CAT-4938,AH-99502,10,misma cerveza Mahou 00 sin alcohol tostada pack 12,Cerveza sin alcohol Mahou 00 Tostada pack 12 latas 33cl,cerveza tostada mahou 00 alcohol pack 12 latas 33 cl,marca_fabricante,Mahou,10.08
+CAT-6255,AM-38870,10,mismos canelones La Cocinera de carne,Canelones La Cocinera carne 500g,canelones de carne la cocinera 500 g,marca_fabricante,La-Cocinera,3.99
+CAT-5713,AH-98521,10,mismo cider Ladrón de Manzanas sabor manzana verde,Sidra cider Ladrón de Manzanas botella 25cl manzana verde,cider ladron de manzanas sabor manzana verde botella 25 cl,marca_fabricante,Ladron-De-Manzanas,0.89
+CAT-7065,AH-98200,10,misma masa para empanadillas estilo argentino Buitoni,Masa para empanadillas oblea estilo Argentino Buitoni 350g,masa para empanadillas estilo argentino buitoni 350 g,marca_fabricante,Buitoni,2.4
+CAT-9289,AH-98345,10,misma cerveza Estrella Galicia especial pack 12 botellas,Cerveza rubia especial Estrella Galicia pack 12 botellas 25cl,cerveza estrella galicia especial pack 12 botellas 25 cl,marca_fabricante,Estrella-Galicia,8.16
+CAT-5168,AH-99177,10,mismo helado kids mix Frigo 8 unidades,Helado kids mix Frigo 8 uds,helados kids mix frigo 8 ud,marca_fabricante,Frigo,4.99
+CAT-1032,AH-98553,10,misma bebida energética Monster Energy,Bebida energética Monster 558 ml Energy Lata,Bebida energética Energy Monster,marca_fabricante,,1.95
+CAT-6467,AH-98609,10,misma cerveza Desperados Mojito,Cerveza rubia Desperados Mojito botella 33cl,cerveza desperados mojito botella 33 cl,marca_fabricante,Desperados,1.5
+CAT-0370,AH-98363,10,misma tónica Schweppes original,Tónica Schweppes lata 33cl original,Tónica original Schweppes,marca_fabricante,,0.99
+CAT-3564,AH-99249,10,misma nata marca blanca ligera para cocinar,Nata para cocinar Alipende pack 3 ligera,Nata ligera para cocinar,marca_blanca,,1.85
+CAT-8744,AH-98420,10,Mismo producto exacto: Monster Energy Ultra Fantasy Ruby Red sin azúcar 500ml.,Bebida energética lata ultra fantasy Ruby Red Monster Energy 500 ml,monster energy ultra fantasy ruby red bebida energetica sin azucar 500 ml,marca_fabricante,Monster,1.79
+CAT-5135,AH-99276,10,Mismo producto exacto: yogur griego Danone stracciatella pack 4x110g.,Yogur estilo griego Danone pack 4 stracciatella,yogur griego de stracciatella danone pack de 4 unidades de 110 g,marca_fabricante,Danone,1.69
+CAT-2678,AH-98127,10,Mismo producto: café molido natural marca blanca Alipende.,Café molido Alipende 250g tueste natural,Café molido natural,marca_blanca,,2.6
+CAT-5718,AH-98576,10,Mismo producto exacto: Malibú piña colada 25cl.,Malibú con piña colada 25cl,pina colada malibu lata 25 cl,marca_fabricante,Malibu,2.55
+CAT-5016,AH-98389,10,"Mismo producto exacto: cerveza 0,0% Estrella Galicia tostada 33cl.","Cerveza 0,0% Estrella Galicia tostada 33cl",cerveza tostada estrella galicia 00 alcohol lata 33 cl,marca_fabricante,Estrella-Galicia,0.89
+CAT-3561,AH-99338,10,Mismo producto: batido de vainilla marca blanca Alipende.,Batido Alipende 1l vainilla,Batido de vainilla,marca_blanca,,1.3
+CAT-6253,AM-38871,10,Mismo producto exacto: lasaña boloñesa La Cocinera 500g.,Lasaña La Cocinera boloñesa 500g,lasana bolonesa la cocinera 500 g,marca_fabricante,La-Cocinera,3.59
+CAT-0953,AH-98128,10,Mismo producto: pan de molde integral 100% sin corteza marca blanca Alipende.,Pan de molde integral sin corteza Alipende 450g,Pan de molde 100% integral sin corteza,marca_blanca,,1.23
+CAT-8933,AH-99190,10,mismo producto exacto: helado sandwich Lotus Biscoff 4u,Helado sandwich Lotus 4u Biscoff,helado sandwich biscoff lotus 4 ud,marca_fabricante,Lotus,3.99
+CAT-5157,AH-99220,10,mismo producto exacto: leche semidesnatada sin lactosa Pascual 1l,Leche sin lactosa Pascual 1l semidesnatada,leche semidesnatada pascual sin lactosa brik 1 l,marca_fabricante,Pascual,1.29
+CAT-6118,AH-99252,10,mismo producto exacto: leche entera Río 1l,Leche Río 1l entera,leche entera rio brik 1 l,marca_fabricante,Rio,1.04
+CAT-9083,AH-98821,10,mismo producto exacto: pechuga pavo cocida lonchas El Pozo 1954 120g sin gluten sin lactosa,Pechuga de pavo 1954 ELPOZO 120 gr lonchas frescas finas sin gluten y sin lactosa,pechuga de pavo cocida en lonchas 1954 elpozo sin gluten y sin lactosa 120 g,marca_fabricante,El-Pozo,2.0
+CAT-9805,AH-98268,10,mismo producto exacto: pasta radiatori Garofalo 500g,Radiatori Garofalo 500g,pasta radiatori garofalo 500 g,marca_fabricante,Garofalo,1.79
+CAT-0218,AH-98229,10,"mismo producto marca blanca: pimentón dulce, marca blanca es Alipende",Pimentón Alipende lata 75g dulce,Pimentón dulce,marca_blanca,,1.3
+CAT-9898,AH-98146,10,mismo producto exacto: café molido mezcla Marcilla 500g,Café molido Marcilla 500g mezcla,cafe molido mezcla gran aroma marcilla 500 g,marca_fabricante,Marcilla,8.95
+CAT-2440,AH-98515,10,mismo producto exacto: cava brut Anna Codorníu 75cl,Cava brut Anna Codorniu 75cl,Cava brut Anna Codorníu,marca_fabricante,,7.99
+CAT-2889,AH-98863,10,mismo producto marca blanca: mortadela con aceitunas en lonchas,Mortadela Alipende con aceitunas en lonchas 250g,Mortadela con aceitunas lonchas,marca_blanca,,1.25
+CAT-5855,AM-52027,10,mismo producto exacto: agua mineral Nestlé Aquarel 5l,Agua mineral natural Nestlé Aquarel garrafa 5l,agua mineral natural nestle aquarel 5 l,marca_fabricante,Aquarel,1.85
+CAT-6542,AH-98535,10,mismo producto exacto: tónica zero Schweppes botella 1l,Tónica zero Schweppes botella 1l,tonica schweppes zero botella 1 l,marca_fabricante,Schweppes,2.05
+CAT-6653,AH-99417,10,mismo producto exacto: pienso perro adulto Bon Menu receta mediterránea 4kg,Pienso perro Bon Menu receta mediterránea 4kg,pienso para perro adulto bon menu receta mediterranea 4 kg,marca_fabricante,Bon-Menu,8.95
+CAT-1690,AM-84950,10,mismo producto marca blanca: atún claro en aceite de oliva,Atún claro Alipende pack 6 en aceite oliva,Atún claro en aceite de oliva,marca_blanca,,4.9
+CAT-7827,AH-98388,10,mismo producto exacto: cerveza especial Estrella Galicia pack 10 latas 33cl,Cerveza rubia especial Estrella Galicia pack 10 latas 33cl,cerveza estrella galicia especial pack de 10 latas 33 cl,marca_fabricante,Estrella-Galicia,6.9
+CAT-0503,AH-98281,10,mismo producto marca blanca: cacahuete tostado con sal,Cacahuete piel tostado con sal Alipende 200g,Cacahuete tostado con sal,marca_blanca,,1.05
+CAT-1006,AH-99427,10,mismo producto exacto: comida húmeda Gourmet Gold Tartelette para gatos 8x85g,Comida húmeda para gatos Gourmet Gold Tartelette con carnes y pescados surtido 8x85g,comida humeda de carne para gato purina gourmet gold tartelette 8x85 g,marca_fabricante,Gourmet,0.92
+CAT-4151,AH-99096,10,mismo producto exacto: croquetas La Cocinera sabrosísima jamón 500g,Croqueta La Cocinera sabrosísima 500g jamón,croquetas de jamon serrano sabrosisimas la cocinera 500 g,marca_fabricante,La-Cocinera,3.49
+CAT-0747,AH-98439,10,mismo producto exacto: bebida isotónica Aquarius zero azúcar limón,Bebida isotónica zero azúcar Aquarius 33cl limón lata,Bebida isotónica limón Aquarius zero azúcar,marca_fabricante,,0.99
+CAT-0996,AM-60125,10,"mismo producto marca blanca: garbanzo cocido (tipo idéntico, marca blanca ignorada)",Garbanzo cocido Alipende 400g,Garbanzo cocido,marca_blanca,,0.85
+CAT-0511,AH-98193,10,"mismo producto marca blanca: caldo de verduras en pastillas (tipo idéntico, marca blanca ignorada)",Caldo de verduras en pastillas Alipende 12 unidades,Caldo de verduras en pastillas,marca_blanca,,0.9
+CAT-1019,AH-98452,10,mismo producto exacto: bebida energética Red Bull,"Bebida energética Red Bull 35,5cl",Bebida energética Red Bull,marca_fabricante,,2.09
+CAT-7982,AH-98391,10,mismo producto exacto: cerveza Mahou Mixta con limón lata 33cl,Cerveza con limón Mahou Mixta lata 33cl,cerveza mahou mixta shandy con limon lata 33 cl,marca_fabricante,Mahou,0.84
+CAT-8283,AM-81262,10,mismo producto exacto: pizza Ristorante Dr Oetker Quattro Formaggi 340g,Pizza Ristorante Dr Oetker 340g 4 formaggi,pizza quattro formaggi ristorante dr oetker 340 g,marca_fabricante,Ristorante,3.95
+CAT-1422,AH-99144,10,"mismo producto marca blanca: sorbete de limón (tipo idéntico, marca blanca ignorada)",Sorbete de limón Alipende 1l,Sorbete con limón,marca_blanca,,2.35
+CAT-4182,AH-98504,10,mismo producto exacto: vino tinto DO Rioja Marqués de Riscal reserva tempranillo,Vino tinto DO Rioja Marqués de Riscal reserva,vino tinto reserva tempranillo marques de riscal doca rioja 75 cl,marca_fabricante,Marques-De-Riscal,18.75
+CAT-4475,AH-99519,10,mismo producto exacto: leche Lauki entera 1l,Leche Lauki 1l entera,leche entera lauki brik 1 l,marca_fabricante,Lauki,1.04
+CAT-0046,AH-98165,10,"mismo producto marca blanca: ajo granulado (tipo idéntico, marca blanca ignorada)",Ajo granulado Alipende 55g,Ajo granulado,marca_blanca,,0.74
+CAT-2659,AH-98210,10,"mismo producto marca blanca: cereales rellenos de leche (tipo idéntico, marca blanca ignorada)",Cereales rellenos de leche Alipende 500g,Cereales rellenos de leche,marca_blanca,,2.4
+CAT-3961,AH-99284,10,mismo producto exacto: natillas Danet chocolate,Natillas Danet pack 4 chocolate,Natillas de chocolate Danet,marca_fabricante,,1.94
+CAT-3120,AH-98870,10,"mismo producto, marca blanca, mismo tipo y subtipo",Queso mezcla curado 300g,Queso curado mezcla,marca_blanca,,3.42
+CAT-4026,AH-98456,10,"mismo producto exacto, marca Mahou, misma cerveza especial",Cerveza rubia especial Mahou 5 Estrellas pack 6 botellas 25cl,cerveza mahou 5 estrellas especial pack 6 botellas 25 cl,marca_fabricante,Mahou,4.05
+CAT-3558,AH-99245,10,"mismo producto, leche entera marca blanca",Leche Alipende 1l entera,Leche entera,marca_blanca,,0.96
+CAT-3483,AH-98824,10,"mismo producto, mango fruta fresca",Mango 2 unidades,Mango,marca_fabricante,,1.79
+CAT-3254,AH-99246,10,"mismo producto, leche desnatada marca blanca",Leche Alipende 1l desnatada,Leche desnatada,marca_blanca,,0.82
+CAT-2902,AH-98122,10,"mismo producto, arroz largo marca blanca",Arroz Alipende 1kg largo,Arroz largo,marca_blanca,,1.25
+CAT-1997,AH-98276,10,"mismo producto, caldo de pescado marca blanca",Caldo de pescado Alipende 1l,Caldo de pescado,marca_blanca,,1.3
+CAT-4042,AH-98517,10,"mismo producto exacto, vino blanco de aguja Blanc Pescador",Vino blanco de aguja Blanc Pescador,vino de aguja blanco blanc pescador 75 cl,marca_fabricante,Blanc-Pescador,3.95
+CAT-2529,AH-99319,10,"mismo producto, yogur líquido fresa marca blanca",Yogur líquido Alipende 1kg fresa,Yogur líquido de fresa,marca_blanca,,1.5
+CAT-4332,AH-98434,10,"mismo producto exacto, cerveza Desperados Original",Cerveza rubia Desperados Original botella 33cl,cerveza desperados original botella 33 cl,marca_fabricante,Desperados,1.5
+CAT-4031,AH-98355,10,"mismo producto exacto, vino blanco Don Simón brik 1l",Vino blanco de mesa Don Simón 1l,vino blanco de mesa don simon brik 1 l,marca_fabricante,Don-Simon,1.75
+CAT-4371,AH-98438,10,"mismo producto exacto, cerveza Heineken lager lata 50cl",Cerveza Heineken Lata 50cl,cerveza heineken lager lata 50 cl,marca_fabricante,Heineken,1.45
+CAT-1992,AM-29420,10,"mismo producto, caldo casero pollo Gallina Blanca",Caldo casero Gallina Blanca 1l pollo 100% natural,Caldo de pollo casero Gallina Blanca,marca_fabricante,,2.2
+CAT-4347,AH-98487,10,"mismo producto exacto, vino manzanilla muy fina DO San Lúcar de Barrameda",Vino manzanilla DO San Lúcar de Barrameda Muyfina,vino manzanilla muy fina do sanlucar de barrameda  75 cl,marca_fabricante,Muyfina,4.95
+CAT-4105,AH-98282,10,mismo producto exacto: tomate frito Orlando sin gluten 350g,Tomate frito sin gluten abre fácil Orlando350g,tomate frito orlando sin gluten brik 350 g,marca_fabricante,Orlando,0.99
+CAT-4155,AH-99521,10,mismo producto exacto: leche entera Pascual 1l,Leche Pascual 1l entera,leche entera pascual brik 1 l,marca_fabricante,Pascual,1.25
+CAT-4947,AH-98626,10,mismo producto exacto: cerveza sin alcohol San Miguel 00 tostada 33cl,Cerveza sin alcohol San Miguel 00 Tostada 33cl,cerveza tostada san miguel 00 alcohol lata 33 cl,marca_fabricante,San-Miguel-00,0.75
+CAT-5480,AH-99191,10,mismo producto exacto: menestra de la huerta Findus 650g,Menestra de la huerta Findus 650g,menestra de la huerta findus 650 g,marca_fabricante,Findus,4.99
+CAT-7892,AH-98785,10,mismo producto exacto: queso crema semicurado President 125g,Queso crema semicurado Président 125g,crema de queso semicurado president 125 g,marca_fabricante,President,1.95
+CAT-5386,AH-98419,10,mismo producto exacto: zumo de naranja con pulpa exprimido Don Simón 1l,Zumo de naranja con pulpa exprimido Don Simón 1l,zumo de naranja don simon exprimido con pulpa brik 1 l,marca_fabricante,Don-Simon,2.95
+CAT-5724,AH-99425,10,mismo producto exacto: comida húmeda para gato Gourmet Gold Doble Placer 8x85g,Comida húmeda para gato Gourmet Gold Doble Placer pack surtido 8x85g,comida humeda para gato adulto purina gourmet gold doble placer 8x85 g,marca_fabricante,Gourmet,6.65
+CAT-5636,AH-98297,10,mismo producto exacto: salsa pesto Genovese Barilla 190g,Salsa pesto Genovese Barilla 190g,salsa pesto alla genovese barilla tarro 190 g,marca_fabricante,Barilla,2.99
+CAT-6258,AH-99106,10,mismo producto exacto: canelones de atún La Cocinera 500g,Canelones La Cocinera atún 500g,canelones de atun la cocinera 500 g,marca_fabricante,La-Cocinera,3.99
+CAT-6663,AH-99500,10,mismo producto exacto: cerveza rubia Mahou Clásica pack 12 latas 33cl,Cerveza rubia Mahou Clásica pack 12 latas 33cl,cerveza mahou clasica pack de 12 latas de 33 cl,marca_fabricante,Mahou,9.24
+CAT-7125,AH-98838,10,mismo producto exacto: manzana Pink Lady bandeja,Manzana Pink Lady bandeja 750g,manzana pink lady bandeja de 6 piezas,marca_fabricante,Marca-Nacional-Sin-Marca,3.59
+CAT-7526,AH-98417,10,mismo producto exacto: refresco té verde maracuyá Fuze Tea 33cl lata,Refresco de té verde Maracuyá Fuze tea 33cl Lata,fuze tea te verde sabor maracuya lata 33 cl,marca_fabricante,Fuze-Tea,0.99
+CAT-7654,AM-55316,10,mismo producto exacto: solomillo de pollo Kentucky Fripozo 250g,Solomillo de pollo kentucky Fripozo 250g,solomillo de pollo kentucky fripozo 250 g,marca_fabricante,Fripozo,3.49
+CAT-5904,AH-98427,10,mismo producto exacto: cerveza rubia Mahou Clásica pack 24 botellas 25cl,Cerveza rubia Mahou Clásica pack 24 botellas 25cl,cerveza mahou clasica pack 24 botellas 25 cl,marca_fabricante,Mahou,14.16
+CAT-9402,AH-99115,10,mismo producto exacto - Pizza Casa di Mama Dr Oetker prosciutto funghi 405g,Pizza Casa di Mama Dr Oetker 405g prosciutto,pizza prosciutto funghi casa di mama dr oetker 405 g,marca_fabricante,Casa-Di-Mama,4.65
+CAT-9385,AH-98366,10,mismo producto exacto - Tinto de verano sin alcohol La Casera limón 33cl,Tinto de verano sin alcohol La Casera 33cl lata limón,tinto de verano con limon sin alcohol la casera lata 33 cl,marca_fabricante,La-Casera,0.97
+CAT-9523,AH-99114,10,mismo producto - La Gula del Norte pack 2x210g,La Gula del Norte 100g pack 2,la gula del norte 2x210 g,marca_fabricante,Marca-Nacional-Sin-Marca,5.45
+CAT-0489,AH-98207,10,mismo producto marca blanca - Barritas de cereales con chocolate blanco,Barritas de cereales con chocolate blanco Alipende 138g,Barritas de cereales con chocolate blanco,marca_blanca,,1.55
+CAT-2140,AH-98811,10,mismo producto - Pimientos tricolor,Pimiento tricolor 500g,Pimientos tricolor,marca_fabricante,,1.99
+CAT-0972,AM-74789,10,mismo producto exacto - Refresco Fanta naranja zero azúcares 33cl,Refresco naranja Fanta lata 33cl zero azúcares,Refresco Fanta naranja zero azúcares añadidos,marca_fabricante,,0.8
+CAT-5788,AH-99498,10,mismo producto - Huevos camperos Pazo de Vilane 12 unidades,Huevos camperos Pazo de Vilane 12 unidades,huevos camperos pazo de vilane 12 ud,marca_fabricante,Marca-Nacional-Sin-Marca,4.15
+CAT-0702,AH-99251,10,mismo producto - Yogur natural Danone,Yogur Danone pack 8 natural,Yogur natural Danone,marca_fabricante,,1.7
+CAT-4009,AH-98332,10,mismo producto marca blanca - Zumo de manzana,Zumo de manzana Alipende pack 6,Zumo de manzana,marca_blanca,,1.3
+CAT-4008,AH-98644,10,mismo producto marca blanca - Zumo de tomate,Zumo de tomate Alipende brik 1l,Zumo de tomate,marca_blanca,,1.05
+CAT-1748,AM-51793,10,mismo producto marca blanca - Salmón ahumado,Salmón ahumado,Salmón ahumado,marca_blanca,,40.0
+CAT-1026,AH-98441,10,mismo producto exacto - Refresco sin gas de naranja Simon Life 33cl,Refresco sin gas de naranja Simon Life 33cl,Refresco de naranja Simon Life sin gas,marca_fabricante,,0.6
+CAT-3512,AH-98687,10,mismo producto - Batata,Batata,Batata,marca_fabricante,,2.69
+CAT-2079,AH-99000,10,mismo producto marca blanca - Pechuga de pavo en lonchas,Pechuga de pavo en lonchas Alipende 250g,Pechuga de pavo finas lonchas,marca_blanca,,2.79
+CAT-6552,AH-98872,10,mismo producto - Lechuga batavia,Lechuga batavia 250gr,lechuga batavia verde 1 ud,marca_fabricante,,1.59
+CAT-1739,AM-51289,10,mismo producto marca blanca - Atún claro al natural,Atún claro Alipende pack 6 al natural,Atún claro al natural,marca_blanca,,4.2
+CAT-3055,AH-98662,10,mismo producto - Manzana Golden,Manzana golden,Manzana Golden,marca_fabricante,,2.69
+CAT-2812,AH-98678,10,mismo producto - Solomillo de cerdo,Solomillo de cerdo,Solomillo de cerdo,marca_fabricante,,9.99
+CAT-2810,AH-98710,10,"mismo producto exacto, misma marca y tipo",Secreto de cerdo ibérico,Secreto de cerdo ibérico,marca_fabricante,,27.99
+CAT-3124,AH-98726,10,"mismo producto marca blanca, mismo tipo y características",Queso de oveja viejo Alipende,Queso viejo de oveja,marca_blanca,,15.99
+CAT-2642,AH-99203,10,"mismo producto marca fabricante, misma marca y especificaciones",Leche Asturiana 1l semidesnatada,Leche semidesnatada Asturiana,marca_fabricante,,1.13
+CAT-3736,AH-98136,10,"mismo producto marca blanca, pan rallado idéntico",Pan rallado Alipende 750g,Pan rallado,marca_blanca,,0.85
+CAT-1622,AH-98261,10,"mismo producto marca blanca, spaghetti idéntico",Spaghetti Alipende 500g,Spaghetti,marca_blanca,,0.8
+CAT-0727,AH-99288,10,"mismo producto marca blanca, yogur griego fresa idéntico",Yogur griego fresa 110g Pack 4,Yogur griego sabor fresa,marca_blanca,,1.69
+CAT-2109,AH-98669,10,"mismo producto marca fabricante, patata idéntica",Patata,Patata,marca_fabricante,,1.89
+CAT-0047,AH-98191,10,"mismo producto marca blanca, canela en rama idéntica",Canela Alipende 14g en rama,Canela en rama,marca_blanca,,1.05
+CAT-0056,AH-98318,10,"mismo producto marca blanca, infusión jengibre idéntica",Infusión Alipende 20u jengibre,Infusión Jengibre,marca_blanca,,1.35
+CAT-4476,AH-99518,10,"mismo producto marca fabricante Lauki, leche semidesnatada idéntica",Leche Lauki 1l semidesnatada,leche semidesnatada lauki brik 1 l,marca_fabricante,Lauki,1.0
+CAT-2913,AH-98157,10,"mismo producto marca blanca, pajaritas vegetales idénticas",Pajaritas Alipende 500g con vegetales,Pajaritas vegetales,marca_blanca,,0.99
+CAT-0329,AH-98138,10,"mismo producto marca blanca, pan de molde blanco idéntico",Pan de molde Alipende 460g blanco,Pan de molde blanco,marca_blanca,,0.8
+CAT-0115,AH-98148,10,"mismo producto marca blanca, sopa de pollo con fideos idéntica",Sopa de pollo con fideos Alipende 66g,Sopa de pollo con fideos finos,marca_blanca,,0.5
+CAT-0362,AH-98305,10,"mismo producto marca blanca, té verde con hierbabuena idéntico",Té verde Alipende 20u hierbabuena,Té verde con hierbabuena,marca_blanca,,1.35
+CAT-0143,AH-98196,10,"mismo producto marca blanca, chocolate con leche fundir idéntico",Chocolate con leche Alipende 150g,Chocolate con leche fundir,marca_blanca,,1.35
+CAT-0335,AH-98430,10,"mismo producto marca fabricante Fanta, refresco limón idéntico",Refresco limón Fanta botella 2l,Refresco Fanta limón,marca_fabricante,,1.85
+CAT-0279,AH-98203,10,"mismo producto: pasas sultanas sin semillas/pepitas, marca blanca",Pasas sultanas sin pepitas Alipende 250g,Pasas sultanas sin semillas,marca_blanca,,1.8
+CAT-0139,AH-98274,10,"mismo producto: tomillo, marca blanca",Tomillo Alipende 18g,Tomillo,marca_blanca,,0.75
+CAT-0239,AH-98316,10,"mismo producto: curry, marca blanca",Curry Alipende 45g,Curry,marca_blanca,,1.05
+CAT-0553,AH-98673,10,"mismo producto: tomate ensalada, marca fabricante sin marca especificada",Tomate ensalada,Tomate ensalada,marca_fabricante,,2.99
+CAT-0427,AH-99496,10,mismo producto: papilla 8 cereales con miel Nestlé +6 meses,Papilla Nestlé 8 cereales miel desde 6meses 725g,Papilla 8 cereales con miel Nestlé +6 meses,marca_fabricante,,5.75
+CAT-1284,AH-98161,10,"mismo producto: cacahuete frito pelado con sal, marca blanca",Cacahuete frito repelado con sal Alipende 200g,Cacahuete frito con sal pelado,marca_blanca,,0.8
+CAT-1078,AH-98867,10,mismo producto: taquitos de chorizo extra Revilla,Taquitos de chorizo Revilla pack 2 de 75g,Taquitos de chorizo extra Revilla,marca_fabricante,,1.91
+CAT-1058,AH-98339,10,"mismo producto: refresco cola zero sin azúcar, marca blanca",Refresco de cola sin azúcar  Alipende 2l zero,Refresco cola Zero azúcar,marca_blanca,,0.8
+CAT-0799,AH-98822,10,"mismo producto: queso emmental rallado para gratinar, marca blanca",Queso emmental rallado Alipende 200g,Queso rallado emmental gratinar,marca_blanca,,1.65
+CAT-1437,AH-98302,10,"mismo producto: dátiles Medjoul con hueso, marca blanca",Dátiles Medjoul con hueso 215g,Dátiles Medjoul con hueso,marca_blanca,,3.99
+CAT-0861,AH-98690,10,"mismo producto: tomate pera, marca fabricante sin marca especificada",Tomate pera,Tomate pera,marca_fabricante,,2.89
+CAT-4867,AH-99207,10,mismo producto: leche entera Puleva calcio 1l,Leche Puleva calcio 1l entera,leche entera vita calcio puleva brik 1 l,marca_fabricante,Puleva,1.59
+CAT-1573,AH-98272,10,"mismo producto: garbanzo, marca blanca",Garbanzo Alipende 1kg,Garbanzo,marca_blanca,,2.2
+CAT-1819,AH-98159,10,"mismo producto: crema de verduras, marca blanca",Crema de verduras Alipende 500ml,Crema de verduras,marca_blanca,,1.0
+CAT-1574,AH-98260,10,"mismo producto: alubia blanca cocida, marca blanca",Alubia blanca cocida Alipende 215g,Alubia cocida blanca,marca_blanca,,0.7
+CAT-1591,AH-98301,10,"mismo producto: alubia granja cocida, marca blanca",Alubia granja cocida Alipende 400g,Alubia cocida granja,marca_blanca,,1.75
+CAT-1675,AH-98666,10,"mismo producto: pepino, marca fabricante sin marca especificada",Pepino,Pepino,marca_fabricante,,2.15
+CAT-1984,AH-99120,10,"mismo producto: helado mini bombón sin azúcares añadidos, marca blanca",Helado bombón mini sin azúcares añadidos Alipende 8 uds,Helado mini bombón surtido sin azúcares añadidos,marca_blanca,,3.5
+CAT-2025,AH-98181,10,mismo producto exacto: caldo de pollo Avecrem en pastillas,Caldo en pastillas Avecrem 24u pollo,Caldo de pollo Avecrem en pastillas,marca_fabricante,,2.95
+CAT-2103,AH-98317,10,mismo producto exacto: sardinillas en escabeche marca blanca Alipende,Sardinillas en escabeche Alipende 2 unidades 62g,Sardinillas en escabeche,marca_blanca,,1.89
+CAT-2412,AH-98192,10,mismo producto exacto: pan rallado casero marca blanca Alipende,Pan rallado Alipende 500g estilo casero,Pan rallado casero,marca_blanca,,1.0
+CAT-2783,AH-98956,10,mismo producto exacto: contramuslo pollo sin piel deshuesado marca BonPollo,Contramuslo sin piel y deshuesado de pollo BonPollo 800g Aprox,Contramuslos de pollo deshuesados y sin piel,marca_fabricante,,7.2
+CAT-3182,AH-98283,10,mismo producto exacto: champiñón entero marca blanca Alipende,Champiñon Alipende bote 185g entero,Champiñón entero,marca_blanca,,1.49
+CAT-3656,AH-98727,10,mismo producto exacto: chirla,Chirla,Chirla,marca_fabricante,,14.99
+CAT-3078,AH-98659,10,mismo producto exacto: pera Conferencia,Pera conferencia,Pera Conferencia,marca_fabricante,,2.29
+CAT-3698,AH-98679,10,mismo producto exacto: rodaja/rodajas de salmón,Salmón en rodajas,Rodaja de salmón,marca_fabricante,,19.99
+CAT-3532,AH-98680,10,mismo producto exacto: limón,Limón,Limón,marca_fabricante,,2.99
+CAT-3478,AH-98860,10,mismo producto exacto: naranja de mesa,Naranja de mesa bolsa 3kg,Naranja de mesa,marca_fabricante,,4.5
+CAT-3559,AH-99205,10,mismo producto exacto: leche entera Asturiana,Leche Asturiana 1l entera,Leche entera Asturiana,marca_fabricante,,1.24

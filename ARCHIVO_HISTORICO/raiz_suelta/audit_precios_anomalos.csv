@@ -1,0 +1,360 @@
+categoria,subcategoria,super,id_catalogo,nombre_cat,nombre_super,precio,mediana_grupo,desv_sigma
+Sin categoría,Otros,Mercadona,CAT-8706,Gambon Crudo Carrefour Extra Congelado 2 Kg,Alistado pequeño congelado,2227.5,3.0,31.4
+Carnicería y Charcutería,Charcuteria,Mercadona,CAT-1111,Jamón de bellota ibérico 100% Covap,Jamón de bellota ibérico 100% Covap,504.0,2.6,16.8
+Pescadería,Pescado,Mercadona,CAT-3172,Morralla,Morralla,787.05,10.5,14.2
+Congelados,Platos congelados preparados,Mercadona,CAT-0978,Alistado pequeño congelado,Alistado pequeño congelado,2227.5,3.4,13.7
+Carnicería y Charcutería,Charcuteria,Carrefour,CAT-5638,Maletin De Jamon De Cebo Iberico 50 Raza Iberica En Lonchas El Pozo Sin Gluten Y Sin Lactosa 15 Sobres De 50 G,Maletin De Jamon De Cebo Iberico 50 Raza Iberica En Lonchas El Pozo Sin Gluten Y Sin Lactosa 15 Sobres De 50 G,49.0,2.38,9.5
+Congelados,Platos congelados preparados,Carrefour,CAT-3022,Pulpo crudo congelado,Pulpo Crudo Entero Congelado Carrefour 1350 G,24.2,4.2,8.4
+Congelados,Platos congelados preparados,Mercadona,CAT-3157,Gambón congelado,Gambón congelado,1282.05,3.4,7.9
+Sin categoría,Otros,Carrefour,CAT-6168,Bateria De Cocina Acero Inoxidable San Ignacio Lexia 9 Piezas,Bateria De Cocina Acero Inoxidable San Ignacio Lexia 9 Piezas,59.9,4.35,7.5
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Carrefour,CAT-5045,Batido Vainilla Fuerza Y Vitalidad Meritene Sin Gluten 15 Sobres,Batido Vainilla Fuerza Y Vitalidad Meritene Sin Gluten 15 Sobres,23.8,1.5,7.3
+Hogar,Lavavajillas,Mercadona,CAT-8613,Limpiamaquinas Finish Pack De 2 Unidades De 250 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.75,6.6
+Desayuno y Snack,Té e infusiones,Mercadona,CAT-6778,Ambientador De Varillas Infusion Naranja Canela Ambar Botanic 75 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.4,6.2
+Desayuno y Snack,Cereales para desayuno,Mercadona,CAT-4820,Copos De Cereales Chocolateados  Carrefour Kids 500 G,"Aceite de oliva 0,4º Hacendado",19.75,2.1,5.9
+Bebidas,Vino,Carrefour,CAT-6197,Caja De 6 Botellas De Vino Tinto Crianza Otonal Do Ca Rioja 75 Cl,Caja De 6 Botellas De Vino Tinto Crianza Otonal Do Ca Rioja 75 Cl,30.9,5.4,5.7
+Lácteos y Huevos,Yogures,Carrefour,CAT-8457,Leche Infantil Para Lactantes En Polvo Danone Bledina 1 Lata 800 G,Leche Infantil Para Lactantes En Polvo Danone Bledina 1 Lata 800 G,15.85,2.32,5.6
+Carnicería y Charcutería,Pollo,Carrefour,CAT-8215,Pienso De Pollo Para Gato Adulto Ultima Cat 75 Kg,Pienso De Pollo Para Gato Adulto Ultima Cat 75 Kg,43.4,5.25,5.5
+Sin categoría,Otros,Carrefour,CAT-6464,Kit Blanqueamiento Dental White Flash Lacer Blanc 1 Ud,Kit Blanqueamiento Dental White Flash Lacer Blanc 1 Ud,44.2,4.35,5.4
+Bebidas,Refrescos,Carrefour,CAT-5958,Comida Humeda En Gelatina Seleccion De Sabores Para Gatos Adultos Purina Felix Fantastic 44X85 G,Comida Humeda En Gelatina Seleccion De Sabores Para Gatos Adultos Purina Felix Fantastic 44X85 G,22.9,2.29,5.3
+Sin categoría,Otros,Carrefour,CAT-5970,Crema Anti Estrias Trofolastin 400 Ml,Crema Anti Estrias Trofolastin 400 Ml,43.1,4.35,5.3
+Cuidado personal e Higiene,Cuidado del cabello,Carrefour,CAT-7693,Ampollas Anticaida Pilexil 15 Ud,Ampollas Anticaida Pilexil 15 Ud,43.5,6.95,5.3
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",DIA,CAT-4428,Leche Desnatada Vita Calcio Puleva Brik 1 L,Leche desnatada calcio Puleva pack 6 x 1 L,9.54,1.59,5.2
+Cuidado personal e Higiene,Cuidado del cabello,Carrefour,CAT-9576,Complemento Alimenticio Para El Cabello Y Las Unas En Capsulas Pilexil Capsulas 150 Ud,Complemento Alimenticio Para El Cabello Y Las Unas En Capsulas Pilexil Capsulas 150 Ud,41.9,6.95,5.1
+Congelados,Helados y postres congelados,Mercadona,CAT-5233,Surtido De Helados Caramel Collection Hagen Dazs 4 Uds,"Aceite de oliva 0,4º Hacendado",19.75,2.3,5.1
+Congelados,Helados y postres congelados,Mercadona,CAT-7076,Surtido De Helados Fruit Collection Hagen Dazs Sin Gluten 4 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.3,5.1
+Congelados,Helados y postres congelados,Mercadona,CAT-8193,Bombones Helados De Frambuesa Banada En Chocolate Blanco Y Negro Franui Sin Gluten 150 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,5.1
+Congelados,Helados y postres congelados,Mercadona,CAT-5162,Surtido De Helados Macadamia Hagen Dazs Sin Gluten 4 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.3,5.1
+Congelados,Helados y postres congelados,Mercadona,CAT-5234,Surtido De Helados Vanilla Collection Hagen Dazs 4 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.3,5.1
+Despensa,Azúcares y edulcorantes,Carrefour,CAT-5546,Leche Infantil De Crecimiento Desde 1 Ano Nutriben Innova Sin Azucar Anadido Lata 800 G,Leche Infantil De Crecimiento Desde 1 Ano Nutriben Innova Sin Azucar Anadido Lata 800 G,24.8,2.79,5.0
+Despensa,Azúcares y edulcorantes,Carrefour,CAT-5844,Leche Infantil De Continuacion Desde 1 Ano En Polvo Evolution Blemil Optimum Sin Azucar Anadida 1 Lata 800 G,Leche Infantil De Continuacion Desde 1 Ano En Polvo Evolution Blemil Optimum Sin Azucar Anadida 1 Lata 800 G,24.3,2.79,4.9
+Sin categoría,Otros,Carrefour,CAT-4677,Set 3 Sartenes De Aluminio Prensado Para Induccion Con  Mango Bakelita San Ignacio 18 22 26 Cm   Cobre,Set 3 Sartenes De Aluminio Prensado Para Induccion Con  Mango Bakelita San Ignacio 18 22 26 Cm   Cobre,39.9,4.35,4.8
+Sin categoría,Otros,Carrefour,CAT-5144,Set De 2 Filtros De Agua Brita Maxtra Pro ,Set De 51 Filtros De Agua Brita Maxtra Pro ,39.9,4.35,4.8
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",DIA,CAT-5592,Leche Desnatada 0 Mg Puleva Sin Lactosa Botella 1 L,Leche desnatada sin lactosa Pascual pack 6 x 1 L,8.94,1.59,4.8
+Hogar,Suavizantes,Carrefour,CAT-7725,Leche Limpiadora Facial Suavizante Avne 200 Ml,Leche Limpiadora Facial Suavizante Avne 200 Ml,21.6,4.99,4.8
+"Azúcar, caramelos y chocolate",Golosinas,Mercadona,CAT-7718,Pastillas De Regaliz Juanola Sin Gluten Sin Lactosa 27 G,"Aceite de oliva 0,4º Hacendado",19.75,1.6,4.8
+Sin categoría,Otros,Carrefour,CAT-8847,Pants Ultra Comfort Huggies T6 1525 Kg 108 Ud,Pants Ultra Comfort Huggies T6 1525 Kg 108 Ud,39.2,4.35,4.7
+Carnicería y Charcutería,Pollo,Carrefour,CAT-4366,Pienso De Pollo Y Cereales Para Perros Adultos Brekkies Excel 15 Kg,Pienso De Pollo Y Cereales Para Perros Adultos Brekkies Excel 15 Kg,37.0,5.25,4.6
+Sin categoría,Otros,Carrefour,CAT-5111,Serum Liposomado C Vit 5 Sesderma 30 Ml,Serum Liposomado C Vit 5 Sesderma 30 Ml,38.0,4.35,4.6
+Panadería y Pastelería,Pan fresco,Carrefour,CAT-8634,Tequenos De Chocolate Pan 600 G,Tequenos De Chocolate Pan 600 G,9.89,1.99,4.6
+Sin categoría,Otros,Carrefour,CAT-5949,Crema Para Las Bolsas Y Ojeras Remescar 8 Ml,Crema Para Las Bolsas Y Ojeras Remescar 8 Ml,37.5,4.35,4.5
+Despensa,Harinas,Mercadona,CAT-9922,Levadura Fresca Levanova Sin Gluten Pack De 2 Sobres De 25 G ,"Aceite de oliva 0,4º Hacendado",19.75,1.75,4.5
+Despensa,Harinas,Mercadona,CAT-8556,Leche Fermentada Con Levaduras Y Granulos De Kefir Nestle 375 G,"Aceite de oliva 0,4º Hacendado",19.75,1.75,4.5
+Pescadería,Pescado,Carrefour,CAT-9668,Pienso Esterilizado De Salmon Para Gato Adulto 75 Kg,Pienso Esterilizado De Salmon Para Gato Adulto 75 Kg,45.5,7.05,4.5
+Cuidado personal e Higiene,Higiene bucal,Carrefour,CAT-9430,Dentifrico Plus Fluor Desensin Pack De 2 Unidades De 125 G,Dentifrico Plus Fluor Desensin Pack De 2 Unidades De 125 G,22.1,5.75,4.5
+Despensa,Especias e hierbas secas,Mercadona,CAT-5874,Pechugas De Pavo Marinadas Al Pimenton Carrefour 500 G Aprox,"Aceite de oliva 0,4º Hacendado",19.75,1.5,4.5
+Despensa,Especias e hierbas secas,Mercadona,CAT-8715,Sandwich De Pollo Al Curry Bon Appetit Carrefour 200 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,4.5
+Carnicería y Charcutería,Pollo,Carrefour,CAT-9330,Pienso De Pollo Y Verduras Para Perro Adulto Purina Friskies Vitafit Complete 15 Kg,Pienso De Pollo Y Verduras Para Perro Adulto Purina Friskies Vitafit Complete 15 Kg,36.1,5.25,4.4
+Cuidado personal e Higiene,Higiene corporal,Carrefour,CAT-7714,Oleogel De Ducha Ph5 Para Piel Sensible Y Seca Eucerin 1000 Ml,Oleogel De Ducha Ph5 Para Piel Sensible Y Seca Eucerin 1000 Ml,27.3,3.35,4.4
+Frutas y Verduras,Verduras,Carrefour,CAT-6579,Filetes De Lomo Bajo De Anojo Circulo De Calidad 500 G Aprox,Filetes De Lomo Bajo De Anojo Circulo De Calidad 500 G Aprox,12.65,2.49,4.4
+Bebidas,Refrescos,AhorraMas,CAT-9591,Coca Cola Zero Azucar Zero Cafeina Pack 4 Botellas 2 L,Refresco cola Coca-Cola botella 2l pack 4 zero azúcar,7.52,0.99,4.4
+Bebidas,Refrescos,Carrefour,CAT-8872,Coca Cola Zero Azucar Pack 24 Latas 33 Cl,Coca Cola Zero Azucar Pack 24 Latas 33 Cl,19.2,2.29,4.3
+Bebidas,Refrescos,Carrefour,CAT-5977,Coca Cola Light Pack 24 Latas 33 Cl,Coca Cola Light Pack 24 Latas 33 Cl,19.2,2.29,4.3
+Bebidas,Refrescos,Carrefour,CAT-6041,Coca Cola Zero Azucar Zero Cafeina Pack 24 Latas 33 Cl,Coca Cola Zero Azucar Zero Cafeina Pack 24 Latas 33 Cl,19.2,2.29,4.3
+Bebidas,Refrescos,Carrefour,CAT-4322,Coca Cola Pack 24 Latas 33 Cl,Coca Cola Pack 24 Latas 33 Cl,19.2,2.29,4.3
+Bebidas,Cerveza,DIA,CAT-8168,Cerveza El Aguila Sin Filtrar Pack 12 Latas 33 Cl,Cerveza sin filtrar El aguila pack 24 x 33 cl,18.0,0.99,4.3
+Bebidas,Agua,Mercadona,CAT-8074,Agua Mineral Solan De Cabras Natural 50 Cl,Aceite de oliva 1º Hacendado,20.85,1.5,4.3
+Frutas y Verduras,Fruta,Carrefour,CAT-9154,Leche Corporal Hidratante Con Aguacate Hydra Bebe Mustela 500 Ml,Leche Corporal Hidratante Con Aguacate Hydra Bebe Mustela 500 Ml,15.15,2.72,4.3
+Bebidas,Zumos,Carrefour,CAT-4023,Concentrado De Granadina Rives 1 L,Concentrado De Granadina Rives 1 L,6.45,2.49,4.3
+Mascotas,Comida para otros animales,Carrefour,CAT-9964,Vegetal Clean Papel Vitakraft  25 Litros,Vegetal Clean Papel Vitakraft  25 Litros,21.9,3.79,4.3
+Cuidado personal e Higiene,Maquillaje y otros,Mercadona,CAT-7266,Bandas De Cera Depilatorias Facial Hipoalergenicas Minima Veet 20 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.5,4.3
+Cuidado personal e Higiene,Maquillaje y otros,Mercadona,CAT-8917,Bandas De Cera Corporales Depilatoria Frias Carrefour Soft 20 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.5,4.3
+Cuidado personal e Higiene,Maquillaje y otros,Mercadona,CAT-8924,Bandas De Cera Depilatoria Faciales Frias Carrefour Soft 20 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.5,4.3
+Lácteos y Huevos,Quesos,DIA,CAT-1577,Queso tierno de cabra,Queso mini tierno de cabra Dia El Cencerro 520 g,7.28,2.49,4.2
+Sin categoría,Otros,Carrefour,CAT-9331,Crema Anticelulitica Con Activos Reductores Thiomucase 1 Ud,Crema Anticelulitica Con Activos Reductores Thiomucase 1 Ud,34.7,4.35,4.1
+Frutas y Verduras,Fruta,Carrefour,CAT-7644,Gel De Bano Con Espuma Con Aguacate Mustela 750 Ml,Gel De Bano Con Espuma Con Aguacate Mustela 750 Ml,14.55,2.72,4.1
+Cuidado personal e Higiene,Higiene corporal,Carrefour,CAT-9530,Emulsion Sin Jabon Con Aceite De Oliva Sebamed 2 Unidades 750 Ml,Emulsion Sin Jabon Con Aceite De Oliva Sebamed 2 Unidades 750 Ml,25.6,3.35,4.1
+Cuidado personal e Higiene,Cremas y protectores,Mercadona,CAT-9535,Agua De Mar En Spray Carrefour Soft 150 Ml,Aceite de oliva 1º Hacendado,20.85,5.0,4.1
+Sin categoría,Otros,Carrefour,CAT-9879,Spray Elimina Piojos Y Liendres Fullmarks 150 Ml,Spray Elimina Piojos Y Liendres Fullmarks 150 Ml,34.2,4.35,4.0
+Bebidas,Cerveza,Carrefour,CAT-9119,Cerveza Mahou 5 Estrellas Pack 28 Latas 33 Cl,Cerveza Mahou 5 Estrellas Pack 28 Latas 33 Cl,22.97,2.17,4.0
+Bebidas,Agua,Mercadona,CAT-0641,Agua de coco 100%,"Aceite de oliva 0,4º Hacendado",19.75,1.5,4.0
+Bebidas,Agua,Carrefour,CAT-8677,Agua Mineral Cabreiroa Grifo 8 L,Agua Mineral Cabreiroa Grifo 8 L,4.05,0.99,4.0
+Pescadería,Pescado,Carrefour,CAT-5670,Bacalao 3 Kg Aprox,Bacalao 3 Kg Aprox,41.25,7.05,4.0
+Pescadería,Marisco,Carrefour,CAT-4482,Gamba Blanca Cruda Extra 500 G Aprox,Gamba Blanca Cruda Extra 500 G Aprox,31.0,8.22,4.0
+Congelados,Helados y postres congelados,Carrefour,CAT-5365,Tarta Helada Romantica Carte Dor 550 G,Tarta Helada Romantica Carte Dor 550 G,11.39,5.19,4.0
+Frutas y Verduras,Verduras,Mercadona,CAT-5778,Nabo Granel 1 Kg Aprox,Pañales bebé talla 1 de 2-5 kg Dodot,20.95,1.94,4.0
+Frutas y Verduras,Verduras,Mercadona,CAT-5706,Zanahoria Circulo De Calidad Carrefour 1 Kg,Aceite de oliva 1º Hacendado,20.85,1.94,4.0
+Frutas y Verduras,Verduras,Mercadona,CAT-6466,Zanahoria Circulo De Calidad Carrefour 500 G,Aceite de oliva 1º Hacendado,20.85,1.94,4.0
+Frutas y Verduras,Verduras,DIA,CAT-2129,Patatas,Patatas 4 Kg,5.49,1.79,4.0
+Despensa,Legumbres secas,Mercadona,CAT-6609,Falafel A Base De Garbanzos Y Hortalizas Vegano Garden Gourmet 190 G,"Aceite de oliva 0,4º Hacendado",19.75,2.48,4.0
+Sin categoría,Otros,Carrefour,CAT-7225,Multivitaminico Y Multimineral En Comprimidos Mujer 50 Multicentrum Sin Gluten 90 Ud,Multivitaminico Y Multimineral En Comprimidos Mujer 50 Multicentrum Sin Gluten 90 Ud,33.2,4.35,3.9
+Despensa,"Arroz, pasta y quinoa",Carrefour,CAT-4793,Pienso De Pollo Y Arroz Para Perro Medium Maxi Adulto  Ultima Dog 75 Kg,Pienso De Pollo Y Arroz Para Perro Medium Maxi Adulto  Ultima Dog 75 Kg,35.7,3.89,3.9
+Despensa,"Arroz, pasta y quinoa",Carrefour,CAT-5676,Pienso De Pollo Y Arroz Para Perro Medium Maxi Junior Ultima 75 Kg,Pienso De Pollo Y Arroz Para Perro Medium Maxi Junior Ultima 75 Kg,35.7,3.89,3.9
+Carnicería y Charcutería,Pavo,Carrefour,CAT-6612,Pienso Esterilizado Bolas De Pelo De Pavo Para Gato Adulto Ultima 75 Kg,Pienso Esterilizado Bolas De Pelo De Pavo Para Gato Adulto Ultima 75 Kg,48.8,5.79,3.9
+Panadería y Pastelería,Bollos,Mercadona,CAT-8475,Croissant Brioche 1 Ud,Pañales bebé talla 1 de 2-5 kg Dodot,20.95,2.1,3.9
+Panadería y Pastelería,Bollos,Mercadona,CAT-6216,Mini Napolitana De Chocolate Carrefour 10 Ud,Aceite de oliva 1º Hacendado,20.85,2.1,3.9
+Cuidado personal e Higiene,Cremas y protectores,Mercadona,CAT-4808,Aceite De Semillas Rosa Mosqueta Ecologico Arganour 50 Ml,"Aceite de oliva 0,4º Hacendado",19.75,5.0,3.9
+Desayuno y Snack,Frutos secos embasados,DIA,CAT-1437,Dátiles Medjoul con hueso,Dátiles Medjoul 500 g,7.99,2.02,3.9
+Bebidas,Cerveza,DIA,CAT-7568,Cerveza Heineken Pack 12 Latas 33 Cl,Cerveza Heineken pack 24 x 1 L,16.08,0.99,3.8
+Desayuno y Snack,Café y cacaos,DIA,CAT-3025,Café en grano Colombia,Café en grano Colombia L'Or 500 g,15.99,4.95,3.8
+Platos preparados,Platos preparados refrigerados,Mercadona,CAT-8931,Wraps Tortillas De Trigo Carrefour Sensation Sin Aceite De Palma 6 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.0,3.8
+Platos preparados,Platos preparados refrigerados,Mercadona,CAT-5352,Sandwich De Vainilla Y Chocolate Classic Carrefour 6 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.0,3.8
+Platos preparados,Platos preparados refrigerados,Mercadona,CAT-6243,Tortilla De Patatas Carrefour Classic Sin Gluten Sin Lactosa 600 G,"Aceite de oliva 0,4º Hacendado",19.75,3.0,3.8
+Platos preparados,Platos preparados refrigerados,Mercadona,CAT-8713,Sandwich De Atun Con Huevo Y Lechuga Carrefour 200 G,"Aceite de oliva 0,4º Hacendado",19.75,3.0,3.8
+Platos preparados,Platos preparados refrigerados,Mercadona,CAT-5176,Sandwich De Chocolate Vegetal Sensation Carrefour 5 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.0,3.8
+Lácteos y Huevos,Quesos,Carrefour,CAT-7933,Minipizzas Con Queso Y Jamon Cocido Piccolinis Buitoni 720 G,Minipizzas Con Queso Y Jamon Cocido Piccolinis Buitoni 720 G,8.79,3.29,3.8
+Cuidado personal e Higiene,Higiene corporal,Carrefour,CAT-4909,Emulsion Sin Jabon Pieles Sensibles Sebamed Pack 2 Unidades 750 Ml,Emulsion Sin Jabon Pieles Sensibles Sebamed Pack 2 Unidades 750 Ml,23.8,3.35,3.8
+Hogar,Lejia y desinfectantes,Mercadona,CAT-2352,Cloro rápido granulado para piscina,Cloro rápido granulado para piscina,32.5,3.55,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-9226,Hermetico Rectangular Bajo De Plastico 1L Carrefour Klipfresh,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-8652,Crackers De Zanahoria Desde 12 Meses Ecologico Nestle 100 G,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-7402,Snack De Zanahoria Y Maiz Desde 10 Meses Ecologico Hero Solo Sin Gluten 40 G,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-6579,Filetes De Lomo Bajo De Anojo Circulo De Calidad 500 G Aprox,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-5283,Tarrito De Calabaza Patata Guisante Y Brocoli Desde 6 Meses  Ecologico Hero Solo Sin Gluten 190 G,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-7044,Bolsita De Manzana Zanahoria Y Mango Ecologica My Carrefour Baby Bio 100 G,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-4271,Tarrito De Calabaza Y Calabacin Desde 4 Meses Ecologico Smileat Sin Gluten 230 G,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-5086,Arreglo De Puchero Completo Carrefour El Mercado 900 G Aprox,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-7954,Tiras De Calabacin Rebozas Y Prefritas Maheso 300 G,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Verduras,Mercadona,CAT-9446,Brotes De Espinaca Y Rucula Carrefour El Mercado 150 G,"Aceite de oliva 0,4º Hacendado",19.75,1.94,3.8
+Frutas y Verduras,Fruta,DIA,CAT-2769,Melón piel de sapo,Melón piel de sapo unidad 2.8 Kg aprox.,6.41,2.24,3.8
+Carnicería y Charcutería,Pollo,Carrefour,CAT-4995,Pienso De Pollo Para Perro Mediano Grande Adulto Ultima 75 Kg,Pienso De Pollo Para Perro Mediano Grande Adulto Ultima 75 Kg,31.2,5.25,3.7
+Sin categoría,Otros,Carrefour,CAT-5353,Multivitaminico Y Multimineral Hombre Multicentrum Sin Gluten 90 Ud  ,Multivitaminico Y Multimineral Hombre Multicentrum Sin Gluten 90 Ud  ,31.5,4.35,3.7
+Bebidas,Licores y destilados,Carrefour,CAT-4987,Serum Hyaluron Activ B3 Avne 30 Ml,Serum Hyaluron Activ B3 Avne 30 Ml,42.1,8.99,3.7
+Hogar,Suavizantes,Mercadona,CAT-6472,Suavizante Concentrado Sueno De Jazmin Mimosin 105 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.7
+Congelados,Helados y postres congelados,Mercadona,CAT-3166,Tarta selva negra congelada,Tarta selva negra Hacendado congelada,14.9,2.3,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-9889,Detergente Liquido Para La Ropa De Bebe Frosch Baby 21 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-9625,Detergente Liquido Para Ropa De Bebe Sin Alergenos Norit 32 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-5014,Quitamanchas En Gel Ropa De Color Oxi Power Carrefour 2 L,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-6821,Detergente En Capsulas Japon Flor De Cerezo Essential Carrefour 30 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-8066,Detergente Liquido Japon Flor De Cerezo Essential Carrefour 44 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-8067,Detergente Liquido Marsella Y Flores De Naranjo Essential Carrefour 44 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-8070,Detergente Liquido Aloe Vera Y Flores De Almendra Dulce Essential Carrefour 44 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Hogar,Detergentes para ropa,Mercadona,CAT-8068,Detergente Liquido Marsella Y Flores De Naranjo Essential Carrefour 80 Lavados,"Aceite de oliva 0,4º Hacendado",19.75,2.7,3.7
+Despensa,Azúcares y edulcorantes,Carrefour,CAT-8452,Leche Infantil De Continuacion Desde 6 Meses Danone Bledina 2 Sin Azucar Anadido Lata 800 G,Leche Infantil De Continuacion Desde 6 Meses Danone Bledina 2 Sin Azucar Anadido Lata 800 G,18.85,2.79,3.7
+Panadería y Pastelería,Bollos,Mercadona,CAT-6767,Bollo De Petitas Chocolate Con Leche Weikis La Bella Easo 6 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.1,3.7
+Panadería y Pastelería,Bollos,Mercadona,CAT-5739,Bizcochos Rellenos De Chocolate Con Leche Cakechoc Milka 175 G,"Aceite de oliva 0,4º Hacendado",19.75,2.1,3.7
+Panadería y Pastelería,Bollos,Mercadona,CAT-5740,Bizcocho De Chocolate Osito Lulu Fontaneda 150 G,"Aceite de oliva 0,4º Hacendado",19.75,2.1,3.7
+Panadería y Pastelería,Bollos,Mercadona,CAT-7317,Bizcocho Recubierto De Frambuesa Y Chocolate Pims Fontaneda 150 G,"Aceite de oliva 0,4º Hacendado",19.75,2.1,3.7
+Panadería y Pastelería,Bollos,Mercadona,CAT-8004,Bollo Con Pepitas De Chocolate Carrefour Classic 6 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.1,3.7
+Panadería y Pastelería,Bollos,Mercadona,CAT-9245,Napolitanas Rellenas De Chocolate Classic Carrefour 320 G,"Aceite de oliva 0,4º Hacendado",19.75,2.1,3.7
+Bebidas,Cerveza,Carrefour,CAT-9118,Cerveza Mahou Clasica Pack De 28 Latas De 33 Cl,Cerveza Mahou Clasica Pack De 28 Latas De 33 Cl,21.0,2.17,3.6
+Bebidas,Cerveza,Carrefour,CAT-5320,Cerveza Amstel 100 Malta Pack 28 Latas 33 Cl,Cerveza Amstel 100 Malta Pack 28 Latas 33 Cl,20.72,2.17,3.6
+Bebidas,Cerveza,Carrefour,CAT-5319,Cerveza Cruzcampo Pilsen Pack 28 Latas 33 Cl,Cerveza Cruzcampo Pilsen Pack 28 Latas 33 Cl,20.72,2.17,3.6
+Bebidas,Agua,DIA,CAT-9285,Agua Mineral Natural Con Gas San Pellegrino 1 L,Agua mineral con gas San Pellegrino pack 6 x 1 L,8.1,1.3,3.6
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-5843,Baguette Carrefour 1 Ud,Pañales bebé talla 1 de 2-5 kg Dodot,20.95,1.5,3.6
+Pescadería,Pescado,Carrefour,CAT-5496,Pienso Digestivo De Salmon Para Perro Medium Maxi Adulto Ultima 7 Kg,Pienso Digestivo De Salmon Para Perro Medium Maxi Adulto Ultima 7 Kg,37.5,7.05,3.6
+Bebidas,Licores y destilados,Carrefour,CAT-9534,Whisky Johnnie Walker Double Black Escoces 70 Cl,Whisky Johnnie Walker Double Black Escoces 70 Cl,41.4,8.99,3.6
+Cuidado personal e Higiene,Cuidado del cabello,DIA,CAT-0734,Champú anticaspa Citrus Fresh H&S cabello graso,Champú anticaspa citrus fresh cabello graso H&S 800 ml,8.99,3.99,3.6
+Cuidado personal e Higiene,Perfumes,Carrefour,CAT-8829,Perfume Para La Ropa En Perlas Concentrado Frescor De Abril Lenor 735 G,Perfume Para La Ropa En Perlas Concentrado Frescor De Abril Lenor 735 G,26.2,7.92,3.6
+Hogar,Lejia y desinfectantes,Mercadona,CAT-3525,Cloro disolución lenta tabletas para piscina,Cloro disolución lenta tabletas para piscina,31.0,3.55,3.6
+Hogar,Lejia y desinfectantes,Mercadona,CAT-3823,Cloro 5 acciones disolución lenta tabletas para piscina,Cloro 5 acciones disolución lenta tabletas para piscina,31.0,3.55,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-9702,Pipas De Calabaza Crudas Y Peladas Carrefour Sin Sal Anadida 150 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-7365,Pan De Molde De Maiz Y Semillas De Girasol 400 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-6096,Cocktail De Frutos Secos Sin Cascara Frit Ravich Sin Gluten 160 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-8378,Cocktail De Frutos Secos Sin Cascara Frit Ravich Sin Gluten 300 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-4629,Cabeza De Cerdo Iberica Con Pistachos Al Corte Frial 250 G Aprox,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-5411,Cocktail De Frutos Secos Tostados Fuerza Original Carrefour Sin Sal Anadida 175 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-8402,Pipas De Girasol Gigantes Saladas Classic Carrefour Sin Gluten 200 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Desayuno y Snack,Frutos secos embasados,Mercadona,CAT-7456,Redondo De Datil Con Nuez Carrefour El Mercado 200 G,"Aceite de oliva 0,4º Hacendado",19.75,2.3,3.6
+Bebidas,Vino,AhorraMas,CAT-2557,Vino tinto crianza Abadía Mantrús DO Ribera del Duero,Vino tinto DO Ribera del Duero Arzuaga crianza,23.99,5.67,3.5
+Sin categoría,Otros,Carrefour,CAT-4791,Locion Urea Repair Plus Eucerin 1L,Locion Urea Repair Plus Eucerin 1L,30.5,4.35,3.5
+Sin categoría,Otros,Carrefour,CAT-8326,Set 4 Utensilios De Freidora De Aire Masterpro Foodies,Set 4 Utensilios De Freidora De Aire Masterpro Foodies,29.99,4.35,3.5
+Bebidas,Cerveza,Mercadona,CAT-8037,Cerveza Alhambra Reserva 1925 Pack De 12 Botellas De 33 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-9120,Cerveza San Miguel Especial Lager Pack De 28 Latas De 33 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-5903,Cerveza Tostada Mahou 00 Alcohol Pack De 6 Botellas De 25 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-9118,Cerveza Mahou Clasica Pack De 28 Latas De 33 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-7827,Cerveza Estrella Galicia Especial Pack De 10 Latas 33 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-8310,Cerveza Tostada Estrella Galicia 00 Alcohol Pack 10 Latas De 33 Cl ,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-8612,Cerveza Saer Brau Sin Alcohol Pack De 6 Botellas De 25 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-4389,Cerveza Erdinger Weissbier Alemana De Trigo Botella 50 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-6022,Set De 10 Vasos De Cerveza De Plastico Reutilizable 315 Cl Smart,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-5587,Cerveza Mahou 5 Estrellas Radler Con Zumo Natural De Limon Lata 33 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-6663,Cerveza Mahou Clasica Pack De 12 Latas De 33 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,Mercadona,CAT-6773,Cerveza Mahou Clasica Pack De 12 Botellas De 25 Cl,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.5
+Bebidas,Cerveza,AhorraMas,CAT-5904,Cerveza Mahou Clasica Pack 24 Botellas 25 Cl,Cerveza rubia Mahou Clásica pack 24 botellas 25cl,14.16,1.05,3.5
+Bebidas,Agua,Carrefour,CAT-2846,Agua mineral grande Bezoya,Agua Mineral Bezoya Grifo 8 L,3.65,0.99,3.5
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-7478,Arepa De Maiz Amarillo Goya Sin Gluten 450 G,Aceite de oliva 1º Hacendado,20.85,1.5,3.5
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-5043,Pan De Leche Con Pepitas De Chocolate 280 G,Aceite de oliva 1º Hacendado,20.85,1.5,3.5
+Pescadería,Pescado,Carrefour,CAT-6392,Pienso De Salmon Para Perro Brekkies 14 Kg,Pienso De Salmon Para Perro Brekkies 14 Kg,37.0,7.05,3.5
+Cuidado personal e Higiene,Cuidado del cabello,Carrefour,CAT-8190,Canastilla Mustela Colonia 200 Ml Gel Champu 200 Ml Leche Corporal 300 Ml Crema Balsamo 50 Ml Y Toallitas 70 Ud,Canastilla Mustela Colonia 200 Ml Gel Champu 200 Ml Leche Corporal 300 Ml Crema Balsamo 50 Ml Y Toallitas 70 Ud,30.7,6.95,3.5
+Cuidado personal e Higiene,Higiene bucal,Carrefour,CAT-5780,Colutorio Control Diario Periodontal Y Periimplantorio Perio Aid 1000 Ml,Colutorio Control Diario Periodontal Y Periimplantorio Perio Aid 1000 Ml,18.49,5.75,3.5
+Cuidado personal e Higiene,Higiene íntima femenina,Mercadona,CAT-6293,Compresas Para Incontinencia De Orina Mini Discreet Ausonia 24 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.25,3.5
+Cuidado personal e Higiene,Higiene íntima femenina,Mercadona,CAT-6292,Compresas Para Incontinencia De Orina Normal Discreet Ausonia 14 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.25,3.5
+Cuidado personal e Higiene,Higiene íntima femenina,Mercadona,CAT-9948,Compresas Para Incontinencia De Orina Proteccion Completa Normal Discreet Ausonia 24 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.25,3.5
+Cuidado personal e Higiene,Higiene íntima femenina,Mercadona,CAT-9949,Compresas Para Incontinencia De Orina Proteccion Completa Extra Discreet Ausonia 20 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.25,3.5
+Cuidado personal e Higiene,Higiene íntima femenina,Mercadona,CAT-4958,Compresas Para Incontinencia De Orina Maxi Absodys Carrefour 16 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.25,3.5
+Cuidado personal e Higiene,Higiene íntima femenina,Mercadona,CAT-5491,Compresas Para Incontinencia De Orina Extra Seguridad Maxi Discreet Ausonia 16 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.25,3.5
+Cuidado personal e Higiene,Higiene íntima femenina,Mercadona,CAT-6661,Compresas Para Incontinencia De Orina Normal Absodys Discret Carrefour Soft 24 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.25,3.5
+Hogar,Utensilios y consumibles de limpieza,Carrefour,CAT-4268,Limpia Salpicaderos Krafft  520Ml  Bayeta,Limpia Salpicaderos Krafft  520Ml  Bayeta,7.99,2.59,3.5
+Bazar y Varios,Hogar y decoración,Carrefour,CAT-6505,Papel Higienico 3 Capas Seda Foxy 18 Rollos,Papel Higienico 3 Capas Seda Foxy 30 Rollos,22.4,4.04,3.5
+Despensa,Azúcares y edulcorantes,Carrefour,CAT-6178,Papilla Infantil Belvit 8 Cereales Desde 5 Meses Sin Azucar Anadido 1000 G,Papilla Infantil Belvit 8 Cereales Desde 5 Meses Sin Azucar Anadido 1000 G,18.15,2.79,3.5
+Pescadería,Moluscos,Mercadona,CAT-4939,Navajas Crudas Procedente De Pesca Sostenible Carrefour 500 G,"Aceite de oliva 0,4º Hacendado",19.75,2.5,3.5
+Mascotas,Comida para otros animales,Carrefour,CAT-4906,Pienso De Buey Y Trigo Para Gatos Esterilizados Purina One 28 Kg,Pienso De Buey Y Trigo Para Gatos Esterilizados Purina One 28 Kg,18.45,3.79,3.5
+Despensa,"Arroz, pasta y quinoa",DIA,CAT-9000,Arroz Bomba Categoria Extra La Fallera 1 Kg,Arroz bomba La fallera 1 Kg,6.05,1.57,3.5
+Bebidas,Vino,Carrefour,CAT-4182,Vino Tinto Reserva Tempranillo Marques De Riscal Doca Rioja 75 Cl,Vino Tinto Reserva Tempranillo Marques De Riscal Doca Rioja 75 Cl,20.6,5.4,3.4
+Sin categoría,Otros,Carrefour,CAT-5407,Crema Reafirmante Post Parto Trofolastin 200 Ml,Crema Reafirmante Post Parto Trofolastin 200 Ml,29.4,4.35,3.4
+Bebidas,Cerveza,Carrefour,CAT-9120,Cerveza San Miguel Especial Lager Pack De 28 Latas De 33 Cl,Cerveza San Miguel Especial Lager Pack De 28 Latas De 33 Cl,19.89,2.17,3.4
+Desayuno y Snack,Café y cacaos,Mercadona,CAT-9763,Canas Rellenas De Crema Al Cacao Carrefour Classic 380 G,"Aceite de oliva 0,4º Hacendado",19.75,3.8,3.4
+Desayuno y Snack,Café y cacaos,Mercadona,CAT-4426,Petit Nestle Nesquik Sin Gluten Pack De 6 Unidades De 60 G,"Aceite de oliva 0,4º Hacendado",19.75,3.8,3.4
+Desayuno y Snack,Café y cacaos,Mercadona,CAT-7778,Sandwich De Vainilla Y Galleta Al Cacao Oreo 4 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.8,3.4
+Desayuno y Snack,Café y cacaos,Mercadona,CAT-9355,Cafe Latte De Vainilla Kaiku Sin Gluten 230 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.8,3.4
+Desayuno y Snack,Café y cacaos,Mercadona,CAT-4584,Croissants Rellenos De Crema De Cacao Carrefour Classic 360 G,"Aceite de oliva 0,4º Hacendado",19.75,3.8,3.4
+Desayuno y Snack,Café y cacaos,Mercadona,CAT-4206,Pepitos Con Crema De Cacao Carrefour Envase 4 Ud,"Aceite de oliva 0,4º Hacendado",19.75,3.8,3.4
+Bebidas,Licores y destilados,Mercadona,CAT-7104,Whisky Westerly 70 Cl,Whisky escocés Black Label Johnnie Walker,28.9,6.35,3.4
+Bebidas,Licores y destilados,Mercadona,CAT-1060,Whisky escocés Black Label Johnnie Walker,Whisky escocés Black Label Johnnie Walker,28.9,6.35,3.4
+Cuidado personal e Higiene,Desodorantes,Carrefour,CAT-8172,Desodorante En Spray Para Los Pies Y Calzado Devor Olor 150 Ml,Desodorante En Spray Para Los Pies Y Calzado Devor Olor 150 Ml,8.89,2.95,3.4
+Congelados,Helados y postres congelados,Mercadona,CAT-0659,Tarta infantil Tesia and Friends congelada,Tarta infantil Tesia and Friends Hacendado congelada,13.8,2.3,3.4
+Congelados,Helados y postres congelados,Mercadona,CAT-1873,Tarta infantil balón de fútbol congelada,Tarta infantil balón de fútbol Hacendado congelada,13.8,2.3,3.4
+Mascotas,Comida para otros animales,Carrefour,CAT-8026,Pienso Esterilizado De Buey Para Gato Adulto Ultima 25 Kg,Pienso Esterilizado De Buey Para Gato Adulto Ultima 25 Kg,17.89,3.79,3.4
+Cuidado personal e Higiene,Parafarmacia,Carrefour,CAT-9449,Peptidos De Colageno Vital Proteins 567 G,Peptidos De Colageno Vital Proteins 567 G,42.9,11.15,3.4
+Sin categoría,Otros,Carrefour,CAT-7740,Crema Anti Estrias Trofolastin 250 Ml,Crema Anti Estrias Trofolastin 250 Ml,28.7,4.35,3.3
+Bebidas,Vino,Mercadona,CAT-8016,Vino Tinto Crianza Tempranillo Altos De Tamaron Do Ribera Del Duero 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-4249,Vino Blanco Moscatel De Alejandria Ecologico Vina Esmeralda Do Penedes 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-8396,Vino Tinto Crianza Tempranillo Altos De Penalen Doca Rioja 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-6944,Vino Moscatel Cortijo De Ceret Do Valencia 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-7344,Vino Fino Cortijo De Ceret Dojerez Xeres Sherry 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-9829,Vino Tinto Habla De La Tierra Vt Extremadura 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-9848,Vino Blanco Verdejo Marques De Caceres Do Rueda 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-4772,Vino Tinto Roble Tempranillo Enrique I Do Ribera De Duero 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-6843,Vino Tinto Crianza Marques De Valido Do Ca Rioja 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-7144,Vino Tinto De Francia Ac Bordeaux Grand Moment 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-8747,Estuche De 2 Botellas De Vino Tinto Roble Protos Do Ribera Del Duero 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-7870,Vino Tinto Roble Mayor De Castilla Do Ribera Del Duero 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-5098,Vino Sweet Semi Dulce Blanco Alma De Valdeguerra 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-5126,Vino Tinto Tinta De Toro Matsu El Picaro Do Toro 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-6197,Caja De 6 Botellas De Vino Tinto Crianza Otonal Do Ca Rioja 75 Cl,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Bebidas,Vino,Mercadona,CAT-5813,Vino De Verano Con Limon Carrefour Sensation Botella 15 L,"Aceite de oliva 0,4º Hacendado",19.75,2.85,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-8930,Tortillas De Trigo Y Maiz Carrefour Sensation Sin Aceite De Palma 10 Ud,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-6335,Pan Payes 5 Cereales Con Semillas De Calabaza Rebanado 490 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-4430,Baguetinas Pan Maheso Pack De 4 Unidades De 125 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-4531,Tortillas De Trigo Para Fajitas Mexifoods 8 Ud,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-5628,Pan Burger Con Semillas De Sesamo Classic Carrefour 4 Ud,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-9541,Cocktail De Picos De Pan Integrales Carrefour El Mercado 500 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-5282,Pan De Molde Carrefour Classic Sin Gluten 350 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-5779,Baguette Precocida Carrefour Classic Pack De 2 Unidades De 150 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-6532,Pan De Sandwich Con Cereales Y Semillas Carrefour Sensation 310 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-6734,Pan De Chapata Tradicional Hecho Aqui Carrefour 380 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-7429,Media Hogaza De Pan Integral De Trigo Espelta Carrefour El Mercado 400 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Panadería y Pastelería,Pan fresco,Mercadona,CAT-7430,Media Hogaza De Pan De Centeno Carrefour El Mercado 400 G,"Aceite de oliva 0,4º Hacendado",19.75,1.5,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-8663,Desodorante En Spray Marine Axe Pack De 2 Unidades De 150 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-7103,Snacks De Pollo Y Bacon Para Perro Pedigree Rodeo Duos 123 G,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-5777,Snacks De Buey Para Perro Pedigree Rodeo Duos 122 G,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-6786,Desodorante En Spray Natural 24H Heno De Pravia 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-8429,Desodorante En Spray Invisible Ice Fresh Rexona Men Pack De 2 Unidades De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-8661,Desodorante En Spray Black Axe Pack De 2 Unidades De 150 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-6040,Desodorante Stick Original 0 Sales De Aluminio Tulipan Negro 100 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-5398,Desodorante En Spray Invisible Dry Dove Pack De 2 Unidades De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-5439,Desodorante En Spray Aloe Vera Rexona Pack De 2 Unidades De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-4697,Desodorante En Spray Invisible Rexona Men Pack De 2 Unidades De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Desodorantes,Mercadona,CAT-8669,Desodorante En Spray Con Extracto De Algodon Soft Carrefour 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.98,3.3
+Cuidado personal e Higiene,Higiene bucal,Carrefour,CAT-9480,Colutorio Encias Vitis 1000 Ml,Colutorio Encias Vitis 1000 Ml,17.69,5.75,3.3
+Cuidado personal e Higiene,Higiene corporal,Carrefour,CAT-6598,Locion Corporal Cica Reparacion Intensa Para Piel Seca Neutrogena 2 Unidades 750 Ml ,Locion Corporal Cica Reparacion Intensa Para Piel Seca Neutrogena 2 Unidades 750 Ml ,21.3,3.35,3.3
+Hogar,Lavavajillas,Mercadona,CAT-9583,Lavavajillas A Mano Pieles Sensibles Aloe Vera Y Jojoba Carrefour Essential 750 Ml,Bebida láctea crecimiento y desarrollo Puleva Max,10.74,1.75,3.3
+Despensa,"Salsas, caldos y condimentos preparados",Carrefour,CAT-5348,Comida Humeda Sabores Mixtos En Salsa Para Perro Pedigree Pack De 12 Unidades De 100 G,Comida Humeda Sabores Mixtos En Salsa Para Perro Pedigree Pack De 12 Unidades De 100 G,9.49,3.27,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-9465,Limpiador Especifico Para Placas De Vitroceramica Vitroclen 450 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-9584,Limpiador De Hornos Con Sosa Caustica Carrefour Expert 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-9198,Quitagrasas Citrico Kh 7 780 Ml  Crema Limpiadora De Superficies Cif 250 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-6324,Limpiador De Bano En Gel Frescor Marino Chubb 15 L,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-6884,Limpiador De Suciedad Y Manchas De Humedad Cillit Bang 1 L,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-7490,Gel Limpiador Facial Al Agua Hidro Boost Neutrogena Pack De 2 Unidades De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-5070,Limpiador En Aceite Espumoso Hidratante Cerave 473 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-7772,Limpiador De Banos En Crema Con Aroma Floral Cif 650 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-4524,Limpiador De Vitroceramica E Induccion En Crema Carrefour 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-5129,Set 7 Estropajos Jabonosos Desengrasantes De Acero Nanas,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-5186,Limpiador De Suciedad Y Manchas De Humedad Cillit Bang 750 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-6198,Agua De Plancha Desmineralizada Essential Carrefour 2 L,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-6310,Agua De Plancha Desmineralizada Essential Carrefour 5 L,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Hogar,Limpiadores de superficie,Mercadona,CAT-7141,Limpia Cristales De Caucho Y Polipropileno Carrefour   Verde,"Aceite de oliva 0,4º Hacendado",19.75,1.85,3.3
+Despensa,"Arroz, pasta y quinoa",Carrefour,CAT-8093,Pienso De Buey Con Arroz Microbioma Intestinal Equilibrado Para Perro Adulto Purina One Mediummaxi 7 Kg,Pienso De Buey Con Arroz Microbioma Intestinal Equilibrado Para Perro Adulto Purina One Mediummaxi 7 Kg,30.5,3.89,3.3
+Despensa,"Arroz, pasta y quinoa",Carrefour,CAT-8092,Pienso De Pollo Con Arroz Energia Microbioma Intestinal Equilibrado Para Perro Purina One Mediummaxi Active 7 Kg,Pienso De Pollo Con Arroz Energia Microbioma Intestinal Equilibrado Para Perro Purina One Mediummaxi Active 7 Kg,30.4,3.89,3.3
+Despensa,Azúcares y edulcorantes,Carrefour,CAT-9462,Batido Sustitutivo Sabor Chocolate Sin Azucar Anadido En Sobres Bimanan Beslim 6 Ud,Batido Sustitutivo Sabor Chocolate Sin Azucar Anadido En Sobres Bimanan Beslim 6 Ud,16.99,2.79,3.3
+Lácteos y Huevos,Postres lácteos,Carrefour,CAT-9461,Natillas Sustitutivas Sabor Vainilla En Sobres Bimanan Beslim 6 Ud,Natillas Sustitutivas Sabor Vainilla En Sobres Bimanan Beslim 6 Ud,18.45,3.29,3.3
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-4705,Galletas De Cerales Artiach Dinosaurus 493 G,Aceite de oliva 1º Hacendado,20.85,1.95,3.3
+Lácteos y Huevos,Yogures,DIA,CAT-3985,Bebida láctea de fresa Danacol 0% azúcares añadidos 0% MG,Bebida láctea de fresa 0% azúcares añadidos Danacol pack 12 x 100 g,6.99,1.59,3.3
+Lácteos y Huevos,Yogures,DIA,CAT-3986,Bebida láctea natural Danacol 0% azúcares añadidos 0% MG,Bebida láctea natural 0% azúcares añadidos Danacol pack 12 x 100 g,6.99,1.59,3.3
+Bebidas,Vino,Carrefour,CAT-8747,Estuche De 2 Botellas De Vino Tinto Roble Protos Do Ribera Del Duero 75 Cl,Estuche De 2 Botellas De Vino Tinto Roble Protos Do Ribera Del Duero 75 Cl,19.49,5.4,3.2
+Bebidas,Refrescos,Carrefour,CAT-8973,Agua De Mar Hipertonica En Spray Fuerza Fuerte 3 Rhinomer Plus 200 Ml,Agua De Mar Hipertonica En Spray Fuerza Fuerte 3 Rhinomer Plus 200 Ml,14.99,2.29,3.2
+Sin categoría,Otros,Carrefour,CAT-9798,Multivitaminico Y Multimineral En Comprimidos Adultos Multicentrum Sin Gluten 90 Ud,Multivitaminico Y Multimineral En Comprimidos Adultos Multicentrum Sin Gluten 90 Ud,27.8,4.35,3.2
+Sin categoría,Otros,Carrefour,CAT-8524,Crema Solar Spf50 Fusion Water Magic Indin 50 Ml,Crema Solar Spf50 Fusion Water Magic Indin 50 Ml,28.0,4.35,3.2
+Sin categoría,Otros,Carrefour,CAT-8727,Crema Solar Fotoprotector Fusion Water Magic Pediatrics Spf50 Isdin 50 Ml,Crema Solar Fotoprotector Fusion Water Magic Pediatrics Spf50 Isdin 50 Ml,28.0,4.35,3.2
+Lácteos y Huevos,Mantequillas y Natas,Mercadona,CAT-9234,Mantequilla Facil De Untar Ligeramente Salada Lurpak 200 G,"Aceite de oliva 0,4º Hacendado",19.75,2.25,3.2
+Lácteos y Huevos,Mantequillas y Natas,Mercadona,CAT-9280,Napolitana De Mantequilla Y Chocolate Carrefour 6 Ud,"Aceite de oliva 0,4º Hacendado",19.75,2.25,3.2
+Lácteos y Huevos,Mantequillas y Natas,Mercadona,CAT-6088,Galletas De Mantequilla Con Tableta De Chocolate Blanco Carrefour 150 G,"Aceite de oliva 0,4º Hacendado",19.75,2.25,3.2
+Bebidas,Refrescos,DIA,CAT-4488,Fanta De Limon Pack 9 Latas 33 Cl,Fanta de limón pack 24 x 330 ml,19.2,1.55,3.2
+Bebidas,Refrescos,DIA,CAT-9368,Fanta De Naranja Zero Pack 6 Latas 33 Cl,Fanta de naranja zero pack 24 x 330 ml,19.2,1.55,3.2
+Carnicería y Charcutería,Carne preparada,Carrefour,CAT-9110,Hamburguesa De Vacuno Wagyu Santa Rosalia 2X150 G,Hamburguesa De Vacuno Wagyu Santa Rosalia 2X150 G,8.75,2.65,3.2
+Carnicería y Charcutería,Carne preparada,Carrefour,CAT-4234,Hamburguesa Originales Heura Sin Gluten 440 G,Hamburguesa Originales Heura Sin Gluten 440 G,8.79,2.65,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-7242,Mascarilla Capilar 72H De Hidratacion Intensiva Hidra Hialuronico Elvive Loreal Paris 300 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-7795,Gel Y Champu Para La Higiene De La Piel Y Cabellos Delicados Pon Emo Colageno 1000 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-9114,Mascarilla Capilar De Keratina Repara  Protege Para Cabello Danado Y Fragil Pantene Pro V 300 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-9113,Mascarilla Capilar De Keratina Suave  Liso Para Cabello Apagado Y Encrespado Pantene Pro V 300 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5258,Champu Gotas De Brillo Para Cabellos Mas Brillantes Suaves Y Sedosos Johnsons Baby 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-4935,Champu Anticaida Quinina Klorane Pack De 2 Unidades De 400 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5768,Champu De Romero Para Cabello Fino Ecologico Urtekram 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-6140,Champu Cuidado Clasico Para Todo Tipo De Cabello Tresemme 685 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-7289,Champu Reparador Con Aceite De Argan Herbal Essences 350 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-6698,Acondicionador Hidratante Al Higo De Barbaria Klorane 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-8087,Champu Para Perros De Pelo Corto Kimbo Instinct 250 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5798,Champu Anticaspa Cabello Normal Graso Tgel Neutrogena Pack De 2 Unidades De 250 Ml ,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5123,Gel De Bano Y Champu Ricitos De Oro Manzanilla Grisi 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5259,Mascarilla Capilar Liso  Brillo Para Cabello Liso Rebelde O Dificil De Alisar Garnier Fructis 300 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5427,Champu Alisador Liso  Brillo Para Cabello Liso Rebelde O Dificil De Alisar Garnier Fructis 380 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5433,Champu Fortificante Pure Fresh Agua De Coco Para Raices Grasas Y Puntas Secas Garnier Fructis 360 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-6150,Aceite Extraordinario Tratamiento Uso Universal Loreal Elvive 100 Ml ,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-4685,Champu Espuma De Lavado En Seco Para Gatos Carrefour 150 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-7244,Champu 72H De Hidratacion Hidra Hialuronico Elvive Loreal Paris 690 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-7556,Mochila Nenuco Pingino Jabon De Ducha 200 Ml Agua De Colonia 200 Ml Y Champu 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-5032,Champu Fortificante Con Extracto De Cebolla Carrefour Soft 300 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-6366,Champu De Almendra Y Vainilla Choice Simpl 15 L,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-6833,Mascarilla Capilar Aceite De Argan Carrefour Soft 300 Ml,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-8148,Champu Seco Con Extracto De Limon Purify Soft Carrefour 200 Ml ,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Cuidado personal e Higiene,Cuidado del cabello,Mercadona,CAT-4683,Champu De Uso Frecuente Para Perro Carrefour 1L,"Aceite de oliva 0,4º Hacendado",19.75,3.9,3.2
+Conservas y Enlatados,"Sopas, cremas y otros preparados",Mercadona,CAT-5242,Preparado De Pure De Verduras Peladas 900 G,Aceite de oliva 1º Hacendado,20.85,1.75,3.2
+Conservas y Enlatados,"Sopas, cremas y otros preparados",DIA,CAT-0800,Fumet caldo de pescado,Fumet de pescado Gallina Blanca 1 L,3.49,1.45,3.2
+Conservas y Enlatados,Conservas de pescado y mariscos,Mercadona,CAT-7436,Ventrescas De Merluza Carrefour Extra 400 G,Aceite de oliva 1º Hacendado,20.85,2.8,3.2
+Despensa,"Salsas, caldos y condimentos preparados",Carrefour,CAT-8607,Comida Humeda Surtido De Carne En Salsa Para Gato Adulto Purina Gourmet Gold 12X85 G,Comida Humeda Surtido De Carne En Salsa Para Gato Adulto Purina Gourmet Gold 12X85 G,9.29,3.27,3.2
+Bazar y Varios,Hogar y decoración,Carrefour,CAT-8667,Papel Higienico Deluxe Xxl Colhogar 36 Rollos,Papel Higienico Deluxe Xxl Colhogar 36 Rollos,20.9,4.04,3.2
+Cuidado personal e Higiene,Cremas y protectores,Carrefour,CAT-7331,Crema Facial De Noche Intensiva Reestructurante Eau Thermale Avne 40 Ml,Crema Facial De Noche Intensiva Reestructurante Eau Thermale Avne 40 Ml,49.3,12.69,3.1
+Cuidado personal e Higiene,Productos de afeitado,Carrefour,CAT-8297,Recambios Maquinilla Fusion5 Gillette 8 Ud,Recambios Maquinilla Fusion5 Gillette 8 Ud,25.4,5.89,3.1
+Bebidas,Refrescos,Mercadona,CAT-9287,Refresco De Manzana Trina Sin Gas Lata 33 Cl,Aceite de oliva 1º Hacendado,20.85,1.85,3.1
+Bebidas,Refrescos,Mercadona,CAT-7120,Pepsi Zero Azucar Pack De 12 Latas De 33 Cl,Aceite de oliva 1º Hacendado,20.85,1.85,3.1
+Bebidas,Refrescos,DIA,CAT-6314,Pepsi Pack 12 Latas 33 Cl,Pepsi pack 24 x 330 ml,18.96,1.55,3.1
+Bebidas,Refrescos,DIA,CAT-9617,Pepsi Zero Azucar Zero Cafeina Pack 9 Latas 33 Cl,Pepsi zero azúcar zero cafeína pack 24 x 330 ml,18.96,1.55,3.1
+Bebidas,Refrescos,DIA,CAT-8858,Pepsi Zero Azucar Pack 4 Botellas 175 L,Pepsi zero azúcar pack 24 x 330 ml,18.96,1.55,3.1
+Bebidas,Refrescos,DIA,CAT-5423,Pepsi Zero Azucar Lima Pack De 9 Latas De 33 Cl,Pepsi zero azúcar sabor lima pack 24 x 330 ml,18.96,1.55,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-6634,Batido De Cacao Cacaolat Sin Gluten Pack De 6 Briks De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-9999,Batido De Cacao Carrefour Sin Gluten Botella 1 L,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-4168,Batido De Cacao Original Cacaolat Sin Gluten Pack De 4 Botellas De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-5115,Granizado De Horchata Natural Carrefour Sensation Sin Gluten Pack De 6 Unidades De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-9191,Bebida De Soja Ligera Alpro Sin Gluten Y Sin Lactosa Brik 1 L,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-9193,Bebida De Almendras Alpro Sin Gluten Y Sin Lactosa Brik 1 L,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-4450,Batido De Cacao Cacaolat Sin Gluten Botella 1 L,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-7748,Bebida De Almendra Calcio Carrefour Sin Gluten Brik 1 L,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-4165,Leche Semidesnatada Carrefour Pack De 6 Briks De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Lácteos y Huevos,"Leche y bebidas ""lácteas""",Mercadona,CAT-4166,Leche Entera Carrefour Pack De 6 Briks De 200 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+"Azúcar, caramelos y chocolate",Chocolates y bombones,Mercadona,CAT-9762,Mini Redondos De Chocolate Carrefour 155 G,Aceite de oliva 1º Hacendado,20.85,2.3,3.1
+"Azúcar, caramelos y chocolate",Chocolates y bombones,Mercadona,CAT-9882,Mini Redondos De Chocolate Carrefour 160 G,Aceite de oliva 1º Hacendado,20.85,2.3,3.1
+"Azúcar, caramelos y chocolate",Chocolates y bombones,Mercadona,CAT-9458,Barritas De Chocolate Fondant Bimanan 10 Ud,Aceite de oliva 1º Hacendado,20.85,2.3,3.1
+"Azúcar, caramelos y chocolate",Chocolates y bombones,Mercadona,CAT-5490,Chocolate Con Leche De Los Alpes Milka 125 G,Aceite de oliva 1º Hacendado,20.85,2.3,3.1
+Conservas y Enlatados,Conservas de pescado y mariscos,DIA,CAT-1739,Atún claro al natural,Atún claro al natural Calvo 6 x 56 g,6.69,2.49,3.1
+Hogar,Suavizantes,Mercadona,CAT-4965,Suavizante Concentrado Original Flor 89 Lavados,Cacao soluble ColaCao original,17.0,2.85,3.1
+Hogar,Suavizantes,Mercadona,CAT-4843,Suavizante Concentrado Original Flor 139 Lavados,Cacao soluble ColaCao original,17.0,2.85,3.1
+Congelados,Helados y postres congelados,Mercadona,CAT-2578,Tarta San Marcos congelada,Tarta San Marcos Hacendado congelada,12.9,2.3,3.1
+Hogar,Detergentes para ropa,Mercadona,CAT-7292,Detergente Lliquido Original Ariel 80 Lavados,Cacao soluble ColaCao original,17.0,2.7,3.1
+Lácteos y Huevos,Postres lácteos,Carrefour,CAT-9719,Comida Humeda Mousses Para Gato Adulto Purina Gourmet Gold  24X85 G,Comida Humeda Mousses Para Gato Adulto Purina Gourmet Gold  24X85 G,17.75,3.29,3.1
+Carnicería y Charcutería,Vacuno,Carrefour,CAT-9564,Filete De Vacuno 1 Kg Aprox,Filete De Vacuno 1 Kg Aprox,14.99,3.19,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-8885,Papilla Infantil Desde 6 Meses Galleta Maria Liquida Nestle Pack De 2 Unidades De 250 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-9905,Papilla Infantil Desde 6 Meses 8 Cereales Galletas Maria Nutriben Sin Aceite De Palma 600 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-6331,Galletas De Chocolate Rellenas De Crema Oreo 440 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-8188,Galleta Rellena De Chocolate Con Leche Lotus Biscoff 150 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-5980,Galletas Infantiles Desde 10 Meses Nestle Pequegalletas Sin Aceite De Palma 180 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-4556,Galletas De Chocolate Rellenas De Crema Mini Oreo Pack De 4 Unidades De 40 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-5864,Barrita De Galleta Crujiente Cubierta De Chocolate Pack 5 Unidades De 415 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-5007,Galletas Rellenas De Crema De Chocolate Mini Principe Pack De 4 Unidades De 40 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-7426,Galletas De Barquillo Rellena Sabor Chocolate Carrefour 210 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-7383,Cookies Con Pepitas De Chocolate Carrefour Classic 225 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-5910,Galletas Rellenas De Crema De Chocolate Mega Carrefour Classic 500 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Desayuno y Snack,Galletas dulces,Mercadona,CAT-9966,Galletas Safari Carrefour Classic Pack De 3 Unidades De 200 G,"Aceite de oliva 0,4º Hacendado",19.75,1.95,3.1
+Cuidado personal e Higiene,Parafarmacia,Carrefour,CAT-9003,Crema Solar Ultra Serum Spf50 Avene 30 Ml,Crema Solar Ultra Serum Spf50 Avene 30 Ml,39.9,11.15,3.1
+Cuidado personal e Higiene,Parafarmacia,Carrefour,CAT-9004,Crema Solar Ultra Serum Rellenador Spf50 Avene 30 Ml,Crema Solar Ultra Serum Rellenador Spf50 Avene 30 Ml,39.9,11.15,3.1
+Cuidado personal e Higiene,Parafarmacia,Carrefour,CAT-9005,Crema Solar Ultra Serum Spf50 Avene 30 Ml,Crema Solar Ultra Serum Spf50 Avene 30 Ml,39.9,11.15,3.1
+"Azúcar, caramelos y chocolate",Chocolates y bombones,Carrefour,CAT-9458,Barritas De Chocolate Fondant Bimanan 10 Ud,Barritas De Chocolate Fondant Bimanan 10 Ud,15.15,3.75,3.1
+"Azúcar, caramelos y chocolate",Chocolates y bombones,Carrefour,CAT-9459,Barritas Sabor Chocolate Crujiente Bimanan Bekomplett Sin Gluten Pack De 8 Unidades De 35 G,Barritas Sabor Chocolate Crujiente Bimanan Bekomplett Sin Gluten Pack De 8 Unidades De 35 G,15.15,3.75,3.1
+Despensa,Aceites,Carrefour,CAT-7207,Aceite De Oliva Virgen Serie Oro Coosur 5 L,Aceite De Oliva Virgen Serie Oro Coosur 5 L,21.95,4.29,3.1
+Lácteos y Huevos,Quesos,AhorraMas,CAT-3124,Queso viejo de oveja,Queso de oveja viejo Alipende,15.99,3.41,3.1
+Desayuno y Snack,Galletas dulces,DIA,CAT-7025,Helado Cookie Dough Ben  Jerrys 465 Ml,Tarrina de helado cookie dough Ben&Jerry's 406 g,6.99,2.62,3.1
+Platos preparados,Platos preparados refrigerados,DIA,CAT-0384,Pollo asado troceado,Pollo asado troceado Bonchef 1.2 Kg,8.39,2.99,3.1
+Cuidado personal e Higiene,Higiene bucal,Carrefour,CAT-4634,Colutorio De Uso Diario Que Previene El Sangrado Gingival Causado Por Encias Delicadas Y Gingivitis Gingilacer 1000 Ml,Colutorio De Uso Diario Que Previene El Sangrado Gingival Causado Por Encias Delicadas Y Gingivitis Gingilacer 1000 Ml,16.75,5.75,3.0
+Conservas y Enlatados,"Sopas, cremas y otros preparados",Mercadona,CAT-7930,Tarrito De Crema De Verduras Desde 6 Meses Hero Solo Sin Gluten 190 G,"Aceite de oliva 0,4º Hacendado",19.75,1.75,3.0
+Conservas y Enlatados,"Sopas, cremas y otros preparados",Mercadona,CAT-7931,Tarrito De Crema De Zanahoria Y Calabaza Verduras Desde 6 Meses Hero Solo Sin Gluten 190 G,"Aceite de oliva 0,4º Hacendado",19.75,1.75,3.0
+Conservas y Enlatados,"Sopas, cremas y otros preparados",Mercadona,CAT-5276,Crema De Calabacin Con Queso Classic Carrefour Sin Gluten 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.75,3.0
+Conservas y Enlatados,"Sopas, cremas y otros preparados",Mercadona,CAT-5278,Crema De Verduras Mediterraneas Classic Carrefour Sin Gluten 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.75,3.0
+Conservas y Enlatados,"Sopas, cremas y otros preparados",Mercadona,CAT-5277,Crema De Verduras De La Huerta Classic Carrefour Sin Gluten 500 Ml,"Aceite de oliva 0,4º Hacendado",19.75,1.75,3.0

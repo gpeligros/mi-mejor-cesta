@@ -1,0 +1,101 @@
+id,id_producto,nombre,categoria_id,categoria,subcategoria,actualizado
+7224,ME-0001,Patata,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7225,ME-0002,Patatas,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7237,ME-0003,Patatas rojas,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7229,ME-0004,Patatas guarnición,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7079,ME-0005,Batata,null,Frutas y Verduras,Verduras,2026-03-09 20:27:28.588062
+7228,ME-0006,Patatas especial para freir,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7317,ME-0007,Yuca,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7099,ME-0008,Cebollas tiernas,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7096,ME-0009,Cebollas,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7067,ME-0010,Ajos morados,null,Frutas y Verduras,Verduras,2026-03-09 20:27:28.588062
+7097,ME-0011,Cebollas dulces,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7098,ME-0012,Cebollas rojas,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7062,ME-0013,Ajo negro dientes pelados,null,Frutas y Verduras,Verduras,2026-03-09 20:27:28.588062
+7246,ME-0014,Picada de ajo y perejil,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7297,ME-0015,Tomate ensalada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7295,ME-0016,Tomate canario,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7300,ME-0017,Tomate pera,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7312,ME-0018,Tomates pera,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7310,ME-0019,Tomates cherry pera kumato,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7308,ME-0020,Tomates cherry,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7309,ME-0021,Tomates cherry en rama Dulcita,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7311,ME-0022,Tomates negros,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7306,ME-0023,Tomates,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7299,ME-0024,Tomate negro,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7301,ME-0025,Tomate rallado,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7273,ME-0026,Rama de Tomates,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7302,ME-0027,Tomate rosa,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7307,ME-0028,Tomates Anhel,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7267,ME-0029,Plátano de Canarias IGP,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7077,ME-0030,Banana,null,Frutas y Verduras,Fruta,2026-03-09 20:27:28.588062
+7268,ME-0031,Plátano macho,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7313,ME-0032,Uva blanca sin semillas,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7314,ME-0033,Uva roja sin semillas,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7320,ME-0034,Zanahorias,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7239,ME-0035,Pepino,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7240,ME-0036,Pepino holandés,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7221,ME-0037,Palitos de zanahoria,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7319,ME-0038,Zanahoria rallada lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7192,ME-0039,Manzana Golden,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7197,ME-0040,Manzanas Golden,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7241,ME-0041,Pera Conferencia,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7242,ME-0042,Peras Conferencia,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7196,ME-0043,Manzana roja dulce,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7199,ME-0044,Manzanas rojas dulces,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7193,ME-0045,Manzana Granny Smith,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7194,ME-0046,Manzana Reineta,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7195,ME-0047,Manzana roja acidulce,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7198,ME-0048,Manzanas rojas acidulces,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7203,ME-0049,Medio melón piel de sapo,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7207,ME-0050,Melón piel de sapo,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7247,ME-0051,Pimiento rojo,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7087,ME-0052,Calabacín verde,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7250,ME-0053,Pimiento verde freír,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7086,ME-0054,Calabacín blanco,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7249,ME-0055,Pimiento verde,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7260,ME-0056,Pimientos tricolor,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7259,ME-0057,Pimientos semipicantes,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7188,ME-0058,Limones,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7186,ME-0059,Limón,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7189,ME-0060,Mandarina,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7215,ME-0061,Naranja de mesa,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7216,ME-0062,Naranjas,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7269,ME-0063,Pomelo,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7183,ME-0064,Lima,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7115,ME-0065,Coliflor,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7276,ME-0066,Repollo liso,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7277,ME-0067,Repollo liso partido,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7278,ME-0068,Repollo rizado,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7204,ME-0069,Medio repollo rizado,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7113,ME-0070,Coles de bruselas,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7112,ME-0071,Col lombarda,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7201,ME-0072,Media col lombarda,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7178,ME-0073,Lechuga Iceberg,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7133,ME-0074,Ensalada mezcla 4 estaciones lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7181,ME-0075,Lechugas corazón romana,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7134,ME-0076,Ensalada mezcla brotes tiernos lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7089,ME-0077,Canónigos lavados,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7179,ME-0078,Lechuga iceberg cortada y lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7137,ME-0079,Ensalada mezcla gourmet lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7111,ME-0080,Cogollos de lechuga,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7176,ME-0081,Lechuga corazón romana,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7126,ME-0082,Endibias,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7135,ME-0083,Ensalada mezcla brotes tiernos maxi lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7138,ME-0084,Ensalada mezcla gourmet maxi lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7279,ME-0085,Rúcula lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7110,ME-0086,Cogollos corazón de lechuga,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7136,ME-0087,Ensalada mezcla dúo canónigos y rúcula lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7177,ME-0088,Lechuga hoja roble,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7140,ME-0089,Escarola rizada cortada y lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7139,ME-0090,Escarola rizada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7152,ME-0091,Espinacas baby lavadas,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7180,ME-0092,Lechuga romana cortada y lavada,null,Frutas y Verduras,Verduras,2026-03-09 20:27:54.256143
+7174,ME-0093,Kiwi verde,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7175,ME-0094,Kiwis verdes,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7059,ME-0095,Aguacate,null,Frutas y Verduras,Fruta,2026-03-09 20:27:28.588062
+7060,ME-0096,Aguacates,null,Frutas y Verduras,Fruta,2026-03-09 20:27:28.588062
+7261,ME-0097,Piña,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7202,ME-0098,Media piña,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+7264,ME-0099,Piña natural a rodajas,null,Frutas y Verduras,Fruta,2026-03-09 20:27:54.256143
+8395,ME-0100,Guacamole,null,Platos preparados,Ensaladas listas,2026-03-09 20:28:44.932163

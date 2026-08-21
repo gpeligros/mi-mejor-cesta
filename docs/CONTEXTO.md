@@ -1,4 +1,4 @@
-# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 10/08/2026)
+# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 21/08/2026)
 
 ## ⚠️ INSTRUCCIONES PARA CLAUDE
 Lee este fichero COMPLETO antes de responder nada.
@@ -215,6 +215,10 @@ python scrapers/clasificar_categoria.py
 2. Arreglar bug de `nombre_comercial` vacío en `scraper_alcampo.py` (61,7% de filas afectadas — visible ahora en el panel de admin, pestaña Precios, filtro "solo vacíos", y en el Dashboard con barra de calidad de datos)
 3. Pasar Stripe a producción (test → live)
 
+### 🔴 Git — pendiente de decidir (21/08/2026)
+- Se preparó (pero NO se confirmó) sacar del control de versiones `scripts/supabase.exe` (97MB, ~80% del peso del repo), `frontend/build/` y `.playwright-cli/`, y se actualizó `.gitignore` para que no vuelvan a colarse. Está en estado "staged" (`git add` hecho) pero sin `git commit` todavía.
+- La reorganización de ficheros de hoy (ver sección 11) también aparecerá como cambios en Git la próxima vez que se revise, porque Git verá los ficheros en su nueva ubicación. Pendiente revisar todo junto y hacer commit.
+
 ### 🟡 Funcionalidades nuevas solicitadas (20/08/2026, sin empezar)
 4. **Funcionalidad tipo Yuka** (escaneo/puntuación nutricional 0-100 con semáforo, vía Open Food Facts API + EAN). Investigado: metodología = Nutri-Score + aditivos + ecológico. La mayoría de scrapers ya capturan EAN. Pendiente: diseñar esquema de datos, integrar API externa, UI del semáforo.
 5. Mejorar menús semanales y funcionalidad nutricional existente (CESTITA/MenuSemanal) — sin concretar todavía qué mejoras exactas.
@@ -235,4 +239,24 @@ python scrapers/clasificar_categoria.py
 ### 🔵 Bajo impacto / opcional
 - Mitigar el caso tipo "Café Climent" — marcas reales nunca etiquetadas en ningún scraper coladas en matching de marca blanca (~0,3% medido, ver sección 6)
 - Re-ejecutar matching completo si se quiere seguir exprimiendo la cobertura de comparación tras los arreglos de hoy
+
+---
+
+## 11. Organización de ficheros del proyecto (21/08/2026)
+
+Hoy se ha limpiado la carpeta raíz del proyecto en el ordenador de David. Objetivo: quitar de en medio todo lo que ya no se usa, sin borrar nada (todo se ha movido, nada se ha eliminado).
+
+### Qué se ha hecho
+- Carpeta nueva **`ARCHIVO_HISTORICO/`** en la raíz. Ahí han ido a parar 128 ficheros/carpetas que ya no se usan pero que no se han querido borrar por si acaso: CSVs sueltos de la raíz, versiones antiguas de scripts, datos de pruebas superadas, copias viejas de `CONTEXTO.md`, prototipos descartados (`old/scraping`, `old/templates`) y restos de scrapers de supermercados descartados (Eroski, Hipercor, versiones antiguas con Gemini).
+- Dentro de `ARCHIVO_HISTORICO/` hay subcarpetas para saber qué es cada cosa: `raiz_suelta/`, `scripts/`, `old_scripts_legacy/`, `old_datos_legacy/`, `old_contexto_antiguos/`, `scrapers_restos/`, `revisar_datos_viejos/`, más `output_sqls/`, `old_scraping_prototipo/` y `old_templates_flask/` (carpetas enteras movidas tal cual).
+- 7 documentos `.docx` que estaban sueltos en `old/Revisar/` (plan estratégico, análisis, especificaciones, traspaso...) se movieron a `docs/`, que es donde tiene sentido que estén.
+- Se depuró `scrapers/`: solo quedan los ficheros que de verdad se usan hoy.
+
+### Qué NO se ha tocado (a propósito)
+- **`old/` sigue existiendo con ese nombre y en ese sitio.** Aunque el nombre suena a "descartable", es la carpeta de trabajo activa del pipeline de reconstrucción del catálogo (sección 6) — varios scripts la usan por nombre fijo (`CARPETA_OLD`). Solo se sacaron de ahí los ficheros sueltos que sobraban (scripts antiguos, CSVs de pruebas, copias de CONTEXTO). Los CSVs con fecha que sí usa el pipeline se dejaron dentro.
+- Dentro de `old/` quedan todavía varias versiones con fecha de un mismo tipo de fichero (p. ej. varios `clusters_dudosos_*.csv`). No se tocaron porque decidir cuál es "la buena" de cada tipo requiere más cuidado — pendiente para una sesión futura.
+- El lado de Git no se tocó en esta limpieza de ficheros — ver el punto "Git — pendiente de decidir" en la sección 10.
+
+### Dos carpetas vacías sueltas
+Al mover ficheros, `old/Revisar/` y una carpeta temporal `_to_delete/` (usada durante la propia limpieza) quedaron vacías. No se pudieron borrar automáticamente por una limitación técnica de la herramienta usada para tocar el ordenador de David — se pueden borrar a mano en el Explorador de Windows cuando quiera, no es urgente.
 

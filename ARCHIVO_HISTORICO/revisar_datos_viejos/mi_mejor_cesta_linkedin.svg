@@ -1,0 +1,154 @@
+<svg viewBox="0 0 1200 628" xmlns="http://www.w3.org/2000/svg" width="1200" height="628">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#013d13;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#025e1e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#037623;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0faf3;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4ade80;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#86efac;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="softShadow" x="-5%" y="-5%" width="115%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+    <clipPath id="roundedCard">
+      <rect x="640" y="60" width="510" height="510" rx="24" ry="24"/>
+    </clipPath>
+    <!-- Subtle dot pattern -->
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.5" fill="#4ade80" opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="628" fill="url(#bgGrad)"/>
+  <!-- Dot pattern overlay -->
+  <rect width="1200" height="628" fill="url(#dots)"/>
+
+  <!-- Decorative circles background -->
+  <circle cx="100" cy="100" r="200" fill="#037623" opacity="0.15"/>
+  <circle cx="1150" cy="580" r="250" fill="#025e1e" opacity="0.2"/>
+  <circle cx="580" cy="320" r="350" fill="#013d13" opacity="0.1"/>
+
+  <!-- LEFT SIDE — Text content -->
+
+  <!-- Tag pill -->
+  <rect x="60" y="80" width="220" height="36" rx="18" fill="#4ade80" opacity="0.2"/>
+  <rect x="60" y="80" width="220" height="36" rx="18" fill="none" stroke="#4ade80" stroke-width="1.5" opacity="0.6"/>
+  <text x="170" y="103" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#4ade80" text-anchor="middle" letter-spacing="1">PROYECTO PERSONAL · IA</text>
+
+  <!-- Main title -->
+  <text x="60" y="175" font-family="'Segoe UI', Arial, sans-serif" font-size="64" font-weight="800" fill="#ffffff" letter-spacing="-1">Mi Mejor</text>
+  <text x="60" y="248" font-family="'Segoe UI', Arial, sans-serif" font-size="64" font-weight="800" fill="#4ade80" letter-spacing="-1">Cesta</text>
+
+  <!-- Subtitle -->
+  <text x="60" y="300" font-family="'Segoe UI', Arial, sans-serif" font-size="20" fill="#86efac" opacity="0.9">Comparador inteligente de precios de supermercados</text>
+  <text x="60" y="328" font-family="'Segoe UI', Arial, sans-serif" font-size="20" fill="#86efac" opacity="0.9">potenciado por LLMs</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="360" x2="200" y2="360" stroke="#4ade80" stroke-width="2" opacity="0.5"/>
+
+  <!-- Key metrics / pills -->
+  <!-- Pill 1 -->
+  <rect x="60" y="380" width="160" height="44" rx="10" fill="#ffffff" opacity="0.08"/>
+  <rect x="60" y="380" width="160" height="44" rx="10" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.4"/>
+  <text x="75" y="397" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#86efac" opacity="0.8">TECNOLOGÍA</text>
+  <text x="75" y="415" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Claude API · Vercel</text>
+
+  <!-- Pill 2 -->
+  <rect x="234" y="380" width="140" height="44" rx="10" fill="#ffffff" opacity="0.08"/>
+  <rect x="234" y="380" width="140" height="44" rx="10" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.4"/>
+  <text x="249" y="397" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#86efac" opacity="0.8">AHORRO MENSUAL</text>
+  <text x="249" y="415" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Hasta 100€/mes</text>
+
+  <!-- Pill 3 -->
+  <rect x="388" y="380" width="155" height="44" rx="10" fill="#ffffff" opacity="0.08"/>
+  <rect x="388" y="380" width="155" height="44" rx="10" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.4"/>
+  <text x="403" y="397" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#86efac" opacity="0.8">SUPERMERCADOS</text>
+  <text x="403" y="415" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Mercadona · DIA · +</text>
+
+  <!-- Bottom URL -->
+  <text x="60" y="490" font-family="'Segoe UI', Arial, sans-serif" font-size="16" fill="#4ade80" opacity="0.7">mi-mejor-cesta.vercel.app</text>
+
+  <!-- Author -->
+  <text x="60" y="560" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.5">Desarrollado por David González Peligros</text>
+  <text x="60" y="582" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#86efac" opacity="0.6">linkedin.com/in/gpeligros</text>
+
+  <!-- RIGHT SIDE — App mockup card -->
+  <rect x="640" y="60" width="510" height="510" rx="24" fill="url(#cardGrad)" filter="url(#shadow)"/>
+
+  <!-- Phone mockup inside card -->
+  <!-- Browser bar simulation -->
+  <rect x="660" y="80" width="470" height="32" rx="8" fill="#f1f5f1"/>
+  <circle cx="680" cy="96" r="5" fill="#ff6b6b" opacity="0.7"/>
+  <circle cx="698" cy="96" r="5" fill="#ffd93d" opacity="0.7"/>
+  <circle cx="716" cy="96" r="5" fill="#6bcb77" opacity="0.7"/>
+  <rect x="740" y="88" width="300" height="16" rx="8" fill="#e2e8e2"/>
+  <text x="890" y="100" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">mi-mejor-cesta.vercel.app</text>
+
+  <!-- App header -->
+  <rect x="660" y="122" width="470" height="52" rx="0" fill="#037623"/>
+  <text x="895" y="155" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">🛒 Mi Mejor Cesta</text>
+
+  <!-- Search bar -->
+  <rect x="675" y="184" width="440" height="36" rx="18" fill="#f8faf8" stroke="#d1fae5" stroke-width="1.5"/>
+  <text x="705" y="207" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#9ca3af">Buscar producto...</text>
+  <rect x="1068" y="189" width="36" height="26" rx="13" fill="#037623"/>
+  <text x="1086" y="206" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#fff" text-anchor="middle">🔍</text>
+
+  <!-- Product comparison rows -->
+  <!-- Header row -->
+  <rect x="660" y="232" width="470" height="28" fill="#f0faf3"/>
+  <text x="700" y="251" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#374151">PRODUCTO</text>
+  <text x="860" y="251" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">MERCADONA</text>
+  <text x="980" y="251" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">DIA</text>
+  <text x="1080" y="251" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#374151" text-anchor="middle">ALCAMPO</text>
+
+  <!-- Row 1 -->
+  <rect x="660" y="260" width="470" height="40" fill="#ffffff"/>
+  <text x="700" y="285" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#374151">🥛 Leche entera 1L</text>
+  <rect x="825" y="265" width="70" height="26" rx="6" fill="#dcfce7"/>
+  <text x="860" y="283" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#16a34a" text-anchor="middle">0,89€ ✓</text>
+  <text x="980" y="283" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">0,99€</text>
+  <text x="1080" y="283" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">0,95€</text>
+
+  <!-- Row 2 -->
+  <rect x="660" y="300" width="470" height="40" fill="#f9fafb"/>
+  <text x="700" y="325" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#374151">🍞 Pan de molde 500g</text>
+  <text x="860" y="325" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">1,45€</text>
+  <rect x="946" y="305" width="66" height="26" rx="6" fill="#dcfce7"/>
+  <text x="980" y="323" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#16a34a" text-anchor="middle">1,19€ ✓</text>
+  <text x="1080" y="325" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">1,39€</text>
+
+  <!-- Row 3 -->
+  <rect x="660" y="340" width="470" height="40" fill="#ffffff"/>
+  <text x="700" y="365" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#374151">🧴 Aceite oliva 750ml</text>
+  <text x="860" y="365" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">4,75€</text>
+  <text x="980" y="365" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">4,99€</text>
+  <rect x="1046" y="345" width="68" height="26" rx="6" fill="#dcfce7"/>
+  <text x="1080" y="363" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#16a34a" text-anchor="middle">4,49€ ✓</text>
+
+  <!-- AI suggestion banner -->
+  <rect x="660" y="390" width="470" height="54" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="680" y="412" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-weight="700" fill="#16a34a">🤖 SUGERENCIA IA</text>
+  <text x="680" y="432" font-family="'Segoe UI', Arial, sans-serif" font-size="12" fill="#374151">Esta semana ahorras <tspan font-weight="800" fill="#16a34a">8,70€</tspan> comprando en Mercadona + DIA</text>
+
+  <!-- Bottom total bar -->
+  <rect x="660" y="454" width="470" height="50" fill="#037623" rx="0"/>
+  <text x="680" y="484" font-family="'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">TOTAL ÓPTIMO</text>
+  <text x="1100" y="484" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="800" fill="#4ade80" text-anchor="end">47,23 €</text>
+
+  <!-- Bottom of card - built with -->
+  <rect x="660" y="504" width="470" height="56" rx="0" fill="#f8faf8"/>
+  <text x="895" y="527" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle">CONSTRUIDO CON</text>
+  <text x="895" y="548" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#4b5563" text-anchor="middle">Claude API · React · Vercel · Python</text>
+
+</svg>
