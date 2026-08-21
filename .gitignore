@@ -20,3 +20,18 @@ backup_*/
 Thumbs.db
 .vercel
 .env*.local
+
+# Entornos virtuales Python
+.venv/
+.venv-1/
+
+# Build de frontend (lo regenera Vercel)
+frontend/build/
+
+# Cachés y logs de herramientas
+.pytest_cache/
+.playwright-cli/
+.playwright-mcp/
+
+# Binarios descargados (no son código del proyecto)
+scripts/*.exe
