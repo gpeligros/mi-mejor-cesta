@@ -261,6 +261,13 @@ def extract_products_from_html(html):
         return prods
 
     # Intento 3: tarjetas HTML
+    # Corregido 23/08/2026: antes se paraba en el primer selector que
+    # encontrase ALGUNA tarjeta, aunque luego ninguna tuviera nombre
+    # extraible (ver _parse_html_card_alcampo) -- se probaban los
+    # siguientes selectores solo si el primero no encontraba tarjetas en
+    # absoluto, nunca si las encontraba pero resultaban inservibles. Ahora
+    # se sigue probando selectores mientras no se consiga ningun producto
+    # valido.
     for sel in [
         '[data-testid="product-card"]',
         '.product-card',
@@ -269,11 +276,11 @@ def extract_products_from_html(html):
         '[data-pid]',
     ]:
         cards = soup.select(sel)
-        if cards:
-            for card in cards:
-                p = _parse_html_card_alcampo(card)
-                if p:
-                    prods.append(p)
+        if not cards:
+            continue
+        encontrados = [p for p in (_parse_html_card_alcampo(c) for c in cards) if p]
+        if encontrados:
+            prods.extend(encontrados)
             break
     return prods
 
@@ -310,10 +317,21 @@ def _parse_jsonld_alcampo(it):
         brand  = item.get("brand") or {}
         brand  = brand.get("name", "") if isinstance(brand, dict) else str(brand)
         disponible = "InStock" in str(offers.get("availability", "InStock"))
+
+        # BUG corregido 23/08/2026: antes se subia el producto igual aunque
+        # no hubiera nombre, dejando nombre_comercial="" en Supabase (esta es
+        # una de las dos rutas que causaba el 61,7% de filas con
+        # nombre_comercial vacio en precios_alcampo, ver CONTEXTO.md).
+        # parse_api_product() ya descartaba estos casos; aqui faltaba el
+        # mismo guardia.
+        nombre = (item.get("name") or "").strip()
+        if not nombre:
+            return None
+
         return {
             "id":               f"AL-{pid}",
             "id_api":           pid,
-            "nombre_comercial": (item.get("name") or "").strip(),
+            "nombre_comercial": nombre,
             "precio":           round(price, 2) if price else None,
             "precio_unidad":    "",
             "marca":            brand.strip(),
@@ -336,8 +354,28 @@ def _parse_html_card_alcampo(card):
                 pid = m.group(1) if m else ""
         if not pid:
             return None
+        # BUG corregido 23/08/2026: esta funcion subia el producto igual
+        # aunque no encontrase nombre, dejando nombre_comercial="" en
+        # Supabase (la otra ruta, junto a _parse_jsonld_alcampo, que causaba
+        # el 61,7% de filas con nombre_comercial vacio en precios_alcampo,
+        # ver CONTEXTO.md). Se amplian los sitios donde buscar el nombre
+        # (el alt de la imagen del producto suele ser fiable cuando el
+        # selector de texto no encuentra nada) y, si de verdad no hay
+        # nombre, se descarta el producto en vez de subirlo vacio.
         name_el = card.select_one('h2, h3, [class*="title"], [class*="name"]')
         name    = name_el.get_text(strip=True) if name_el else ""
+        if not name:
+            name = card.get("aria-label", "").strip()
+        if not name:
+            link_alt = card.find("a", attrs={"aria-label": True})
+            if link_alt:
+                name = link_alt.get("aria-label", "").strip()
+        if not name:
+            img_alt = card.find("img", alt=True)
+            if img_alt:
+                name = img_alt.get("alt", "").strip()
+        if not name:
+            return None
         price   = 0.0
         for sel in ['[class*="price"]', '[itemprop="price"]', '[data-price]']:
             el = card.select_one(sel)

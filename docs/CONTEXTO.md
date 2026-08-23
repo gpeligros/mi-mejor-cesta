@@ -69,7 +69,7 @@ Repositorio: https://github.com/gpeligros/mi-mejor-cesta
 | `productos_match` | Tabla puente CAT↔supermercados. | Reconstruida entera en la Fase 5 del 20/08 |
 | `precios_mercadona` | IDs ME-xxxx. Tiene `categoria_mercadona`/`subcategoria_mercadona` (~53% poblado). | ~8.371 |
 | `precios_dia` | IDs DI-xxxx. **Tiene `categoria_dia`/`subcategoria_dia` (nuevo, 10/08/2026, 6.055 filas pobladas).** | ~6.055 actualizados hoy |
-| `precios_alcampo` | IDs AL-xxxx. Campo `categoria` = código interno (ej. `OC1701`), decodificable vía `MAPPING_ALCAMPO` en `clasificar_categoria.py`. ⚠️ 61,7% de filas con `nombre_comercial` vacío (bug de scraper pendiente). | 2.264 |
+| `precios_alcampo` | IDs AL-xxxx. Campo `categoria` = código interno (ej. `OC1701`), decodificable vía `MAPPING_ALCAMPO` en `clasificar_categoria.py`. ⚠️ 61,7% de filas con `nombre_comercial` vacío — diagnosticado 23/08/2026: son 1.397 filas huérfanas del 27/04/2026, no un bug del scraper actual (ver sección 5). Falta el re-scrape de verdad para limpiarlas. | 2.264 |
 | `precios_carrefour` | IDs CF-xxxx. Sin categoría propia. **Scraper roto** (ver sección 5). | 7.241 (datos de antes de que la web cambiase — desactualizados) |
 | `precios_ahorramas` | IDs AH-xxxx. Campo `categoria_ahorramas` (genérico, 98% poblado, útil solo como pista amplia). | 1.529 |
 | `supermercados` | **Nueva, 20/08/2026.** Config de supermercados para el panel admin (nombre, color, orden, activo, tabla_precios, columna_match). El frontend/admin ya la usa dinámicamente. Ver sección 10. | 5 |
@@ -100,7 +100,7 @@ Repositorio: https://github.com/gpeligros/mi-mejor-cesta
 | Super | Estado | Categoría nativa | Notas |
 |---|---|---|---|
 | Mercadona | ✅ Funciona | Sí (~53% poblado) | Sin cambios esta sesión |
-| Alcampo | ✅ Funciona, sin tocar | Sí, decodificable (`MAPPING_ALCAMPO`) | Bug pendiente: 61,7% de filas con `nombre_comercial` vacío |
+| Alcampo | ✅ Funciona, código corregido 23/08 | Sí, decodificable (`MAPPING_ALCAMPO`) | 61,7% de filas con `nombre_comercial` vacío en la BBDD — diagnosticado como datos huérfanos del 27/04, no bug del scraper actual (ver detalle abajo). Falta re-scrape real para limpiarlas |
 | AhorraMas | ✅ Funciona, sin tocar | Parcial (genérica) | Sin cambios esta sesión |
 | DIA | ✅ **Reescrito completo 10/08/2026** | Sí, nueva y granular (28 categorías / 246 subcategorías) | 6.055 productos subidos correctamente |
 | Carrefour | ❌ **Roto** — misma causa que tenía DIA (web rediseñada) | No | **Pendiente de reescribir con el mismo método que DIA** |
@@ -129,8 +129,18 @@ Se extrajo el árbol completo de categorías real (28 L1 / 246 L2) desde el payl
 ### Carrefour — pendiente, mismo problema que tenía DIA
 Confirmado el síntoma (0 productos) pero no investigada la API nueva todavía. Cuando se retome: DevTools → Network → filtrar por dominio → buscar endpoint tipo `/api/.../products` tras hacer scroll → capturar árbol de categorías → reescribir con el mismo patrón que `scraper_dia.py`.
 
-### Bug pendiente: Alcampo con nombres vacíos
-1.397 de 2.264 filas de `precios_alcampo` (61,7%) tienen `nombre_comercial` vacío. No abordado esta sesión.
+### Bug de Alcampo con nombres vacíos — diagnosticado y corregido en código el 23/08/2026 (P0 #3)
+**El diagnóstico inicial ("un selector de nombre que falla") era incorrecto.** Se analizó `old/export_precios_alcampo_20260810_2148.csv` (export real de `precios_alcampo`, 2.264 filas) sin acceso a la BBDD en vivo, y los datos cuentan otra historia:
+
+- Las 1.397 filas vacías (61,7%) **NO tienen solo el nombre vacío** — tienen TAMBIÉN `precio`, `marca`, `imagen`, `ean` y `categoria` vacíos. Solo conservan `id`, `id_api`, `url` y `disponible`.
+- Las 1.397 comparten EXACTAMENTE la misma fecha de `actualizado`: **27/04/2026**, y ninguna se ha vuelto a tocar desde entonces (el export es del 10/08/2026, casi 4 meses después). Las filas con datos completos son de fechas distintas (22/03 y 07/04/2026).
+- Conclusión: no es un bug del scraper actual — `scraper_alcampo.py` (tal y como está hoy) nunca construye una fila con nombre vacío sin que también le falte el precio, así que este patrón no puede venir de su lógica de parseo. Son 1.397 filas "esqueleto" que dejó algún proceso puntual el 27/04/2026 (probablemente una versión antigua del scraper o un paso de descubrimiento de URLs que nunca se completó con los detalles), y que el scraper actual no ha vuelto a encontrar/sobrescribir desde entonces. Además, una fila sin nombre Y sin precio no sirve para comparar precios aunque se le rellene el nombre — el problema real es que están "huérfanas", no que les falte un dato.
+
+**Corregido en el código de todas formas (dos bugs reales, aunque no eran la causa principal del 61,7%):** en `scraper_alcampo.py`, dos de las tres rutas de extracción de nombre (`_parse_jsonld_alcampo()` y `_parse_html_card_alcampo()`, usadas como fallback cuando la API principal falla) subían el producto igual aunque no encontraran nombre, dejando `nombre_comercial=""` — a diferencia de `parse_api_product()` (la ruta principal), que si no encuentra nombre descarta el producto entero. Ahora las tres rutas se comportan igual: si no hay nombre, se descarta la fila en vez de subirla vacía. De paso, `_parse_html_card_alcampo()` ahora también prueba `aria-label` y el `alt` de la imagen del producto como nombre de repuesto cuando el selector de texto no encuentra nada, y `extract_products_from_html()` ya no se rinde en el primer selector de tarjetas que encuentre ALGO aunque resulte inservible — prueba el siguiente. Sin acceso a la web en vivo para confirmarlo con datos reales.
+
+**Pendiente, acción de David:**
+1. Ejecutar `scraper_alcampo.py` de verdad (no `--dry-run`) — como usa upsert por `id_api`, cualquiera de esos 1.397 productos que Alcampo siga vendiendo hoy se sobrescribirá solo con datos completos al volver a encontrarse en el listado de categorías.
+2. Después, comprobar cuántas quedan: `SELECT count(*) FROM precios_alcampo WHERE nombre_comercial IS NULL OR nombre_comercial = '';` — las que sigan vacías tras el re-scrape son casi con toda seguridad productos descatalogados por Alcampo, candidatas a desactivar o borrar (decisión de David, no se toca la BBDD desde aquí).
 
 ---
 
@@ -170,8 +180,8 @@ Sin cambios esta sesión. Ver histórico. Pendiente pasar Stripe test → live.
 - `match_mercadona.py` sin `--dry-run` real — no ejecutar hasta reescribir
 
 ### 🟡 Importantes
-- Carrefour: scraper roto, sin arreglar
-- Alcampo: 61,7% de filas sin `nombre_comercial`
+- Carrefour: scraper roto, sin arreglar (sesión 23/08: no se pudo investigar la API nueva por falta de acceso a internet/navegador en vivo desde esta sesión — ver sección 5)
+- Alcampo: 61,7% de filas sin `nombre_comercial` en la BBDD — código ya corregido 23/08, pero falta el re-scrape real para limpiar los datos existentes (ver sección 5)
 
 ### 🟢 Menores
 - `precios_carrefour` con datos desactualizados hasta que se arregle el scraper
@@ -212,14 +222,17 @@ python scrapers/construir_catalogo_v2.py
 ## 10. Pendientes por orden de prioridad
 
 ### 🔴 Alto impacto / bloqueantes
-1. Reescribir `scraper_carrefour.py` (mismo método que se usó para DIA: DevTools → capturar API real → reconstruir; ver sección 5)
-2. Arreglar bug de `nombre_comercial` vacío en `scraper_alcampo.py` (61,7% de filas afectadas — visible ahora en el panel de admin, pestaña Precios, filtro "solo vacíos", y en el Dashboard con barra de calidad de datos)
+1. Reescribir `scraper_carrefour.py` (mismo método que se usó para DIA: DevTools → capturar API real → reconstruir; ver sección 5). **Bloqueado el 23/08/2026**: esta sesión no tiene acceso a internet ni a un navegador conectado para hacer el descubrimiento en vivo con DevTools — necesita que David haga esa parte (o una sesión futura con el navegador de Chrome conectado) y comparta el endpoint encontrado.
+2. ✅ **Bug de `nombre_comercial` vacío en `scraper_alcampo.py` — código corregido el 23/08/2026** (ver sección 5). Falta solo que David ejecute el scraper de verdad para limpiar los datos existentes.
 3. Pasar Stripe a producción (test → live)
 
-### 🔴 Git — pendiente de decidir (21/08/2026)
-- Se preparó (pero NO se confirmó) sacar del control de versiones `scripts/supabase.exe` (97MB, ~80% del peso del repo), `frontend/build/` y `.playwright-cli/`, y se actualizó `.gitignore` para que no vuelvan a colarse. Está en estado "staged" (`git add` hecho) pero sin `git commit` todavía.
-- La reorganización de ficheros de hoy (ver sección 11) también aparecerá como cambios en Git la próxima vez que se revise, porque Git verá los ficheros en su nueva ubicación. Pendiente revisar todo junto y hacer commit.
-- Ojo: sin comitear todavía, todo del 23/08/2026: el fix de `construir_catalogo_v2.py`, los 5 ficheros de frontend de P1 (`App.js`, `Sidebar.js`, `SuperCard.js`, `Cestita.js`, `Landing.js`) y los 7 ficheros del histórico de precios (`historico_precios.sql`, `historico_precios.py`, `scraper_mercadona.py`, `scraper_dia.py`, `scraper_alcampo.py`, `scraper_ahorramas.py`, `scraper_carrefour.py`) — ver sección 12.
+### ✅ Git — al día (actualizado 23/08/2026)
+- La limpieza de `scripts/supabase.exe`, `frontend/build/` y `.playwright-cli/` (que en sesiones anteriores quedó como "pendiente de decidir") **ya está comiteada** — quedó resuelta en algún momento entre sesiones sin que este documento se actualizara. Confirmado con `git log`: commits `Dejar de trackear binarios y artefactos de build`, `Dejar de trackear frontend/build, .playwright-cli y scripts/supabase.exe` y `Reorganizar ficheros del proyecto: archivar legacy en ARCHIVO_HISTORICO/`.
+- **Comiteado hoy, 23/08/2026, en 2 commits locales (sin `git push` todavía — pendiente de que David lo revise y decida cuándo subirlo):**
+  1. `fix(catalogo): corregir nombres sucios en Fase 5` — solo `construir_catalogo_v2.py`.
+  2. `feat(P1): buscador con acentos, cobertura por super, ...` — los 5 ficheros de frontend de P1, los 5 scrapers + los 2 ficheros nuevos del histórico de precios, y este mismo `CONTEXTO.md`.
+- **Quedaron FUERA de estos commits, a propósito, un grupo de ficheros con cambios que no se hicieron en esta sesión y cuyo origen no se ha podido verificar** (no forman parte de ningún trabajo documentado en este archivo): `backend/admin/requirements.txt`, `backend/api/app_gestion.py` (758 líneas cambiadas — el más grande con diferencia), `frontend/postcss.config`, `frontend/public/icon`, `frontend/public/icon.svg`, `frontend/public/index_backup.html`, `frontend/public/robots.txt`, `frontend/src/analytics/Googleanalytics.js`, `frontend/src/components/Footer.js`, `frontend/tailwind.config.js`, `scrapers/scraper_openprices.py`, `scripts/clasificador.py`, `scripts/discover_endpoint.py`, `scripts/generar_codigos_v3.py`, `scripts/requirements_gestor.txt`. Probablemente sean cambios locales de David hechos con otro editor/herramienta en otro momento — **David debe revisarlos y decidir si los quiere comitear** (por separado, no mezclados con el trabajo de hoy). También quedaron sin tocar unos ficheros/carpetas sin trackear (`.claude/`, `ARCHIVO_HISTORICO/restos_tecnicos_git/`, `old/`, los PDF nuevos en `docs/`) por el mismo motivo.
+- Nota técnica sin impacto para David: al comitear desde esta sesión (vía el puente de acceso al dispositivo) Git no pudo borrar sus propios ficheros temporales de bloqueo (`.git/index.lock`, `.git/HEAD.lock`, cientos de `tmp_obj_*` en `.git/objects/`) por una restricción de permisos del propio puente — se comprobó con `git fsck` que el repositorio queda íntegro (los commits y objetos reales se escriben bien, son solo restos cosméticos). Si algún día le apetece, puede borrarlos a mano o con `git gc`; no es urgente.
 
 ### 🔴 Histórico de precios — ejecutar el SQL antes de que funcione (23/08/2026)
 - `scrapers/historico_precios.sql` está escrito pero SIN ejecutar en Supabase — la tabla `historico_precios` no existe todavía en producción. Hasta que se ejecute, los scrapers seguirán subiendo precios con normalidad (el registro de histórico falla en silencio y se ignora), simplemente no se guardará ningún histórico. Ver sección 12, "Punto 4", para los pasos de prueba recomendados.
@@ -284,7 +297,7 @@ Tras el fix de Fase 5 (sección 0), se repasó `PLAN_PRIORIZADO.md` (cruce de `A
 ### Pendiente de este bloque, importante
 - **Frontend (puntos 1,2,3,5,6,7,8): nada se ha probado en un `npm start` real ni en navegador** — solo se validó que cada fichero compila (sintaxis JS/JSX correcta vía esbuild). `App.js` pasa props nuevas a `Sidebar`, `SuperCard` y `Cestita`, así que antes de desplegar conviene abrir la app en local y probar: buscador con acentos, badge de cobertura, selector de límite de supers, cantidades (stepper, PDF, guardar compra), badge de marca blanca y la landing.
 - **Backend (punto 4): la tabla `historico_precios` todavía no existe en Supabase** — hay que ejecutar el SQL a mano primero. Ver el detalle y los pasos de prueba en "Punto 4" más abajo.
-- **Nada de esto está comiteado en Git todavía** — se suma a los cambios ya pendientes de comitear de sesiones anteriores (ver sección 10, "Git — pendiente de decidir"): el fix de `construir_catalogo_v2.py` del 23/08, los 5 ficheros de frontend (`App.js`, `Sidebar.js`, `SuperCard.js`, `Cestita.js`, `Landing.js`) y ahora también los 7 ficheros del histórico de precios (`historico_precios.sql`, `historico_precios.py` + los 5 scrapers).
+- **Ya comiteado en local (no subido a GitHub todavía)** — ver sección 10, "Git — al día", con el detalle de los 2 commits.
 - Nuevas claves de `localStorage`: `limiteFragmentacion_v1`, `cantidades_v1`.
 
 ### Punto 4 — Histórico de precios real: qué se implementó y qué falta a mano
@@ -300,4 +313,4 @@ Era el único punto de P1 que toca la arquitectura de BBDD (tabla nueva), así q
 1. Ejecutar `scrapers/historico_precios.sql` una vez en el SQL Editor de Supabase — la tabla `historico_precios` todavía NO existe en producción.
 2. Probar un scraper cualquiera con `--dry-run` primero y comprobar el mensaje `[dry-run] historico_precios: N cambios detectados` (mercadona no tiene `--dry-run`, tiene confirmación manual s/n — probar con precaución o en una copia).
 3. Después de eso, un run pequeño de verdad (una categoría, por ejemplo) y revisar en el SQL Editor que las filas de `historico_precios` tienen sentido antes de confiar en runs completos.
-4. No comiteado en Git todavía (se suma a la lista de la sección 10).
+4. Ya comiteado en local (commit `feat(P1): ...`, ver sección 10) — falta ejecutar el SQL y probar, y falta hacer `git push` cuando David decida.
