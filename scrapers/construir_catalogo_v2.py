@@ -28,6 +28,7 @@ import csv
 import glob
 import os
 import re
+import sys
 import unicodedata
 from pathlib import Path
 from datetime import datetime
@@ -41,6 +42,12 @@ except ImportError:
 
 RAIZ = Path(__file__).resolve().parents[1]
 CARPETA_OLD = RAIZ / "old"
+
+# Reutilizamos quitar_marca()/extraer_formato() de normalizar_productos.py
+# (Fase 2) en vez de reinventar la limpieza de nombre aquí — ver el porqué
+# justo encima de elegir_nombre_representativo().
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from normalizar_productos import quitar_marca, extraer_formato  # noqa: E402
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://scpuriaofisssalsbzqv.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
@@ -67,12 +74,46 @@ def mas_reciente(patron):
     return candidatos[-1] if candidatos else None
 
 
+def elegir_nombre_limpio(fila):
+    """Construye el nombre_generico final a partir de UNA fila de
+    miembros_finales_*.csv: quita marca y formato del nombre_original,
+    y vuelve a añadir la marca al final (mismo patrón que ya usa
+    clasificar_categoria.py en su columna 'nombre_representativo': 'Aceite
+    de oliva 0,4º Hacendado').
+
+    BUG corregido 23/08/2026 (David, sesión "fallos tras la Fase 5"): antes
+    esta función devolvía directamente nombre_original SIN LIMPIAR cuando
+    el cluster no tenía ningún miembro de Mercadona — es decir, para la
+    mayoría del catálogo (los clusters de solo DIA/Alcampo/Carrefour/
+    AhorraMas), el nombre que veía el usuario en la app arrastraba el
+    formato/cantidad tal cual lo escribió cada super ("Leche Desnatada
+    Carrefour Botella 1,5 L" en vez de "Leche Desnatada Carrefour").
+    Verificado con los CSV reales de la Fase 5 del 20/08/2026
+    (miembros_finales_20260820_1345.csv + categorias_asignadas_20260820_1346.csv):
+    12.021 de 16.727 productos (71,9%) tenían el nombre sucio. Con este
+    fix, sobre el mismo dataset, bajan a 11 (0,1%), sin ninguna regresión
+    en los ~4.230 clusters que sí tenían Mercadona (esos ya salían limpios).
+    """
+    marca = (fila.get("marca_detectada") or "").strip()
+    sin_marca, _ = quitar_marca(fila["nombre_original"], marca)
+    nombre_limpio, _ = extraer_formato(sin_marca)
+    nombre_limpio = nombre_limpio.strip()
+    if not nombre_limpio:
+        nombre_limpio = fila["nombre_original"]
+    if marca and marca.lower() not in nombre_limpio.lower():
+        return f"{nombre_limpio} {marca}".strip()
+    return nombre_limpio
+
+
 def elegir_nombre_representativo(filas_cluster):
     mercadona = [f for f in filas_cluster if f["super"] == "Mercadona"]
     if mercadona:
-        return mercadona[0]["nombre_original"]
-    nombres = [f["nombre_original"] for f in filas_cluster]
-    return Counter(nombres).most_common(1)[0][0]
+        fila = mercadona[0]
+    else:
+        nombres = Counter(f["nombre_original"] for f in filas_cluster)
+        nombre_top = nombres.most_common(1)[0][0]
+        fila = next(f for f in filas_cluster if f["nombre_original"] == nombre_top)
+    return elegir_nombre_limpio(fila)
 
 
 def elegir_marca(filas_cluster):
