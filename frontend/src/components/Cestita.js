@@ -33,7 +33,8 @@ const parsearAccion = (texto) => {
 
 const limpiarTexto = (texto) => texto.replace(/<accion>.*?<\/accion>/s, '').trim();
 
-const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session, toggleProd, db }) => {
+const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session, toggleProd, db, getCantidad }) => {
+  const cantidadDe = (id) => (getCantidad ? getCantidad(id) : 1);
   const [abierto, setAbierto]       = useState(false);
   const [mensajes, setMensajes]     = useState([
     {
@@ -70,15 +71,17 @@ const Cestita = ({ seleccionados, precios, supersActivos, getProdFull, session, 
     const lineas = seleccionados.map(id => {
       const prod = getProdFull(id);
       if (!prod) return null;
+      const cant = cantidadDe(id);
       const preciosProd = (supersActivos || []).map(s => {
         const p = precios[id]?.[s];
         return p ? `${s}: ${p.toFixed(2)}€` : null;
       }).filter(Boolean);
-      return `• ${prod.nombre} — ${preciosProd.join(' | ') || 'sin precio'}`;
+      const sufijoCantidad = cant > 1 ? ` (x${cant})` : '';
+      return `• ${prod.nombre}${sufijoCantidad} — ${preciosProd.join(' | ') || 'sin precio'}`;
     }).filter(Boolean);
 
     const totales = (supersActivos || []).map(s => {
-      const t = seleccionados.reduce((acc, id) => acc + (precios[id]?.[s] || 0), 0);
+      const t = seleccionados.reduce((acc, id) => acc + (precios[id]?.[s] || 0) * cantidadDe(id), 0);
       return t > 0 ? `${s}: ${t.toFixed(2)}€` : null;
     }).filter(Boolean);
 

@@ -40,6 +40,24 @@ const safeJSON = (raw, fallback) => {
 
 const SUPERS_VALIDOS = ['Mercadona', 'DIA', 'Alcampo', 'AhorraMas', 'Carrefour'];
 
+// Todas las combinaciones de tamaño k de un array — se usa para el límite
+// de fragmentación de la cesta inteligente (como mucho 5 supers activos,
+// así que como mucho 2^5 combinaciones, coste trivial). Ver stats.multi
+// más abajo y COMPARE-07 en claude/PLAN_PRIORIZADO.md.
+const combinacionesDeTamano = (arr, k) => {
+  const resultado = [];
+  const combinar = (inicio, actual) => {
+    if (actual.length === k) { resultado.push(actual.slice()); return; }
+    for (let i = inicio; i < arr.length; i++) {
+      actual.push(arr[i]);
+      combinar(i + 1, actual);
+      actual.pop();
+    }
+  };
+  combinar(0, []);
+  return resultado;
+};
+
 const App = () => {
   // Estados
   const [session, setSession] = useState(null);
@@ -54,6 +72,18 @@ const App = () => {
       : [];
   });
   const [comprados, setComprados] = useState([]);
+  // Cantidades por producto (id_catalogo -> nº unidades). Los productos sin
+  // entrada aquí se tratan como cantidad 1 — así no rompe cestas guardadas
+  // ni la lista colaborativa de antes de que existiera esta función.
+  const [cantidades, setCantidades] = useState(() => {
+    const parsed = safeJSON(safeGet('cantidades_v1'), {});
+    return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
+  });
+  const getCantidad = (id) => cantidades[id] || 1;
+  const setCantidadProducto = (id, nueva) => {
+    const n = Math.max(1, Math.min(99, parseInt(nueva, 10) || 1));
+    setCantidades(prev => ({ ...prev, [id]: n }));
+  };
   const [cestasGuardadas, setCestasGuardadas] = useState(
     () => safeJSON(safeGet('misCestas_v7'), {}) || {}
   );
@@ -65,6 +95,17 @@ const App = () => {
     }
     return ['Mercadona', 'DIA', 'Alcampo', 'Carrefour', 'AhorraMas'];
   });
+  // Límite de fragmentación: como mucho en cuántos supers distintos está
+  // dispuesto el usuario a comprar en la cesta inteligente. null = sin límite
+  // (comportamiento de siempre: el más barato producto a producto, sin tope).
+  const [limiteFragmentacion, setLimiteFragmentacion] = useState(() => {
+    const guardado = safeJSON(safeGet('limiteFragmentacion_v1'), null);
+    return (typeof guardado === 'number' && guardado > 0) ? guardado : null;
+  });
+  useEffect(() => {
+    safeSet('limiteFragmentacion_v1', JSON.stringify(limiteFragmentacion));
+  }, [limiteFragmentacion]);
+
   const [modalUpgrade, setModalUpgrade] = useState(null);
   const { plan, cargando: planCargando, limiteSupers, limiteProductos, limiteMenusGuardados } = usePlan(session);
 
@@ -357,7 +398,8 @@ const App = () => {
     safeSet('miCesta_v7', JSON.stringify(seleccionados));
     safeSet('misCestas_v7', JSON.stringify(cestasGuardadas));
     safeSet('sync_pref', JSON.stringify(syncActiva));
-  }, [seleccionados, cestasGuardadas, syncActiva]);
+    safeSet('cantidades_v1', JSON.stringify(cantidades));
+  }, [seleccionados, cestasGuardadas, syncActiva, cantidades]);
 
   // Persistir supermercados activos del usuario
   useEffect(() => {
@@ -391,6 +433,15 @@ const App = () => {
     }
     const nvas = estaEnCesta ? seleccionados.filter(x => x !== id) : [...seleccionados, id];
     setSeleccionados(nvas);
+    if (estaEnCesta) {
+      // Al quitar el producto, olvidamos también su cantidad guardada
+      setCantidades(prev => {
+        if (!(id in prev)) return prev;
+        const copia = { ...prev };
+        delete copia[id];
+        return copia;
+      });
+    }
     sincronizarNube(nvas, comprados);
   };
 
@@ -403,6 +454,7 @@ const App = () => {
   const vaciarCesta = () => {
     setSeleccionados([]);
     setComprados([]);
+    setCantidades({});
     sincronizarNube([], []);
   };
 
@@ -458,19 +510,21 @@ const App = () => {
         const prod = getProdFull(id);
         if (!prod) return '';
         const nombre = getNombreReal(id, s) || prod.nombre;
+        const cant = getCantidad(id);
         const precio = precios[id]?.[s] || 0;
+        const subtotal = precio * cant;
         // Marca precio mínimo en verde
         const preciosValidos = supersActivos.map(x => precios[id]?.[x] || 0).filter(p => p > 0);
         const esMinimo = precio > 0 && precio === Math.min(...preciosValidos);
         return `<tr>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:13px;">${nombre}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:13px;">${nombre}${cant > 1 ? ` <span style="color:#999;">×${cant}</span>` : ''}</td>
           <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:right;font-weight:900;font-size:13px;color:${esMinimo ? '#037623' : '#102215'}">
-            ${precio > 0 ? precio.toFixed(2) + '€' : '—'}
+            ${subtotal > 0 ? subtotal.toFixed(2) + '€' : '—'}
           </td>
         </tr>`;
       }).join('');
 
-      const total = seleccionados.reduce((acc, id) => acc + (precios[id]?.[s] || 0), 0);
+      const total = seleccionados.reduce((acc, id) => acc + (precios[id]?.[s] || 0) * getCantidad(id), 0);
 
       return `
         <div style="margin-bottom:32px;break-inside:avoid;">
@@ -547,11 +601,12 @@ const App = () => {
   // para mostrar al usuario "Carrefour: 3 de 8 productos" cuando proceda.
   // ═══════════════════════════════════════════════════════════════════
   const stats = (() => {
-    // Total por super (suma de productos que ese super sí tiene)
+    // Total por super (suma de productos que ese super sí tiene, ya
+    // multiplicado por la cantidad de cada producto en la cesta)
     const totalesPorSuper = supersActivos.map(s => {
       const total = seleccionados.reduce((acc, id) => {
         const precio = precios[id]?.[s] || 0;
-        return acc + (precio > 0 ? precio : 0);
+        return acc + (precio > 0 ? precio * getCantidad(id) : 0);
       }, 0);
       const productosDisponibles = seleccionados.filter(id =>
         (precios[id]?.[s] || 0) > 0
@@ -559,9 +614,10 @@ const App = () => {
       return { id: s, t: total, productosDisponibles };
     }).sort((a, b) => a.t - b.t);
 
-    // Multi: suma del MÍNIMO precio por producto entre los supers activos.
-    // MaxPorProducto: suma del MÁXIMO precio por producto. Esto da el
-    // "peor caso si compras todo de cualquier super donde esté disponible".
+    // Multi: suma del MÍNIMO precio por producto (× su cantidad) entre los
+    // supers activos. MaxPorProducto: suma del MÁXIMO precio por producto
+    // (× cantidad). Esto da el "peor caso si compras todo de cualquier
+    // super donde esté disponible".
     let multiTotal = 0;
     let maxTotal = 0;
     let productosSinPrecio = 0;
@@ -570,19 +626,61 @@ const App = () => {
         .map(s => precios[id]?.[s] || 0)
         .filter(p => p > 0);
       if (preciosValidos.length > 0) {
-        multiTotal += Math.min(...preciosValidos);
-        maxTotal   += Math.max(...preciosValidos);
+        const cant = getCantidad(id);
+        multiTotal += Math.min(...preciosValidos) * cant;
+        maxTotal   += Math.max(...preciosValidos) * cant;
       } else {
         productosSinPrecio++;
       }
     });
 
-    // El ahorro nunca debe ser negativo (defensivo)
-    const ahorro = Math.max(0, maxTotal - multiTotal);
-    
-    return { 
-      totalesPorSuper, 
-      multi: multiTotal,
+    // ── Límite de fragmentación: mejor subconjunto de como mucho
+    // `limiteFragmentacion` supers, para no acabar recomendando comprar en
+    // 4-5 tiendas distintas para ahorrar poco (COMPARE-07, PLAN_PRIORIZADO.md).
+    // Sin límite (null, o límite >= nº de supers activos), se comporta
+    // exactamente igual que antes: el más barato producto a producto entre
+    // TODOS los supers activos.
+    let multiConLimite = multiTotal;
+    let supersUsados = supersActivos;
+    const limiteActivo = !!(limiteFragmentacion && limiteFragmentacion < supersActivos.length);
+    if (limiteActivo) {
+      let mejor = null;
+      for (let k = 1; k <= limiteFragmentacion; k++) {
+        combinacionesDeTamano(supersActivos, k).forEach(subset => {
+          let total = 0;
+          let cubiertos = 0;
+          seleccionados.forEach(id => {
+            const preciosValidos = subset
+              .map(s => precios[id]?.[s] || 0)
+              .filter(p => p > 0);
+            if (preciosValidos.length > 0) {
+              total += Math.min(...preciosValidos) * getCantidad(id);
+              cubiertos++;
+            }
+          });
+          // Primero no perder cobertura de productos, luego el coste más bajo
+          if (!mejor || cubiertos > mejor.cubiertos || (cubiertos === mejor.cubiertos && total < mejor.total)) {
+            mejor = { subset, total, cubiertos };
+          }
+        });
+      }
+      if (mejor) {
+        multiConLimite = mejor.total;
+        supersUsados = mejor.subset;
+      }
+    }
+
+    // El ahorro nunca debe ser negativo (defensivo). Se calcula sobre el
+    // total YA limitado, para que el panel de ahorro sea coherente con lo
+    // que de verdad se va a comprar si hay un límite de supers activo.
+    const ahorro = Math.max(0, maxTotal - multiConLimite);
+
+    return {
+      totalesPorSuper,
+      multi: multiConLimite,
+      multiSinLimite: multiTotal,
+      supersUsados,
+      limiteActivo,
       ahorro: ahorro || 0,
       productosSinPrecio
     };
@@ -599,10 +697,15 @@ const App = () => {
         if (!p || !comprados.includes(id)) return null;
         const precioVal = precios[id]?.[modoTienda] || 0;
         if (precioVal <= 0) return null;
+        const cant = getCantidad(id);
+        const nombreBase = getNombreReal(id, modoTienda) || p.nombre;
         return {
           id_catalogo: id,
-          nombre_producto: getNombreReal(id, modoTienda) || p.nombre,
-          precio: precioVal,
+          // Sin columna de cantidad en compras_detalle (no se ha tocado el
+          // esquema de BBDD) — se refleja en el nombre y el precio ya es el
+          // importe total de esa línea (precio unitario × cantidad).
+          nombre_producto: cant > 1 ? `${nombreBase} ×${cant}` : nombreBase,
+          precio: precioVal * cant,
           supermercado: modoTienda,
         };
       })
@@ -658,15 +761,16 @@ const App = () => {
         const precioVal = precios[id]?.[modoTienda] || 0;
         const nombreReal = getNombreReal(id, modoTienda);
         if (!precioVal || precioVal <= 0) return null;
-        return { ...p, precio: precioVal, nombreReal };
+        const cantidad = getCantidad(id);
+        return { ...p, precio: precioVal, cantidad, subtotal: precioVal * cantidad, nombreReal };
       })
       .filter(Boolean)
-      .sort((a, b) => (b.precio || 0) - (a.precio || 0));
+      .sort((a, b) => (b.subtotal || 0) - (a.subtotal || 0));
 
     const numComprados = comprados.filter(id => prods.some(p => p.id_producto === id)).length;
     const totalComprados = prods
       .filter(p => comprados.includes(p.id_producto))
-      .reduce((acc, p) => acc + p.precio, 0);
+      .reduce((acc, p) => acc + p.subtotal, 0);
 
     return (
       <div style={{ 
@@ -739,8 +843,32 @@ const App = () => {
                   {p.categoria} · {p.subcategoria}
                 </div>
               </div>
-              <div style={{ fontWeight: '900', fontSize: '18px', color: '#037623' }}>
-                {(p.precio || 0).toFixed(2)}€
+
+              {/* Cantidad */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                <button
+                  onClick={() => setCantidadProducto(p.id_producto, p.cantidad - 1)}
+                  disabled={p.cantidad <= 1}
+                  style={{ width: '26px', height: '26px', borderRadius: '8px', border: '1px solid #ddd', background: 'white', color: p.cantidad <= 1 ? '#ccc' : '#102215', fontWeight: '900', cursor: p.cantidad <= 1 ? 'not-allowed' : 'pointer' }}
+                >
+                  −
+                </button>
+                <span style={{ minWidth: '18px', textAlign: 'center', fontWeight: '800', fontSize: '13px' }}>{p.cantidad}</span>
+                <button
+                  onClick={() => setCantidadProducto(p.id_producto, p.cantidad + 1)}
+                  style={{ width: '26px', height: '26px', borderRadius: '8px', border: '1px solid #ddd', background: 'white', color: '#102215', fontWeight: '900', cursor: 'pointer' }}
+                >
+                  +
+                </button>
+              </div>
+
+              <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                <div style={{ fontWeight: '900', fontSize: '18px', color: '#037623' }}>
+                  {(p.subtotal || 0).toFixed(2)}€
+                </div>
+                {p.cantidad > 1 && (
+                  <div style={{ fontSize: '10px', color: '#999' }}>{p.precio.toFixed(2)}€/ud</div>
+                )}
               </div>
             </div>
           ))}
@@ -916,6 +1044,9 @@ const App = () => {
               seleccionados={seleccionados}
               setSeleccionados={setSeleccionados}
               setComprados={setComprados}
+              limiteFragmentacion={limiteFragmentacion}
+              setLimiteFragmentacion={setLimiteFragmentacion}
+              numSupersActivos={supersActivos.length}
               db={db}
               acordeon={acordeon}
               setAcordeon={setAcordeon}
@@ -955,9 +1086,11 @@ const App = () => {
                     getPrecio={getPrecio}
                     getNombreReal={getNombreReal}
                     supersActivos={supersActivos} 
-                    getProdFull={getProdFull} 
+                    getProdFull={getProdFull}
                     setModoTienda={setModoTienda}
                     toggleProd={toggleProd}
+                    getCantidad={getCantidad}
+                    setCantidadProducto={setCantidadProducto}
                   />
                 ))}
                 {seccionActual === 'privacidad' && <RenderPrivacidad />}
@@ -1004,6 +1137,7 @@ const App = () => {
         session={session}
         toggleProd={toggleProd}
         db={db}
+        getCantidad={getCantidad}
       />
 
       {mostrarColaborativa && (

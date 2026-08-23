@@ -9,11 +9,19 @@ Sin visitas individuales por producto — todo desde el listado de categoría.
 IDs: AL-{pid} directo (compatible con Carrefour).
 Tabla destino: precios_alcampo
 """
-import argparse, json, logging, os, re, time
+import argparse, json, logging, os, re, sys, time
+from pathlib import Path
 from curl_cffi import requests as curl_requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 load_dotenv()
+
+# Histórico de precios (P1 #4, 23/08/2026) — módulo hermano en scrapers/
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from historico_precios import registrar_cambios_precio
+except ImportError:
+    registrar_cambios_precio = None
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
 BASE_URL     = "https://www.compraonline.alcampo.es"
@@ -428,6 +436,8 @@ def upsert(client, products):
         p["actualizado"] = now
     if not products:
         return 0
+    if registrar_cambios_precio:
+        registrar_cambios_precio(client, TABLE_NAME, "alcampo", products)
     res = client.table(TABLE_NAME).upsert(products, on_conflict="id_api").execute()
     return len(res.data) if res.data else len(products)
 

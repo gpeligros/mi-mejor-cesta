@@ -4,6 +4,12 @@ import { supabase } from '../supabaseClient';
 const VERDE = '#037623';
 const OSCURO = '#102215';
 
+// Normaliza acentos/mayúsculas para comparar texto — misma lógica que ya
+// usaba CESTITA (buscarProductoEnDb en Cestita.js) para su chat, ahora
+// también en el buscador principal para que "cafe" encuentre "café".
+const normalizarBusqueda = (texto) =>
+  (texto || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
 // Limpia el nombre quitando la parte redundante del slug
 const limpiarNombre = (nombre) => {
   const match = nombre.match(/^(.+?)\s*\((.+)\)\s*$/);
@@ -46,13 +52,14 @@ const BarraProgreso = ({ valor, maximo, color = VERDE, label, cantidad }) => {
   );
 };
 
-const Sidebar = ({ 
-  stats, cestasGuardadas, setCestasGuardadas, 
-  seleccionados, setSeleccionados, setComprados, 
-  escaneando, fileInputRef, handleFoto, 
-  busqueda, setBusqueda, db, acordeon, setAcordeon, 
+const Sidebar = ({
+  stats, cestasGuardadas, setCestasGuardadas,
+  seleccionados, setSeleccionados, setComprados,
+  escaneando, fileInputRef, handleFoto,
+  busqueda, setBusqueda, db, acordeon, setAcordeon,
   toggleProd, vaciarCesta, exportarPDF, onCompartir,
   plan, onUpgrade, session, onAdmin,
+  limiteFragmentacion, setLimiteFragmentacion, numSupersActivos,
 }) => {
 
   const [esAdmin, setEsAdmin] = React.useState(false);
@@ -210,6 +217,40 @@ const Sidebar = ({
         <h3 style={{ fontSize: '12px', marginBottom: '5px', fontWeight: '900' }}>💡 MI MEJOR CESTA: {stats.multi.toFixed(2)}€</h3>
         <p style={{ fontSize: '11px', color: '#666' }}>Precio mínimo comprando cada cosa en su sitio más barato.</p>
       </div>
+
+      {/* LÍMITE DE FRAGMENTACIÓN — evita recomendar comprar en 4-5 tiendas
+          distintas para ahorrar poco (COMPARE-07, PLAN_PRIORIZADO.md) */}
+      {numSupersActivos > 1 && (
+        <div style={{ background: 'white', padding: '16px 20px', borderRadius: '20px', border: '1px solid #e0e6e1', marginBottom: '15px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <span style={{ fontSize: '11px', fontWeight: '900', color: OSCURO }}>🏪 COMPRAR EN COMO MÁXIMO</span>
+            <select
+              value={Math.min(limiteFragmentacion || numSupersActivos, numSupersActivos)}
+              onChange={(e) => {
+                const v = parseInt(e.target.value, 10);
+                setLimiteFragmentacion(v >= numSupersActivos ? null : v);
+              }}
+              style={{ fontSize: '11px', fontWeight: '900', color: VERDE, border: `1px solid ${VERDE}`, borderRadius: '8px', padding: '4px 8px', background: '#e8fdf0', cursor: 'pointer' }}
+            >
+              {Array.from({ length: numSupersActivos }, (_, i) => i + 1).map(n => (
+                <option key={n} value={n}>{n} súper{n !== 1 ? 's' : ''}</option>
+              ))}
+            </select>
+          </div>
+          {stats.limiteActivo ? (
+            <p style={{ fontSize: '11px', color: '#666', margin: 0 }}>
+              Comprando en: <strong>{(stats.supersUsados || []).join(', ')}</strong>.
+              {stats.multiSinLimite < stats.multi && (
+                <> Sin límite ahorrarías {(stats.multi - stats.multiSinLimite).toFixed(2)}€ más, repartiendo entre más tiendas.</>
+              )}
+            </p>
+          ) : (
+            <p style={{ fontSize: '11px', color: '#999', margin: 0 }}>
+              Sin límite: cada producto se compra donde esté más barato, aunque sean varias tiendas.
+            </p>
+          )}
+        </div>
+      )}
 
       {/* BOTONES ACCIÓN */}
       <div style={{ marginBottom: '20px', display: 'grid', gap: '8px' }}>
@@ -426,7 +467,7 @@ const Sidebar = ({
             const subcategoriasFiltradas = Object.keys(db[categoria] || {}).filter(subcategoria => {
               return db[categoria][subcategoria].some(producto => {
                 const nombreLimpio = limpiarNombre(producto.nombre);
-                return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
+                return normalizarBusqueda(nombreLimpio).includes(normalizarBusqueda(busqueda));
               });
             });
             if (subcategoriasFiltradas.length === 0) return null;
@@ -446,7 +487,7 @@ const Sidebar = ({
                   const productosFiltrados = db[categoria][subcategoria]
                     .filter(producto => {
                       const nombreLimpio = limpiarNombre(producto.nombre);
-                      return nombreLimpio.toLowerCase().includes(busqueda.toLowerCase());
+                      return normalizarBusqueda(nombreLimpio).includes(normalizarBusqueda(busqueda));
                     })
                     .sort((a, b) => limpiarNombre(a.nombre).localeCompare(limpiarNombre(b.nombre)));
 

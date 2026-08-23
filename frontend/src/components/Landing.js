@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-const SUPERS = ['Mercadona', 'DIA', 'Carrefour', 'Lidl', 'Aldi', 'Alcampo'];
+// Los 5 supermercados que la app compara de verdad hoy (docs/CONTEXTO.md,
+// sección 2) — antes esta lista incluía "Lidl" y "Aldi", que no existen en
+// el catálogo, y le faltaba "AhorraMas", que sí existe. Cifra corregida
+// 23/08/2026 (PLAN_PRIORIZADO.md, "no usar cifras ficticias").
+const SUPERS = ['Mercadona', 'DIA', 'Alcampo', 'AhorraMas', 'Carrefour'];
 
 const BENEFICIOS = [
-  { icono: '💰', titulo: 'Ahorra hasta 100€/mes', texto: 'Compara precios en tiempo real y elige siempre el más barato.' },
+  { icono: '💰', titulo: 'Ahorra en cada compra', texto: 'Compara precios en tiempo real y elige siempre el más barato.' },
   { icono: '🛒', titulo: 'Tu cesta inteligente', texto: 'Añade productos y ve al instante dónde te sale más barato todo.' },
   { icono: '📸', titulo: 'Escanea tu lista', texto: 'Fotografía tu lista de papel y la importamos automáticamente.' },
 ];
@@ -94,7 +98,7 @@ const Landing = ({ onEntrar }) => {
             lineHeight: 1.5,
           }}>
             Descubre dónde te sale más barato cada producto.<br />
-            Crea tu cesta ideal y ahorra hasta <strong>100€ al mes</strong>.
+            Crea tu cesta ideal y compara en segundos.
           </p>
 
           <button
@@ -139,10 +143,13 @@ const Landing = ({ onEntrar }) => {
         flexWrap: 'wrap',
         borderBottom: '1px solid #eee',
       }}>
+        {/* Cifras reales del catálogo (docs/CONTEXTO.md, 20/08/2026) — antes
+            decía "+4.000" (desactualizado) y "100€ ahorro medio/mes" (sin
+            ningún dato que lo respalde). Corregido 23/08/2026. */}
         {[
-          { num: '+4.000', label: 'productos comparados' },
-          { num: '6', label: 'supermercados' },
-          { num: '100€', label: 'ahorro medio/mes' },
+          { num: '16.727', label: 'productos comparados' },
+          { num: '5', label: 'supermercados' },
+          { num: '2.104', label: 'comparando en 2+ tiendas' },
         ].map((s, i) => (
           <div key={i} style={{
             textAlign: 'center',
@@ -154,6 +161,41 @@ const Landing = ({ onEntrar }) => {
             <div style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>{s.label}</div>
           </div>
         ))}
+      </section>
+
+      {/* CÓMO FUNCIONA — 3 pasos, pedido en la auditoría (HOME-03) porque el
+          hero iba directo a beneficios sin explicar el flujo */}
+      <section style={{ padding: '56px 24px 0', maxWidth: '900px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontWeight: '900', fontSize: 'clamp(20px, 4vw, 28px)', marginBottom: '40px', color: '#102215' }}>
+          Cómo funciona
+        </h2>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '24px',
+        }}>
+          {[
+            { paso: '1', icono: '➕', titulo: 'Añade productos', texto: 'Busca y marca lo que sueles comprar en tu cesta.' },
+            { paso: '2', icono: '🔍', titulo: 'Comparamos', texto: 'Cruzamos el precio de cada producto en todos los supermercados a la vez.' },
+            { paso: '3', icono: '✅', titulo: 'Elige la mejor opción', texto: 'Te decimos dónde te sale más barato, producto a producto o en total.' },
+          ].map((p, i) => (
+            <div key={i} style={{ textAlign: 'center', position: 'relative' }}>
+              <div style={{
+                width: '56px', height: '56px', margin: '0 auto 14px',
+                borderRadius: '50%', background: '#e8fdf0',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '26px', border: '2px solid #037623',
+              }}>
+                {p.icono}
+              </div>
+              <div style={{ fontSize: '11px', fontWeight: '900', color: '#037623', letterSpacing: '1px', marginBottom: '4px' }}>
+                PASO {p.paso}
+              </div>
+              <h3 style={{ fontWeight: '900', fontSize: '15px', color: '#102215', margin: '0 0 6px' }}>{p.titulo}</h3>
+              <p style={{ fontSize: '13px', color: '#666', lineHeight: 1.5, margin: 0 }}>{p.texto}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* BENEFICIOS */}

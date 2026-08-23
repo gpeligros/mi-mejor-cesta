@@ -31,10 +31,18 @@ USO:
   python scraper_dia.py --dry-run                    # prueba todas, sin subir
   python scraper_dia.py                               # scrape completo real
 """
-import argparse, json, logging, os, time
+import argparse, json, logging, os, sys, time
+from pathlib import Path
 from curl_cffi import requests as curl_requests
 from dotenv import load_dotenv
 load_dotenv()
+
+# Histórico de precios (P1 #4, 23/08/2026) — módulo hermano en scrapers/
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from historico_precios import registrar_cambios_precio
+except ImportError:
+    registrar_cambios_precio = None
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
 BASE_URL   = "https://www.dia.es"
@@ -361,6 +369,8 @@ def upsert(client, products):
         p["actualizado"] = now
     if not products:
         return 0
+    if registrar_cambios_precio:
+        registrar_cambios_precio(client, TABLE_NAME, "dia", products)
     res = client.table(TABLE_NAME).upsert(products, on_conflict="id_api").execute()
     return len(res.data) if res.data else len(products)
 

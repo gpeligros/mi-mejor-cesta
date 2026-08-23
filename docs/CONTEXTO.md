@@ -1,4 +1,4 @@
-# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 21/08/2026)
+# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 23/08/2026)
 
 ## ⚠️ INSTRUCCIONES PARA CLAUDE
 Lee este fichero COMPLETO antes de responder nada.
@@ -9,14 +9,26 @@ NUNCA empieces a escribir código sin entender primero el estado real.
 SIEMPRE pide los ficheros actuales antes de modificarlos.
 NUNCA uses sed en PowerShell — usar python3 para manipular ficheros.
 PowerShell NO soporta && — ejecutar comandos por separado.
+**SIEMPRE que actualices CONTEXTO.md, guárdalo en las DOS copias a la vez y nunca solo en una:** el Proyecto de Claude (`project_write`) Y `docs/CONTEXTO.md` en el ordenador de David (vía el puente de acceso al dispositivo — stage del fichero actual para coger su mtime, luego SendUserFile + `device_commit_files` con ese mtime). Quedaron desincronizadas una vez (23/08/2026) porque solo se actualizó la copia del Proyecto — no debe volver a pasar.
 
 ---
 
 ## 0. ⚠️ ESTADO CRÍTICO — LEER PRIMERO
 
-**Fase 5 EJECUTADA en producción el 20/08/2026.** Catálogo: 16.727 productos, **2.104 comparando precio en ≥2 supers** (2,5x respecto a la reconstrucción del 10/08). Reemplaza la versión del 10/08/2026, que ya quedó obsoleta tras los arreglos de esta sesión.
+**23/08/2026 — Bug de "nombres sucios" encontrado, corregido y YA APLICADO A PRODUCCIÓN.** Esta era la tarea "Pendiente URGENTE" que quedó anotada el 21/08 (los fallos que David reportó tras la Fase 5 del 20/08, sin detallar cuáles). Diagnóstico hecho releyendo el código + simulando la Fase 5 contra los CSV reales que se usaron el 20/08 (`miembros_finales_20260820_1345.csv` + `categorias_asignadas_20260820_1346.csv`), sin tocar la BBDD (Supabase no es alcanzable desde el entorno cloud de esta sesión).
 
-**Arreglos aplicados hoy (20/08/2026) en el pipeline de reconstrucción:**
+- **Causa:** `elegir_nombre_representativo()` en `construir_catalogo_v2.py` usaba el nombre tal cual lo escribió cada supermercado (`nombre_original`, sin limpiar) cada vez que un cluster no tenía ningún miembro de Mercadona. Como la mayoría del catálogo no tiene Mercadona (12.497 de 16.727 clusters), el nombre que ve el usuario en la app arrastraba el formato/cantidad pegado: p. ej. "Leche Desnatada Carrefour Botella 1,5 L" en vez de "Leche Desnatada Carrefour".
+- **Impacto medido sobre los datos reales de producción (20/08):** 12.021 de 16.727 productos (**71,9%** del catálogo) tenían el nombre sucio de esta forma.
+- **Fix aplicado:** `elegir_nombre_representativo()` ahora reutiliza `quitar_marca()` + `extraer_formato()` de `normalizar_productos.py` (Fase 2) — las mismas funciones ya probadas — para construir el nombre limpio y volver a añadir la marca al final (mismo patrón que ya usaba `clasificar_categoria.py` en su columna `nombre_representativo`, ej. "Aceite de oliva 0,4º Hacendado"). Probado antes en `--dry-run` contra los mismos CSV reales: baja de 71,9% a 0,1% (11 casos residuales, sin regresión en ninguno de los ~4.230 clusters que sí tenían Mercadona).
+- **✅ Aplicado a producción el 23/08/2026:** David ejecutó `construir_catalogo_v2.py` de verdad desde su ordenador (backup automático hecho antes de tocar nada, tablas reconstruidas, log final "CATÁLOGO NUEVO EN PRODUCCIÓN" confirmado). El catálogo en Supabase ya usa la lógica de nombre limpio.
+- **Pendiente de verificar:** confirmar visualmente en la app (o en el panel admin) que los nombres salen limpios ahora con algún ejemplo real, y anotar aquí las cifras finales de la ejecución (total de productos, marca blanca vs. fabricante, cuántos comparan en ≥2 supers) si David las pega — no se han registrado todavía en este documento.
+- Se revisó también `App.js`: ya está adaptado a la tabla nueva (`vista_productos`, `id_categoria`, `tipo`), no se encontró ninguna suposición rota sobre la estructura vieja del catálogo.
+- `vista_productos` no se pudo verificar en vivo (vive solo en Supabase, no hay ningún `.sql` en el repo que la defina — no está versionada, posible mejora futura documentarla).
+- El propio script termina sugiriendo "re-ejecutar matching de los supers no cubiertos todavía" — es un mensaje genérico del script, no un paso obligatorio: `CONTEXTO.md` ya lo marcaba como opcional porque el catálogo reconstruido trae sus propios matches (sección 6). Solo tendría sentido si se quiere seguir exprimiendo cobertura.
+
+**Fase 5 EJECUTADA en producción el 20/08/2026** (con el bug de nombres de arriba, ya corregido el 23/08). Catálogo: 16.727 productos, **2.104 comparando precio en ≥2 supers** (2,5x respecto a la reconstrucción del 10/08). Reemplaza la versión del 10/08/2026, que ya quedó obsoleta tras los arreglos de esa sesión.
+
+**Arreglos aplicados el 20/08/2026 en el pipeline de reconstrucción:**
 1. **Equivalencia numeral↔palabra** (`unificar_numeros()` en `normalizar_productos.py`, `agrupar_productos.py`, `clasificar_categoria.py`) — "Mahou 5 Estrellas" y "Mahou Cinco Estrellas" ahora se tratan como el mismo texto. Bug detectado por David con capturas reales de la app.
 2. **Vocabulario de marcas aprendido del propio catálogo** (`construir_vocabulario_marcas()` en `normalizar_productos.py`) — Mercadona tenía el campo `marca` vacío en ~50% de sus productos de marca real (Danone, Puleva, Dove, Milka confirmado con datos reales), rompiendo el matching cross-super. Se rescatan 3.000+ filas por sesión comparando contra marcas ya detectadas en el resto del catálogo. Exclusión de palabras genéricas (colores, "original", "especial"...) para evitar falsos positivos.
 3. **Comparación de marca blanca por descripción** (`detectar_marcas_genericas()`, `clave_bucket()`, `texto_comparacion()` en `agrupar_productos.py`) — petición explícita de David: Hacendado, Dia Vegecampo, Carrefour Classic, Alipende... ahora se comparan entre sí por tipo de producto, no se quedan aislados por fabricante. Es el cambio de mayor impacto del día (+1.246 clusters comparando). Una marca se considera "genérica" solo si (a) aparece en un único supermercado en todo el catálogo Y (b) está en una lista de marcas blancas conocidas o contiene el nombre de un supermercado — el filtro (b) se añadió tras detectar que marcas reales infrarrepresentadas (ej. "Eucerin" solo scrapeado en Carrefour) se colaban como si fueran blancas y fusionaban con productos de otra marca real distinta (ej. "Schwarzkopf").
@@ -52,15 +64,16 @@ Repositorio: https://github.com/gpeligros/mi-mejor-cesta
 ### Tablas principales
 | Tabla | Descripción | Filas (última verificación) |
 |-------|-------------|-------|
-| `productos_catalogo` | Catálogo genérico. Solo admin escribe. | ~9.999 (ANTIGUO, pendiente de sustituir por Fase 5) |
+| `productos_catalogo` | Catálogo genérico. Solo admin escribe. | 16.727 (reconstruido en Fase 5, 20/08; nombres corregidos 23/08) |
 | `categorias_maestras` | 87 categorías fijas (id 85-171). NUNCA modificar. | 87 |
-| `productos_match` | Tabla puente CAT↔supermercados. | ~9.999 (ANTIGUO — contaminado por bug de match_mercadona.py, se sustituye en Fase 5) |
+| `productos_match` | Tabla puente CAT↔supermercados. | Reconstruida entera en la Fase 5 del 20/08 |
 | `precios_mercadona` | IDs ME-xxxx. Tiene `categoria_mercadona`/`subcategoria_mercadona` (~53% poblado). | ~8.371 |
 | `precios_dia` | IDs DI-xxxx. **Tiene `categoria_dia`/`subcategoria_dia` (nuevo, 10/08/2026, 6.055 filas pobladas).** | ~6.055 actualizados hoy |
 | `precios_alcampo` | IDs AL-xxxx. Campo `categoria` = código interno (ej. `OC1701`), decodificable vía `MAPPING_ALCAMPO` en `clasificar_categoria.py`. ⚠️ 61,7% de filas con `nombre_comercial` vacío (bug de scraper pendiente). | 2.264 |
 | `precios_carrefour` | IDs CF-xxxx. Sin categoría propia. **Scraper roto** (ver sección 5). | 7.241 (datos de antes de que la web cambiase — desactualizados) |
 | `precios_ahorramas` | IDs AH-xxxx. Campo `categoria_ahorramas` (genérico, 98% poblado, útil solo como pista amplia). | 1.529 |
 | `supermercados` | **Nueva, 20/08/2026.** Config de supermercados para el panel admin (nombre, color, orden, activo, tabla_precios, columna_match). El frontend/admin ya la usa dinámicamente. Ver sección 10. | 5 |
+| `historico_precios` | **Nueva, 23/08/2026 (P1 #4), SQL escrito pero SIN EJECUTAR TODAVÍA en Supabase.** Un registro por cada cambio de precio detectado (super, id_producto_super, precio, fecha). Poblada por diff en los propios scrapers, no por trigger — ver sección 12. | 0 (tabla aún no creada) |
 
 ### Reglas de oro
 - NUNCA scrapers escriben en productos_catalogo ni categorias_maestras
@@ -125,8 +138,6 @@ Confirmado el síntoma (0 productos) pero no investigada la API nueva todavía. 
 
 Motivo: el catálogo se construyó originalmente solo desde Mercadona, arrastrando duplicados masivos y contaminación de marca blanca, con solo ~93% de productos con cobertura en un único supermercado.
 
-**Todo lo de esta sección vive en CSVs dentro de `old/`, en local. Nada se ha aplicado todavía a la BBDD real (Fase 5 pendiente).**
-
 ### Scripts, en orden de ejecución
 1. **`exportar_todos_precios.py`** (Fase 1) — exporta las 5 tablas `precios_*` completas a CSV.
 2. **`normalizar_productos.py`** (Fase 2) — separa nombre base / marca / formato de cada producto.
@@ -134,25 +145,16 @@ Motivo: el catálogo se construyó originalmente solo desde Mercadona, arrastran
 4. **`revisar_clusters_dudosos.py`** (Fase 3b, con IA, coste mínimo) — Haiku puntúa 0-10 los bridges dudosos.
 5. **`construir_propuesta_final.py`** (Fase 4) — aplica decisiones de la IA, genera catálogo propuesto + muestra de revisión.
 6. **`clasificar_categoria.py`** (Fase 4b) — categoriza en 3 capas: Mercadona real → Alcampo real (decodificado) → palabras clave. Capa "vecino más cercano" desactivada por defecto (poco fiable incluso a umbral 85). Residual cae en "Bazar y Varios".
+7. **`construir_catalogo_v2.py`** (Fase 5, única que toca la BBDD) — lee `miembros_finales_*.csv` + `categorias_asignadas_*.csv` y reconstruye `productos_catalogo`/`productos_match` en Supabase. **Corregido 23/08/2026 y re-ejecutado en producción ese mismo día** (ver sección 0) — antes del fix generaba nombres sucios en el 71,9% del catálogo.
 
-### Resultado de la última ejecución completa (08/08/2026, ANTES del arreglo de DIA)
-- 17.154 clusters totales, 746 comparan precio en ≥2 supers (37 en ≥3), 16.408 solo en 1 super
-- Categorización: 80,8% fiable (Mercadona real + palabra clave), 19,3% en "Bazar y Varios"
+### Resultado de la última ejecución completa en producción
+- **20/08/2026** (construcción del catálogo): 16.727 productos en catálogo, 2.104 comparando precio en ≥2 supers
+- **23/08/2026** (mismo catálogo, solo con el fix de nombres aplicado): re-ejecutado con éxito según confirmó David ("CATÁLOGO NUEVO EN PRODUCCIÓN"). Pendiente registrar aquí las cifras exactas de esta segunda ejecución si difieren de las del 20/08 (no deberían, el fix solo toca el texto del nombre, no el agrupamiento).
 
-⚠️ **Pendiente re-ejecutar todo el pipeline con los datos de DIA ya actualizados** (categoría nueva y más productos) — los números de arriba están desactualizados.
-
-### Pendiente antes de la Fase 5
-~~1. Añadir `MAPPING_DIA` + Capa 1c en `clasificar_categoria.py`~~ ✅ hecho 10/08/2026
-~~2. Re-ejecutar pipeline completo (pasos 1-6) con datos de DIA frescos~~ ✅ hecho 10/08/2026
-~~3. Revisar de nuevo la muestra final con David~~ ✅ hecho 10/08/2026
-~~4. Escribir el script de Fase 5~~ ✅ `construir_catalogo_v2.py`, hecho y EJECUTADO 10/08/2026
-5. Re-ejecutar matching de los 5 supers contra el catálogo nuevo — no hecho, opcional (el catálogo ya trae matches de la propia reconstrucción)
-
-### 🔴 Pendiente URGENTE — próxima sesión
-**David reportó fallos en el catálogo nuevo tras la Fase 5 (10/08/2026, noche), sin detallar cuáles.** Primera tarea de la próxima sesión: preguntarle qué está viendo exactamente (capturas, ejemplos de productos concretos) antes de tocar nada. Posibles sospechosos a revisar primero:
-- `nombre_generico` de marca_fabricante puede llevar el nombre completo con formato si no había ningún miembro de Mercadona en el cluster (revisar `elegir_nombre_representativo()` en `construir_catalogo_v2.py`)
-- Verificar que el frontend (`App.js`, `vista_productos`) no tenga alguna suposición sobre la estructura vieja del catálogo que ya no se cumpla
-- Revisar si `vista_productos` (la VIEW que une catálogo + categorías) sigue funcionando bien con los `id_categoria` nuevos
+### Pendiente
+- Verificar en la app / panel admin que los nombres se ven limpios ahora — ver sección 0
+- Re-ejecutar matching de los 5 supers contra el catálogo nuevo — sigue siendo opcional, no obligatorio (el catálogo ya trae matches de la propia reconstrucción)
+- Documentar (o versionar en un `.sql`) la definición de la VIEW `vista_productos` — hoy solo vive en Supabase, no hay forma de revisarla fuera del dashboard
 
 ---
 
@@ -164,18 +166,16 @@ Sin cambios esta sesión. Ver histórico. Pendiente pasar Stripe test → live.
 ## 8. Problemas conocidos / Deuda técnica
 
 ### 🔴 Críticos
-- Catálogo en producción sigue siendo el antiguo — Fase 5 pendiente
 - Stripe en modo TEST
 - `match_mercadona.py` sin `--dry-run` real — no ejecutar hasta reescribir
 
 ### 🟡 Importantes
 - Carrefour: scraper roto, sin arreglar
 - Alcampo: 61,7% de filas sin `nombre_comercial`
-- `MAPPING_DIA` no existe todavía
-- Falta script de Fase 5
 
 ### 🟢 Menores
 - `precios_carrefour` con datos desactualizados hasta que se arregle el scraper
+- `vista_productos` no versionada (vive solo en Supabase, sin `.sql` en el repo)
 
 ---
 
@@ -203,7 +203,8 @@ python scrapers/revisar_clusters_dudosos.py --dry-run
 python scrapers/revisar_clusters_dudosos.py
 python scrapers/construir_propuesta_final.py
 python scrapers/clasificar_categoria.py
-# Fase 5: script todavia no existe
+python scrapers/construir_catalogo_v2.py --dry-run   # revisar antes de re-ejecutar
+python scrapers/construir_catalogo_v2.py
 ```
 
 ---
@@ -218,6 +219,10 @@ python scrapers/clasificar_categoria.py
 ### 🔴 Git — pendiente de decidir (21/08/2026)
 - Se preparó (pero NO se confirmó) sacar del control de versiones `scripts/supabase.exe` (97MB, ~80% del peso del repo), `frontend/build/` y `.playwright-cli/`, y se actualizó `.gitignore` para que no vuelvan a colarse. Está en estado "staged" (`git add` hecho) pero sin `git commit` todavía.
 - La reorganización de ficheros de hoy (ver sección 11) también aparecerá como cambios en Git la próxima vez que se revise, porque Git verá los ficheros en su nueva ubicación. Pendiente revisar todo junto y hacer commit.
+- Ojo: sin comitear todavía, todo del 23/08/2026: el fix de `construir_catalogo_v2.py`, los 5 ficheros de frontend de P1 (`App.js`, `Sidebar.js`, `SuperCard.js`, `Cestita.js`, `Landing.js`) y los 7 ficheros del histórico de precios (`historico_precios.sql`, `historico_precios.py`, `scraper_mercadona.py`, `scraper_dia.py`, `scraper_alcampo.py`, `scraper_ahorramas.py`, `scraper_carrefour.py`) — ver sección 12.
+
+### 🔴 Histórico de precios — ejecutar el SQL antes de que funcione (23/08/2026)
+- `scrapers/historico_precios.sql` está escrito pero SIN ejecutar en Supabase — la tabla `historico_precios` no existe todavía en producción. Hasta que se ejecute, los scrapers seguirán subiendo precios con normalidad (el registro de histórico falla en silencio y se ignora), simplemente no se guardará ningún histórico. Ver sección 12, "Punto 4", para los pasos de prueba recomendados.
 
 ### 🟡 Funcionalidades nuevas solicitadas (20/08/2026, sin empezar)
 4. **Funcionalidad tipo Yuka** (escaneo/puntuación nutricional 0-100 con semáforo, vía Open Food Facts API + EAN). Investigado: metodología = Nutri-Score + aditivos + ecológico. La mayoría de scrapers ya capturan EAN. Pendiente: diseñar esquema de datos, integrar API externa, UI del semáforo.
@@ -260,3 +265,39 @@ Hoy se ha limpiado la carpeta raíz del proyecto en el ordenador de David. Objet
 ### Dos carpetas vacías sueltas
 Al mover ficheros, `old/Revisar/` y una carpeta temporal `_to_delete/` (usada durante la propia limpieza) quedaron vacías. No se pudieron borrar automáticamente por una limitación técnica de la herramienta usada para tocar el ordenador de David — se pueden borrar a mano en el Explorador de Windows cuando quiera, no es urgente.
 
+---
+
+## 12. P1 — Mejoras de frontend (23/08/2026)
+
+Tras el fix de Fase 5 (sección 0), se repasó `PLAN_PRIORIZADO.md` (cruce de `Análisis de app web.pdf` + `Propuestas_GPT.pdf` contra el código real) y David pidió ejecutar **todo el bloque P1, los 8 puntos en orden, uno detrás de otro**. Los 8 puntos están implementados en código. **El punto 4 (histórico de precios) necesitó parar a consultar arquitectura de BBDD primero** (regla de oro) — David eligió el enfoque "diff en los scrapers" y con su aprobación se implementó también, pero con un paso manual pendiente antes de que funcione de verdad: ver más abajo.
+
+### Hecho y aplicado al repo real (vía puente de acceso al dispositivo)
+1. **Normalización de acentos reutilizada en el buscador** (`Sidebar.js`) — se extrajo la misma lógica de quitar acentos que ya usaba el chat IA (`Cestita.js`) a una función `normalizarBusqueda()` y se aplicó en los dos filtros de búsqueda por nombre de producto, que antes hacían `.toLowerCase().includes(...)` a pelo (buscar "cafe" no encontraba "café").
+2. **Cobertura por supermercado en cada SuperCard** (`SuperCard.js`) — badge nuevo junto al logo, `X/Y productos` (verde si están todos, ámbar si falta alguno), calculado sobre los productos de la cesta actual.
+3. **Límite configurable de supermercados en la cesta inteligente** (`App.js` + `Sidebar.js`) — nuevo control "🏪 Comprar en como máximo" (selector 1..N supers activos) para evitar que la cesta óptima se fragmente en 4-5 tiendas distintas cuando el ahorro extra es mínimo. Nueva función `combinacionesDeTamano()` que prueba combinaciones de supers hasta el límite elegido y se queda con la más barata; persiste en `localStorage` (`limiteFragmentacion_v1`).
+4. **Histórico de precios real** (`scrapers/historico_precios.sql` + `scrapers/historico_precios.py`, más un cambio pequeño en `scraper_mercadona.py`, `scraper_dia.py`, `scraper_alcampo.py`, `scraper_ahorramas.py` y `scraper_carrefour.py`) — David eligió el enfoque "diff en los scrapers" (sin trigger de BBDD). Cada scraper, justo antes de subir un precio, consulta el precio que ya había en Supabase; si es distinto (o el producto es nuevo), se inserta una fila en `historico_precios` con el precio nuevo y la fecha de hoy — si no ha cambiado, no se inserta nada. Ver detalle más abajo, incluyendo el paso manual pendiente.
+5. **Cantidades en la cesta** (`App.js`, `SuperCard.js`, `Cestita.js`) — stepper −/+ por producto en cada fila de SuperCard y en el modo tienda. Todos los totales (por super, cesta multi-tienda, PDF, guardar compra, contexto que recibe la IA) multiplican ya por la cantidad. **No se ha tocado la BBDD**: `compras_detalle` no tiene columna `cantidad`, así que se guarda como antes (precio = importe total de la línea) y se añade `×N` al nombre del producto para que se entienda al mirar el histórico. Persiste en `localStorage` (`cantidades_v1`).
+6. **Señal visual "misma marca" vs. "alternativa equivalente"** (`SuperCard.js`) — badge ámbar "≈ alternativa equivalente" cuando `producto.tipo === 'marca_blanca'`, con tooltip explicando que se compara por tipo de producto y no es literalmente la misma marca en cada super. No hizo falta tocar la BBDD ni `App.js`: el campo `tipo` ya venía cargado en `db` y llega vía `getProdFull(id)`.
+7. **Cifras desactualizadas en la Landing corregidas** (`Landing.js`) — la lista `SUPERS` incluía Lidl/Aldi (no existen en el catálogo) y le faltaba AhorraMas; se corrigió a los 5 reales. Se quitó la afirmación "ahorra hasta 100€/mes" (sin ningún dato que la respalde) y se sustituyeron las cifras `+4.000 / 6 / 100€` por las reales del catálogo: **16.727 productos, 5 supermercados, 2.104 comparando en 2+ tiendas**.
+8. **Sección "Cómo funciona" añadida a la Landing** (`Landing.js`) — 3 pasos (Añade productos → Comparamos → Elige la mejor opción) entre las estadísticas y los beneficios, para que la landing no pase directa del hero a los beneficios sin explicar el flujo.
+
+### Pendiente de este bloque, importante
+- **Frontend (puntos 1,2,3,5,6,7,8): nada se ha probado en un `npm start` real ni en navegador** — solo se validó que cada fichero compila (sintaxis JS/JSX correcta vía esbuild). `App.js` pasa props nuevas a `Sidebar`, `SuperCard` y `Cestita`, así que antes de desplegar conviene abrir la app en local y probar: buscador con acentos, badge de cobertura, selector de límite de supers, cantidades (stepper, PDF, guardar compra), badge de marca blanca y la landing.
+- **Backend (punto 4): la tabla `historico_precios` todavía no existe en Supabase** — hay que ejecutar el SQL a mano primero. Ver el detalle y los pasos de prueba en "Punto 4" más abajo.
+- **Nada de esto está comiteado en Git todavía** — se suma a los cambios ya pendientes de comitear de sesiones anteriores (ver sección 10, "Git — pendiente de decidir"): el fix de `construir_catalogo_v2.py` del 23/08, los 5 ficheros de frontend (`App.js`, `Sidebar.js`, `SuperCard.js`, `Cestita.js`, `Landing.js`) y ahora también los 7 ficheros del histórico de precios (`historico_precios.sql`, `historico_precios.py` + los 5 scrapers).
+- Nuevas claves de `localStorage`: `limiteFragmentacion_v1`, `cantidades_v1`.
+
+### Punto 4 — Histórico de precios real: qué se implementó y qué falta a mano
+Era el único punto de P1 que toca la arquitectura de BBDD (tabla nueva), así que se propuso primero y David aprobó explícitamente el enfoque "diff en los scrapers" antes de escribir nada (regla de oro: nunca cambiar arquitectura de BBDD sin consultar).
+
+**Diseño:**
+- Tabla nueva `historico_precios` (super, id_producto_super, precio, fecha, con índice único por super+producto+fecha para que no se pueda duplicar un mismo día). SQL en `scrapers/historico_precios.sql`.
+- Módulo nuevo `scrapers/historico_precios.py` con la lógica de comparar precio nuevo vs. precio guardado y decidir si hay que insertar fila. Dos funciones: una para los 4 scrapers que usan el cliente `supabase-py` (DIA, Alcampo, Ahorramas, Carrefour) y otra en REST puro para Mercadona (que sube precios con `urllib`, no con ese cliente).
+- Los 5 scrapers (`scraper_mercadona.py`, `scraper_dia.py`, `scraper_alcampo.py`, `scraper_ahorramas.py`, `scraper_carrefour.py`) ahora llaman a esa función justo antes de subir los precios nuevos. Si `historico_precios.py` no está disponible por lo que sea, el `import` falla en silencio y el scraper sigue funcionando exactamente igual que antes (nunca puede romper la subida de precios normal).
+- Pensado para alimentar tanto las alertas de bajada de precio como el gráfico "evolución de precio" que ya se vende en el modal de Premium pero no existe todavía (hueco detectado en la auditoría P0) — ninguna de las dos está construida todavía, esto solo prepara los datos.
+
+**⚠️ Pendiente OBLIGATORIO antes de que esto funcione, y sin probar de verdad (escrito sin acceso a la BBDD real):**
+1. Ejecutar `scrapers/historico_precios.sql` una vez en el SQL Editor de Supabase — la tabla `historico_precios` todavía NO existe en producción.
+2. Probar un scraper cualquiera con `--dry-run` primero y comprobar el mensaje `[dry-run] historico_precios: N cambios detectados` (mercadona no tiene `--dry-run`, tiene confirmación manual s/n — probar con precaución o en una copia).
+3. Después de eso, un run pequeño de verdad (una categoría, por ejemplo) y revisar en el SQL Editor que las filas de `historico_precios` tienen sentido antes de confiar en runs completos.
+4. No comiteado en Git todavía (se suma a la lista de la sección 10).

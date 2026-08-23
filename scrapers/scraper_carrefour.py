@@ -10,11 +10,19 @@ Mantiene la MISMA estructura que scraper_hipercor.py (CONTEXTO.md rule).
 ID producto: código numérico interno de Carrefour con prefijo CF-
 Tabla destino: precios_carrefour
 """
-import argparse, json, logging, os, re, time
+import argparse, json, logging, os, re, sys, time
+from pathlib import Path
 from curl_cffi import requests as curl_requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 load_dotenv()
+
+# Histórico de precios (P1 #4, 23/08/2026) — módulo hermano en scrapers/
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from historico_precios import registrar_cambios_precio
+except ImportError:
+    registrar_cambios_precio = None
 
 # ─────────────────────────────────────────────────────────
 # CONFIG
@@ -411,6 +419,8 @@ def upsert(client, products):
         p["actualizado"] = now
     if not products:
         return 0
+    if registrar_cambios_precio:
+        registrar_cambios_precio(client, TABLE_NAME, "carrefour", products)
     res = client.table(TABLE_NAME).upsert(products, on_conflict="id_api").execute()
     return len(res.data) if res.data else len(products)
 
@@ -480,6 +490,9 @@ def main(dry_run=False, only_cat=None, force_stealth=False, debug=False):
                 productos_final.extend(new_extra)
 
             log.info(f"    ✅ Total categoría: {len(productos_final)} productos")
+            # ── Adjuntar categoría nativa Carrefour (antes se tiraba) ──
+            for p in productos_final:
+                p["categoria_carrefour"] = cat_name
             if dry_run or not db:
                 log.info("    [dry-run] muestra:")
                 for p in productos_final[:3]:
@@ -498,6 +511,10 @@ def main(dry_run=False, only_cat=None, force_stealth=False, debug=False):
         products = [parse_api_product(p) for p in products_raw]
         products = [p for p in products if p]
         total_p += len(products)
+
+        # ── Adjuntar categoría nativa Carrefour (antes se tiraba) ──
+        for p in products:
+            p["categoria_carrefour"] = cat_name
 
         if dry_run or not db:
             log.info(f"    [dry-run] {len(products)} productos. Muestra:")

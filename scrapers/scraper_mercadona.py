@@ -15,7 +15,7 @@ Uso:
   python scraper_mercadona.py
 """
 
-import requests, json, csv, time, os, urllib.request, urllib.error
+import requests, json, csv, sys, time, os, urllib.request, urllib.error
 from datetime import datetime
 from pathlib import Path
 
@@ -25,6 +25,13 @@ try:
     load_dotenv(Path(__file__).resolve().parents[1] / '.env')
 except ImportError:
     pass
+
+# Histórico de precios (P1 #4, 23/08/2026) — módulo hermano en scrapers/
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from historico_precios import registrar_cambios_precio_rest
+except ImportError:
+    registrar_cambios_precio_rest = None
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://scpuriaofisssalsbzqv.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
@@ -313,6 +320,11 @@ def subir_supabase(productos):
               "reference_price", "reference_format",
               "categoria_mercadona", "subcategoria_mercadona"]
     HEADERS_SB["Prefer"] = "resolution=merge-duplicates,return=minimal"
+
+    # Histórico de precios (P1 #4, 23/08/2026) — antes de sobrescribir el
+    # precio, registra en historico_precios los productos cuyo precio cambia.
+    if registrar_cambios_precio_rest:
+        registrar_cambios_precio_rest(SUPABASE_URL, HEADERS_SB, TABLA_SB, "mercadona", productos)
 
     ok = err = 0
     BATCH = 50
