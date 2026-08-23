@@ -3,8 +3,11 @@ import React, { useState, useRef, useEffect } from 'react';
 const CESTITA_VERDE = '#037623';
 const CESTITA_OSCURO = '#102215';
 
-// Busca el producto más parecido en db por nombre
-const buscarProductoEnDb = (db, nombreBuscado) => {
+// Busca el producto más parecido en db por nombre.
+// Exportada 23/08/2026 para reutilizarla también en el escáner OCR y el
+// dictado por voz (App.js / Sidebar.js) — misma lógica de matching que ya
+// usaba CESTITA, sin duplicarla.
+export const buscarProductoEnDb = (db, nombreBuscado) => {
   if (!db || !nombreBuscado) return null;
   const nombreNorm = nombreBuscado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   let mejorMatch = null;

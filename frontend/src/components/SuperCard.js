@@ -1,9 +1,51 @@
 import React from 'react';
+import { supabase } from '../supabaseClient';
+import GraficoEvolucionPrecios from './GraficoEvolucionPrecios';
 
-const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActivos, getProdFull, setModoTienda, getNombreReal, toggleProd, getCantidad, setCantidadProducto }) => {
+const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActivos, getProdFull, setModoTienda, getNombreReal, toggleProd, getCantidad, setCantidadProducto, plan, onUpgrade }) => {
   // getCantidad es opcional (por si algún consumidor viejo no lo pasa) — sin
   // él, todo se comporta como cantidad 1 siempre, igual que antes.
   const cantidadDe = (id) => (getCantidad ? getCantidad(id) : 1);
+
+  // Evolución de precio (P0 #1, plan Premium — 23/08/2026). plan/onUpgrade
+  // son opcionales (por si algún consumidor viejo no los pasa) — sin ellos
+  // el botón simplemente no se muestra, en vez de romper.
+  const [graficoAbierto, setGraficoAbierto] = React.useState(null); // { nombre, datos } | 'cargando' | null
+  const verEvolucion = async (id, nombre) => {
+    const esPremium = plan === 'premium';
+    if (!esPremium) {
+      if (onUpgrade) onUpgrade('historicoPrecios', 'premium');
+      return;
+    }
+    setGraficoAbierto('cargando');
+    try {
+      const { data: match, error: errMatch } = await supabase
+        .from('productos_match')
+        .select('id_mercadona, id_dia, id_alcampo, id_ahorramas, id_carrefour')
+        .eq('id_catalogo', id)
+        .maybeSingle();
+      if (errMatch) throw errMatch;
+
+      const idsPorSuper = match ? [
+        match.id_mercadona, match.id_dia, match.id_alcampo, match.id_ahorramas, match.id_carrefour,
+      ].filter(Boolean) : [];
+
+      let datos = [];
+      if (idsPorSuper.length > 0) {
+        const { data: historico, error: errHist } = await supabase
+          .from('historico_precios')
+          .select('super, precio, fecha')
+          .in('id_producto_super', idsPorSuper)
+          .order('fecha', { ascending: true });
+        if (errHist) throw errHist;
+        datos = historico || [];
+      }
+      setGraficoAbierto({ nombre, datos });
+    } catch (e) {
+      console.error('Error cargando evolución de precio:', e);
+      setGraficoAbierto({ nombre, datos: [] });
+    }
+  };
 
   const totalS = seleccionados.reduce((acc, id) => {
     const precio = precios[id]?.[sId];
@@ -132,6 +174,21 @@ const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActiv
                     ≈ alternativa equivalente
                   </span>
                 )}
+                <button
+                  onClick={() => verEvolucion(id, (getNombreReal && getNombreReal(id, sId)) || producto.nombre)}
+                  title="Ver evolución de precio (plan Premium)"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                    fontSize: '12px',
+                    cursor: 'pointer',
+                    lineHeight: 1,
+                    opacity: 0.55,
+                  }}
+                >
+                  📈
+                </button>
               </div>
               {producto.subcategoria && (
                 <div style={{ fontSize: '10px', color: '#999', marginTop: '2px' }}>
@@ -193,6 +250,24 @@ const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActiv
         <div style={{ fontSize: '10px', color: '#bbb', fontWeight: '900', letterSpacing: '1px' }}>TOTAL EN TIENDA</div>
         <div style={{ fontSize: '38px', fontWeight: '900', color: '#102215', marginTop: '5px' }}>{totalS.toFixed(2)}€</div>
       </div>
+
+      {/* Modal de evolución de precio */}
+      {graficoAbierto === 'cargando' && (
+        <div
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          <div style={{ background: 'white', borderRadius: '16px', padding: '24px 32px', fontSize: '13px', fontWeight: '700', color: '#666' }}>
+            Cargando evolución de precio...
+          </div>
+        </div>
+      )}
+      {graficoAbierto && graficoAbierto !== 'cargando' && (
+        <GraficoEvolucionPrecios
+          nombreProducto={graficoAbierto.nombre}
+          datos={graficoAbierto.datos}
+          onCerrar={() => setGraficoAbierto(null)}
+        />
+      )}
     </div>
   );
 };

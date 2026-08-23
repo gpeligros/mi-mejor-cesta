@@ -13,7 +13,7 @@ import Landing from './components/Landing';
 import Terminos from './components/Terminos';
 import Cookies from './components/Cookies';
 import ListaColaborativa from './components/ListaColaborativa';
-import Cestita from './components/Cestita';
+import Cestita, { buscarProductoEnDb } from './components/Cestita';
 import ModalUpgrade from './components/ModalUpgrade';
 import ToolBar from './components/ToolBar';
 import MenuSemanal from './components/MenuSemanal';
@@ -468,18 +468,62 @@ const App = () => {
     return null;
   };
 
+  // Escáner OCR (P0 #1, 23/08/2026): antes era un placeholder que solo
+  // mostraba un alert. Usa tesseract.js (ya estaba en package.json, sin
+  // instalar nada nuevo) para leer el texto de la foto, y reutiliza
+  // buscarProductoEnDb() (la misma función que usa CESTITA) para
+  // encontrar cada línea en el catálogo y añadirla a la cesta.
+  // Sin probar contra fotos reales en esta sesión (sin navegador/cámara
+  // disponible aquí) — probar con una foto real antes de confiar en ello.
   const handleFoto = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
+    const esPlanBasic = plan === 'basic' || plan === 'premium';
+    if (!esPlanBasic) {
+      setModalUpgrade({ funcionalidad: 'escanearLista', planRequerido: 'basic' });
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
+    }
+
     setEscaneando(true);
-    
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      alert('Función de escaneo OCR pendiente de implementar.\n\nOpciones recomendadas:\n- Tesseract.js (gratis, en navegador)\n- Google Cloud Vision API\n- OpenAI Vision API');
+      const { createWorker } = await import('tesseract.js');
+      const worker = await createWorker('spa');
+      const { data: { text } } = await worker.recognize(file);
+      await worker.terminate();
+
+      const lineas = text.split('\n').map(l => l.trim()).filter(l => l.length > 2);
+      if (lineas.length === 0) {
+        alert('No se ha podido leer texto en la foto. Prueba con una foto más clara y bien iluminada.');
+        return;
+      }
+
+      const encontrados = [];
+      const noEncontrados = [];
+      lineas.forEach(linea => {
+        const prod = buscarProductoEnDb(db, linea);
+        if (prod && prod.id_producto) {
+          if (!seleccionados.includes(prod.id_producto)) {
+            toggleProd(prod.id_producto);
+          }
+          encontrados.push(prod.nombre || linea);
+        } else {
+          noEncontrados.push(linea);
+        }
+      });
+
+      let resumen = encontrados.length > 0
+        ? `✅ Añadidos ${encontrados.length} producto(s) a la cesta:\n${encontrados.map(n => '• ' + n).join('\n')}`
+        : 'No se reconoció ningún producto de tu catálogo en la foto.';
+      if (noEncontrados.length > 0) {
+        resumen += `\n\n⚠️ Líneas no reconocidas (${noEncontrados.length}):\n${noEncontrados.slice(0, 10).map(n => '• ' + n).join('\n')}`;
+      }
+      alert(resumen);
     } catch (err) {
       console.error('Error escaneando imagen:', err);
-      alert('Error al procesar la imagen. Intenta de nuevo.');
+      alert('Error al procesar la imagen. Intenta de nuevo con una foto más clara.');
     } finally {
       setEscaneando(false);
       if (fileInputRef.current) {
@@ -1048,6 +1092,7 @@ const App = () => {
               setLimiteFragmentacion={setLimiteFragmentacion}
               numSupersActivos={supersActivos.length}
               db={db}
+              getProdFull={getProdFull}
               acordeon={acordeon}
               setAcordeon={setAcordeon}
               toggleProd={toggleProd}
@@ -1091,6 +1136,8 @@ const App = () => {
                     toggleProd={toggleProd}
                     getCantidad={getCantidad}
                     setCantidadProducto={setCantidadProducto}
+                    plan={plan}
+                    onUpgrade={(f, p) => setModalUpgrade({ funcionalidad: f, planRequerido: p || 'basic' })}
                   />
                 ))}
                 {seccionActual === 'privacidad' && <RenderPrivacidad />}

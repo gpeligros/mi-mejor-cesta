@@ -1,5 +1,7 @@
 import React from 'react';
 import { supabase } from '../supabaseClient';
+import { buscarProductoEnDb } from './Cestita';
+import AlertasPrecio from './AlertasPrecio';
 
 const VERDE = '#037623';
 const OSCURO = '#102215';
@@ -60,6 +62,7 @@ const Sidebar = ({
   toggleProd, vaciarCesta, exportarPDF, onCompartir,
   plan, onUpgrade, session, onAdmin,
   limiteFragmentacion, setLimiteFragmentacion, numSupersActivos,
+  getProdFull,
 }) => {
 
   const [esAdmin, setEsAdmin] = React.useState(false);
@@ -69,6 +72,64 @@ const Sidebar = ({
     supabase.from('profiles').select('rol').eq('id', session.user.id).single()
       .then(({ data }) => setEsAdmin(data?.rol === 'admin'));
   }, [session]);
+
+  // Dictado de lista por voz (P0 #1, 23/08/2026) — Web Speech API del
+  // navegador, sin dependencias nuevas. Reutiliza buscarProductoEnDb()
+  // (la misma función que usa CESTITA) para encontrar cada producto
+  // dictado en el catálogo. Sin probar con voz real en esta sesión (sin
+  // micrófono/navegador disponible aquí) — probar de verdad antes de
+  // confiar en ello. Soporte de navegador limitado (funciona en Chrome;
+  // Safari/Firefox pueden no soportar SpeechRecognition).
+  const [dictando, setDictando] = React.useState(false);
+
+  const iniciarDictado = () => {
+    const esPlanBasic = plan === 'basic' || plan === 'premium';
+    if (!esPlanBasic) {
+      onUpgrade('dictadoVoz', 'basic');
+      return;
+    }
+    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognitionAPI) {
+      alert('Tu navegador no soporta el dictado por voz. Prueba con Chrome en ordenador o Android.');
+      return;
+    }
+    const recognition = new SpeechRecognitionAPI();
+    recognition.lang = 'es-ES';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event) => {
+      const texto = event.results[0][0].transcript;
+      const frases = texto.split(/,| y /i).map(f => f.trim()).filter(Boolean);
+      const encontrados = [];
+      const noEncontrados = [];
+      frases.forEach(frase => {
+        const prod = buscarProductoEnDb(db, frase);
+        if (prod && prod.id_producto) {
+          if (!seleccionados.includes(prod.id_producto)) toggleProd(prod.id_producto);
+          encontrados.push(prod.nombre || frase);
+        } else {
+          noEncontrados.push(frase);
+        }
+      });
+      let resumen = encontrados.length > 0
+        ? `🎤 Escuchado: "${texto}"\n\n✅ Añadidos:\n${encontrados.map(n => '• ' + n).join('\n')}`
+        : `🎤 Escuchado: "${texto}"\n\nNo se reconoció ningún producto de tu catálogo.`;
+      if (noEncontrados.length > 0) {
+        resumen += `\n\n⚠️ No encontrados:\n${noEncontrados.map(n => '• ' + n).join('\n')}`;
+      }
+      alert(resumen);
+    };
+    recognition.onerror = (event) => {
+      console.error('Error de dictado:', event.error);
+      if (event.error !== 'no-speech' && event.error !== 'aborted') {
+        alert('No se pudo procesar el dictado. Intenta de nuevo.');
+      }
+    };
+    recognition.onend = () => setDictando(false);
+    setDictando(true);
+    recognition.start();
+  };
 
   const [subcatAbierta, setSubcatAbierta] = React.useState(null);
   const [historial, setHistorial] = React.useState([]);
@@ -251,6 +312,14 @@ const Sidebar = ({
           )}
         </div>
       )}
+
+      <AlertasPrecio
+        seleccionados={seleccionados}
+        getProdFull={getProdFull}
+        plan={plan}
+        onUpgrade={onUpgrade}
+        session={session}
+      />
 
       {/* BOTONES ACCIÓN */}
       <div style={{ marginBottom: '20px', display: 'grid', gap: '8px' }}>
@@ -440,17 +509,21 @@ const Sidebar = ({
         )}
       </div>
 
-      {/* ESCÁNER — oculto hasta tener OCR funcional (Tesseract.js o Cloud Vision).
-           Para reactivarlo cuando esté implementado, poner OCR_HABILITADO = true. */}
-      {false && (
-        <div style={{ background: 'linear-gradient(135deg, #102215 0%, #037623 100%)', color: 'white', padding: '20px', borderRadius: '20px', marginBottom: '20px' }}>
-          <h4 style={{ margin: '0 0 10px 0', fontSize: '13px', fontWeight: '900' }}>📸 ESCANEAR LISTA</h4>
-          <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFoto} style={{ display: 'none' }} />
-          <button onClick={() => fileInputRef?.current?.click()} disabled={escaneando} style={{ width: '100%', background: escaneando ? '#999' : '#13ec49', color: OSCURO, border: 'none', padding: '10px', borderRadius: '10px', fontWeight: '900', cursor: escaneando ? 'not-allowed' : 'pointer' }}>
-            {escaneando ? "PROCESANDO..." : "SUBIR FOTO"}
-          </button>
-        </div>
-      )}
+      {/* ESCÁNER + DICTADO — reactivados 23/08/2026 (P0 #1). El gate de plan
+           pasa dentro de handleFoto/iniciarDictado (mismo patrón que
+           toggleEstadisticas): el botón siempre se ve, y si no tienes plan
+           Básico/Premium se abre el modal de upgrade en vez de ejecutar la
+           acción. */}
+      <div style={{ background: 'linear-gradient(135deg, #102215 0%, #037623 100%)', color: 'white', padding: '20px', borderRadius: '20px', marginBottom: '20px' }}>
+        <h4 style={{ margin: '0 0 10px 0', fontSize: '13px', fontWeight: '900' }}>📸 ESCANEAR O DICTAR LISTA</h4>
+        <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFoto} style={{ display: 'none' }} />
+        <button onClick={() => fileInputRef?.current?.click()} disabled={escaneando} style={{ width: '100%', background: escaneando ? '#999' : '#13ec49', color: OSCURO, border: 'none', padding: '10px', borderRadius: '10px', fontWeight: '900', cursor: escaneando ? 'not-allowed' : 'pointer', marginBottom: '8px' }}>
+          {escaneando ? "PROCESANDO..." : "📸 SUBIR FOTO"}
+        </button>
+        <button onClick={iniciarDictado} disabled={dictando} style={{ width: '100%', background: dictando ? '#999' : 'rgba(255,255,255,0.15)', color: 'white', border: '1px solid rgba(255,255,255,0.3)', padding: '10px', borderRadius: '10px', fontWeight: '900', cursor: dictando ? 'not-allowed' : 'pointer' }}>
+          {dictando ? "🎤 ESCUCHANDO..." : "🎤 DICTAR PRODUCTOS"}
+        </button>
+      </div>
 
       {/* BUSCADOR Y LISTADO */}
       <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '25px', border: '1px solid #e0e6e1' }}>

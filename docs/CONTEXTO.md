@@ -314,3 +314,32 @@ Era el único punto de P1 que toca la arquitectura de BBDD (tabla nueva), así q
 2. Probar un scraper cualquiera con `--dry-run` primero y comprobar el mensaje `[dry-run] historico_precios: N cambios detectados` (mercadona no tiene `--dry-run`, tiene confirmación manual s/n — probar con precaución o en una copia).
 3. Después de eso, un run pequeño de verdad (una categoría, por ejemplo) y revisar en el SQL Editor que las filas de `historico_precios` tienen sentido antes de confiar en runs completos.
 4. Ya comiteado en local (commit `feat(P1): ...`, ver sección 10) — falta ejecutar el SQL y probar, y falta hacer `git push` cuando David decida.
+
+---
+
+## 13. P0 #1 — Desajuste del modal de precios: las 4 funciones, construidas (23/08/2026)
+
+`ModalUpgrade.js` vendía 4 funciones que no existían (sección 0 de `PLAN_PRIORIZADO.md`): alertas de precio y escáner OCR y dictado por voz (plan Básico), evolución histórica de precios (plan Premium). David pidió construir las 4, sabiendo que la de alertas es la más grande. Las 4 tienen código nuevo ya en el repo — **ninguna se ha podido probar de verdad en esta sesión** (sin navegador, cámara, micrófono ni BBDD en vivo disponibles aquí). Antes de dar esto por cerrado hace falta que David las pruebe una por una.
+
+### 1. Escáner OCR (`App.js`, `handleFoto`)
+`tesseract.js` ya estaba en `package.json` (v7, nunca se había usado) — ahora `handleFoto()` lo usa de verdad: lee el texto de la foto (idioma español), separa por líneas, y usa `buscarProductoEnDb()` (la misma función que ya usaba CESTITA, ahora exportada desde `Cestita.js`) para encontrar cada línea en el catálogo y añadirla a la cesta. Al final muestra un resumen de qué se añadió y qué no se reconoció. Gateado a plan Básico+ (mismo patrón que `toggleEstadisticas` en `Sidebar.js`: el botón siempre se ve, si no tienes plan se abre el modal de upgrade). El bloque de UI en `Sidebar.js` (antes `{false && (...)}`) ya no está oculto.
+**Probar:** subir una foto real de una lista de la compra y comprobar que reconoce productos razonablemente bien — la calidad del OCR depende mucho de la foto (luz, encuadre, letra).
+
+### 2. Dictado de lista por voz (`Sidebar.js`, nueva función `iniciarDictado`)
+Web Speech API del navegador (`SpeechRecognition`/`webkitSpeechRecognition`), sin dependencias nuevas. Escucha en español, separa lo dicho por comas o "y", y usa la misma `buscarProductoEnDb()` para añadir cada producto reconocido. Si el navegador no soporta la API (Safari es el caso más probable), avisa en vez de romper. Mismo gate de plan Básico+.
+**Probar:** en Chrome (escritorio o Android), decir algo como "leche, pan y tomates" y comprobar que añade lo que puede.
+
+### 3. Evolución histórica de precios (Premium) — `GraficoEvolucionPrecios.js` (nuevo) + `SuperCard.js`
+Gráfico de líneas hecho a mano en SVG (sin librería de gráficos nueva — no había ninguna instalada y esta sesión no puede verificar un `npm install`). Botón "📈" junto al nombre de cada producto en `SuperCard.js` (gateado a plan Premium): al pulsarlo consulta `productos_match` para encontrar el id de ese producto en cada supermercado, y `historico_precios` para traer su histórico real, y lo pinta agrupado por super con un color por cadena.
+**Depende de:** que `historico_precios` exista (sección 12, SQL sin ejecutar todavía) y tenga datos de verdad — hasta entonces el gráfico se abre pero muestra "Todavía no hay histórico de precios para este producto".
+
+### 4. Alertas de precio (Básico) — v1 solo dentro de la app, `AlertasPrecio.js` (nuevo)
+Es la pieza más grande de las 4 (David lo sabía al pedirlo). Para no bloquear todo en una decisión de infraestructura de notificaciones (email vs. push — ninguna de las dos está montada), se construyó una **v1 sin salir de la app**: un panel nuevo en `Sidebar.js`, justo debajo del control de límite de supermercados, que compara los dos precios más recientes de cada producto de la cesta en `historico_precios` y muestra cuáles han subido o bajado desde el último cambio detectado. Gateado a plan Básico+, solo visible con sesión iniciada.
+**Depende de:** lo mismo que el punto 3 — sin datos en `historico_precios` (y sin al menos 2 cambios de precio detectados para el mismo producto) no hay nada que mostrar.
+**Pendiente para una sesión futura, decisión de David:** si además de esto quiere avisos por email o notificaciones push de verdad, hay que decidir el canal (email = un servicio tipo Resend/SendGrid + una función programada; push = suscripción push del navegador/PWA + el mismo tipo de función programada) — no se ha construido nada de eso todavía, esta v1 solo avisa cuando el usuario abre la app.
+
+### Ficheros nuevos de esta sección
+`frontend/src/components/GraficoEvolucionPrecios.js`, `frontend/src/components/AlertasPrecio.js`. Ficheros tocados: `App.js`, `Sidebar.js`, `SuperCard.js`, `Cestita.js` (exporta `buscarProductoEnDb`), `ModalUpgrade.js` (dos claves de mensaje nuevas: `dictadoVoz`, `historicoPrecios`).
+
+### Estado del hallazgo de la sección 0
+Con esto, las 4 funciones que se vendían sin existir **ya existen en código** — deja de ser un problema de "se cobra por algo que no está" y pasa a ser "está construido pero sin probar con datos/entradas reales". Sigue sin tener sentido activar Stripe en producción hasta probarlas, pero el riesgo ya no es el mismo.
