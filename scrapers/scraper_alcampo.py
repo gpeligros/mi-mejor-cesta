@@ -539,6 +539,22 @@ def main(dry_run=False, only_cat=None, force_stealth=False, debug=False):
             parsed = [parse_api_product(it) for it in products_raw]
             parsed = [p for p in parsed if p]
 
+        # BUG corregido 23/08/2026 (encontrado en un run real de David):
+        # el fallback de Scrapling puede devolver el mismo producto dos
+        # veces dentro de una misma categoria (p.ej. la pagina 1 vuelve a
+        # aparecer al paginar). Eso llegaba duplicado hasta el upsert final
+        # y Postgres rechaza la sentencia entera con "ON CONFLICT DO UPDATE
+        # command cannot affect row a second time" -- el scraper se paraba
+        # a mitad de categoria sin subir nada de ese lote. Se deduplica por
+        # id_api ANTES de comparar contra seen_global.
+        if parsed:
+            _por_id_api = {}
+            for p in parsed:
+                _por_id_api[p["id_api"]] = p
+            if len(_por_id_api) < len(parsed):
+                log.info(f"    ({len(parsed) - len(_por_id_api)} duplicados dentro de la categoria, descartados)")
+            parsed = list(_por_id_api.values())
+
         new_prods = [p for p in parsed if p["id_api"] not in seen_global]
         seen_global.update(p["id_api"] for p in new_prods)
         total_p += len(new_prods)

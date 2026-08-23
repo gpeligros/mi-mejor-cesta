@@ -68,7 +68,17 @@ def _detectar_cambios(precios_actuales, super_nombre, productos):
                 "precio": precio_nuevo,
                 "fecha": hoy,
             })
-    return cambios
+    # Defensa añadida 23/08/2026 tras un caso real en Alcampo: si la misma
+    # id_producto_super llega repetida dentro de "productos" (p.ej. un
+    # scraper con un bug de paginación que devuelve el mismo producto dos
+    # veces), aquí se generarían dos filas idénticas para el mismo
+    # (super, id_producto_super, fecha) y el INSERT en historico_precios
+    # fallaría entero por su índice único. Se deduplica por
+    # id_producto_super quedándose con la última aparición.
+    por_id = {}
+    for c in cambios:
+        por_id[c["id_producto_super"]] = c
+    return list(por_id.values())
 
 
 def registrar_cambios_precio(client, tabla_precios, super_nombre, productos, dry_run=False):
