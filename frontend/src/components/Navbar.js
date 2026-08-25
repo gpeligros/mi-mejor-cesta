@@ -15,12 +15,10 @@ const Navbar = () => (
       gap: '10px',
       justifyContent: 'center'
     }}>
-      <svg 
-        width="36" 
-        height="36" 
-        viewBox="0 0 24 24" 
+      <svg
+        viewBox="0 0 24 24"
         fill="none"
-        style={{ flexShrink: 0 }}
+        style={{ flexShrink: 0, width: 'clamp(24px, 6.5vw, 46px)', height: 'clamp(24px, 6.5vw, 46px)' }}
       >
         <path d="M3 9h18l-1.5 11h-15L3 9z" stroke="#102215" strokeWidth="1.5" fill="white"/>
         <path d="M8 9V6c0-2 1.5-3.5 4-3.5s4 1.5 4 3.5v3" stroke="#102215" strokeWidth="1.5"/>

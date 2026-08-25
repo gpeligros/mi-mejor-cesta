@@ -153,7 +153,7 @@ const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActiv
             {/* Nombre */}
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '14px', fontWeight: '700', color: '#102215', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                <span>{(getNombreReal && getNombreReal(id, sId)) || producto.nombre}</span>
+                <span>{producto.nombre}</span>
                 {/* Marca blanca: el pipeline lo compara por tipo de producto,
                     no es literalmente la misma marca en cada supermercado
                     (ver agrupar_productos.py / PLAN_PRIORIZADO.md PRODUCT-06) */}
@@ -190,6 +190,11 @@ const SuperCard = ({ sId, logo, seleccionados, precios, referencias, supersActiv
                   📈
                 </button>
               </div>
+              {getNombreReal && getNombreReal(id, sId) && getNombreReal(id, sId) !== producto.nombre && (
+                <div style={{ fontSize: '11px', color: '#999' }}>
+                  {getNombreReal(id, sId)}
+                </div>
+              )}
               {producto.subcategoria && (
                 <div style={{ fontSize: '10px', color: '#999', marginTop: '2px' }}>
                   {producto.subcategoria}

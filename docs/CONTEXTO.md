@@ -1,4 +1,4 @@
-# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 23/08/2026)
+# MI MEJOR CESTA — Contexto del Proyecto (Actualizado 25/08/2026)
 
 ## ⚠️ INSTRUCCIONES PARA CLAUDE
 Lee este fichero COMPLETO antes de responder nada.
@@ -14,6 +14,19 @@ PowerShell NO soporta && — ejecutar comandos por separado.
 ---
 
 ## 0. ⚠️ ESTADO CRÍTICO — LEER PRIMERO
+
+**25/08/2026 — Corrección importante al diagnóstico del 23/08: el bug de "nombres sucios" NO estaba solo en la Fase 5, y David confirmó visualmente que seguía viéndose sucio en producción tras el fix del 23/08.**
+
+Verificado hoy releyendo `App.js`/`SuperCard.js` (con acceso al repositorio real vía el puente al ordenador de David; sin acceso a Supabase en vivo, ni desde este entorno cloud ni desde la shell del propio puente — ambos bloqueados por política de red, solo GitHub/npm/PyPI están permitidos) y con David confirmando en vivo qué veía en `mi-mejor-cesta.vercel.app`:
+
+- El fix del 23/08 (`elegir_nombre_representativo()` en `construir_catalogo_v2.py`) es correcto y sigue aplicado — limpia `productos_catalogo.nombre_generico` de verdad.
+- **Pero ese campo no es el que se muestra como nombre principal del producto en la cesta.** `SuperCard.js` (línea ~156) mostraba `getNombreReal(id, sId) || producto.nombre` — es decir, siempre prioriza `nombre_comercial` (el texto crudo tal cual lo scrapeó cada supermercado, de `precios_carrefour`/`precios_dia`/etc., nunca pasado por `quitar_marca()`/`extraer_formato()`) y solo cae al nombre limpio del catálogo si no hay nombre real para ese súper — casi nunca, porque casi todo producto emparejado sí lo tiene.
+- Confirmado con una captura real de David: un producto de Carrefour salía como "Bebida Refrescante Aromatizada Con Agua Mineral Y Zumo De Limon Carrefour Sensation Sin Azucares Anadidos 15 L" — el nombre real crudo, no el generado por la Fase 5.
+- Dato curioso: en "modo tienda" (`App.js`, líneas ~880-884) SÍ existía ya el patrón correcto — nombre real en negrita arriba, nombre limpio en gris pequeño debajo cuando difieren. `SuperCard.js` (la vista normal de la cesta, la que se ve en la mayoría de capturas) no tenía ese subtítulo.
+
+**Fix aplicado hoy (25/08/2026), con aprobación explícita de David sobre las 3 opciones planteadas (elegía entre dejarlo igual / limpiar también el nombre real / invertir la prioridad — eligió invertir):** en `SuperCard.js` se cambió el nombre mostrado en negrita a `producto.nombre` (el limpio del catálogo) y se añadió debajo, en gris pequeño (mismo estilo que ya usaba `App.js` en modo tienda), el nombre real (`getNombreReal(id, sId)`) solo cuando existe y es distinto del limpio. Sin tocar BBDD, sin tocar `App.js`, solo `SuperCard.js` (6 líneas añadidas, 1 modificada). Verificado que compila (`@babel/core` + `@babel/preset-react` contra el fichero real, sin errores de sintaxis) — **no probado todavía en un `npm start` real en navegador**, eso sigue pendiente igual que el resto de puntos P1/P0 de la sección 12/13.
+
+**Pendiente:** decidir si el commit de este cambio se hace junto con el resto de pendientes o aparte; y seguir sin poder verificar visualmente desde esta sesión (sin navegador conectado) — depende de que David lo mire en `npm start` o en producción tras desplegar.
 
 **23/08/2026 — Bug de "nombres sucios" encontrado, corregido y YA APLICADO A PRODUCCIÓN.** Esta era la tarea "Pendiente URGENTE" que quedó anotada el 21/08 (los fallos que David reportó tras la Fase 5 del 20/08, sin detallar cuáles). Diagnóstico hecho releyendo el código + simulando la Fase 5 contra los CSV reales que se usaron el 20/08 (`miembros_finales_20260820_1345.csv` + `categorias_asignadas_20260820_1346.csv`), sin tocar la BBDD (Supabase no es alcanzable desde el entorno cloud de esta sesión).
 
@@ -73,7 +86,7 @@ Repositorio: https://github.com/gpeligros/mi-mejor-cesta
 | `precios_carrefour` | IDs CF-xxxx. Sin categoría propia. **Scraper roto** (ver sección 5). | 7.241 (datos de antes de que la web cambiase — desactualizados) |
 | `precios_ahorramas` | IDs AH-xxxx. Campo `categoria_ahorramas` (genérico, 98% poblado, útil solo como pista amplia). | 1.529 |
 | `supermercados` | **Nueva, 20/08/2026.** Config de supermercados para el panel admin (nombre, color, orden, activo, tabla_precios, columna_match). El frontend/admin ya la usa dinámicamente. Ver sección 10. | 5 |
-| `historico_precios` | **Nueva, 23/08/2026 (P1 #4), SQL escrito pero SIN EJECUTAR TODAVÍA en Supabase.** Un registro por cada cambio de precio detectado (super, id_producto_super, precio, fecha). Poblada por diff en los propios scrapers, no por trigger — ver sección 12. | 0 (tabla aún no creada) |
+| `historico_precios` | **Nueva, 23/08/2026 (P1 #4), confirmada funcionando en producción 25/08/2026.** Un registro por cada cambio de precio detectado (super, id_producto_super, precio, fecha). Poblada por diff en los propios scrapers, no por trigger — ver sección 12. | 1.156+ (1.116 Alcampo 23/08 + 40 DIA 25/08) |
 
 ### Reglas de oro
 - NUNCA scrapers escriben en productos_catalogo ni categorias_maestras
@@ -226,16 +239,26 @@ python scrapers/construir_catalogo_v2.py
 2. ✅ **Bug de `nombre_comercial` vacío en `scraper_alcampo.py` — código corregido el 23/08/2026** (ver sección 5). Falta solo que David ejecute el scraper de verdad para limpiar los datos existentes.
 3. Pasar Stripe a producción (test → live)
 
-### ✅ Git — al día (actualizado 23/08/2026)
+### ✅ Git — subido a producción (actualizado 23/08/2026, noche)
 - La limpieza de `scripts/supabase.exe`, `frontend/build/` y `.playwright-cli/` (que en sesiones anteriores quedó como "pendiente de decidir") **ya está comiteada** — quedó resuelta en algún momento entre sesiones sin que este documento se actualizara. Confirmado con `git log`: commits `Dejar de trackear binarios y artefactos de build`, `Dejar de trackear frontend/build, .playwright-cli y scripts/supabase.exe` y `Reorganizar ficheros del proyecto: archivar legacy en ARCHIVO_HISTORICO/`.
-- **Comiteado hoy, 23/08/2026, en 2 commits locales (sin `git push` todavía — pendiente de que David lo revise y decida cuándo subirlo):**
-  1. `fix(catalogo): corregir nombres sucios en Fase 5` — solo `construir_catalogo_v2.py`.
-  2. `feat(P1): buscador con acentos, cobertura por super, ...` — los 5 ficheros de frontend de P1, los 5 scrapers + los 2 ficheros nuevos del histórico de precios, y este mismo `CONTEXTO.md`.
-- **Quedaron FUERA de estos commits, a propósito, un grupo de ficheros con cambios que no se hicieron en esta sesión y cuyo origen no se ha podido verificar** (no forman parte de ningún trabajo documentado en este archivo): `backend/admin/requirements.txt`, `backend/api/app_gestion.py` (758 líneas cambiadas — el más grande con diferencia), `frontend/postcss.config`, `frontend/public/icon`, `frontend/public/icon.svg`, `frontend/public/index_backup.html`, `frontend/public/robots.txt`, `frontend/src/analytics/Googleanalytics.js`, `frontend/src/components/Footer.js`, `frontend/tailwind.config.js`, `scrapers/scraper_openprices.py`, `scripts/clasificador.py`, `scripts/discover_endpoint.py`, `scripts/generar_codigos_v3.py`, `scripts/requirements_gestor.txt`. Probablemente sean cambios locales de David hechos con otro editor/herramienta en otro momento — **David debe revisarlos y decidir si los quiere comitear** (por separado, no mezclados con el trabajo de hoy). También quedaron sin tocar unos ficheros/carpetas sin trackear (`.claude/`, `ARCHIVO_HISTORICO/restos_tecnicos_git/`, `old/`, los PDF nuevos en `docs/`) por el mismo motivo.
-- Nota técnica sin impacto para David: al comitear desde esta sesión (vía el puente de acceso al dispositivo) Git no pudo borrar sus propios ficheros temporales de bloqueo (`.git/index.lock`, `.git/HEAD.lock`, cientos de `tmp_obj_*` en `.git/objects/`) por una restricción de permisos del propio puente — se comprobó con `git fsck` que el repositorio queda íntegro (los commits y objetos reales se escriben bien, son solo restos cosméticos). Si algún día le apetece, puede borrarlos a mano o con `git gc`; no es urgente.
+- **✅ `git push origin main` hecho el 23/08/2026 por David desde su terminal** (`3f90e21..a8bd36a  main -> main`), tras verificar desde esta sesión que el diff no traía ningún `.env` ni secreto y que ningún fichero de origen no verificado (ver punto siguiente) estaba incluido. Vercel debería haber desplegado ya automáticamente — **pendiente de que David confirme que https://mi-mejor-cesta.vercel.app refleja los cambios**. 5 commits subidos, en orden:
+  1. `b0773bf` `fix(catalogo): corregir nombres sucios en Fase 5` — solo `construir_catalogo_v2.py`.
+  2. `046ff64` `feat(P1): buscador con acentos, cobertura por super, ...` — los 5 ficheros de frontend de P1, los 5 scrapers + los 2 ficheros nuevos del histórico de precios, y este mismo `CONTEXTO.md`.
+  3. `3a36677` `fix(alcampo): no subir productos sin nombre en las rutas de fallback (P0 #3, parcial)` — no documentado en este fichero cuando se hizo; encontrado ya comiteado al revisar el estado antes del push.
+  4. `d8ce792` `feat(P0): construir escaner OCR, dictado por voz, evolucion de precios y alertas de precio` — igual, no documentado en su momento; corresponde a los 4 puntos de la sección 13.
+  5. `a8bd36a` `fix(alcampo): deduplicar productos por id_api antes del upsert masivo` — probablemente el run de los 1.141 productos ("Total upserted: 1141") que David pegó justo antes de pedir el push.
+- **Confirmado hoy (25/08/2026): el repo local sigue exactamente sincronizado con GitHub** (`git rev-parse HEAD` y `git rev-parse origin/main` coinciden en `a8bd36a`) — nada se perdió entre sesiones.
+- **Sigue sin resolver, IGUAL que antes del push, un grupo de ficheros con cambios que no se hicieron en ninguna sesión de Claude y cuyo origen no se ha podido verificar** (deliberadamente NO se comitearon ni se subieron): `backend/admin/requirements.txt`, `backend/api/app_gestion.py` (758 líneas cambiadas — el más grande con diferencia), `frontend/postcss.config`, `frontend/public/icon`, `frontend/public/icon.svg`, `frontend/public/index_backup.html`, `frontend/public/robots.txt`, `frontend/src/analytics/Googleanalytics.js`, `frontend/src/components/Footer.js`, `frontend/tailwind.config.js`, `scrapers/scraper_openprices.py`, `scripts/clasificador.py`, `scripts/discover_endpoint.py`, `scripts/generar_codigos_v3.py`, `scripts/requirements_gestor.txt`. Probablemente sean cambios locales de David hechos con otro editor/herramienta en otro momento — **David debe revisarlos y decidir si los quiere comitear** (por separado). También siguen sin trackear `.claude/`, `ARCHIVO_HISTORICO/restos_tecnicos_git/`, `old/` y los PDF nuevos en `docs/`, por el mismo motivo.
+- Nota técnica sin impacto para David: al comitear desde esta sesión (vía el puente de acceso al dispositivo) Git no pudo borrar sus propios ficheros temporales de bloqueo (`.git/index.lock`, `.git/HEAD.lock`, cientos de `tmp_obj_*` en `.git/objects/`) por una restricción de permisos del propio puente — se comprobó con `git fsck` que el repositorio queda íntegro (los commits y objetos reales se escriben bien, son solo restos cosméticos). Si algún día le apetece, puede borrarlos a mano o con `git gc`; no es urgente. El propio `git push` no se pudo ejecutar desde esta sesión (la VM del puente no tiene las credenciales de GitHub del Credential Manager de Windows) — lo ejecutó David directamente en su terminal.
+- **25/08/2026 — nuevos cambios sin comitear todavía** (esta sesión): `frontend/src/components/SuperCard.js` (fix de nombre mostrado, ver sección 0), `frontend/src/components/Navbar.js` (icono más grande, ver "Diseño visual" más abajo), `frontend/public/index.html` (meta-descripciones corregidas, ver "Bajo impacto" más abajo), y este mismo `CONTEXTO.md`. Ninguno comiteado todavía — pendiente decidir con David si se comitea junto con el resto de P1/P0 o aparte.
 
-### 🔴 Histórico de precios — ejecutar el SQL antes de que funcione (23/08/2026)
-- `scrapers/historico_precios.sql` está escrito pero SIN ejecutar en Supabase — la tabla `historico_precios` no existe todavía en producción. Hasta que se ejecute, los scrapers seguirán subiendo precios con normalidad (el registro de histórico falla en silencio y se ignora), simplemente no se guardará ningún histórico. Ver sección 12, "Punto 4", para los pasos de prueba recomendados.
+### 🆕 Hallazgo de red (25/08/2026)
+- Ni el entorno cloud de esta sesión ni la shell del puente de acceso al ordenador de David tienen salida a internet hacia Supabase (`scpuriaofisssalsbzqv.supabase.co` → 403 en ambos). Solo un puñado de dominios están permitidos (GitHub, npm, PyPI y similares). Para consultar Supabase en vivo desde una sesión de Claude hace falta o bien que David lo compruebe él mismo, o bien la extensión de Chrome conectada (tampoco disponible hoy — "Browser extension is not connected"). Un intento de `npm run build` real vía el puente tampoco llegó a completarse en un tiempo razonable (el proceso desapareció sin generar build nuevo) — validación de sintaxis (`@babel/core`) sí confirmada para todos los ficheros tocados hoy.
+
+### ✅ Histórico de precios — confirmado FUNCIONANDO en producción (25/08/2026)
+- **Corrección a lo que decía esta sección hasta ahora:** la tabla `historico_precios` YA EXISTÍA antes de hoy (con datos reales de `scraper_alcampo.py` fechados 23/08/2026, 1.116 filas) — la nota de "SQL sin ejecutar" que llevaba puesta desde el 23/08 era incorrecta, nadie actualizó este documento cuando se creó. Confirmado hoy 25/08 con un `SELECT` real en el SQL Editor.
+- **Confirmado con un run real de `scraper_dia.py --cat verduras` (25/08/2026):** `📈 historico_precios: 40 cambios de precio registrados` — la lógica de diff (comparar el precio nuevo contra el que ya había en `precios_dia` antes de subirlo) funciona correctamente en producción, no solo en teoría.
+- **Pendiente para que el gráfico de evolución/alertas muestren algo de verdad:** cada producto solo tiene, de momento, UNA fecha registrada en `historico_precios` (23/08 para Alcampo, 25/08 para DIA) — hace falta que algún producto acumule ≥2 fechas distintas con precios diferentes para que haya algo que graficar o alertar. Se irá poblando solo según se sigan ejecutando los scrapers de verdad en los próximos días; no hace falta ninguna acción especial, solo tiempo y runs reales.
 
 ### 🟡 Funcionalidades nuevas solicitadas (20/08/2026, sin empezar)
 4. **Funcionalidad tipo Yuka** (escaneo/puntuación nutricional 0-100 con semáforo, vía Open Food Facts API + EAN). Investigado: metodología = Nutri-Score + aditivos + ecológico. La mayoría de scrapers ya capturan EAN. Pendiente: diseñar esquema de datos, integrar API externa, UI del semáforo.
@@ -252,11 +275,13 @@ python scrapers/construir_catalogo_v2.py
 
 ### 🟢 Diseño visual — hecho el 20/08/2026, pendiente de ver desplegado
 - `StoreSelector.js` y `ToolBar.js` (zona superior de la app, "Mis tiendas" + botones Menú/Recetas/Nutricional) rediseñados con gradientes, sombras, transiciones — sin tocar logos. Pendiente confirmar que se ve bien en producción.
-- El resto de la app (SuperCard, Sidebar, etc.) no se ha tocado — si "un poco pobre" se refería a más partes, especificar cuáles en la próxima sesión.
+- **25/08/2026 — `Navbar.js`:** icono del logo (el bolso con el corazón) pasó de tamaño fijo `36x36` a `clamp(24px, 6.5vw, 46px)` — a petición de David, "un poco más grande que las letras" del título `MI MEJOR CESTA` (que ya usaba `clamp(18px, 5vw, 36px)`). Escala junto con el título en vez de quedarse fijo. Verificado que compila, no visto en pantalla todavía.
+- El resto de la app (SuperCard, Sidebar, etc.) no se ha tocado en ese rediseño del 20/08 — el nombre de producto en `SuperCard.js` sí se tocó hoy, pero por el motivo de la sección 0 (nombres sucios), no por diseño visual.
 
 ### 🔵 Bajo impacto / opcional
 - Mitigar el caso tipo "Café Climent" — marcas reales nunca etiquetadas en ningún scraper coladas en matching de marca blanca (~0,3% medido, ver sección 6)
 - Re-ejecutar matching completo si se quiere seguir exprimiendo la cobertura de comparación tras los arreglos de hoy
+- ✅ **Corregido 25/08/2026:** el `<meta name="description">` y el `<meta property="og:description">` de `frontend/public/index.html` ya no dicen "Ahorra hasta 100€ al mes" (cifra sin respaldo, detectada hoy comparando el HTML en crudo de GitHub con la página en vivo) — ahora mencionan la cifra real de productos comparados, en línea con lo que ya se corrigió en `Landing.js` el 23/08.
 
 ---
 
@@ -294,10 +319,13 @@ Tras el fix de Fase 5 (sección 0), se repasó `PLAN_PRIORIZADO.md` (cruce de `A
 7. **Cifras desactualizadas en la Landing corregidas** (`Landing.js`) — la lista `SUPERS` incluía Lidl/Aldi (no existen en el catálogo) y le faltaba AhorraMas; se corrigió a los 5 reales. Se quitó la afirmación "ahorra hasta 100€/mes" (sin ningún dato que la respalde) y se sustituyeron las cifras `+4.000 / 6 / 100€` por las reales del catálogo: **16.727 productos, 5 supermercados, 2.104 comparando en 2+ tiendas**.
 8. **Sección "Cómo funciona" añadida a la Landing** (`Landing.js`) — 3 pasos (Añade productos → Comparamos → Elige la mejor opción) entre las estadísticas y los beneficios, para que la landing no pase directa del hero a los beneficios sin explicar el flujo.
 
+### Confirmado hoy (25/08/2026)
+Leyendo `Landing.js` en crudo desde GitHub `main`: las cifras reales (16.727 / 5 / 2.104), la ausencia de "100€ ahorro medio" y la sección "Cómo funciona" de 3 pasos SÍ están en la rama principal. El único resto de la cifra vieja era el meta-tag de `index.html` — ya corregido también hoy (ver sección 10, "Bajo impacto / opcional").
+
 ### Pendiente de este bloque, importante
-- **Frontend (puntos 1,2,3,5,6,7,8): nada se ha probado en un `npm start` real ni en navegador** — solo se validó que cada fichero compila (sintaxis JS/JSX correcta vía esbuild). `App.js` pasa props nuevas a `Sidebar`, `SuperCard` y `Cestita`, así que antes de desplegar conviene abrir la app en local y probar: buscador con acentos, badge de cobertura, selector de límite de supers, cantidades (stepper, PDF, guardar compra), badge de marca blanca y la landing.
-- **Backend (punto 4): la tabla `historico_precios` todavía no existe en Supabase** — hay que ejecutar el SQL a mano primero. Ver el detalle y los pasos de prueba en "Punto 4" más abajo.
-- **Ya comiteado en local (no subido a GitHub todavía)** — ver sección 10, "Git — al día", con el detalle de los 2 commits.
+- **Frontend (puntos 1,2,3,5,6,7,8): nada se ha probado en un `npm start` real ni en navegador** — solo se validó que cada fichero compila (sintaxis JS/JSX correcta vía esbuild/babel). `App.js` pasa props nuevas a `Sidebar`, `SuperCard` y `Cestita`, así que antes de desplegar conviene abrir la app en local y probar: buscador con acentos, badge de cobertura, selector de límite de supers, cantidades (stepper, PDF, guardar compra), badge de marca blanca y la landing.
+- ✅ **Backend (punto 4): confirmado funcionando en producción 25/08/2026** — ver "Punto 4" más abajo.
+- **✅ Comiteado y ya subido a GitHub** (`git push` del 23/08/2026) — ver sección 10, "Git — subido a producción", con el detalle de los 5 commits.
 - Nuevas claves de `localStorage`: `limiteFragmentacion_v1`, `cantidades_v1`.
 
 ### Punto 4 — Histórico de precios real: qué se implementó y qué falta a mano
@@ -309,11 +337,11 @@ Era el único punto de P1 que toca la arquitectura de BBDD (tabla nueva), así q
 - Los 5 scrapers (`scraper_mercadona.py`, `scraper_dia.py`, `scraper_alcampo.py`, `scraper_ahorramas.py`, `scraper_carrefour.py`) ahora llaman a esa función justo antes de subir los precios nuevos. Si `historico_precios.py` no está disponible por lo que sea, el `import` falla en silencio y el scraper sigue funcionando exactamente igual que antes (nunca puede romper la subida de precios normal).
 - Pensado para alimentar tanto las alertas de bajada de precio como el gráfico "evolución de precio" que ya se vende en el modal de Premium pero no existe todavía (hueco detectado en la auditoría P0) — ninguna de las dos está construida todavía, esto solo prepara los datos.
 
-**⚠️ Pendiente OBLIGATORIO antes de que esto funcione, y sin probar de verdad (escrito sin acceso a la BBDD real):**
-1. Ejecutar `scrapers/historico_precios.sql` una vez en el SQL Editor de Supabase — la tabla `historico_precios` todavía NO existe en producción.
-2. Probar un scraper cualquiera con `--dry-run` primero y comprobar el mensaje `[dry-run] historico_precios: N cambios detectados` (mercadona no tiene `--dry-run`, tiene confirmación manual s/n — probar con precaución o en una copia).
-3. Después de eso, un run pequeño de verdad (una categoría, por ejemplo) y revisar en el SQL Editor que las filas de `historico_precios` tienen sentido antes de confiar en runs completos.
-4. Ya comiteado en local (commit `feat(P1): ...`, ver sección 10) — falta ejecutar el SQL y probar, y falta hacer `git push` cuando David decida.
+**✅ Confirmado funcionando de verdad en producción (25/08/2026):**
+1. La tabla ya existía (creada en algún momento no documentado, con datos de Alcampo del 23/08).
+2. Run real de `scraper_dia.py --cat verduras` (25/08): 208 productos actualizados en `precios_dia`, 40 cambios de precio reales detectados y guardados en `historico_precios` (`📈 historico_precios: 40 cambios de precio registrados`).
+3. Ya comiteado y subido a GitHub (commit `046ff64` `feat(P1): ...`, ver sección 10).
+4. Sigue pendiente que se acumulen ≥2 fechas por producto (ver nota en sección 10) antes de que el gráfico de evolución o las alertas tengan algo real que mostrar.
 
 ---
 
