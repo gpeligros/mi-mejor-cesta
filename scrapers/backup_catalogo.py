@@ -9,7 +9,7 @@ USO:
   python scrapers/backup_catalogo.py
 
 SALIDA:
-  old/backup_productos_catalogo_<fecha>.csv   (con TODAS las filas)
+  datos/backup_productos_catalogo_<fecha>.csv   (con TODAS las filas)
 
 REQUISITOS:
   - pip install supabase python-dotenv
@@ -62,7 +62,7 @@ for r in filas:
             columnas.append(k)
 
 fecha = datetime.now().strftime("%Y%m%d_%H%M")
-destino = Path(__file__).resolve().parents[1] / "old" / f"backup_{TABLA}_{fecha}.csv"
+destino = Path(__file__).resolve().parents[1] / "datos" / f"backup_{TABLA}_{fecha}.csv"
 destino.parent.mkdir(parents=True, exist_ok=True)
 
 with open(destino, "w", newline="", encoding="utf-8") as f:

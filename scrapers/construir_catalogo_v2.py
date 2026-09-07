@@ -2,7 +2,7 @@
 construir_catalogo_v2.py — Mi Mejor Cesta — FASE 5
 =====================================================
 La ÚNICA fase de la reconstrucción del catálogo que toca la BBDD real.
-Todo lo anterior (Fases 1-4b) vive en CSVs locales dentro de old/.
+Todo lo anterior (Fases 1-4b) vive en CSVs locales dentro de datos/.
 
 Qué hace:
   1. Lee miembros_finales_<fecha>.csv (Fase 4) + categorias_asignadas_<fecha>.csv (Fase 4b)
@@ -41,7 +41,7 @@ except ImportError:
     pass
 
 RAIZ = Path(__file__).resolve().parents[1]
-CARPETA_OLD = RAIZ / "old"
+CARPETA_DATOS = RAIZ / "datos"
 
 # Reutilizamos quitar_marca()/extraer_formato() de normalizar_productos.py
 # (Fase 2) en vez de reinventar la limpieza de nombre aquí — ver el porqué
@@ -70,7 +70,7 @@ def normalizar(t):
 
 
 def mas_reciente(patron):
-    candidatos = sorted(glob.glob(str(CARPETA_OLD / patron)))
+    candidatos = sorted(glob.glob(str(CARPETA_DATOS / patron)))
     return candidatos[-1] if candidatos else None
 
 
@@ -207,7 +207,7 @@ def construir_datos():
 def hacer_backup(supabase):
     print("\n💾 Haciendo backup de productos_catalogo y productos_match actuales...")
     fecha = datetime.now().strftime("%Y%m%d_%H%M")
-    CARPETA_OLD.mkdir(parents=True, exist_ok=True)
+    CARPETA_DATOS.mkdir(parents=True, exist_ok=True)
 
     for tabla in ["productos_catalogo", "productos_match"]:
         filas, offset = [], 0
@@ -218,7 +218,7 @@ def hacer_backup(supabase):
                 break
             offset += 1000
         if filas:
-            ruta = CARPETA_OLD / f"backup_{tabla}_{fecha}.csv"
+            ruta = CARPETA_DATOS / f"backup_{tabla}_{fecha}.csv"
             with open(ruta, "w", newline="", encoding="utf-8") as f:
                 cols = list(filas[0].keys())
                 w = csv.DictWriter(f, fieldnames=cols)
@@ -272,7 +272,7 @@ def main():
     print(f"   - productos_catalogo ({len(catalogo):,} filas nuevas)")
     print(f"   - productos_match ({len(matches):,} filas nuevas)")
     print(f"   - compras y compras_detalle (VACÍAS — confirmado sin usuarios reales, 10/08/2026)")
-    print(f"\n   Backup ya guardado en {CARPETA_OLD} por si hace falta revertir.")
+    print(f"\n   Backup ya guardado en {CARPETA_DATOS} por si hace falta revertir.")
     resp = input("\n¿Continuar? Escribe 'SI' (mayúsculas) para confirmar: ")
     if resp.strip() != "SI":
         print("Cancelado. No se ha tocado nada.")

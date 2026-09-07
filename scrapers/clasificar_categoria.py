@@ -22,11 +22,11 @@ No toca la BBDD. Solo lee CSVs locales y escribe un CSV de asignación.
 USO:
   python scrapers/clasificar_categoria.py
 
-Requiere en old/:
+Requiere en datos/:
   - export_precios_mercadona_<fecha>.csv  (de exportar_todos_precios.py — Fase 1)
   - miembros_finales_<fecha>.csv           (de construir_propuesta_final.py — Fase 4)
 
-SALIDA (en old/):
+SALIDA (en datos/):
   categorias_asignadas_<fecha>.csv   -> cluster_id, id_categoria, categoria,
                                          subcategoria, origen (mercadona_real|
                                          keyword|vecino_cercano|sin_match_bazar)
@@ -44,7 +44,7 @@ from collections import defaultdict, Counter
 from rapidfuzz import fuzz
 
 RAIZ = Path(__file__).resolve().parents[1]
-CARPETA_OLD = RAIZ / "old"
+CARPETA_DATOS = RAIZ / "datos"
 
 UMBRAL_VECINO = 55  # laxo a propósito: es la última red de seguridad, mejor
                      # una categoría aproximada que "sin categorizar"
@@ -500,7 +500,7 @@ MAPPING_DIA = {
 
 
 RAIZ = Path(__file__).resolve().parents[1]
-CARPETA_OLD = RAIZ / "old"
+CARPETA_DATOS = RAIZ / "datos"
 
 # ── Las 87 categorías reales (id, categoria, subcategoria) ────────────────
 CATEGORIAS_MAESTRAS = {
@@ -865,7 +865,7 @@ def clasificar_texto(texto):
 
 
 def mas_reciente(patron):
-    candidatos = sorted(glob.glob(str(CARPETA_OLD / patron)))
+    candidatos = sorted(glob.glob(str(CARPETA_DATOS / patron)))
     return candidatos[-1] if candidatos else None
 
 
@@ -973,7 +973,7 @@ def main():
 
     ruta = mas_reciente("miembros_finales_*.csv")
     if not ruta:
-        print(f"\n❌ No se encontró miembros_finales_*.csv en {CARPETA_OLD}")
+        print(f"\n❌ No se encontró miembros_finales_*.csv en {CARPETA_DATOS}")
         print("   Ejecuta primero: python scrapers/construir_propuesta_final.py")
         return
 
@@ -1142,7 +1142,7 @@ def main():
     resultados_lista = list(resultados.values())
 
     fecha = datetime.now().strftime("%Y%m%d_%H%M")
-    ruta_salida = CARPETA_OLD / f"categorias_asignadas_{fecha}.csv"
+    ruta_salida = CARPETA_DATOS / f"categorias_asignadas_{fecha}.csv"
     with open(ruta_salida, "w", newline="", encoding="utf-8") as f:
         cols = ["cluster_id", "id_categoria", "categoria", "subcategoria", "origen", "nombre_representativo"]
         w = csv.DictWriter(f, fieldnames=cols)
@@ -1150,7 +1150,7 @@ def main():
         w.writerows(resultados_lista)
 
     # muestra de lo asignado por vecino más cercano (menos fiable, para revisar)
-    ruta_vecinos = CARPETA_OLD / f"revisar_vecino_cercano_{fecha}.csv"
+    ruta_vecinos = CARPETA_DATOS / f"revisar_vecino_cercano_{fecha}.csv"
     vecinos = [r for r in resultados_lista if r["origen"] in ("vecino_cercano", "sin_match_bazar")]
     with open(ruta_vecinos, "w", newline="", encoding="utf-8") as f:
         cols = ["cluster_id", "id_categoria", "categoria", "subcategoria", "origen", "nombre_representativo"]
@@ -1174,7 +1174,7 @@ def main():
     for cat, n in dist.most_common(15):
         print(f"    {cat:32s} {n:>5,}")
 
-    print(f"\n✅ CSVs generados en {CARPETA_OLD}:")
+    print(f"\n✅ CSVs generados en {CARPETA_DATOS}:")
     print(f"  {ruta_salida.name}")
     print(f"  {ruta_vecinos.name}  <- revisa esto (categorías menos fiables: {len(vecinos):,} filas)")
 

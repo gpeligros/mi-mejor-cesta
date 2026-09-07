@@ -1,3 +1,7 @@
+> **Documento histórico, congelado el 25/08/2026.** No se actualiza.
+> El estado vivo del proyecto está en [`CONTEXTO.md`](../CONTEXTO.md), en la raíz.
+> Aviso: aquí se habla de la carpeta `old/`; desde el 07/09/2026 se llama `datos/`.
+
 # MI MEJOR CESTA — Contexto del Proyecto (Actualizado 25/08/2026)
 
 ## ⚠️ INSTRUCCIONES PARA CLAUDE

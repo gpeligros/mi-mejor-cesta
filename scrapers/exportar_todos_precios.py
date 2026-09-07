@@ -15,11 +15,11 @@ USO:
   python scrapers/exportar_todos_precios.py
 
 SALIDA:
-  old/export_precios_mercadona_<fecha>.csv
-  old/export_precios_dia_<fecha>.csv
-  old/export_precios_alcampo_<fecha>.csv
-  old/export_precios_carrefour_<fecha>.csv
-  old/export_precios_ahorramas_<fecha>.csv
+  datos/export_precios_mercadona_<fecha>.csv
+  datos/export_precios_dia_<fecha>.csv
+  datos/export_precios_alcampo_<fecha>.csv
+  datos/export_precios_carrefour_<fecha>.csv
+  datos/export_precios_ahorramas_<fecha>.csv
 
 REQUISITOS:
   - pip install supabase python-dotenv
@@ -102,7 +102,7 @@ def main():
     print("=" * 60)
 
     fecha = datetime.now().strftime("%Y%m%d_%H%M")
-    destino_dir = Path(__file__).resolve().parents[1] / "old"
+    destino_dir = Path(__file__).resolve().parents[1] / "datos"
     destino_dir.mkdir(parents=True, exist_ok=True)
 
     resumen = {}
@@ -117,7 +117,7 @@ def main():
         print(f"  {tabla:25s} {n:>8,} filas")
         total += n
     print(f"  {'TOTAL':25s} {total:>8,} filas")
-    print("\n✅ Completado. Todos los CSVs están en la carpeta old/.")
+    print("\n✅ Completado. Todos los CSVs están en la carpeta datos/.")
     print("   Siguiente paso: Fase 2 — normalización de nombres.")
 
 

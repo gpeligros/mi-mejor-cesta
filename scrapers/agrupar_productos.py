@@ -4,7 +4,7 @@ agrupar_productos.py — Mi Mejor Cesta
 FASE 3a de la reconstrucción del catálogo (parte SIN COSTE — solo fuzzy
 matching local, sin llamadas a IA).
 
-Lee el CSV más reciente de normalizar_productos.py (old/) y agrupa productos
+Lee el CSV más reciente de normalizar_productos.py (datos/) y agrupa productos
 en dos PASADAS:
 
   PASADA A — Dedup intra-super:
@@ -29,7 +29,7 @@ USO:
   python scrapers/agrupar_productos.py
   python scrapers/agrupar_productos.py --umbral-auto 90 --umbral-dudoso 78
 
-SALIDA (en old/):
+SALIDA (en datos/):
   resumen_clusters_<fecha>.csv   -> 1 fila por cluster final (catálogo propuesto)
   clusters_dudosos_<fecha>.csv   -> detalle de bridges en banda dudosa (Fase 3b)
 """
@@ -44,7 +44,7 @@ from collections import defaultdict
 from rapidfuzz import fuzz, process
 
 RAIZ = Path(__file__).resolve().parents[1]
-CARPETA_OLD = RAIZ / "old"
+CARPETA_DATOS = RAIZ / "datos"
 
 UMBRAL_AUTO_DEFAULT = 88
 UMBRAL_DUDOSO_DEFAULT = 75
@@ -58,7 +58,7 @@ ORDEN_SUPERS = ["Mercadona", "Carrefour", "DIA", "AhorraMas", "Alcampo"]
 
 
 def csv_normalizado_mas_reciente():
-    candidatos = sorted(glob.glob(str(CARPETA_OLD / "normalizado_*.csv")))
+    candidatos = sorted(glob.glob(str(CARPETA_DATOS / "normalizado_*.csv")))
     return candidatos[-1] if candidatos else None
 
 
@@ -278,7 +278,7 @@ def main():
 
     ruta = csv_normalizado_mas_reciente()
     if not ruta:
-        print(f"\n❌ No se encontró ningún normalizado_*.csv en {CARPETA_OLD}")
+        print(f"\n❌ No se encontró ningún normalizado_*.csv en {CARPETA_DATOS}")
         print("   Ejecuta primero: python scrapers/normalizar_productos.py")
         return
 
@@ -443,7 +443,7 @@ def main():
         })
     resumen.sort(key=lambda r: (-r["n_supers"], r["min_score_bridge"]))
 
-    ruta_resumen = CARPETA_OLD / f"resumen_clusters_{fecha}.csv"
+    ruta_resumen = CARPETA_DATOS / f"resumen_clusters_{fecha}.csv"
     with open(ruta_resumen, "w", newline="", encoding="utf-8") as f:
         cols = ["cluster_id", "marca", "nombre_canonico", "n_supers", "n_filas_originales",
                 "tiene_mercadona", "tiene_dia", "tiene_alcampo", "tiene_carrefour",
@@ -452,7 +452,7 @@ def main():
         w.writeheader()
         w.writerows(resumen)
 
-    ruta_dudosos = CARPETA_OLD / f"clusters_dudosos_{fecha}.csv"
+    ruta_dudosos = CARPETA_DATOS / f"clusters_dudosos_{fecha}.csv"
     with open(ruta_dudosos, "w", newline="", encoding="utf-8") as f:
         cols = ["cluster_id", "nombre_canonico_cluster", "marca", "super_candidato",
                 "nombre_candidato", "score_bridge"]
@@ -471,7 +471,7 @@ def main():
     # ── NUEVO: detalle completo fila a fila, necesario para la Fase 5 ────
     # (qué id_super concreto de cada supermercado pertenece a qué cluster
     # final; el resumen de arriba solo tiene agregados/booleanos)
-    ruta_miembros = CARPETA_OLD / f"miembros_clusters_{fecha}.csv"
+    ruta_miembros = CARPETA_DATOS / f"miembros_clusters_{fecha}.csv"
     with open(ruta_miembros, "w", newline="", encoding="utf-8") as f:
         cols = ["cluster_id", "super", "id_super", "nombre_original",
                 "marca_detectada", "formato", "precio", "score_bridge_super"]
@@ -491,7 +491,7 @@ def main():
                         "score_bridge_super": round(score, 1) if score < 100 else "",
                     })
 
-    print(f"\n✅ CSVs generados en {CARPETA_OLD}:")
+    print(f"\n✅ CSVs generados en {CARPETA_DATOS}:")
     print(f"  {ruta_resumen.name}")
     print(f"  {ruta_dudosos.name}  ({len(clusters_dudosos_detalle):,} bridges dudosos)")
     print(f"  {ruta_miembros.name}  (detalle completo, para la Fase 5)")

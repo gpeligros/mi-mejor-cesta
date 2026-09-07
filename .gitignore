@@ -35,3 +35,9 @@ frontend/build/
 
 # Binarios descargados (no son código del proyecto)
 scripts/*.exe
+
+# Worktrees y ajustes locales de Claude
+.claude/
+
+# Cuarentena antes de borrar (la revisa David)
+_to_delete/

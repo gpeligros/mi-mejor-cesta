@@ -3,7 +3,7 @@ normalizar_productos.py — Mi Mejor Cesta
 ==========================================
 FASE 2 de la reconstrucción del catálogo.
 
-Lee los 5 CSVs generados por exportar_todos_precios.py (carpeta old/) y para
+Lee los 5 CSVs generados por exportar_todos_precios.py (carpeta datos/) y para
 cada producto extrae:
   - nombre_base   : nombre sin marca ni formato/cantidad (para agrupar)
   - marca_detectada : la marca (del campo 'marca' de la fila, o extraída
@@ -21,11 +21,11 @@ USO:
   python scrapers/normalizar_productos.py
 
 Requiere que ya hayas ejecutado exportar_todos_precios.py y que los CSVs
-existan en old/export_precios_<super>_<fecha>.csv (coge el más reciente
+existan en datos/export_precios_<super>_<fecha>.csv (coge el más reciente
 de cada super automáticamente).
 
 SALIDA:
-  old/normalizado_<fecha>.csv   — todas las filas de los 5 supers juntas,
+  datos/normalizado_<fecha>.csv   — todas las filas de los 5 supers juntas,
                                    con columnas nuevas: super, nombre_base,
                                    marca_detectada, formato
 """
@@ -39,7 +39,7 @@ from datetime import datetime
 from collections import defaultdict, Counter
 
 RAIZ = Path(__file__).resolve().parents[1]
-CARPETA_OLD = RAIZ / "old"
+CARPETA_DATOS = RAIZ / "datos"
 
 SUPERS = {
     "precios_mercadona": "Mercadona",
@@ -149,14 +149,14 @@ def quitar_marca(nombre, marca):
 
 
 def csv_mas_reciente(prefijo):
-    candidatos = sorted(glob.glob(str(CARPETA_OLD / f"export_{prefijo}_*.csv")))
+    candidatos = sorted(glob.glob(str(CARPETA_DATOS / f"export_{prefijo}_*.csv")))
     return candidatos[-1] if candidatos else None
 
 
 def procesar_super(tabla, nombre_super):
     ruta = csv_mas_reciente(tabla)
     if not ruta:
-        print(f"  ⚠️  No se encontró CSV para {tabla} en old/. Se omite.")
+        print(f"  ⚠️  No se encontró CSV para {tabla} en datos/. Se omite.")
         return []
 
     filas_out = []
@@ -244,8 +244,8 @@ def main():
     print("  🧹 NORMALIZAR PRODUCTOS — Fase 2")
     print("=" * 60)
 
-    if not CARPETA_OLD.exists():
-        print(f"\n❌ No existe la carpeta {CARPETA_OLD}")
+    if not CARPETA_DATOS.exists():
+        print(f"\n❌ No existe la carpeta {CARPETA_DATOS}")
         print("   Ejecuta primero: python scrapers/exportar_todos_precios.py")
         return
 
@@ -255,7 +255,7 @@ def main():
         todas.extend(procesar_super(tabla, nombre_super))
 
     if not todas:
-        print("\n❌ No se procesó ninguna fila. Revisa que existan los CSVs en old/.")
+        print("\n❌ No se procesó ninguna fila. Revisa que existan los CSVs en datos/.")
         return
 
     # ── Rescate de marca con vocabulario aprendido del propio catálogo ───
@@ -277,7 +277,7 @@ def main():
         f["clave_agrupacion"] = normalizar_texto(f"{f['marca_detectada']} {f['nombre_base']}")
 
     fecha = datetime.now().strftime("%Y%m%d_%H%M")
-    destino = CARPETA_OLD / f"normalizado_{fecha}.csv"
+    destino = CARPETA_DATOS / f"normalizado_{fecha}.csv"
 
     columnas = ["super", "id_super", "nombre_original", "marca_detectada",
                 "nombre_base", "formato", "precio", "clave_agrupacion"]

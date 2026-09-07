@@ -20,7 +20,7 @@ No toca la BBDD. Solo lee/escribe CSVs locales.
 USO:
   python scrapers/construir_propuesta_final.py
 
-SALIDA (en old/):
+SALIDA (en datos/):
   miembros_finales_<fecha>.csv    -> membresía definitiva (cluster_id corregido)
   resumen_final_<fecha>.csv       -> 1 fila por cluster final definitivo
   muestra_revision_<fecha>.csv    -> muestra amplia de clusters multi-super
@@ -35,11 +35,11 @@ from datetime import datetime
 from collections import defaultdict
 
 RAIZ = Path(__file__).resolve().parents[1]
-CARPETA_OLD = RAIZ / "old"
+CARPETA_DATOS = RAIZ / "datos"
 
 
 def mas_reciente(patron):
-    candidatos = sorted(glob.glob(str(CARPETA_OLD / patron)))
+    candidatos = sorted(glob.glob(str(CARPETA_DATOS / patron)))
     return candidatos[-1] if candidatos else None
 
 
@@ -52,11 +52,11 @@ def main():
     ruta_rechazados = mas_reciente("bridges_rechazados_*.csv")
 
     if not ruta_miembros:
-        print(f"\n❌ No se encontró miembros_clusters_*.csv en {CARPETA_OLD}")
+        print(f"\n❌ No se encontró miembros_clusters_*.csv en {CARPETA_DATOS}")
         print("   Ejecuta primero: python scrapers/agrupar_productos.py")
         return
     if not ruta_rechazados:
-        print(f"\n❌ No se encontró bridges_rechazados_*.csv en {CARPETA_OLD}")
+        print(f"\n❌ No se encontró bridges_rechazados_*.csv en {CARPETA_DATOS}")
         print("   Ejecuta primero: python scrapers/revisar_clusters_dudosos.py")
         return
 
@@ -114,14 +114,14 @@ def main():
 
     fecha = datetime.now().strftime("%Y%m%d_%H%M")
 
-    ruta_miembros_final = CARPETA_OLD / f"miembros_finales_{fecha}.csv"
+    ruta_miembros_final = CARPETA_DATOS / f"miembros_finales_{fecha}.csv"
     with open(ruta_miembros_final, "w", newline="", encoding="utf-8") as f:
         cols = list(miembros[0].keys())
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
         w.writerows(miembros)
 
-    ruta_resumen_final = CARPETA_OLD / f"resumen_final_{fecha}.csv"
+    ruta_resumen_final = CARPETA_DATOS / f"resumen_final_{fecha}.csv"
     with open(ruta_resumen_final, "w", newline="", encoding="utf-8") as f:
         cols = ["cluster_id", "marca", "nombre_representativo", "n_supers",
                  "n_filas_originales", "supers"]
@@ -136,7 +136,7 @@ def main():
     random.seed(7)
     muestra_multi2 = random.sample(multi2, min(150, len(multi2)))
 
-    ruta_muestra = CARPETA_OLD / f"muestra_revision_{fecha}.csv"
+    ruta_muestra = CARPETA_DATOS / f"muestra_revision_{fecha}.csv"
     filas_muestra = []
     for r in sorted(multi3, key=lambda x: -x["n_supers"]) + muestra_multi2:
         detalle = por_cluster[r["cluster_id"]]
@@ -167,7 +167,7 @@ def main():
     print(f"  Con cobertura en ≥2 supers (comparan precio):       {n_multi:,}")
     print(f"    - de ellos, en ≥3 supers:                         {len(multi3):,}")
     print(f"  Solo en 1 super (no comparan, pero sí muestran):    {n_solo1:,}")
-    print(f"\n✅ CSVs generados en {CARPETA_OLD}:")
+    print(f"\n✅ CSVs generados en {CARPETA_DATOS}:")
     print(f"  {ruta_miembros_final.name}")
     print(f"  {ruta_resumen_final.name}")
     print(f"  {ruta_muestra.name}  <- REVISA ESTE antes de la Fase 5")

@@ -18,9 +18,9 @@ USO:
   python scrapers/revisar_clusters_dudosos.py --umbral 6  # score < 6 = incorrecto (default: 6)
 
 Requiere que ya hayas ejecutado agrupar_productos.py (lee el
-clusters_dudosos_<fecha>.csv más reciente en old/).
+clusters_dudosos_<fecha>.csv más reciente en datos/).
 
-SALIDA (en old/, nada se escribe en Supabase):
+SALIDA (en datos/, nada se escribe en Supabase):
   clusters_dudosos_revisados_<fecha>.csv   -> todos, con score + motivo
   bridges_aceptados_<fecha>.csv            -> solo score >= umbral (para Fase 5)
   bridges_rechazados_<fecha>.csv           -> solo score < umbral (quedan como
@@ -48,7 +48,7 @@ import anthropic
 load_dotenv()
 
 RAIZ = Path(__file__).resolve().parents[1]
-CARPETA_OLD = RAIZ / "old"
+CARPETA_DATOS = RAIZ / "datos"
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 
@@ -94,7 +94,7 @@ Devuelve ÚNICAMENTE un array JSON, sin texto adicional:
 
 
 def csv_dudosos_mas_reciente():
-    candidatos = sorted(glob.glob(str(CARPETA_OLD / "clusters_dudosos_*.csv")))
+    candidatos = sorted(glob.glob(str(CARPETA_DATOS / "clusters_dudosos_*.csv")))
     # Excluir los "revisados" si por error coincidieran con el patrón
     candidatos = [c for c in candidatos if "revisado" not in c]
     return candidatos[-1] if candidatos else None
@@ -151,7 +151,7 @@ def main():
 
     ruta = csv_dudosos_mas_reciente()
     if not ruta:
-        print(f"\n❌ No se encontró ningún clusters_dudosos_*.csv en {CARPETA_OLD}")
+        print(f"\n❌ No se encontró ningún clusters_dudosos_*.csv en {CARPETA_DATOS}")
         print("   Ejecuta primero: python scrapers/agrupar_productos.py")
         return
 
@@ -232,25 +232,25 @@ def main():
     fecha = datetime.now().strftime("%Y%m%d_%H%M")
     cols = list(todas_filas[0].keys()) + ["score", "motivo"]
 
-    ruta_todos = CARPETA_OLD / f"clusters_dudosos_revisados_{fecha}.csv"
+    ruta_todos = CARPETA_DATOS / f"clusters_dudosos_revisados_{fecha}.csv"
     with open(ruta_todos, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
         w.writerows(resultados)
 
-    ruta_aceptados = CARPETA_OLD / f"bridges_aceptados_{fecha}.csv"
+    ruta_aceptados = CARPETA_DATOS / f"bridges_aceptados_{fecha}.csv"
     with open(ruta_aceptados, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
         w.writerows(aceptados)
 
-    ruta_rechazados = CARPETA_OLD / f"bridges_rechazados_{fecha}.csv"
+    ruta_rechazados = CARPETA_DATOS / f"bridges_rechazados_{fecha}.csv"
     with open(ruta_rechazados, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
         w.writerows(rechazados)
 
-    print(f"\n✅ CSVs generados en {CARPETA_OLD}:")
+    print(f"\n✅ CSVs generados en {CARPETA_DATOS}:")
     print(f"  {ruta_todos.name}")
     print(f"  {ruta_aceptados.name}  ({len(aceptados)} bridges confirmados)")
     print(f"  {ruta_rechazados.name}  ({len(rechazados)} bridges descartados)")
